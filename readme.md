@@ -29,3 +29,5 @@ Se trabaja de forma **incremental en 3 entregas**:
 ## 👥 Integrantes del grupo
 
 - Daniel Rodríguez — daniel.rdelacalle@alumnos.upm.es
+- Rafael Caro - rafael.caroancochea@alumnos.upm.es
+- Julio Fernández de Luz - julio.fernandezdeluz@alumnos.upm.es
