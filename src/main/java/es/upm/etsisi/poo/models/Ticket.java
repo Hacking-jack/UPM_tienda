@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Ticket {
-    private ArrayList<Producto> products = new ArrayList<Producto>();
+    private ArrayList<Product> products = new ArrayList<Product>();
     private final LocalDateTime creationDateTime = LocalDateTime.now();
     private String cashier;
 
