@@ -31,3 +31,5 @@ Se trabaja de forma **incremental en 3 entregas**:
 - Daniel Rodríguez — daniel.rdelacalle@alumnos.upm.es
 - Rafael Caro - rafael.caroancochea@alumnos.upm.es
 - Julio Fernández de Luz - julio.fernandezdeluz@alumnos.upm.es
+- Santiago Conde Izquierdo - santiago.conde.izquierdo@alumnos.upm.es
+- Alvaro Huertas Díaz - alvaro.huertas@alumnos.upm.es
