@@ -15,9 +15,9 @@ public class App
     }
     public static void main( String[] args )
     {
-        App app=new App();
+        App aplicacion=new App();
         //app.iniciar();
-        app.run();
+        aplicacion.run();
 
     }
 
