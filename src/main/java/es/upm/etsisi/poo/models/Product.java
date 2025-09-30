@@ -3,13 +3,38 @@ package es.upm.etsisi.poo.models;
 public class Product {
     private String name;
     private String description;
+    private String categories;
+    private int id;
     private int price;
 
-    public Product(String name, int price, String description) {
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getCategories() {
+        return categories;
+    }
+
+    public void setCategories(String categories) {
+        this.categories = categories;
+    }
+
+
+
+    public Product(String name, int price, String categories) {
         this.name = name;
         this.price = price;
-        this.description = description;
+        this.categories = categories;
     }
+    public Product(int id){
+        this.id = id;
+    }
+
 
     public String getName() {
         return name;
