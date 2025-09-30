@@ -2,13 +2,15 @@ package es.upm.etsisi.poo.models;
 
 public class Product {
     private String name;
-    private String description;
-    private int price;
+    private String categories;
+    private double price;
+    private int id;
 
-    public Product(String name, int price, String description) {
+    public Product(String name, double price, String categories, int id) {
         this.name = name;
         this.price = price;
-        this.description = description;
+        this.categories = categories;
+        this.id=id;
     }
 
     public String getName() {
@@ -19,28 +21,33 @@ public class Product {
         this.name = name;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
-    public String getDescription() {
-        return description;
+    public String getCategories() {
+        return categories;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setCategories(String categories) {
+        this.categories = categories;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override
     public String toString() {
-        return "Product{" +
-                "name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", price=" + price +
-                '}';
+        return "{class:Product," + "id:" + id + ", name:'"
+                + name + '\''+", category:" + categories +", price:"+ price + '}';
     }
 }
