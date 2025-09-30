@@ -7,6 +7,17 @@ ticket remove <prodId> (elimina todas las apariciones del producto, revisa si ex
 ticket print (imprime factura)
  */
 
+import es.upm.etsisi.poo.models.Product;
+import es.upm.etsisi.poo.models.Ticket;
+
 public class ticketController {
+    private Ticket ticket = new Ticket();
+    public  ticketController(Ticket ticket){
+        this.ticket = ticket;
+
+    }
+    public static void newTicket(){
+        //Se hará en el switch
+    }
 
 }

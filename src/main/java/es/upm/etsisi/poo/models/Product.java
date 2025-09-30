@@ -3,14 +3,12 @@ package es.upm.etsisi.poo.models;
 public class Product {
     private String name;
     private String description;
-    private double price;
-    private int id;
+    private int price;
 
-    public Product(String name, double price, String description, int id) {
+    public Product(String name, int price, String description) {
         this.name = name;
         this.price = price;
         this.description = description;
-        this.id=id;
     }
 
     public String getName() {
@@ -21,11 +19,11 @@ public class Product {
         this.name = name;
     }
 
-    public double getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 
@@ -35,14 +33,6 @@ public class Product {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     @Override
