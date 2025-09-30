@@ -21,7 +21,7 @@ public class App
 
     }
 
-    private static void run() {
+    private void run() {
 
         Scanner scanner=new Scanner(System.in);
         boolean bucle=true;
