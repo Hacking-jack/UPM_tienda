@@ -1,20 +1,15 @@
 package es.upm.etsisi.poo.models;
 
+
 public class Product {
-    public enum Categorie {
-        MERCH,
-        PAPELERIA,
-        ROPA,
-        LIBRO,
-        ELECTRONICA;
-    }
+
 
     private String name;
-    private Categorie categories;
+    private Categories categories;
     private double price;
     private int id;
 
-    public Product(String name, double price, Categorie categories, int id) {
+    public Product(String name, double price, Categories categories, int id) {
         this.name = name;
         this.price = price;
         this.categories = categories;
@@ -38,18 +33,13 @@ public class Product {
     }
 
 
-    public static Categorie getCategories(String texto) {
-        try {
-            return Categorie.valueOf(texto.toUpperCase());
-        } catch (IllegalArgumentException e) {
-            System.out.println("Categoría inválida: " + texto);
-            return null;
-        }
+    public Categories getCategories() {
+        return categories;
     }
 
 
 
-    public void setCategories(Categorie categories) {
+    public void setCategories(Categories categories) {
         this.categories = categories;
     }
 
