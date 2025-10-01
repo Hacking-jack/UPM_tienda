@@ -43,7 +43,7 @@ public class App
             String[] lineSepSpace = line.split(" ");
             switch (lineSepSpace[0]) {
                 case "help":
-                    //printhelp();
+                    help();
                     break;
                 case "exit":
                     bucle=false;
@@ -85,5 +85,13 @@ public class App
                     break;
             }
         }
+    }
+    public void help(){
+        System.out.println("Commands:\n  prod add <id> \"" +
+                "<name>\" <category> <price>\n  prod list\n" +
+                "  prod update <id> NAME|CATEGORY|PRICE <value>\n" +
+                "  prod remove <id>\n  ticket new\n  ticket add" +
+                " <prodId> <quantity>\n  ticket remove <prodId>\n" +
+                "  ticket print\n  echo \"<texto>\"\n  help\n  exit");
     }
 }

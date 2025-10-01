@@ -14,7 +14,7 @@ public class TicketController {
 
     private Ticket ticket;
 
-    public TicketController(Ticket ticket){
+    public TicketController(Ticket ticket) {
         this.ticket = ticket;
 
     }
@@ -27,17 +27,20 @@ public class TicketController {
         this.ticket = ticket;
     }
 
-    public static void newTicket(){
-        //Se hará en el switch
+    public void newTicket() {
+        this.ticket = new Ticket();
     }
-    public void addAproduct(Product product, int quantity){
-        for(int i = 0; i<quantity; i++)
+
+    public void add(Product product, int quantity) {
+        for (int i = 0; i < quantity; i++)
             ticket.getProducts().add(product);
     }
-    public void remove(Product product){
+
+    public void remove(Product product) {
         ticket.getProducts().remove(product);
     }
-    public void print(){//Hay que terminarlo
+
+    public void print() {//Hay que terminarlo
         for (int i = 0; i < ticket.getProducts().size(); i++) {
             System.out.println(ticket.getProducts().get(i).toString());
         }
