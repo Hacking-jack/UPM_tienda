@@ -41,8 +41,23 @@ public class TicketController {
     }
 
     public void print() {//Hay que terminarlo
+        double precioTotal = 0, descuentoTotal = 0, precioFinal = 0;
         for (int i = 0; i < ticket.getProducts().size(); i++) {
-            System.out.println(ticket.getProducts().get(i).toString());
+            precioTotal += ticket.getProducts().get(i).getPrice();
+            descuentoTotal += ticket.getProducts().get(i).getDiscount() * ticket.getProducts().get(i).getPrice();
+            precioFinal = precioTotal - descuentoTotal;
+            if(ticket.getProducts().get(i).getDiscount() == null) {
+                System.out.println(ticket.getProducts().get(i).toString());
+                System.out.println("Total price: "+precioTotal);
+                System.out.println("Total discount: "+descuentoTotal);
+                System.out.println("Final price: "+precioFinal);
+            }
+            else{
+                System.out.println(ticket.getProducts().get(i).toString()+"**discount -"+ticket.getProducts().get(i).getDiscount()*ticket.getProducts().get(i).getPrice());
+                System.out.println("Total price: "+precioTotal);
+                System.out.println("Total discount: "+descuentoTotal);
+                System.out.println("Final price: "+precioFinal);
+            }
         }
     }
 }
