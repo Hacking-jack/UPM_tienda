@@ -22,20 +22,4 @@ public class Ticket {
     public void setProducts(ArrayList<Product> products) {
         this.products = products;
     }
-
-
-
-    //Despues decidimos donde va
-    public void add(Product product, int cantidad){
-        for(int i = 0; i<cantidad;i++)
-            products.add(product);
-    }
-    public void remove(Product product){
-        products.remove(product);
-    }
-    public void print(){ // completar
-        for (int i = 0; i < products.size(); i++) {
-            System.out.println(products.get(i).toString());
-        }
-    }
 }
