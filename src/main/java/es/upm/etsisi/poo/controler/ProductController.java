@@ -19,7 +19,7 @@ public class ProductController {
     }
 
 
-    public void add(int id, String name, String categories, double price) {
+    public void add(int id, String name, Product.Categorie categories, double price) {
         if (existeId(id) != -1) {
             System.out.println("Error. Ya existe el id.");
         } else {
@@ -47,7 +47,8 @@ public class ProductController {
                     products.get(position).setName(valor);
                     break;
                 case "CATEGORY":
-                    products.get(position).setCategories(valor);
+                    Product.Categorie categorie = Product.Categorie.valueOf(valor.toUpperCase());
+                    products.get(position).setCategories(categorie);
                     break;
                 case "PRICE":
                     products.get(position).setPrice(Double.parseDouble(valor));
