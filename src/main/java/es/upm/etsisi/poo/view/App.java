@@ -1,5 +1,9 @@
 package es.upm.etsisi.poo.view;
 
+import es.upm.etsisi.poo.controler.ProductController;
+import es.upm.etsisi.poo.controler.TicketController;
+import es.upm.etsisi.poo.models.Ticket;
+
 import java.util.Scanner;
 
 /*
@@ -10,15 +14,21 @@ exit
  */
 public class App 
 {
-    public App(){
-
-    }
+    private Ticket ticket;
+    private ProductController productController;
+    private TicketController ticketController;
     public static void main( String[] args )
     {
         App aplicacion=new App();
-        //app.iniciar();
+        aplicacion.iniciar();
         aplicacion.run();
 
+    }
+
+    private void iniciar(){
+        this.productController =new ProductController();
+        this.ticket=new Ticket();
+        this.ticketController=new TicketController(ticket);
     }
 
     private void run() {
@@ -71,7 +81,6 @@ public class App
                 default:
                     break;
             }
-
         }
     }
 }

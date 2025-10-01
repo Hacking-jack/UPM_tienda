@@ -9,8 +9,15 @@ prod list (lista productos actuales)
 prod update <id> campo valor (campos: nombre|categoria|precio)
 prod remove <id>
  */
-public class productController {
-    private ArrayList<Product> products = new ArrayList<Product>();
+public class ProductController {
+
+    private ArrayList<Product> products;
+
+    public ProductController(){
+        products= new ArrayList<>();
+    }
+
+
     public void add(int id, String name, String categories, double price){
         if (products.contains(id)){
             System.out.println("Error. Ya existe el id.");
