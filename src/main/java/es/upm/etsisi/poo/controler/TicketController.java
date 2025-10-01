@@ -10,11 +10,22 @@ ticket print (imprime factura)
 import es.upm.etsisi.poo.models.Ticket;
 
 public class TicketController {
-    private Ticket ticket = new Ticket();
+
+    private Ticket ticket;
+
     public TicketController(Ticket ticket){
         this.ticket = ticket;
 
     }
+
+    public Ticket getTicket() {
+        return ticket;
+    }
+
+    public void setTicket(Ticket ticket) {
+        this.ticket = ticket;
+    }
+
     public static void newTicket(){
         //Se hará en el switch
     }
