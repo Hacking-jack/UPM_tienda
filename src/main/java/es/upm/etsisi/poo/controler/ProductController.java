@@ -82,5 +82,8 @@ public class ProductController {
         }
         return i;
     }
+    public void categorieControl(Product.Categorie categorie){
+
+    }
 
 }
