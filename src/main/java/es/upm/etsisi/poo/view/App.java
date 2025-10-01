@@ -2,6 +2,7 @@ package es.upm.etsisi.poo.view;
 
 import es.upm.etsisi.poo.controler.ProductController;
 import es.upm.etsisi.poo.controler.TicketController;
+import es.upm.etsisi.poo.models.Product;
 import es.upm.etsisi.poo.models.Ticket;
 
 import java.util.Scanner;
@@ -12,33 +13,32 @@ help (lista los comandos)
 echo “<texto>” (imprime el texto en el valor texto)
 exit
  */
-public class App 
-{
+public class App {
     private Ticket ticket;
     private ProductController productController;
     private TicketController ticketController;
-    public static void main( String[] args )
-    {
-        App aplicacion=new App();
+
+    public static void main(String[] args) {
+        App aplicacion = new App();
         aplicacion.iniciar();
         aplicacion.run();
 
     }
 
-    private void iniciar(){
-        this.productController =new ProductController();
-        this.ticket=new Ticket();
-        this.ticketController=new TicketController(ticket);
+    private void iniciar() {
+        this.productController = new ProductController();
+        this.ticket = new Ticket();
+        this.ticketController = new TicketController(ticket);
     }
 
     private void run() {
 
-        Scanner scanner=new Scanner(System.in);
-        boolean bucle=true;
-        while(bucle) {
+        Scanner scanner = new Scanner(System.in);
+        boolean bucle = true;
+        while (bucle) {
             //System.out.print(TASK_APP);
-            String line=scanner.nextLine();
-            if (System.getenv("debugFile")!=null)
+            String line = scanner.nextLine();
+            if (System.getenv("debugFile") != null)
                 System.out.println(line);
             String[] lineSepSpace = line.split(" ");
             switch (lineSepSpace[0]) {
@@ -46,24 +46,29 @@ public class App
                     help();
                     break;
                 case "exit":
-                    bucle=false;
+                    bucle = false;
                     break;
                 case "prod":
-                    switch (lineSepSpace[1]){
+                    switch (lineSepSpace[1]) {
                         case "add":
+                            productController.add(Integer.parseInt(lineSepSpace[2]), lineSepSpace[3], lineSepSpace[4].toUpperCase(), Double.parseDouble(lineSepSpace[5]));
                             break;
                         case "list":
+                            productController.list();
                             break;
                         case "update":
+                            productController.update(Integer.parseInt(lineSepSpace[2]), lineSepSpace[3], lineSepSpace[4]);
                             break;
                         case "remove":
+                            productController.remove(Integer.parseInt(lineSepSpace[2]));
                             break;
                         default:
+                            System.out.println("Comando no válido, usa help para ver lista de comandos");
                             break;
                     }
                     break;
                 case "ticket":
-                    switch (lineSepSpace[1]){
+                    switch (lineSepSpace[1]) {
                         case "new":
                             break;
                         case "add":
@@ -73,20 +78,21 @@ public class App
                         case "print":
                             break;
                         default:
+                            System.out.println("Comando no válido, usa help para ver lista de comandos");
                             break;
                     }
-                    break;
-                case "print":
                     break;
                 case "echo":
                     System.out.println(line);
                     break;
                 default:
+                    System.out.println("Comando no válido, usa help para ver lista de comandos");
                     break;
             }
         }
     }
-    public void help(){
+
+    public void help() {
         System.out.println("Commands:\n  prod add <id> \"" +
                 "<name>\" <category> <price>\n  prod list\n" +
                 "  prod update <id> NAME|CATEGORY|PRICE <value>\n" +
