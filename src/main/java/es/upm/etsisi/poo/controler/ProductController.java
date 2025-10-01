@@ -2,6 +2,8 @@ package es.upm.etsisi.poo.controler;
 
 import java.util.ArrayList;
 
+
+import es.upm.etsisi.poo.models.Categories;
 import es.upm.etsisi.poo.models.Product;
 
 /*
@@ -19,13 +21,15 @@ public class ProductController {
     }
 
 
-    public void add(int id, String name, Product.Categorie categories, double price) {
-        if (existeId(id) != -1) {
-            System.out.println("Error. Ya existe el id.");
-        } else {
-            Product product = new Product(name, price, categories, id);
-            products.add(product);
-            System.out.println(product.toString());
+    public void add(int id, String name, String categories, double price) {
+        if(categorieControl(categories)){
+            if (existeId(id) != -1) {
+                System.out.println("Error. Ya existe el id.");
+            } else {
+                Product product = new Product(name, price, Categories.valueOf(categories), id);
+                products.add(product);
+                System.out.println(product.toString());
+            }
         }
         //Falta app.echo
     }
@@ -47,8 +51,10 @@ public class ProductController {
                     products.get(position).setName(valor);
                     break;
                 case "CATEGORY":
-                    Product.Categorie categorie = Product.Categorie.valueOf(valor.toUpperCase());
-                    products.get(position).setCategories(categorie);
+                    if(categorieControl(valor)) {
+                        Categories categorie = Categories.valueOf(valor.toUpperCase());
+                        products.get(position).setCategories(categorie);
+                    }
                     break;
                 case "PRICE":
                     products.get(position).setPrice(Double.parseDouble(valor));
@@ -82,7 +88,14 @@ public class ProductController {
         }
         return i;
     }
-    public void categorieControl(Product.Categorie categorie){
+    public boolean categorieControl(String categorie){
+        try{
+            Categories.valueOf(categorie);
+            return true;
+        }catch(IllegalArgumentException ex){
+            System.out.println("Categoría no válida");
+            return false;
+        }
 
     }
 

@@ -16,7 +16,6 @@ public class TicketController {
 
     public TicketController(Ticket ticket) {
         this.ticket = ticket;
-
     }
 
     public Ticket getTicket() {
