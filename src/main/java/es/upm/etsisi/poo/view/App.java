@@ -78,6 +78,9 @@ public class App
                     break;
                 case "print":
                     break;
+                case "echo":
+                    System.out.println(line);
+                    break;
                 default:
                     break;
             }
