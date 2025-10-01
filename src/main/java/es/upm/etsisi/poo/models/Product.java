@@ -1,7 +1,7 @@
 package es.upm.etsisi.poo.models;
 
 
-public class Product {
+public class Product { // Falta limite de 200
 
 
     private String name;

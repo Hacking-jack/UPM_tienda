@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 
-public class Ticket {
+public class Ticket { //Falta limite de 100
     private ArrayList<Product> products;
 
 
