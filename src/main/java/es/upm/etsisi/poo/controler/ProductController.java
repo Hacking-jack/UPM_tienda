@@ -42,7 +42,7 @@ public class ProductController {
     }
 
     public void update(int id, String campo, String valor) {
-        int position = existeId(id);
+        int position = existeId(id)-1;
         if (existeId(id) == -1) {
             System.out.println("Error. No existe el id para actualizar.");
         } else {
@@ -64,14 +64,16 @@ public class ProductController {
                     break;
             }
         }
+        System.out.println(products.get(position).toString()+"\n");
     }
 
     public void remove(int id) {
-        int position = existeId(id);
+        int position = existeId(id)-1;
         if (position == -1) {
             System.out.println("Error. No existe el id para borrar.");
         } else {
-            products.remove(products.get(position-1));
+            System.out.println(products.get(position).toString());
+            products.remove(products.get(position));
         }
     }
 
@@ -106,7 +108,6 @@ public class ProductController {
             System.out.println("Categoría no válida");
             return false;
         }
-
     }
 
 }

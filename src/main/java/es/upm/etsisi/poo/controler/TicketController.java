@@ -34,6 +34,7 @@ public class TicketController {
     public void add(Product product, int quantity) {
         for (int i = 0; i < quantity; i++)
             ticket.getProducts().add(product);
+        print();
     }
 
     public void remove(Product product) {
