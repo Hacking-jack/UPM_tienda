@@ -5,6 +5,7 @@ import es.upm.etsisi.poo.controler.TicketController;
 import es.upm.etsisi.poo.models.Product;
 import es.upm.etsisi.poo.models.Ticket;
 
+import java.util.Objects;
 import java.util.Scanner;
 
 /*
@@ -51,12 +52,16 @@ public class App {
                 case "prod":
                     switch (lineSepSpace[1]) {
                         case "add":
+                            reordenarSplitNombre(lineSepSpace,3);
                             productController.add(Integer.parseInt(lineSepSpace[2]), lineSepSpace[3], lineSepSpace[4].toUpperCase(), Double.parseDouble(lineSepSpace[5]));
                             break;
                         case "list":
                             productController.list();
                             break;
                         case "update":
+                            if(Objects.equals(lineSepSpace[3], "NAME")){
+                                reordenarSplitNombre(lineSepSpace,3);
+                            }
                             productController.update(Integer.parseInt(lineSepSpace[2]), lineSepSpace[3], lineSepSpace[4]);
                             break;
                         case "remove":
@@ -88,6 +93,30 @@ public class App {
                 default:
                     System.out.println("Comando no válido, usa help para ver lista de comandos");
                     break;
+            }
+        }
+    }
+
+    public void reordenarSplitNombre(String[] array,int inicioNombre){
+        int cont=0;
+        boolean fin=false;
+        while(!fin && cont+inicioNombre<array.length){
+            if(array[inicioNombre+cont].charAt(array[inicioNombre+cont].length()-1)=='"'){
+                fin=true;
+            }else{
+                cont++;
+            }
+        }
+        if(!fin){
+            System.out.println("El formato del nombre esta mal");
+        }else{
+            StringBuilder string = new StringBuilder();
+            for(int i=inicioNombre;i<inicioNombre+cont;i++){
+                string.append(array[i]);
+            }
+            array[inicioNombre]=string.toString();
+            for(int i=inicioNombre+1;i < array.length-cont;i++){
+                array[i]=array[i+cont];
             }
         }
     }
