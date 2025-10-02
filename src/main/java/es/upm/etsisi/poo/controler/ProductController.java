@@ -71,7 +71,7 @@ public class ProductController {
         if (position == -1) {
             System.out.println("Error. No existe el id para borrar.");
         } else {
-            products.remove(products.get(position));
+            products.remove(products.get(position-1));
         }
     }
 
@@ -82,14 +82,24 @@ public class ProductController {
             if (products.get(i).getId() == id) {
                 encontrado = true;
             }
+            i++;
         }
         if (!encontrado) {
             i = -1;
         }
         return i;
     }
+
+    public Product productoID(int id){
+        if(existeId(id)!=-1)
+            return products.get((existeId(id))-1);
+        else{
+            return null;
+        }
+    }
     public boolean categorieControl(String categorie){
         try{
+            categorie=categorie.toUpperCase();
             Categories.valueOf(categorie);
             return true;
         }catch(IllegalArgumentException ex){

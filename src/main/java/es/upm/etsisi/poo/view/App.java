@@ -60,7 +60,7 @@ public class App {
                             break;
                         case "update":
                             if(Objects.equals(lineSepSpace[3], "NAME")){
-                                reordenarSplitNombre(lineSepSpace,3);
+                                reordenarSplitNombre(lineSepSpace,4);
                             }
                             productController.update(Integer.parseInt(lineSepSpace[2]), lineSepSpace[3], lineSepSpace[4]);
                             break;
@@ -75,12 +75,24 @@ public class App {
                 case "ticket":
                     switch (lineSepSpace[1]) {
                         case "new":
+                            ticketController.newTicket();
                             break;
                         case "add":
+                            if(productController.productoID(Integer.parseInt(lineSepSpace[2]))!=null) {
+                                ticketController.add(productController.productoID(Integer.parseInt(lineSepSpace[2])), Integer.parseInt(lineSepSpace[3]));
+                            }else{
+                                System.out.println("ID no existe");
+                            }
                             break;
                         case "remove":
+                            if(productController.productoID(Integer.parseInt(lineSepSpace[2]))!=null) {
+                                ticketController.remove(productController.productoID(Integer.parseInt(lineSepSpace[2])));
+                            }else{
+                                System.out.println("ID no existe");
+                            }
                             break;
                         case "print":
+                            ticketController.print();
                             break;
                         default:
                             System.out.println("Comando no válido, usa help para ver lista de comandos");
@@ -111,10 +123,15 @@ public class App {
             System.out.println("El formato del nombre esta mal");
         }else{
             StringBuilder string = new StringBuilder();
-            for(int i=inicioNombre;i<inicioNombre+cont;i++){
-                string.append(array[i]);
+            for(int i=inicioNombre;i<=inicioNombre+cont;i++){
+                if(i==inicioNombre+cont){
+                    string.append(array[i]);
+                }else {
+                    string.append(array[i]).append(" ");
+                }
+
             }
-            array[inicioNombre]=string.toString();
+            array[inicioNombre]=string.substring(1,string.length()-1);
             for(int i=inicioNombre+1;i < array.length-cont;i++){
                 array[i]=array[i+cont];
             }

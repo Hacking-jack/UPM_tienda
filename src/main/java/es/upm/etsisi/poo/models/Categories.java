@@ -2,21 +2,21 @@ package es.upm.etsisi.poo.models;
 
 public enum Categories {
     MERCH,
-    PAPELERIA,
-    ROPA,
-    LIBRO,
-    ELECTRONICA;
+    STATIONERY,
+    CLOTHES,
+    BOOK,
+    ELECTRONICS;
     public static double getDiscount(Categories categorie){
         switch (categorie){
             case MERCH:
                 return 0;
-            case PAPELERIA:
+            case STATIONERY:
                 return 0.05;
-            case ROPA:
+            case CLOTHES:
                 return 0.07;
-            case LIBRO:
+            case BOOK:
                 return 0.1;
-            case ELECTRONICA:
+            case ELECTRONICS:
                 return 0.03;
             default:
                 return 0;
