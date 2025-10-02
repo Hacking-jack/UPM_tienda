@@ -7,6 +7,7 @@ ticket remove <prodId> (elimina todas las apariciones del producto, revisa si ex
 ticket print (imprime factura)
  */
 
+import es.upm.etsisi.poo.models.Categories;
 import es.upm.etsisi.poo.models.Product;
 import es.upm.etsisi.poo.models.Ticket;
 
@@ -43,16 +44,16 @@ public class TicketController {
         double precioTotal = 0, descuentoTotal = 0, precioFinal = 0;
         for (int i = 0; i < ticket.getProducts().size(); i++) {
             precioTotal += ticket.getProducts().get(i).getPrice();
-            descuentoTotal += ticket.getProducts().get(i).getDiscount() * ticket.getProducts().get(i).getPrice();
+            descuentoTotal += Categories.getDiscount(ticket.getProducts().get(i).getCategories()) * ticket.getProducts().get(i).getPrice();
             precioFinal = precioTotal - descuentoTotal;
-            if(ticket.getProducts().get(i).getDiscount() == null) {
+            if(Categories.getDiscount(ticket.getProducts().get(i).getCategories()) == 0.0) {
                 System.out.println(ticket.getProducts().get(i).toString());
                 System.out.println("Total price: "+precioTotal);
                 System.out.println("Total discount: "+descuentoTotal);
                 System.out.println("Final price: "+precioFinal);
             }
             else{
-                System.out.println(ticket.getProducts().get(i).toString()+"**discount -"+ticket.getProducts().get(i).getDiscount()*ticket.getProducts().get(i).getPrice());
+                System.out.println(ticket.getProducts().get(i).toString()+"**discount -"+Categories.getDiscount(ticket.getProducts().get(i).getCategories())*ticket.getProducts().get(i).getPrice());
                 System.out.println("Total price: "+precioTotal);
                 System.out.println("Total discount: "+descuentoTotal);
                 System.out.println("Final price: "+precioFinal);
