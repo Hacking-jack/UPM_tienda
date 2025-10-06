@@ -30,6 +30,7 @@ public class App {
         this.productController = new ProductController();
         this.ticket = new Ticket();
         this.ticketController = new TicketController(ticket);
+        System.out.println("Welcome to the ticket module App\nTicket module. Type 'help' to see commands");
     }
 
     private void run() {
@@ -37,10 +38,8 @@ public class App {
         Scanner scanner = new Scanner(System.in);
         boolean bucle = true;
         while (bucle) {
-            //System.out.print(TASK_APP);
+            System.out.print("tUPM>");
             String line = scanner.nextLine();
-            if (System.getenv("debugFile") != null)
-                System.out.println(line);
             String[] lineSepSpace = line.split(" ");
             switch (lineSepSpace[0]) {
                 case "help":
