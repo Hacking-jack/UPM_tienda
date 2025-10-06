@@ -110,7 +110,7 @@ public class App {
                     }
                     break;
                 case "echo":
-                    System.out.println(line);
+                    System.out.println(line+"\n");
                     break;
                 default:
                     System.out.println("Comando no válido, usa help para ver lista de comandos");
@@ -159,8 +159,8 @@ public class App {
                 "  prod remove <id>\n  ticket new\n  ticket add" +
                 " <prodId> <quantity>\n  ticket remove <prodId>\n" +
                 "  ticket print\n  echo \"<texto>\"\n  help\n  exit\n\n" +
-                " Categories: MERCH, STATIONERY, CLOTHES, BOOKS, ELECTRONICS\n" +
+                "Categories: MERCH, STATIONERY, CLOTHES, BOOKS, ELECTRONICS\n" +
                 "Discounts if there are ≥2 units in the category: MERCH 0%, STATIONERY 5%" +
-                ", CLOTHES 7%, BOOK 10%,\nELECTRONICS 3%");
+                ", CLOTHES 7%, BOOK 10%,\nELECTRONICS 3%\n");
     }
 }
