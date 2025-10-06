@@ -15,9 +15,11 @@ prod remove <id>
 public class ProductController {
 
     private ArrayList<Product> products;
+    private int counter;
 
     public ProductController() {
         products = new ArrayList<>();
+        this.counter = 0;
     }
 
 
@@ -26,9 +28,14 @@ public class ProductController {
             if (existeId(id) != -1) {
                 System.out.println("Error. Ya existe el id.");
             } else {
-                Product product = new Product(name, price, Categories.valueOf(categories), id);
-                products.add(product);
-                System.out.println(product.toString());
+                if (counter<200) {
+                    Product product = new Product(name, price, Categories.valueOf(categories), id);
+                    products.add(product);
+                    System.out.println(product.toString());
+                    counter++;
+                }else{
+                    System.out.println("Catálogo de productos lleno.");
+                }
             }
         }
         //Falta app.echo
@@ -74,6 +81,7 @@ public class ProductController {
         } else {
             System.out.println(products.get(position).toString());
             products.remove(products.get(position));
+            counter--;
         }
     }
 
