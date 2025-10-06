@@ -23,6 +23,7 @@ public class App {
         App aplicacion = new App();
         aplicacion.iniciar();
         aplicacion.run();
+        aplicacion.end();
 
     }
 
@@ -40,6 +41,7 @@ public class App {
         while (bucle) {
             System.out.print("tUPM>");
             String line = scanner.nextLine();
+            System.out.println(line);
             String[] lineSepSpace = line.split(" ");
             switch (lineSepSpace[0]) {
                 case "help":
@@ -53,32 +55,39 @@ public class App {
                         case "add":
                             reordenarSplitNombre(lineSepSpace,3);
                             productController.add(Integer.parseInt(lineSepSpace[2]), lineSepSpace[3], lineSepSpace[4].toUpperCase(), Double.parseDouble(lineSepSpace[5]));
+                            System.out.println("prod add: ok\n");
                             break;
                         case "list":
                             productController.list();
+                            System.out.println("prod list: ok\n");
                             break;
                         case "update":
                             if(Objects.equals(lineSepSpace[3], "NAME")){
                                 reordenarSplitNombre(lineSepSpace,4);
                             }
                             productController.update(Integer.parseInt(lineSepSpace[2]), lineSepSpace[3], lineSepSpace[4]);
+                            System.out.println("prod update: ok\n");
                             break;
                         case "remove":
                             productController.remove(Integer.parseInt(lineSepSpace[2]));
+                            System.out.println("prod remove: ok\n");
                             break;
                         default:
                             System.out.println("Comando no válido, usa help para ver lista de comandos");
                             break;
+
                     }
                     break;
                 case "ticket":
                     switch (lineSepSpace[1]) {
                         case "new":
                             ticketController.newTicket();
+                            System.out.println("ticket new: ok\n");
                             break;
                         case "add":
                             if(productController.productoID(Integer.parseInt(lineSepSpace[2]))!=null) {
                                 ticketController.add(productController.productoID(Integer.parseInt(lineSepSpace[2])), Integer.parseInt(lineSepSpace[3]));
+                                System.out.println("ticket add: ok\n");
                             }else{
                                 System.out.println("ID no existe");
                             }
@@ -86,12 +95,14 @@ public class App {
                         case "remove":
                             if(productController.productoID(Integer.parseInt(lineSepSpace[2]))!=null) {
                                 ticketController.remove(productController.productoID(Integer.parseInt(lineSepSpace[2])));
+                                System.out.println("ticket remove: ok\n");
                             }else{
                                 System.out.println("ID no existe");
                             }
                             break;
                         case "print":
                             ticketController.print();
+                            System.out.println("ticket print: ok\n");
                             break;
                         default:
                             System.out.println("Comando no válido, usa help para ver lista de comandos");
@@ -106,6 +117,10 @@ public class App {
                     break;
             }
         }
+    }
+
+    public void end(){
+        System.out.println("Closing application.\nGoodbye!\n");
     }
 
     public void reordenarSplitNombre(String[] array,int inicioNombre){
@@ -143,6 +158,9 @@ public class App {
                 "  prod update <id> NAME|CATEGORY|PRICE <value>\n" +
                 "  prod remove <id>\n  ticket new\n  ticket add" +
                 " <prodId> <quantity>\n  ticket remove <prodId>\n" +
-                "  ticket print\n  echo \"<texto>\"\n  help\n  exit");
+                "  ticket print\n  echo \"<texto>\"\n  help\n  exit\n\n" +
+                " Categories: MERCH, STATIONERY, CLOTHES, BOOKS, ELECTRONICS\n" +
+                "Discounts if there are ≥2 units in the category: MERCH 0%, STATIONERY 5%" +
+                ", CLOTHES 7%, BOOK 10%,\nELECTRONICS 3%");
     }
 }
