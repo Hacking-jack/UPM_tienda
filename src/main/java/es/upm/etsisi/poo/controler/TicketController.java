@@ -65,7 +65,7 @@ public class TicketController {
                 counterElectronic++;
             }
         }
-        for (int i = 0; i < ticket.getProducts().size(); i++) {
+        for (int i = ticket.getProducts().size()-1; i >=0; i--) {
             precioTotal += ticket.getProducts().get(i).getPrice();
             boolean discount=hasDiscount(counterStationary,counterClothes,counterBook,counterElectronic,
                     ticket.getProducts().get(i).getCategories());

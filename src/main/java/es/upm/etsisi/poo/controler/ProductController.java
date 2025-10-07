@@ -71,7 +71,7 @@ public class ProductController {
                     break;
             }
         }
-        System.out.println(products.get(position).toString()+"\n");
+        System.out.println(products.get(position).toString());
     }
 
     public void remove(int id) {
