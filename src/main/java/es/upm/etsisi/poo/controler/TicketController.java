@@ -31,14 +31,17 @@ public class TicketController {
 
     public void newTicket() {
         this.ticket = new Ticket();
+        this.counter=0;
     }
 
     public void add(Product product, int quantity) {
         if (counter < 100) {
-            for (int i = 0; i < quantity; i++)
+            for (int i = 0; i < quantity; i++){
                 ticket.getProducts().add(product);
+                counter++;
+            }
             print();
-            counter++;
+
         } else {
             System.out.println("Ticket lleno.");
         }
