@@ -35,106 +35,110 @@ public class App {
     }
 
     private void run() {
+            Scanner scanner = new Scanner(System.in);
+            boolean bucle = true;
+            while (bucle) {
+                try {
+                System.out.print("tUPM>");
+                String line = scanner.nextLine();
+                System.out.println(line);
+                String[] lineSepSpace = line.split(" ");
+                switch (lineSepSpace[0]) {
+                    case "help":
+                        help();
+                        break;
+                    case "exit":
+                        bucle = false;
+                        break;
+                    case "prod":
+                        switch (lineSepSpace[1]) {
+                            case "add":
+                                reordenarSplitNombre(lineSepSpace, 3);
+                                productController.add(Integer.parseInt(lineSepSpace[2]), lineSepSpace[3], lineSepSpace[4].toUpperCase(), Double.parseDouble(lineSepSpace[5]));
+                                System.out.println("prod add: ok\n");
+                                break;
+                            case "list":
+                                productController.list();
+                                System.out.println("prod list: ok\n");
+                                break;
+                            case "update":
+                                if (Objects.equals(lineSepSpace[3], "NAME")) {
+                                    reordenarSplitNombre(lineSepSpace, 4);
+                                }
+                                productController.update(Integer.parseInt(lineSepSpace[2]), lineSepSpace[3], lineSepSpace[4]);
+                                System.out.println("prod update: ok\n");
+                                break;
+                            case "remove":
+                                productController.remove(Integer.parseInt(lineSepSpace[2]));
+                                System.out.println("prod remove: ok\n");
+                                break;
+                            default:
+                                System.out.println("Comando no válido, usa help para ver lista de comandos");
+                                break;
 
-        Scanner scanner = new Scanner(System.in);
-        boolean bucle = true;
-        while (bucle) {
-            System.out.print("tUPM>");
-            String line = scanner.nextLine();
-            System.out.println(line);
-            String[] lineSepSpace = line.split(" ");
-            switch (lineSepSpace[0]) {
-                case "help":
-                    help();
-                    break;
-                case "exit":
-                    bucle = false;
-                    break;
-                case "prod":
-                    switch (lineSepSpace[1]) {
-                        case "add":
-                            reordenarSplitNombre(lineSepSpace,3);
-                            productController.add(Integer.parseInt(lineSepSpace[2]), lineSepSpace[3], lineSepSpace[4].toUpperCase(), Double.parseDouble(lineSepSpace[5]));
-                            System.out.println("prod add: ok\n");
-                            break;
-                        case "list":
-                            productController.list();
-                            System.out.println("prod list: ok\n");
-                            break;
-                        case "update":
-                            if(Objects.equals(lineSepSpace[3], "NAME")){
-                                reordenarSplitNombre(lineSepSpace,4);
-                            }
-                            productController.update(Integer.parseInt(lineSepSpace[2]), lineSepSpace[3], lineSepSpace[4]);
-                            System.out.println("prod update: ok\n");
-                            break;
-                        case "remove":
-                            productController.remove(Integer.parseInt(lineSepSpace[2]));
-                            System.out.println("prod remove: ok\n");
-                            break;
-                        default:
-                            System.out.println("Comando no válido, usa help para ver lista de comandos");
-                            break;
-
-                    }
-                    break;
-                case "ticket":
-                    switch (lineSepSpace[1]) {
-                        case "new":
-                            ticketController.newTicket();
-                            System.out.println("ticket new: ok\n");
-                            break;
-                        case "add":
-                            if(productController.productoID(Integer.parseInt(lineSepSpace[2]))!=null) {
-                                ticketController.add(productController.productoID(Integer.parseInt(lineSepSpace[2])), Integer.parseInt(lineSepSpace[3]));
-                                System.out.println("ticket add: ok\n");
-                            }else{
-                                System.out.println("ID no existe");
-                            }
-                            break;
-                        case "remove":
-                            if(productController.productoID(Integer.parseInt(lineSepSpace[2]))!=null) {
-                                ticketController.remove(productController.productoID(Integer.parseInt(lineSepSpace[2])));
-                                System.out.println("ticket remove: ok\n");
-                            }else{
-                                System.out.println("ID no existe");
-                            }
-                            break;
-                        case "print":
-                            ticketController.print();
-                            System.out.println("ticket print: ok\n");
-                            break;
-                        default:
-                            System.out.println("Comando no válido, usa help para ver lista de comandos");
-                            break;
-                    }
-                    break;
-                case "echo":
-                    System.out.println(line+"\n");
-                    break;
-                default:
-                    System.out.println("Comando no válido, usa help para ver lista de comandos");
-                    break;
+                        }
+                        break;
+                    case "ticket":
+                        switch (lineSepSpace[1]) {
+                            case "new":
+                                ticketController.newTicket();
+                                System.out.println("ticket new: ok\n");
+                                break;
+                            case "add":
+                                if (productController.productoID(Integer.parseInt(lineSepSpace[2])) != null) {
+                                    ticketController.add(productController.productoID(Integer.parseInt(lineSepSpace[2])), Integer.parseInt(lineSepSpace[3]));
+                                    System.out.println("ticket add: ok\n");
+                                } else {
+                                    System.out.println("ID no existe");
+                                }
+                                break;
+                            case "remove":
+                                if (productController.productoID(Integer.parseInt(lineSepSpace[2])) != null) {
+                                    ticketController.remove(productController.productoID(Integer.parseInt(lineSepSpace[2])));
+                                    System.out.println("ticket remove: ok\n");
+                                } else {
+                                    System.out.println("ID no existe");
+                                }
+                                break;
+                            case "print":
+                                ticketController.print();
+                                System.out.println("ticket print: ok\n");
+                                break;
+                            default:
+                                System.out.println("Comando no válido, usa help para ver lista de comandos");
+                                break;
+                        }
+                        break;
+                    case "echo":
+                        System.out.println(line + "\n");
+                        break;
+                    default:
+                        System.out.println("Comando no válido, usa help para ver lista de comandos");
+                        break;
+                }
+                }catch (NumberFormatException | ArrayIndexOutOfBoundsException ex){
+                    System.out.println("Formato del comando incorrecto. Use help para ver los comandos");
+                }
             }
-        }
+
     }
 
     public void end(){
         System.out.println("Closing application.\nGoodbye!\n");
     }
 
-    public void reordenarSplitNombre(String[] array,int inicioNombre){
+    public void reordenarSplitNombre(String[] array,int inicioNombre) throws NumberFormatException{
         int cont=0;
         boolean fin=false;
         while(!fin && cont+inicioNombre<array.length){
-            if(array[inicioNombre+cont].charAt(array[inicioNombre+cont].length()-1)=='"'){
+            if(array[inicioNombre+cont].endsWith("\"")){
                 fin=true;
             }else{
                 cont++;
             }
         }
         if(!fin){
-            System.out.println("El formato del nombre esta mal");
+            throw new NumberFormatException("");
         }else{
             StringBuilder string = new StringBuilder();
             for(int i=inicioNombre;i<=inicioNombre+cont;i++){
@@ -161,6 +165,6 @@ public class App {
                 "  ticket print\n  echo \"<texto>\"\n  help\n  exit\n\n" +
                 "Categories: MERCH, STATIONERY, CLOTHES, BOOKS, ELECTRONICS\n" +
                 "Discounts if there are ≥2 units in the category: MERCH 0%, STATIONERY 5%" +
-                ", CLOTHES 7%, BOOK 10%,\nELECTRONICS 3%\n");
+                ", CLOTHES 7%, BOOKS 10%,\nELECTRONICS 3%\n");
     }
 }
