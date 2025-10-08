@@ -1,0 +1,322 @@
+help
+echo "Creando 205 productos..."
+prod add 1 "Producto 1" BOOK 10
+prod add 2 "Producto 2" CLOTHES 11
+prod add 3 "Producto 3" MERCH 12
+prod add 4 "Producto 4" STATIONERY 13
+prod add 5 "Producto 5" ELECTRONICS 14
+prod add 6 "Producto 6" BOOK 15
+prod add 7 "Producto 7" CLOTHES 16
+prod add 8 "Producto 8" MERCH 17
+prod add 9 "Producto 9" STATIONERY 18
+prod add 10 "Producto 10" ELECTRONICS 19
+prod add 11 "Producto 11" BOOK 20
+prod add 12 "Producto 12" CLOTHES 21
+prod add 13 "Producto 13" MERCH 22
+prod add 14 "Producto 14" STATIONERY 23
+prod add 15 "Producto 15" ELECTRONICS 24
+prod add 16 "Producto 16" BOOK 25
+prod add 17 "Producto 17" CLOTHES 26
+prod add 18 "Producto 18" MERCH 27
+prod add 19 "Producto 19" STATIONERY 28
+prod add 20 "Producto 20" ELECTRONICS 29
+prod add 21 "Producto 21" BOOK 30
+prod add 22 "Producto 22" CLOTHES 31
+prod add 23 "Producto 23" MERCH 32
+prod add 24 "Producto 24" STATIONERY 33
+prod add 25 "Producto 25" ELECTRONICS 34
+prod add 26 "Producto 26" BOOK 35
+prod add 27 "Producto 27" CLOTHES 36
+prod add 28 "Producto 28" MERCH 37
+prod add 29 "Producto 29" STATIONERY 38
+prod add 30 "Producto 30" ELECTRONICS 39
+prod add 31 "Producto 31" BOOK 40
+prod add 32 "Producto 32" CLOTHES 41
+prod add 33 "Producto 33" MERCH 42
+prod add 34 "Producto 34" STATIONERY 43
+prod add 35 "Producto 35" ELECTRONICS 44
+prod add 36 "Producto 36" BOOK 45
+prod add 37 "Producto 37" CLOTHES 46
+prod add 38 "Producto 38" MERCH 47
+prod add 39 "Producto 39" STATIONERY 48
+prod add 40 "Producto 40" ELECTRONICS 49
+prod add 41 "Producto 41" BOOK 50
+prod add 42 "Producto 42" CLOTHES 51
+prod add 43 "Producto 43" MERCH 52
+prod add 44 "Producto 44" STATIONERY 53
+prod add 45 "Producto 45" ELECTRONICS 54
+prod add 46 "Producto 46" BOOK 55
+prod add 47 "Producto 47" CLOTHES 56
+prod add 48 "Producto 48" MERCH 57
+prod add 49 "Producto 49" STATIONERY 58
+prod add 50 "Producto 50" ELECTRONICS 59
+prod add 51 "Producto 51" BOOK 60
+prod add 52 "Producto 52" CLOTHES 61
+prod add 53 "Producto 53" MERCH 62
+prod add 54 "Producto 54" STATIONERY 63
+prod add 55 "Producto 55" ELECTRONICS 64
+prod add 56 "Producto 56" BOOK 65
+prod add 57 "Producto 57" CLOTHES 66
+prod add 58 "Producto 58" MERCH 67
+prod add 59 "Producto 59" STATIONERY 68
+prod add 60 "Producto 60" ELECTRONICS 69
+prod add 61 "Producto 61" BOOK 70
+prod add 62 "Producto 62" CLOTHES 71
+prod add 63 "Producto 63" MERCH 72
+prod add 64 "Producto 64" STATIONERY 73
+prod add 65 "Producto 65" ELECTRONICS 74
+prod add 66 "Producto 66" BOOK 75
+prod add 67 "Producto 67" CLOTHES 76
+prod add 68 "Producto 68" MERCH 77
+prod add 69 "Producto 69" STATIONERY 78
+prod add 70 "Producto 70" ELECTRONICS 79
+prod add 71 "Producto 71" BOOK 80
+prod add 72 "Producto 72" CLOTHES 81
+prod add 73 "Producto 73" MERCH 82
+prod add 74 "Producto 74" STATIONERY 83
+prod add 75 "Producto 75" ELECTRONICS 84
+prod add 76 "Producto 76" BOOK 85
+prod add 77 "Producto 77" CLOTHES 86
+prod add 78 "Producto 78" MERCH 87
+prod add 79 "Producto 79" STATIONERY 88
+prod add 80 "Producto 80" ELECTRONICS 89
+prod add 81 "Producto 81" BOOK 90
+prod add 82 "Producto 82" CLOTHES 91
+prod add 83 "Producto 83" MERCH 92
+prod add 84 "Producto 84" STATIONERY 93
+prod add 85 "Producto 85" ELECTRONICS 94
+prod add 86 "Producto 86" BOOK 95
+prod add 87 "Producto 87" CLOTHES 96
+prod add 88 "Producto 88" MERCH 97
+prod add 89 "Producto 89" STATIONERY 98
+prod add 90 "Producto 90" ELECTRONICS 99
+prod add 91 "Producto 91" BOOK 100
+prod add 92 "Producto 92" CLOTHES 101
+prod add 93 "Producto 93" MERCH 102
+prod add 94 "Producto 94" STATIONERY 103
+prod add 95 "Producto 95" ELECTRONICS 104
+prod add 96 "Producto 96" BOOK 105
+prod add 97 "Producto 97" CLOTHES 106
+prod add 98 "Producto 98" MERCH 107
+prod add 99 "Producto 99" STATIONERY 108
+prod add 100 "Producto 100" ELECTRONICS 109
+prod add 101 "Producto 101" BOOK 110
+prod add 102 "Producto 102" CLOTHES 111
+prod add 103 "Producto 103" MERCH 112
+prod add 104 "Producto 104" STATIONERY 113
+prod add 105 "Producto 105" ELECTRONICS 114
+prod add 106 "Producto 106" BOOK 115
+prod add 107 "Producto 107" CLOTHES 116
+prod add 108 "Producto 108" MERCH 117
+prod add 109 "Producto 109" STATIONERY 118
+prod add 110 "Producto 110" ELECTRONICS 119
+prod add 111 "Producto 111" BOOK 120
+prod add 112 "Producto 112" CLOTHES 121
+prod add 113 "Producto 113" MERCH 122
+prod add 114 "Producto 114" STATIONERY 123
+prod add 115 "Producto 115" ELECTRONICS 124
+prod add 116 "Producto 116" BOOK 125
+prod add 117 "Producto 117" CLOTHES 126
+prod add 118 "Producto 118" MERCH 127
+prod add 119 "Producto 119" STATIONERY 128
+prod add 120 "Producto 120" ELECTRONICS 129
+prod add 121 "Producto 121" BOOK 130
+prod add 122 "Producto 122" CLOTHES 131
+prod add 123 "Producto 123" MERCH 132
+prod add 124 "Producto 124" STATIONERY 133
+prod add 125 "Producto 125" ELECTRONICS 134
+prod add 126 "Producto 126" BOOK 135
+prod add 127 "Producto 127" CLOTHES 136
+prod add 128 "Producto 128" MERCH 137
+prod add 129 "Producto 129" STATIONERY 138
+prod add 130 "Producto 130" ELECTRONICS 139
+prod add 131 "Producto 131" BOOK 140
+prod add 132 "Producto 132" CLOTHES 141
+prod add 133 "Producto 133" MERCH 142
+prod add 134 "Producto 134" STATIONERY 143
+prod add 135 "Producto 135" ELECTRONICS 144
+prod add 136 "Producto 136" BOOK 145
+prod add 137 "Producto 137" CLOTHES 146
+prod add 138 "Producto 138" MERCH 147
+prod add 139 "Producto 139" STATIONERY 148
+prod add 140 "Producto 140" ELECTRONICS 149
+prod add 141 "Producto 141" BOOK 150
+prod add 142 "Producto 142" CLOTHES 151
+prod add 143 "Producto 143" MERCH 152
+prod add 144 "Producto 144" STATIONERY 153
+prod add 145 "Producto 145" ELECTRONICS 154
+prod add 146 "Producto 146" BOOK 155
+prod add 147 "Producto 147" CLOTHES 156
+prod add 148 "Producto 148" MERCH 157
+prod add 149 "Producto 149" STATIONERY 158
+prod add 150 "Producto 150" ELECTRONICS 159
+prod add 151 "Producto 151" BOOK 160
+prod add 152 "Producto 152" CLOTHES 161
+prod add 153 "Producto 153" MERCH 162
+prod add 154 "Producto 154" STATIONERY 163
+prod add 155 "Producto 155" ELECTRONICS 164
+prod add 156 "Producto 156" BOOK 165
+prod add 157 "Producto 157" CLOTHES 166
+prod add 158 "Producto 158" MERCH 167
+prod add 159 "Producto 159" STATIONERY 168
+prod add 160 "Producto 160" ELECTRONICS 169
+prod add 161 "Producto 161" BOOK 170
+prod add 162 "Producto 162" CLOTHES 171
+prod add 163 "Producto 163" MERCH 172
+prod add 164 "Producto 164" STATIONERY 173
+prod add 165 "Producto 165" ELECTRONICS 174
+prod add 166 "Producto 166" BOOK 175
+prod add 167 "Producto 167" CLOTHES 176
+prod add 168 "Producto 168" MERCH 177
+prod add 169 "Producto 169" STATIONERY 178
+prod add 170 "Producto 170" ELECTRONICS 179
+prod add 171 "Producto 171" BOOK 180
+prod add 172 "Producto 172" CLOTHES 181
+prod add 173 "Producto 173" MERCH 182
+prod add 174 "Producto 174" STATIONERY 183
+prod add 175 "Producto 175" ELECTRONICS 184
+prod add 176 "Producto 176" BOOK 185
+prod add 177 "Producto 177" CLOTHES 186
+prod add 178 "Producto 178" MERCH 187
+prod add 179 "Producto 179" STATIONERY 188
+prod add 180 "Producto 180" ELECTRONICS 189
+prod add 181 "Producto 181" BOOK 190
+prod add 182 "Producto 182" CLOTHES 191
+prod add 183 "Producto 183" MERCH 192
+prod add 184 "Producto 184" STATIONERY 193
+prod add 185 "Producto 185" ELECTRONICS 194
+prod add 186 "Producto 186" BOOK 195
+prod add 187 "Producto 187" CLOTHES 196
+prod add 188 "Producto 188" MERCH 197
+prod add 189 "Producto 189" STATIONERY 198
+prod add 190 "Producto 190" ELECTRONICS 199
+prod add 191 "Producto 191" BOOK 200
+prod add 192 "Producto 192" CLOTHES 201
+prod add 193 "Producto 193" MERCH 202
+prod add 194 "Producto 194" STATIONERY 203
+prod add 195 "Producto 195" ELECTRONICS 204
+prod add 196 "Producto 196" BOOK 205
+prod add 197 "Producto 197" CLOTHES 206
+prod add 198 "Producto 198" MERCH 207
+prod add 199 "Producto 199" STATIONERY 208
+prod add 200 "Producto 200" ELECTRONICS 209
+prod add 201 "Producto 201" BOOK 210
+prod add 202 "Producto 202" CLOTHES 211
+prod add 203 "Producto 203" MERCH 212
+prod add 204 "Producto 204" STATIONERY 213
+prod add 205 "Producto 205" ELECTRONICS 214
+echo "Lista rápida de productos (opcional)"
+prod list
+echo "Creando ticket y añadiendo 100 productos distintos (ids 1..100, qty 1 cada uno)"
+ticket new
+ticket add 1 1
+ticket add 2 1
+ticket add 3 1
+ticket add 4 1
+ticket add 5 1
+ticket add 6 1
+ticket add 7 1
+ticket add 8 1
+ticket add 9 1
+ticket add 10 1
+ticket add 11 1
+ticket add 12 1
+ticket add 13 1
+ticket add 14 1
+ticket add 15 1
+ticket add 16 1
+ticket add 17 1
+ticket add 18 1
+ticket add 19 1
+ticket add 20 1
+ticket add 21 1
+ticket add 22 1
+ticket add 23 1
+ticket add 24 1
+ticket add 25 1
+ticket add 26 1
+ticket add 27 1
+ticket add 28 1
+ticket add 29 1
+ticket add 30 1
+ticket add 31 1
+ticket add 32 1
+ticket add 33 1
+ticket add 34 1
+ticket add 35 1
+ticket add 36 1
+ticket add 37 1
+ticket add 38 1
+ticket add 39 1
+ticket add 40 1
+ticket add 41 1
+ticket add 42 1
+ticket add 43 1
+ticket add 44 1
+ticket add 45 1
+ticket add 46 1
+ticket add 47 1
+ticket add 48 1
+ticket add 49 1
+ticket add 50 1
+ticket add 51 1
+ticket add 52 1
+ticket add 53 1
+ticket add 54 1
+ticket add 55 1
+ticket add 56 1
+ticket add 57 1
+ticket add 58 1
+ticket add 59 1
+ticket add 60 1
+ticket add 61 1
+ticket add 62 1
+ticket add 63 1
+ticket add 64 1
+ticket add 65 1
+ticket add 66 1
+ticket add 67 1
+ticket add 68 1
+ticket add 69 1
+ticket add 70 1
+ticket add 71 1
+ticket add 72 1
+ticket add 73 1
+ticket add 74 1
+ticket add 75 1
+ticket add 76 1
+ticket add 77 1
+ticket add 78 1
+ticket add 79 1
+ticket add 80 1
+ticket add 81 1
+ticket add 82 1
+ticket add 83 1
+ticket add 84 1
+ticket add 85 1
+ticket add 86 1
+ticket add 87 1
+ticket add 88 1
+ticket add 89 1
+ticket add 90 1
+ticket add 91 1
+ticket add 92 1
+ticket add 93 1
+ticket add 94 1
+ticket add 95 1
+ticket add 96 1
+ticket add 97 1
+ticket add 98 1
+ticket add 99 1
+ticket add 100 1
+ticket add 101 1
+echo "Añadiendo 50 unidades del producto 201"
+ticket add 1 50
+echo "Añadiendo 50 unidades del producto 202"
+ticket add 2 50
+echo "Intento añadir 1 unidad extra de un producto de los primeros (producto 50)"
+ticket add 1 1
+echo "Imprimiendo ticket final"
+ticket print
+echo "Fin del script"
+exit
