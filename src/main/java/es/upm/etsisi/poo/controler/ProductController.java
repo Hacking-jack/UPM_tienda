@@ -53,7 +53,7 @@ public class ProductController {
         if (existeId(id) == -1) {
             System.out.println("Error. No existe el id para actualizar.");
         } else {
-            switch (campo) {
+            switch (campo.toUpperCase()) {
                 case "NAME":
                     products.get(position).setName(valor);
                     break;
@@ -70,13 +70,13 @@ public class ProductController {
                     System.out.println("Campo no valido");
                     break;
             }
+            System.out.println(products.get(position).toString());
         }
-        System.out.println(products.get(position).toString());
     }
 
     public void remove(int id) {
         int position = existeId(id)-1;
-        if (position == -1) {
+        if (position == -2) {
             System.out.println("Error. No existe el id para borrar.");
         } else {
             System.out.println(products.get(position).toString());
