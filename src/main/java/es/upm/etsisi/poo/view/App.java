@@ -41,7 +41,6 @@ public class App {
                 try {
                 System.out.print("tUPM>");
                 String line = scanner.nextLine();
-                System.out.println(line);
                 String[] lineSepSpace = line.split(" ");
                 switch (lineSepSpace[0]) {
                     case "help":

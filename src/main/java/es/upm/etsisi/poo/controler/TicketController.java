@@ -80,12 +80,13 @@ public class TicketController {
             if (!discount || Categories.getDiscount(ticket.getProducts().get(i).getCategories()) == 0.0) {
                 System.out.println(ticket.getProducts().get(i).toString());
             } else{
-                System.out.println(ticket.getProducts().get(i).toString() + "**discount -" + Categories.getDiscount
+                System.out.print(ticket.getProducts().get(i).toString()) ;
+                System.out.printf("**discount -%.2f%n", Categories.getDiscount
                         (ticket.getProducts().get(i).getCategories()) * ticket.getProducts().get(i).getPrice());
             }
         }
         System.out.println("Total price: " + precioTotal);
-        System.out.println("Total discount: " + descuentoTotal);
+        System.out.printf("Total discount: %.2f%n", descuentoTotal);
         System.out.println("Final price: " + precioFinal);
     }
     public boolean hasDiscount(int counterStationary,int counterClothes,int counterBook,int counterElectronic,
