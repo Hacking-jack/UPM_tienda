@@ -38,7 +38,6 @@ public class ProductController {
                 }
             }
         }
-        //Falta app.echo
     }
 
     public void list() {

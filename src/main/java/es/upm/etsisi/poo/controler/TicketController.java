@@ -21,13 +21,6 @@ public class TicketController {
         this.counter = 0;
     }
 
-    public Ticket getTicket() {
-        return ticket;
-    }
-
-    public void setTicket(Ticket ticket) {
-        this.ticket = ticket;
-    }
 
     public void newTicket() {
         this.ticket = new Ticket();

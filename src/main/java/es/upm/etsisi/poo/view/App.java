@@ -61,7 +61,7 @@ public class App {
                                 System.out.println("prod list: ok\n");
                                 break;
                             case "update":
-                                if (Objects.equals(lineSepSpace[3], "NAME")) {
+                                if (Objects.equals(lineSepSpace[3].toUpperCase(), "NAME")) {
                                     reordenarSplitNombre(lineSepSpace, 4);
                                 }
                                 productController.update(Integer.parseInt(lineSepSpace[2]), lineSepSpace[3], lineSepSpace[4]);
