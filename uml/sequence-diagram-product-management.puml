@@ -1,0 +1,227 @@
+@startuml Sequence_Product_Management
+
+skinparam backgroundColor #FEFEFE
+skinparam sequenceMessageAlign center
+skinparam responseMessageBelowArrow true
+skinparam shadowing false
+skinparam defaultFontName Arial
+
+title Product Management - Sequence Diagram\n<size:12>CRUD Operations on Product Catalog</size>
+
+actor User
+participant "app:App" as App
+participant "productController:\nProductController" as PC
+participant "products:\nArrayList<Product>" as List
+participant "product:Product" as Product
+participant "<<enumeration>>\nCategories" as Cat
+
+== Product Add ==
+
+autonumber "<b>[0]"
+
+User -> App ++: prod add <id> "<name>" <category> <price>
+activate User
+
+App -> App: parse command\nreordenarSplitNombre()
+note right
+  Handles quoted names:
+  "Laptop Dell"
+end note
+
+App -> PC ++: add(id, name, category, price)
+
+PC -> PC ++: categorieControl(category)
+PC -> Cat ++: valueOf(category.toUpperCase())
+
+alt Valid category
+    Cat --> PC --: Categories enum
+    PC --> PC --: return true
+
+    PC -> PC ++: existeId(id)
+
+    loop search in products list
+        PC -> List ++: get(i).getId()
+        List --> PC --: productId
+    end
+
+    alt ID doesn't exist
+        PC --> PC --: return -1
+
+        alt counter < 200
+            create Product
+            PC -> Product ++: new Product(name, price, category, id)
+            Product --> PC --: product instance
+
+            PC -> List: add(product)
+            PC -> PC: counter++
+
+            PC -> Product: toString()
+            Product --> PC: product representation
+
+            PC -> User: print product details
+            PC --> App --: void
+            App -> User: "prod add: ok\n"
+
+        else counter >= 200
+            PC -> User: "Catálogo de productos lleno."
+            PC --> App --: void
+        end
+
+    else ID exists
+        PC --> PC --: return position+1
+        PC -> User: "Error. Ya existe el id."
+        PC --> App --: void
+    end
+
+else Invalid category
+    Cat --> PC --: throw IllegalArgumentException
+    PC --> PC --: return false
+    PC -> User: "Categoría no válida"
+    PC --> App --: void
+end
+
+deactivate User
+deactivate App
+
+|||
+
+== Product Update ==
+
+autonumber "<b>[0]"
+
+User -> App ++: prod update <id> <field> <value>
+activate User
+
+App -> App: parse command
+
+App -> PC ++: update(id, field, value)
+
+PC -> PC ++: existeId(id)
+return position+1 or -1
+
+alt ID exists
+
+    PC -> PC: position = existeId(id) - 1
+
+    alt field == "NAME"
+        PC -> List ++: get(position)
+        return product
+        PC -> Product ++: setName(value)
+        Product --> PC --: void
+
+    else field == "CATEGORY"
+        PC -> PC ++: categorieControl(value)
+
+        alt valid category
+            PC --> PC --: true
+            PC -> Cat ++: valueOf(value.toUpperCase())
+            Cat --> PC --: Categories enum
+
+            PC -> List ++: get(position)
+            return product
+            PC -> Product ++: setCategories(category)
+            Product --> PC --: void
+        else invalid category
+            PC --> PC --: false
+            PC -> User: "Categoría no válida"
+        end
+
+    else field == "PRICE"
+        PC -> List ++: get(position)
+        return product
+        PC -> Product ++: setPrice(Double.parseDouble(value))
+        Product --> PC --: void
+    end
+
+    PC -> Product ++: toString()
+    return product representation
+    PC -> User: print updated product
+    PC --> App --: void
+    App -> User: "prod update: ok\n"
+
+else ID doesn't exist
+    PC -> User: "Error. No existe el id para actualizar."
+    PC --> App --: void
+end
+
+deactivate User
+deactivate App
+
+|||
+
+== Product List ==
+
+autonumber "<b>[0]"
+
+User -> App ++: prod list
+activate User
+
+App -> PC ++: list()
+
+PC -> User: print "Catalog:"
+
+loop for each product
+    PC -> List ++: get(i)
+    return product
+
+    PC -> Product ++: toString()
+    return product representation
+
+    PC -> User: print product
+end
+
+PC --> App --: void
+App -> User: "prod list: ok\n"
+
+deactivate User
+deactivate App
+
+|||
+
+== Product Remove ==
+
+autonumber "<b>[0]"
+
+User -> App ++: prod remove <id>
+activate User
+
+App -> PC ++: remove(id)
+
+PC -> PC ++: existeId(id)
+return position+1 or -1
+
+alt ID exists
+    PC -> PC: position = existeId(id) - 1
+
+    PC -> List ++: get(position)
+    return product
+
+    PC -> Product ++: toString()
+    return product representation
+
+    PC -> User: print removed product
+
+    PC -> List: remove(product)
+    PC -> PC: counter--
+
+    PC --> App --: void
+    App -> User: "prod remove: ok\n"
+
+else ID doesn't exist
+    PC -> User: "Error. No existe el id para borrar."
+    PC --> App --: void
+end
+
+deactivate User
+deactivate App
+
+note over App, PC
+  <b>Business Rules:</b>
+  • Maximum 200 products in catalog
+  • Unique IDs enforced
+  • Category validation on add/update
+  • Names can contain spaces (quoted)
+end note
+
+@enduml
+

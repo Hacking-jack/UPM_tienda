@@ -1,0 +1,193 @@
+@startuml UPM_Tienda_Class_Diagram
+
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam backgroundColor #FEFEFE
+skinparam defaultFontName Arial
+
+title UPM Tienda - Class Diagram\n<size:12>Store Management System with Product Catalog and Ticket Processing</size>
+
+package "view" <<Rectangle>> #E8F5E9 {
+    class App {
+        - ticket: Ticket
+        - productController: ProductController
+        - ticketController: TicketController
+        __Constructors__
+        + App()
+        __Methods__
+        + {static} main(args: String[]): void
+        - iniciar(): void
+        - run(): void
+        + end(): void
+        + help(): void
+        + reordenarSplitNombre(array: String[], inicioNombre: int): void
+    }
+}
+
+package "controller" <<Rectangle>> #E3F2FD {
+    class ProductController {
+        - products: ArrayList<Product>
+        - counter: int
+        __Constructors__
+        + ProductController()
+        __CRUD Operations__
+        + add(id: int, name: String, categories: String, price: double): void
+        + list(): void
+        + update(id: int, campo: String, valor: String): void
+        + remove(id: int): void
+        __Queries__
+        + existeId(id: int): int
+        + productoID(id: int): Product
+        __Validation__
+        + categorieControl(categorie: String): boolean
+    }
+
+    class TicketController {
+        - ticket: Ticket
+        - counter: int
+        __Constructors__
+        + TicketController(ticket: Ticket)
+        __Ticket Operations__
+        + newTicket(): void
+        + add(product: Product, quantity: int): void
+        + remove(product: Product): void
+        + print(): void
+        __Business Logic__
+        + hasDiscount(counterStationary: int, counterClothes: int, \n  counterBook: int, counterElectronic: int, categories: Categories): boolean
+    }
+
+    class Loader {
+        - {static} DB_PATH: String = "database.json"
+        - gson: Gson
+        __Constructors__
+        + Loader()
+    }
+}
+
+package "models" <<Rectangle>> #FCE4EC {
+    class Product {
+        - name: String
+        - categories: Categories
+        - price: double
+        - id: int
+        __Constructors__
+        + Product(name: String, price: double, categories: Categories, id: int)
+        __Getters__
+        + getPrice(): double
+        + getCategories(): Categories
+        + getId(): int
+        __Setters__
+        + setName(name: String): void
+        + setPrice(price: double): void
+        + setCategories(categories: Categories): void
+        __Object Methods__
+        + toString(): String
+    }
+
+    class Ticket {
+        - products: ArrayList<Product>
+        __Constructors__
+        + Ticket()
+        __Getters__
+        + getProducts(): ArrayList<Product>
+    }
+
+    enum Categories {
+        {field} MERCH
+        {field} STATIONERY
+        {field} CLOTHES
+        {field} BOOK
+        {field} ELECTRONICS
+        __Static Methods__
+        + {static} getDiscount(categorie: Categories): double
+    }
+}
+
+' ============ Relationships ============
+
+' View Layer Dependencies
+App "1" *-down- "1" ProductController : manages >
+App "1" *-down- "1" TicketController : manages >
+App "1" *-down- "1" Ticket : creates >
+
+' Controller to Models
+ProductController "1" o-right- "0..200" Product : <<manages>>
+TicketController "1" -down-> "1" Ticket : <<controls>>
+TicketController .up.> Product : <<uses>>
+TicketController .right.> Categories : <<queries>>
+
+' Models relationships
+Ticket "1" o-left- "0..100" Product : <<contains>>
+Product "1" *-down- "1" Categories : <<categorized by>>
+
+' Dependencies
+ProductController .down.> Categories : <<validates>>
+Loader .right.> Product : <<serializes>>
+
+' ============ Constraints & Notes ============
+
+note right of ProductController
+  <b>Business Rules:</b>
+  • Maximum 200 products allowed
+  • Unique IDs enforced
+  • CRUD operations for catalog
+  • Category validation
+
+  <b>Returns:</b>
+  existeId(): position+1 or -1
+end note
+
+note right of TicketController
+  <b>Business Rules:</b>
+  • Maximum 100 products per ticket
+  • Discount: 2+ items same category
+  • Calculates total, discount, final price
+
+  <b>Discount Logic:</b>
+  Applied per product if category
+  has ≥2 items in ticket
+end note
+
+note bottom of Categories
+  <b>Discount Rates (%):</b>
+  • MERCH: 0%
+  • STATIONERY: 5%
+  • CLOTHES: 7%
+  • BOOK: 10%
+  • ELECTRONICS: 3%
+
+  Discount applied when ≥2 units
+  of same category in ticket
+end note
+
+note top of Ticket
+  <b>Responsibility:</b>
+  Aggregates products
+  for purchase processing
+
+  <b>Capacity:</b> 0-100 products
+end note
+
+note left of App
+  <b>Main Application:</b>
+  • CLI Interface
+  • Command Parser
+  • User Interaction
+
+  <b>Commands:</b>
+  prod, ticket, help, exit
+end note
+
+legend right
+  |= Symbol |= Meaning |
+  | *-- | Composition |
+  | o-- | Aggregation |
+  | --> | Association |
+  | ..> | Dependency |
+
+  <b>Design Pattern:</b> MVC (Model-View-Controller)
+endlegend
+
+@enduml

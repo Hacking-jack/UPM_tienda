@@ -1,0 +1,180 @@
+@startuml State_Diagram
+
+skinparam backgroundColor #FEFEFE
+skinparam defaultFontName Arial
+skinparam stateBorderColor #1976D2
+skinparam stateBackgroundColor #E3F2FD
+skinparam stateArrowColor #1976D2
+
+title UPM Tienda - State Diagram\n<size:12>Product and Ticket Lifecycle States</size>
+
+state "Product Lifecycle" as ProductLife {
+
+  [*] --> Created
+
+  state Created {
+    Created : entry / Validate category
+    Created : entry / Check unique ID
+    Created : entry / Check counter < 200
+    Created : do / Create Product instance
+    Created : do / Add to products list
+    Created : do / counter++
+    Created : exit / Display product details
+  }
+
+  Created --> Active
+
+  state Active {
+    Active : Product is in catalog
+    Active : Can be listed
+    Active : Can be added to tickets
+    Active : Can be modified
+  }
+
+  Active --> Updating
+
+  state Updating {
+    state "Update Name" as UpdateName
+    state "Update Category" as UpdateCat
+    state "Update Price" as UpdatePrice
+
+    [*] --> CheckField
+
+    CheckField --> UpdateName
+    CheckField --> UpdateCat
+    CheckField --> UpdatePrice
+
+    UpdateName : Parse quoted name
+    UpdateName : Set new name
+
+    UpdateCat : Validate category
+    UpdateCat : Set new category
+
+    UpdatePrice : Parse double value
+    UpdatePrice : Set new price
+
+    UpdateName --> [*]
+    UpdateCat --> [*]
+    UpdatePrice --> [*]
+  }
+
+  Updating --> Active
+
+  Active --> InTicket
+
+  state InTicket {
+    InTicket : Referenced in ticket
+    InTicket : Can still be updated
+    InTicket : Affects ticket calculations
+  }
+
+  InTicket --> Active
+  InTicket --> InTicket
+
+  Active --> Removed
+  InTicket --> Removed
+
+  state Removed {
+    Removed : entry / Display product info
+    Removed : do / Remove from list
+    Removed : do / counter--
+    Removed : exit / Product deleted
+  }
+
+  Removed --> [*]
+}
+
+state "Ticket Lifecycle" as TicketLife {
+
+  [*] --> Empty
+
+  state Empty {
+    Empty : No products
+    Empty : counter = 0
+    Empty : Ready for items
+  }
+
+  Empty --> WithProducts
+
+  state WithProducts {
+    WithProducts : Contains 1-99 products
+    WithProducts : Tracks category counts
+    WithProducts : Can calculate discounts
+
+    state "Calculating Receipt" as CalcReceipt {
+      CalcReceipt : Count products per category
+      CalcReceipt : Calculate total price
+      CalcReceipt : Apply discounts (>=2 same cat)
+      CalcReceipt : Calculate final price
+    }
+  }
+
+  WithProducts --> WithProducts
+  WithProducts --> Full
+
+  state Full {
+    Full : Maximum capacity reached
+    Full : Cannot add more products
+    Full : Can still remove items
+  }
+
+  Full --> WithProducts
+  WithProducts --> Empty
+
+  WithProducts --> Printing
+  Full --> Printing
+
+  state Printing {
+    Printing : entry / Initialize counters
+    Printing : do / Count categories
+    Printing : do / Calculate prices
+    Printing : do / Apply discounts
+    Printing : do / Display receipt
+    Printing : exit / Print totals
+  }
+
+  Printing --> WithProducts
+
+  WithProducts --> [*]
+  Full --> [*]
+  Empty --> [*]
+}
+
+note right of ProductLife
+  <b>Product States</b>
+  Created - Initial validation
+  Active - Available in catalog
+  Updating - Modification in progress
+  InTicket - Referenced by tickets
+  Removed - Deleted from catalog
+
+  <b>Constraints</b>
+  Max 200 products
+  Unique IDs
+  Valid categories only
+end note
+
+note right of TicketLife
+  <b>Ticket States</b>
+  Empty - No products (0)
+  WithProducts - 1-99 products
+  Full - 100 products (max)
+  Printing - Calculating receipt
+
+  <b>Business Rules</b>
+  Discount >=2 same category
+  Products added by reference
+  Auto-print on add
+end note
+
+note bottom
+  <b>State Transitions</b>
+  Solid arrows indicate normal flow
+
+  <b>State Annotations</b>
+  entry / Actions when entering state
+  do / Actions while in state
+  exit / Actions when leaving state
+end note
+
+@enduml
