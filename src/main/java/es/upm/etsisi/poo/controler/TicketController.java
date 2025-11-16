@@ -29,10 +29,17 @@ public class TicketController {
 
     public void add(Product product, int quantity) {
         if (counter < 100) {
+            boolean stop=false;
             for (int i = 0; i < quantity; i++){
-                ticket.getProducts().add(product);
-                counter++;
+                if(counter<100) {
+                    ticket.getProducts().add(product);
+                    counter++;
+                }else{
+                    stop=true;
+                }
             }
+            if(stop) System.out.println("No se pudieron añadir todos los productos, se han añadido hasta llegar" +
+                                        "al limite de 100");
             print();
 
         } else {
