@@ -23,6 +23,7 @@ public class ProductController {
     }
 
 
+
     public void add(int id, String name, String categories, double price) {
         if(categorieControl(categories)){
             if (existeId(id) != -1) {
