@@ -19,6 +19,15 @@ public class ProductFoodMeeting extends Product{
         this.asistentes=0;
     }
 
+    public void añadirAsistentes(int asistentes){
+        if(this.asistentes+asistentes>maxParticipantes){
+            System.out.println("No se han podido añadir todos los asistentes, se han añadido hasta llegar al maximo");
+            this.asistentes=maxParticipantes;
+        }else{
+            this.asistentes+=asistentes;
+        }
+    }
+
     public String getDate() {
         return date;
     }
