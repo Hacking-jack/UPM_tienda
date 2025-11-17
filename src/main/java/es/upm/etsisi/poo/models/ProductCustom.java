@@ -2,9 +2,9 @@ package es.upm.etsisi.poo.models;
 
 public class ProductCustom extends Product{
 
-    int maxPers;
-    String[] listaPers;
-    int persAct;
+    public int maxPers;
+    private String[] listaPers;
+    private int persAct;
 
     public ProductCustom(String name, double price, Categories categories, int id, int maxPers){
         super(name, price, categories, id);
@@ -21,6 +21,11 @@ public class ProductCustom extends Product{
             System.out.println("No se ha podido añadir la personalización "+pers+", se ha alcanzado el maximo " +
                     "de personalizaciones");
         }
+    }
+
+    @Override
+    public double getPrice() {
+        return price+(0.1*price*persAct);
     }
 
     @Override

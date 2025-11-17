@@ -1,22 +1,30 @@
 package es.upm.etsisi.poo.models;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
+
 public class ProductFoodMeeting extends Product{
 
-    private String date;
+    private LocalDate date;
     private int maxParticipantes=100;
     private boolean isFood; //false==comida, true==reunion
     private int asistentes;
 
     public ProductFoodMeeting(String name, double price, int id, String date, int maxParticipantes, boolean isFood){
         super(name, price, null, id);
-        this.date =date;
-        if(maxParticipantes<=100){
-            this.maxParticipantes=maxParticipantes;
-        }else{
-            System.out.println("Se ha establecido el máximo de asistentes en 100, el máximo permitido");
+        try{
+            this.date =LocalDate.parse(date);
+            if(maxParticipantes<=100){
+                this.maxParticipantes=maxParticipantes;
+            }else{
+                System.out.println("Se ha establecido el máximo de asistentes en 100, el máximo permitido");
+            }
+            this.isFood=isFood;
+            this.asistentes=0;
+        }catch (DateTimeParseException ex){
+            System.out.println("El formato de la fecha debe ser yyyy-MM-dd");
         }
-        this.isFood=isFood;
-        this.asistentes=0;
+
     }
 
     public void añadirAsistentes(int asistentes){
@@ -28,7 +36,7 @@ public class ProductFoodMeeting extends Product{
         }
     }
 
-    public String getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
