@@ -49,6 +49,11 @@ public class ProductFoodMeeting extends Product{
     }
 
     @Override
+    public double getPrice(){
+        return price*asistentes;
+    }
+
+    @Override
     public String toString() {
         return "{class:" + ((isFood) ? "Food" : "Meeting") +
                 ", id:" + id + ", name:" + name + ", price:" + price * asistentes + ", date of Event:" + date +
