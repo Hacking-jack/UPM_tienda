@@ -1,13 +1,13 @@
 package es.upm.etsisi.poo.models;
 
 
-public class Product { // Falta limite de 200
+public class Product {
 
 
-    private String name;
-    private Categories categories;
-    private double price;
-    private int id;
+    protected String name;
+    protected Categories categories;
+    protected double price;
+    protected int id;
 
     public Product(String name, double price, Categories categories, int id) {
         this.name = name;
