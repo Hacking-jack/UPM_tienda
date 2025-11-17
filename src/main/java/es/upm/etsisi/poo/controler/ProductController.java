@@ -15,11 +15,11 @@ prod remove <id>
 public class ProductController {
 
     protected ArrayList<Product> products;
-    protected int counter;
+    protected static int counter;
 
     public ProductController() {
         products = new ArrayList<>();
-        this.counter = 0;
+        counter = 0;
     }
 
 
