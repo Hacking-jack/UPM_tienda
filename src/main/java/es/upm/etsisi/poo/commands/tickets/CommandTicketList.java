@@ -5,7 +5,9 @@ import es.upm.etsisi.poo.commands.Command;
 public class CommandTicketList implements Command {
 
     @Override
-    public void execute() {
+    public boolean execute() {
+        //TODO
 
+        return true;
     }
 }

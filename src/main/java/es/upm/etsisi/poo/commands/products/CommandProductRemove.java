@@ -1,16 +1,20 @@
 package es.upm.etsisi.poo.commands.products;
 
 import es.upm.etsisi.poo.commands.Command;
+import es.upm.etsisi.poo.controler.ProductController;
 
 public class CommandProductRemove implements Command {
-    private final String id;
+    private final int id;
+    private final ProductController productController;
 
-    public CommandProductRemove(String id) {
+    public CommandProductRemove(int id, ProductController productController) {
         this.id = id;
+        this.productController=productController;
     }
 
     @Override
-    public void execute() {
-        // TODO
+    public boolean execute() {
+        productController.remove(id);
+        return true;
     }
 }

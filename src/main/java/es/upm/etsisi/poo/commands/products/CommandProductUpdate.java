@@ -15,7 +15,9 @@ public class CommandProductUpdate implements Command {
     }
 
     @Override
-    public void execute() {
+    public boolean execute() {
         // TODO
+
+        return true;
     }
 }

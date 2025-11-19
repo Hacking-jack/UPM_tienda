@@ -10,7 +10,8 @@ public class CommandEcho implements Command {
     }
 
     @Override
-    public void execute() {
+    public boolean execute() {
         System.out.println(text);
+        return true;
     }
 }

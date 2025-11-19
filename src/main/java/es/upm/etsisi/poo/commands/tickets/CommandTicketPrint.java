@@ -12,7 +12,9 @@ public class CommandTicketPrint implements Command {
     }
 
     @Override
-    public void execute() {
+    public boolean execute() {
         // TODO
+
+        return true;
     }
 }

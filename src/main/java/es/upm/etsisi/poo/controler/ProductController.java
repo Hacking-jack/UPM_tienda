@@ -14,7 +14,7 @@ prod remove <id>
  */
 public class ProductController {
 
-    protected ArrayList<Product> products;
+    protected static ArrayList<Product> products;
     protected static int counter;
 
     public ProductController() {
