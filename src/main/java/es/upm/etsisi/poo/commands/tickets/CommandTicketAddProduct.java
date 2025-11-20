@@ -27,7 +27,11 @@ public class CommandTicketAddProduct implements Command {
 
     @Override
     public boolean execute() {
-        ticketController.add()//Lo dejo asi para que no se nos olvide hacerlo
+        if(pers[0]==null) {// sin pers
+            ticketController.add()//Lo dejo asi para que no se nos olvide hacerlo
+        }else{
+            ticketController. //con pers
+        }
         return true;
     }
 }

@@ -16,7 +16,7 @@ public class CommandTicketPrint implements Command {
 
     @Override
     public boolean execute() {
-        ticketController.print(ticketId, cashId);
+        ticketController.commandPrint(ticketId, cashId);
         return true;
     }
 }

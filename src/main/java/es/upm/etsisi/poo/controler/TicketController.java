@@ -65,7 +65,68 @@ public class TicketController {
         }
     }
 
-    public void print(String ticketId, String cashId) {
+    public void print(String ticketId, String cashId){
+
+        List<Product> products = ticket.getProducts();
+
+        if (products.isEmpty()) {
+            System.out.println("Error. El ticket está vacío.");
+            return;
+        }
+
+        List<Product> sortedProducts = new ArrayList<>(products);
+        sortedProducts.sort(Comparator.comparing(Product::getName));
+
+        double precioTotal = 0;
+        int counterStationary = 0, counterClothes = 0, counterBook = 0, counterElectronic = 0;
+        for (Product p : products) {
+            precioTotal += p.getPrice();
+            if (p.getCategories() == Categories.STATIONERY) {
+                counterStationary++;
+            } else if (p.getCategories() == Categories.CLOTHES) {
+                counterClothes++;
+            } else if (p.getCategories() == Categories.BOOK) {
+                counterBook++;
+            } else if (p.getCategories() == Categories.ELECTRONICS) {
+                counterElectronic++;
+            }
+        }
+
+        double descuentoTotal = 0;
+
+        System.out.printf("Ticket : %s%n", ticketId);
+
+        for (int i = 0; i < sortedProducts.size(); i++) {
+            Product p = sortedProducts.get(i);
+            boolean discount = hasDiscount(counterStationary, counterClothes, counterBook, counterElectronic,
+                    p.getCategories());
+            double discountAmount = 0.0;
+            if (discount) {
+                discountAmount = Categories.getDiscount(p.getCategories()) * p.getPrice();
+                descuentoTotal += discountAmount;
+            }
+            if (discountAmount == 0.0) {
+                System.out.println("  " + p.toString());
+            } else {
+                System.out.print("  " + p.toString());
+                System.out.printf(" **discount -%.2f%n", discountAmount);
+            }
+        }
+
+        double precioFinal = precioTotal - descuentoTotal;
+        System.out.printf("  Total price: %.2f%n", precioTotal);
+        System.out.printf("  Total discount: %.2f%n", descuentoTotal);
+        System.out.printf("  Final Price: %.2f%n", precioFinal);
+
+        Cashier cashier = cashierController.searchId(cashId);
+
+        if (cashier == null) {
+            System.out.println("Error fatal: Cajero no encontrado para guardar el ticket.");
+            return;
+        }
+    }
+
+    public void commandPrint(String ticketId, String cashId) {
 
         List<Product> products = ticket.getProducts();
 
