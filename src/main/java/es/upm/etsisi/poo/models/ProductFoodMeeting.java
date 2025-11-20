@@ -10,10 +10,10 @@ public class ProductFoodMeeting extends Product{
     private boolean isFood; //false==comida, true==reunion
     private int asistentes;
 
-    public ProductFoodMeeting(String name, double price, int id, String date, int maxParticipantes, boolean isFood){
+    public ProductFoodMeeting(String name, double price, int id, LocalDate date, int maxParticipantes, boolean isFood){
         super(name, price, null, id);
         try{
-            this.date =LocalDate.parse(date);
+            this.date = date;
             if(maxParticipantes<=100){
                 this.maxParticipantes=maxParticipantes;
             }else{

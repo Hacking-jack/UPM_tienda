@@ -4,6 +4,10 @@ package es.upm.etsisi.poo.controler;
 import es.upm.etsisi.poo.models.Product;
 import es.upm.etsisi.poo.models.ProductFoodMeeting;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+
 public class ProductFoodMeetingController extends ProductController{
 
     public ProductFoodMeetingController() {
@@ -11,15 +15,19 @@ public class ProductFoodMeetingController extends ProductController{
     }
 
     public void add(int id, String name, String categories, double price, String date, int maxParticipantes, boolean isFood) {
+        LocalDate fecha=LocalDate.parse(date);
+        int dias= (int) ChronoUnit.DAYS.between(LocalDate.now(), fecha);
         if(categorieControl(categories)){
             if (existeId(id) != -1) {
                 System.out.println("Error. Ya existe el id.");
             } else {
                 if (counter<200) {
-                    Product product = new ProductFoodMeeting(name, price, id, date, maxParticipantes, isFood);
-                    products.add(product);
-                    System.out.println(product.toString());
-                    counter++;
+                    if((isFood && dias>=3) || (!isFood && (dias>=1 || (dias==0 && LocalDateTime.now().getHour()<=12)))) {
+                        Product product = new ProductFoodMeeting(name, price, id, fecha, maxParticipantes, isFood);
+                        products.add(product);
+                        System.out.println(product.toString());
+                        counter++;
+                    }
                 }else{
                     System.out.println("Catálogo de productos lleno.");
                 }
