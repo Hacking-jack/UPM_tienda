@@ -1,10 +1,6 @@
 package es.upm.etsisi.poo.controler;
 
-import es.upm.etsisi.poo.models.Categories;
-import es.upm.etsisi.poo.models.Product;
-import es.upm.etsisi.poo.models.Ticket;
-import es.upm.etsisi.poo.models.Cashier;
-import es.upm.etsisi.poo.models.Client;
+import es.upm.etsisi.poo.models.*;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -130,7 +126,7 @@ public class TicketController {
             return;
         }
 
-        Ticket completedTicket = new Ticket(finalTicketId, now, products, precioFinal);
+        Ticket completedTicket = new Ticket(finalTicketId, now, products, precioFinal, States.CERRADO);
         historyController.saveCompletedTicket(completedTicket, cashier, client);
         this.newTicketState(null, null, null);
     }

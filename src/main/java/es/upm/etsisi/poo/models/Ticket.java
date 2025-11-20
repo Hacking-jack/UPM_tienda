@@ -10,6 +10,7 @@ public class Ticket {
     private String idTicket;
     private double finalPrice;
     private LocalDateTime date;
+    private States estado;
 
 
 
@@ -18,12 +19,12 @@ public class Ticket {
     }
 
     public Ticket(String idTicket,LocalDateTime date,
-                  List<Product> products, double finalPrice) {
+                  List<Product> products, double finalPrice, States estado) {
         this.products = new ArrayList<>(products);
         this.finalPrice = finalPrice;
         this.idTicket = idTicket;
         this.date = date;
-
+        this.estado = States.VACIO;
     }
 
     public ArrayList<Product> getProducts() {
