@@ -9,7 +9,7 @@ public class CommandClientRemove implements Command {
 
     public CommandClientRemove(String dni, ClientController clientController) {
         this.dni = dni;
-        this.clientController=clientController;
+        this.clientController = clientController;
     }
 
     @Override

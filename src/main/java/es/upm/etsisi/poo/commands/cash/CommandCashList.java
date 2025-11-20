@@ -7,7 +7,7 @@ public class CommandCashList implements Command {
     private final CashierController cashierController;
 
     public CommandCashList(CashierController cashierController) {
-        this.cashierController=cashierController;
+        this.cashierController = cashierController;
     }
 
     @Override

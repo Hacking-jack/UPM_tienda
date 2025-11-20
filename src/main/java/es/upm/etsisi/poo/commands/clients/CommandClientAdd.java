@@ -17,7 +17,7 @@ public class CommandClientAdd implements Command {
         this.dni = dni;
         this.email = email;
         this.cashId = cashId;
-        this.clientController=clientController;
+        this.clientController = clientController;
     }
 
     @Override

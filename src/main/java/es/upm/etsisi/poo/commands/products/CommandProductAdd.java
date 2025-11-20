@@ -20,16 +20,16 @@ public class CommandProductAdd implements Command {
         this.category = category;
         this.price = price;
         this.maxPers = maxPers;
-        this.productController=productController;
-        this.productCustomController=productCustomController;
+        this.productController = productController;
+        this.productCustomController = productCustomController;
     }
 
     @Override
     public boolean execute() {
-        if(maxPers==null) {
+        if (maxPers == null) {
             productController.add(id, name, category, price);
-        }else{
-            productCustomController.add(id,name,category,price,maxPers);
+        } else {
+            productCustomController.add(id, name, category, price, maxPers);
         }
         return true;
     }

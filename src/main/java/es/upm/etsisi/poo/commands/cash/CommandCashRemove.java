@@ -11,7 +11,7 @@ public class CommandCashRemove implements Command {
 
     public CommandCashRemove(String id, CashierController cashierController) {
         this.id = id;
-        this.cashierController=cashierController;
+        this.cashierController = cashierController;
     }
 
     @Override

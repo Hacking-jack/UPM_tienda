@@ -14,7 +14,7 @@ public class CommandCashAdd implements Command {
         this.id = id;
         this.name = name;
         this.email = email;
-        this.cashierController=cashierController;
+        this.cashierController = cashierController;
     }
 
     @Override

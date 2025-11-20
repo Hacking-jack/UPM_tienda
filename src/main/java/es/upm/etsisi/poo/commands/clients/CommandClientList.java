@@ -7,7 +7,7 @@ public class CommandClientList implements Command {
     private final ClientController clientController;
 
     public CommandClientList(ClientController clientController) {
-        this.clientController=clientController;
+        this.clientController = clientController;
     }
 
     @Override

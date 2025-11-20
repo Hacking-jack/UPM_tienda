@@ -21,12 +21,12 @@ public class CommandProductAddFood implements Command {
         this.price = price;
         this.date = date;
         this.maxPeople = maxPeople;
-        this.productFoodMeetingController=productFoodMeetingController;
+        this.productFoodMeetingController = productFoodMeetingController;
     }
 
     @Override
     public boolean execute() {
-        productFoodMeetingController.add(id ,name,null, price, date, maxPeople, true);
+        productFoodMeetingController.add(id, name, null, price, date, maxPeople, true);
         return true;
     }
 

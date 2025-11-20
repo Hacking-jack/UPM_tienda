@@ -30,7 +30,6 @@ public class CommandHelp implements Command {
                 "exit\n\n" +
 
 
-
                 "Categories: MERCH, STATIONERY, CLOTHES, BOOKS, ELECTRONICS\n" +
                 "Discounts if there are ≥2 units in the category: MERCH 0%, STATIONERY 5%" +
                 ", CLOTHES 7%, BOOKS 10%, ELECTRONICS 3%.\n");

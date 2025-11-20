@@ -12,9 +12,9 @@ public class CommandProductList implements Command {
 
     public CommandProductList(ProductController productController, ProductCustomController productCustomController,
                               ProductFoodMeetingController productFoodMeetingController) {
-        this.productController=productController;
-        this.productCustomController=productCustomController;
-        this.productFoodMeetingController=productFoodMeetingController;
+        this.productController = productController;
+        this.productCustomController = productCustomController;
+        this.productFoodMeetingController = productFoodMeetingController;
     }
 
     @Override

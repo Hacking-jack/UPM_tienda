@@ -9,7 +9,7 @@ public class CommandProductRemove implements Command {
 
     public CommandProductRemove(int id, ProductController productController) {
         this.id = id;
-        this.productController=productController;
+        this.productController = productController;
     }
 
     @Override

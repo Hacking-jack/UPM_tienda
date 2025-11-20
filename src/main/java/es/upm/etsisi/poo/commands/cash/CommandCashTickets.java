@@ -11,12 +11,12 @@ public class CommandCashTickets implements Command {
 
     public CommandCashTickets(String cashId, CashierController cashierController) {
         this.cashId = cashId;
-        this.cashierController=cashierController;
+        this.cashierController = cashierController;
     }
 
     @Override
     public boolean execute() {
-        //TODO
+        cashierController.cashTickets(cashId);
         return true;
     }
 }
