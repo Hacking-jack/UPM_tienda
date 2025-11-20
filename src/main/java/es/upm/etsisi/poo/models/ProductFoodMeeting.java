@@ -7,7 +7,7 @@ public class ProductFoodMeeting extends Product{
 
     private LocalDate date;
     private int maxParticipantes=100;
-    private boolean isFood; //false==comida, true==reunion
+    private boolean isFood; //true==comida, false==reunion
     private int asistentes;
 
     public ProductFoodMeeting(String name, double price, int id, LocalDate date, int maxParticipantes, boolean isFood){
