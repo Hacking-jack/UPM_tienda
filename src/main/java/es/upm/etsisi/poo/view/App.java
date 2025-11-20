@@ -1,8 +1,21 @@
 package es.upm.etsisi.poo.view;
 
+import es.upm.etsisi.poo.commands.cash.CommandCashAdd;
+import es.upm.etsisi.poo.commands.cash.CommandCashList;
+import es.upm.etsisi.poo.commands.cash.CommandCashRemove;
+import es.upm.etsisi.poo.commands.cash.CommandCashTickets;
+import es.upm.etsisi.poo.commands.clients.CommandClientAdd;
+import es.upm.etsisi.poo.commands.clients.CommandClientList;
+import es.upm.etsisi.poo.commands.clients.CommandClientRemove;
+import es.upm.etsisi.poo.commands.general.CommandEcho;
+import es.upm.etsisi.poo.commands.general.CommandExit;
+import es.upm.etsisi.poo.commands.general.CommandHelp;
+import es.upm.etsisi.poo.commands.products.*;
+import es.upm.etsisi.poo.commands.tickets.*;
 import es.upm.etsisi.poo.controler.*;
 import es.upm.etsisi.poo.models.Product;
 import es.upm.etsisi.poo.models.Ticket;
+import es.upm.etsisi.poo.commands.*;
 
 import java.util.HashMap;
 import java.util.Objects;
@@ -15,12 +28,13 @@ echo “<texto>” (imprime el texto en el valor texto)
 exit
  */
 public class App {
-    private Ticket ticket;
     private ProductController productController;
     private TicketController ticketController;
     private CashierController cashierController;
     private ClientController clientController;
     private HistorySalesController historyController;
+    private ProductFoodMeetingController productFoodMeetingController;
+    private ProductCustomController productCustomController;
 
     public static void main(String[] args) {
         App aplicacion = new App();
@@ -41,140 +55,187 @@ public class App {
     }
 
     private void run() {
-            Scanner scanner = new Scanner(System.in);
-            boolean bucle = true;
-            while (bucle) {
-                try {
+        Scanner scanner = new Scanner(System.in);
+        boolean bucle = true;
+        while (bucle) {
+            try {
                 System.out.print("tUPM>");
                 String line = scanner.nextLine();
-                String[] lineSepSpace = line.split(" ");
-                switch (lineSepSpace[0]) {
-                    case "help":
-                        help();
+                String[] args = line.split(" ");
+                String comando = ordenarSplit(args);
+                Command cmd = null;
+                switch (comando) {
+                    case "client add":
+                        cmd = new CommandClientAdd(args[0], args[1], args[2], args[3], clientController);
                         break;
-                    case "exit":
-                        bucle = false;
-                        break;
-                    case "prod":
-                        switch (lineSepSpace[1]) {
-                            case "add":
-                                reordenarSplitNombre(lineSepSpace, 3);
-                                productController.add(Integer.parseInt(lineSepSpace[2]), lineSepSpace[3],
-                                        lineSepSpace[4].toUpperCase(), Double.parseDouble(lineSepSpace[5]));
-                                System.out.println("prod add: ok\n");
-                                break;
-                            case "list":
-                                productController.list();
-                                System.out.println("prod list: ok\n");
-                                break;
-                            case "update":
-                                if (Objects.equals(lineSepSpace[3].toUpperCase(), "NAME")) {
-                                    reordenarSplitNombre(lineSepSpace, 4);
-                                }
-                                productController.update(Integer.parseInt(lineSepSpace[2]), lineSepSpace[3],
-                                        lineSepSpace[4]);
-                                System.out.println("prod update: ok\n");
-                                break;
-                            case "remove":
-                                productController.remove(Integer.parseInt(lineSepSpace[2]));
-                                System.out.println("prod remove: ok\n");
-                                break;
-                            default:
-                                System.out.println("Comando no válido, usa help para ver lista de comandos");
-                                break;
 
-                        }
+                    case "client remove":
+                        cmd = new CommandClientRemove(args[0], clientController);
                         break;
-                    case "ticket":
-                        switch (lineSepSpace[1]) {
-                            case "new":
-                                ticketController.newTicketState(lineSepSpace[2], lineSepSpace[3], lineSepSpace[4]);
-                                System.out.println("ticket new: ok\n");
-                                break;
-                            case "add":
-                                if (productController.productoID(Integer.parseInt(lineSepSpace[2])) != null) {
-                                    ticketController.add(productController
-                                            .productoID(Integer.parseInt(lineSepSpace[2])),
-                                            Integer.parseInt(lineSepSpace[3]));
-                                    System.out.println("ticket add: ok\n");
-                                } else {
-                                    System.out.println("ID no existe");
-                                }
-                                break;
-                            case "remove":
-                                if (productController.productoID(Integer.parseInt(lineSepSpace[2])) != null) {
-                                    ticketController.remove(productController
-                                            .productoID(Integer.parseInt(lineSepSpace[2])));
-                                    System.out.println("ticket remove: ok\n");
-                                } else {
-                                    System.out.println("ID no existe");
-                                }
-                                break;
-                            case "print":
-                                ticketController.print(lineSepSpace[2], lineSepSpace[3]);
-                                System.out.println("ticket print: ok\n");
-                                break;
-                            default:
-                                System.out.println("Comando no válido, usa help para ver lista de comandos");
-                                break;
-                        }
+
+                    case "client list":
+                        cmd = new CommandClientList(clientController);
                         break;
+
+                    case "cash add":
+                        cmd = new CommandCashAdd(args[0], args[1], args[2], cashierController);
+                        break;
+
+                    case "cash remove":
+                        cmd = new CommandCashRemove(args[0], cashierController);
+                        break;
+
+                    case "cash list":
+                        cmd = new CommandCashList(cashierController);
+                        break;
+
+                    case "cash tickets":
+                        cmd = new CommandCashTickets(args[0], cashierController);
+                        break;
+
+                    case "ticket new":
+                        cmd = new CommandTicketNew(args[0], args[1], args[2], ticketController);
+                        break;
+
+                    case "ticket add":
+                        String[] pers = new String[args.length];
+                        pers = obtenerPers(args);
+                        cmd = new CommandTicketAddProduct(args[0], args[1], args[2], Integer.parseInt(args[3]), pers,
+                                ticketController, productController);
+                        break;
+
+                    case "ticket remove":
+                        cmd = new CommandTicketRemoveProduct(args[0], args[1], Integer.parseInt(args[2]),
+                                ticketController, productController);
+                        break;
+
+                    case "ticket print":
+                        cmd = new CommandTicketPrint(args[0], args[1], ticketController);
+                        break;
+
+                    case "ticket list":
+                        cmd = new CommandTicketList(ticketController);
+                        break;
+
+                    case "prod add":
+                        cmd = new CommandProductAdd(Integer.parseInt(args[0]), args[1], args[2],
+                                Double.parseDouble(args[3]), Integer.parseInt(args[4]), productController,
+                                productCustomController);
+                        break;
+
+                    case "prod update":
+                        cmd = new CommandProductUpdate(Integer.parseInt(args[0]), args[1], args[2], productController);
+                        break;
+
+                    case "prod addFood":
+                        cmd = new CommandProductAddFood(Integer.parseInt(args[0]), args[1], Double.parseDouble(args[2]),
+                                args[3], Integer.parseInt(args[4]), productFoodMeetingController);
+                        break;
+
+                    case "prod addMeeting":
+                        cmd = new CommandProductAddMeeting(Integer.parseInt(args[0]), args[1], Double.parseDouble(args[2]),
+                                args[3], Integer.parseInt(args[4]), productFoodMeetingController);
+                        break;
+
+                    case "prod list":
+                        cmd = new CommandProductList(productController, productCustomController, productFoodMeetingController);
+                        break;
+
+                    case "prod remove":
+                        cmd = new CommandProductRemove(Integer.parseInt(args[0]), productController);
+                    case "help":
+                        cmd = new CommandHelp();
+                        break;
+
                     case "echo":
-                        System.out.println(line + "\n");
+                        cmd = new CommandEcho(line);
                         break;
+
+                    case "exit":
+                        cmd = new CommandExit();
+                        break;
+
                     default:
-                        System.out.println("Comando no válido, usa help para ver lista de comandos");
                         break;
                 }
-                }catch (NumberFormatException | ArrayIndexOutOfBoundsException ex){
-                    System.out.println("Formato del comando incorrecto. Use help para ver los comandos");
-                }
+                bucle = cmd.execute();
+            } catch (NumberFormatException | ArrayIndexOutOfBoundsException | NullPointerException ex) {
+                System.out.println("Formato del comando incorrecto. Use help para ver los comandos");
             }
+        }
 
     }
 
-    public void end(){
+    public void end() {
         System.out.println("Closing application.\nGoodbye!\n");
     }
 
-    public void reordenarSplitNombre(String[] array,int inicioNombre) throws NumberFormatException{
-        int cont=0;
-        boolean fin=false;
-        while(!fin && cont+inicioNombre<array.length){
-            if(array[inicioNombre+cont].endsWith("\"")){
-                fin=true;
-            }else{
-                cont++;
+    private String ordenarSplit(String[] split) throws NumberFormatException {
+        String command;
+        String firsWord = split[0];
+        if (firsWord.equalsIgnoreCase("client") || firsWord.equalsIgnoreCase("cash") ||
+                firsWord.equalsIgnoreCase("ticket") || firsWord.equalsIgnoreCase("prod")) {
+            command = firsWord + " " + split[1];
+            reordenarArray(split, -1, 2);
+        } else {
+            if (firsWord.equalsIgnoreCase("exit") || firsWord.equalsIgnoreCase("help")
+                    || firsWord.equalsIgnoreCase("echo")) {
+                command = firsWord;
+                reordenarArray(split, -1, 1);
+            } else {
+                throw new NumberFormatException("Formato de comando no válido");
             }
         }
-        if(!fin){
-            throw new NumberFormatException("");
-        }else{
-            StringBuilder string = new StringBuilder();
-            for(int i=inicioNombre;i<=inicioNombre+cont;i++){
-                if(i==inicioNombre+cont){
-                    string.append(array[i]);
-                }else {
-                    string.append(array[i]).append(" ");
+        mergeQuotedInput(split);
+        return command;
+    }
+
+    private String[] obtenerPers(String[] args) {
+        int i=4;// indice en el que empiezan las pers
+        while(!args[i].equals(" ")){
+            i++;
+        }
+        String[] pers =new String[i-4];
+        for(int j=4;j<i;j++){
+            pers[j-4]=args[j];
+        }
+        return pers;
+    }
+
+    private static void mergeQuotedInput(String[] split) {
+        boolean inQuotes = false;
+        StringBuilder current = new StringBuilder();
+        int indice = 0;
+
+        for (int i = 0; i < split.length; i++) {
+            String part = split[i];
+            if (!inQuotes) {
+                if (part.startsWith("\"") && !part.endsWith("\"")) {    //empiezan comillas
+                    inQuotes = true;
+                    current.append(part.substring(1)).append(" ");
+                    indice = i;
                 }
-
-            }
-            array[inicioNombre]=string.substring(1,string.length()-1);
-            for(int i=inicioNombre+1;i < array.length-cont;i++){
-                array[i]=array[i+cont];
+            } else {
+                if (part.endsWith("\"")) {
+                    current.append(part, 0, part.length() - 1);
+                    split[indice] = current.toString();
+                    reordenarArray(split, indice, i - indice);
+                    current.setLength(0);
+                    inQuotes = false;
+                } else {
+                    current.append(part).append(" ");
+                }
             }
         }
     }
 
-    public void help() {
-        System.out.println("Commands:\n  prod add <id> \"" +
-                "<name>\" <category> <price>\n  prod list\n" +
-                "  prod update <id> NAME|CATEGORY|PRICE <value>\n" +
-                "  prod remove <id>\n  ticket new\n  ticket add" +
-                " <prodId> <quantity>\n  ticket remove <prodId>\n" +
-                "  ticket print\n  echo \"<texto>\"\n  help\n  exit\n\n" +
-                "Categories: MERCH, STATIONERY, CLOTHES, BOOKS, ELECTRONICS\n" +
-                "Discounts if there are ≥2 units in the category: MERCH 0%, STATIONERY 5%" +
-                ", CLOTHES 7%, BOOKS 10%,\nELECTRONICS 3%\n");
+    private static void reordenarArray(String[] split, int i1, int dif) {
+        for (int i = i1 + 1; i < split.length; i++) {
+            split[i] = split[i + dif];
+        }
+        for(int i=split.length-dif-1; i< split.length;i++){
+            split[i]=" ";
+        }
     }
+
 }
