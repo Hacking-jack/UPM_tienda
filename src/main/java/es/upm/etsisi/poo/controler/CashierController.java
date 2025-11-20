@@ -1,6 +1,6 @@
 package es.upm.etsisi.poo.controler;
-import es.upm.etsisi.poo.models.Ticket;
 import es.upm.etsisi.poo.models.Cashier;
+import es.upm.etsisi.poo.models.Ticket;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -58,7 +58,7 @@ public class CashierController {
         }
         return null;
     }
-    // En CashierController.java
+
     public void cashTickets(String cashId) {
         List<Ticket> ticketsDelCajero = historyController.searchTicketsByCashier(cashId);
 
@@ -66,19 +66,19 @@ public class CashierController {
             System.out.println("Tickets: \ncash tickets: ok");
             return;
         }
+
         System.out.println("Tickets: ");
+
         ticketsDelCajero.sort(Comparator.comparing(Ticket::getDate));
-        for (Ticket ticket : ticketsDelCajero) {
+
+        for (int i = 0; i < ticketsDelCajero.size(); i++) {
+            Ticket ticket = ticketsDelCajero.get(i);
+
             String status = ticket.getProducts().isEmpty() ? "EMPTY" : "CLOSE";
+
             System.out.printf("  %s->%s\n", ticket.getIdTicket(), status);
         }
         System.out.println("cash tickets: ok");
     }
 }
 
-
-//o cash add [<id>] "<nombre>"<email>
-//o cash remove <id>
-//o cash list (Ordenados por nombre y sin mostrar sus tickets)
-//o cash tickets <id> (Muestra los tickets del cajero ordenados por el Id del ticket,
-//mostrando solo el ID y el estado)

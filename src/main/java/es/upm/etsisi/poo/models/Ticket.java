@@ -8,8 +8,6 @@ import java.time.LocalDateTime;
 public class Ticket {
     private ArrayList<Product> products;
     private String idTicket;
-    private Cashier cashier;
-    private Client client;
     private double finalPrice;
     private LocalDateTime date;
 
@@ -19,10 +17,8 @@ public class Ticket {
         products = new ArrayList<>();
     }
 
-    public Ticket(String idTicket,LocalDateTime date, Cashier cashier, Client client,
+    public Ticket(String idTicket,LocalDateTime date,
                   List<Product> products, double finalPrice) {
-        this.cashier = cashier;
-        this.client = client;
         this.products = new ArrayList<>(products);
         this.finalPrice = finalPrice;
         this.idTicket = idTicket;
@@ -34,13 +30,6 @@ public class Ticket {
         return products;
     }
 
-    public Cashier getCashier() {
-        return cashier;
-    }
-
-    public Client getClient() {
-        return client;
-    }
     public LocalDateTime getDate() {
         return date;
     }
