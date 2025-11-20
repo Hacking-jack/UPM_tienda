@@ -1,16 +1,20 @@
 package es.upm.etsisi.poo.controler;
-
+import es.upm.etsisi.poo.models.Ticket;
 import es.upm.etsisi.poo.models.Cashier;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-
+import java.util.List;
 public class CashierController {
 
     private ArrayList<Cashier> cajeros;
+    private HistorySalesController  historyController;
 
     public CashierController() {
         this.cajeros = new ArrayList<>();
+    }
+    public void setHistoryController(HistorySalesController historyController) {
+        this.historyController = historyController;
     }
 
     public void add(String id, String nombre, String email) {
@@ -53,6 +57,22 @@ public class CashierController {
             }
         }
         return null;
+    }
+    // En CashierController.java
+    public void cashTickets(String cashId) {
+        List<Ticket> ticketsDelCajero = historyController.searchTicketsByCashier(cashId);
+
+        if (ticketsDelCajero.isEmpty()) {
+            System.out.println("Tickets: \ncash tickets: ok");
+            return;
+        }
+        System.out.println("Tickets: ");
+        ticketsDelCajero.sort(Comparator.comparing(Ticket::getDate));
+        for (Ticket ticket : ticketsDelCajero) {
+            String status = ticket.getProducts().isEmpty() ? "EMPTY" : "CLOSE";
+            System.out.printf("  %s->%s\n", ticket.getIdTicket(), status);
+        }
+        System.out.println("cash tickets: ok");
     }
 }
 

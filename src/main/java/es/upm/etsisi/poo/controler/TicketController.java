@@ -1,47 +1,58 @@
 package es.upm.etsisi.poo.controler;
-/*
-Esto controla los tickets
-ticket new (resetea ticket en curso)
-ticket add <prodId> <cantidad> (agrega al ticket la cantidad de ese producto)
-ticket remove <prodId> (elimina todas las apariciones del producto, revisa si existe el id )
-ticket print (imprime factura)
- */
 
 import es.upm.etsisi.poo.models.Categories;
 import es.upm.etsisi.poo.models.Product;
 import es.upm.etsisi.poo.models.Ticket;
+import es.upm.etsisi.poo.models.Cashier;
+import es.upm.etsisi.poo.models.Client;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 
 public class TicketController {
 
     private Ticket ticket;
     private int counter;
+    private final HistorySalesController historyController;
+    private final CashierController cashierController;
+    private final ClientController clientController;
+    private String currentClientDNI;
 
-    public TicketController(Ticket ticket) {
-        this.ticket = ticket;
-        this.counter = 0;
+
+    public TicketController(HistorySalesController historyController, CashierController cashierController,
+                            ClientController clientController) {
+        this.historyController = historyController;
+        this.cashierController = cashierController;
+        this.clientController = clientController;
+        this.newTicketState(null, null, null);
     }
 
-
-    public void newTicket() {
+    public void newTicketState(String id, String cashId, String clientDNI) {
+        this.currentClientDNI = clientDNI;
         this.ticket = new Ticket();
-        this.counter=0;
+        this.counter = 0;
     }
 
     public void add(Product product, int quantity) {
         if (counter < 100) {
-            boolean stop=false;
-            for (int i = 0; i < quantity; i++){
-                if(counter<100) {
+            boolean stop = false;
+            int addedCount = 0;
+            for (int i = 0; i < quantity; i++) {
+                if (counter < 100) {
                     ticket.getProducts().add(product);
                     counter++;
-                }else{
-                    stop=true;
+                    addedCount++;
+                } else {
+                    stop = true;
+                    break;
                 }
             }
-            if(stop) System.out.println("No se pudieron añadir todos los productos, se han añadido hasta llegar" +
-                                        "al limite de 100");
-            print();
-
+            if (stop) System.out.println("No se pudieron añadir todos los productos, se han añadido " + addedCount +
+                    " hasta llegar al limite de 100");
         } else {
             System.out.println("Ticket lleno.");
         }
@@ -54,63 +65,96 @@ public class TicketController {
         }
     }
 
-    public void print() {//Hay que terminarlo
-        double precioTotal = 0, descuentoTotal = 0, precioFinal=0;
-        int counterStationary=0,counterClothes=0,counterBook=0,counterElectronic=0;
-        for (int i=0;i<ticket.getProducts().size();i++){
-            if (ticket.getProducts().get(i).getCategories()==Categories.STATIONERY){
+    public void print(String ticketId, String cashId) {
+
+        List<Product> products = ticket.getProducts();
+
+        if (products.isEmpty()) {
+            System.out.println("Error. El ticket está vacío.");
+            return;
+        }
+
+        List<Product> sortedProducts = new ArrayList<>(products);
+        sortedProducts.sort(Comparator.comparing(Product::getName));
+
+        double precioTotal = 0;
+        int counterStationary = 0, counterClothes = 0, counterBook = 0, counterElectronic = 0;
+        for (Product p : products) {
+            precioTotal += p.getPrice();
+            if (p.getCategories() == Categories.STATIONERY) {
                 counterStationary++;
-            } else if (ticket.getProducts().get(i).getCategories()==Categories.CLOTHES) {
+            } else if (p.getCategories() == Categories.CLOTHES) {
                 counterClothes++;
-            }else if (ticket.getProducts().get(i).getCategories()==Categories.BOOK){
+            } else if (p.getCategories() == Categories.BOOK) {
                 counterBook++;
-            }else if(ticket.getProducts().get(i).getCategories()==Categories.ELECTRONICS){
+            } else if (p.getCategories() == Categories.ELECTRONICS) {
                 counterElectronic++;
             }
         }
-        for (int i = ticket.getProducts().size()-1; i >=0; i--) {
-            precioTotal += ticket.getProducts().get(i).getPrice();
-            boolean discount=hasDiscount(counterStationary,counterClothes,counterBook,counterElectronic,
-                    ticket.getProducts().get(i).getCategories());
+
+        double descuentoTotal = 0;
+        LocalDateTime now = LocalDateTime.now();
+        String finalTicketId = ticketId + "-" + now.format(DateTimeFormatter.ofPattern("dd-MM-yy-HH:mm"));
+
+        System.out.printf("Ticket : %s%n", finalTicketId);
+
+        for (int i = 0; i < sortedProducts.size(); i++) {
+            Product p = sortedProducts.get(i);
+            boolean discount = hasDiscount(counterStationary, counterClothes, counterBook, counterElectronic,
+                    p.getCategories());
+            double discountAmount = 0.0;
             if (discount) {
-                descuentoTotal += Categories.getDiscount(ticket.getProducts().get(i).getCategories()) *
-                        ticket.getProducts().get(i).getPrice();
+                discountAmount = Categories.getDiscount(p.getCategories()) * p.getPrice();
+                descuentoTotal += discountAmount;
             }
-            precioFinal = precioTotal - descuentoTotal;
-            if (!discount || Categories.getDiscount(ticket.getProducts().get(i).getCategories()) == 0.0) {
-                System.out.println(ticket.getProducts().get(i).toString());
-            } else{
-                System.out.print(ticket.getProducts().get(i).toString()) ;
-                System.out.printf("**discount -%.2f%n", Categories.getDiscount
-                        (ticket.getProducts().get(i).getCategories()) * ticket.getProducts().get(i).getPrice());
+            if (discountAmount == 0.0) {
+                System.out.println("  " + p.toString());
+            } else {
+                System.out.print("  " + p.toString());
+                System.out.printf(" **discount -%.2f%n", discountAmount);
             }
         }
-        System.out.println("Total price: " + precioTotal);
-        System.out.printf("Total discount: %.2f%n", descuentoTotal);
-        System.out.println("Final price: " + precioFinal);
+
+        double precioFinal = precioTotal - descuentoTotal;
+        System.out.printf("  Total price: %.2f%n", precioTotal);
+        System.out.printf("  Total discount: %.2f%n", descuentoTotal);
+        System.out.printf("  Final Price: %.2f%n", precioFinal);
+
+        Cashier cashier = cashierController.searchId(cashId);
+        Client client = clientController.dniSearch(this.currentClientDNI);
+
+        if (cashier == null) {
+            System.out.println("Error fatal: Cajero no encontrado para guardar el ticket.");
+            return;
+        }
+
+        Ticket completedTicket = new Ticket(finalTicketId, now, cashier, client, products, precioFinal);
+        historyController.saveCompletedTicket(completedTicket);
+        this.newTicketState(null, null, null);
     }
-    public boolean hasDiscount(int counterStationary,int counterClothes,int counterBook,int counterElectronic,
-                               Categories categories){
+
+    public boolean hasDiscount(int counterStationary, int counterClothes, int counterBook, int counterElectronic,
+                               Categories categories) {
         boolean correct = false;
-        switch (categories){
+        switch (categories) {
             case STATIONERY:
-                if (counterStationary>=2){
-                    correct=true;
+                if (counterStationary >= 2) {
+                    correct = true;
                 }
                 break;
             case CLOTHES:
-                if (counterClothes>=2){
-                    correct=true;
+                if (counterClothes >= 2) {
+                    correct = true;
                 }
                 break;
             case BOOK:
-                if (counterBook>=2){
-                    correct=true;
+                if (counterBook >= 2) {
+                    correct = true;
                 }
                 break;
             case ELECTRONICS:
-                if (counterElectronic>=2){
-                    correct=true;
+                if (counterElectronic >= 2) {
+                    correct = true;
                 }
                 break;
         }

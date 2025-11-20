@@ -1,10 +1,10 @@
 package es.upm.etsisi.poo.view;
 
-import es.upm.etsisi.poo.controler.ProductController;
-import es.upm.etsisi.poo.controler.TicketController;
+import es.upm.etsisi.poo.controler.*;
 import es.upm.etsisi.poo.models.Product;
 import es.upm.etsisi.poo.models.Ticket;
 
+import java.util.HashMap;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -18,6 +18,9 @@ public class App {
     private Ticket ticket;
     private ProductController productController;
     private TicketController ticketController;
+    private CashierController cashierController;
+    private ClientController clientController;
+    private HistorySalesController historyController;
 
     public static void main(String[] args) {
         App aplicacion = new App();
@@ -29,8 +32,11 @@ public class App {
 
     private void iniciar() {
         this.productController = new ProductController();
-        this.ticket = new Ticket();
-        this.ticketController = new TicketController(ticket);
+        this.historyController = new HistorySalesController();
+        this.cashierController = new CashierController();
+        this.clientController = new ClientController(cashierController);
+        this.ticketController = new TicketController(this.historyController, this.cashierController,
+                this.clientController);
         System.out.println("Welcome to the ticket module App\nTicket module. Type 'help' to see commands");
     }
 
@@ -53,7 +59,8 @@ public class App {
                         switch (lineSepSpace[1]) {
                             case "add":
                                 reordenarSplitNombre(lineSepSpace, 3);
-                                productController.add(Integer.parseInt(lineSepSpace[2]), lineSepSpace[3], lineSepSpace[4].toUpperCase(), Double.parseDouble(lineSepSpace[5]));
+                                productController.add(Integer.parseInt(lineSepSpace[2]), lineSepSpace[3],
+                                        lineSepSpace[4].toUpperCase(), Double.parseDouble(lineSepSpace[5]));
                                 System.out.println("prod add: ok\n");
                                 break;
                             case "list":
@@ -64,7 +71,8 @@ public class App {
                                 if (Objects.equals(lineSepSpace[3].toUpperCase(), "NAME")) {
                                     reordenarSplitNombre(lineSepSpace, 4);
                                 }
-                                productController.update(Integer.parseInt(lineSepSpace[2]), lineSepSpace[3], lineSepSpace[4]);
+                                productController.update(Integer.parseInt(lineSepSpace[2]), lineSepSpace[3],
+                                        lineSepSpace[4]);
                                 System.out.println("prod update: ok\n");
                                 break;
                             case "remove":
@@ -80,12 +88,14 @@ public class App {
                     case "ticket":
                         switch (lineSepSpace[1]) {
                             case "new":
-                                ticketController.newTicket();
+                                ticketController.newTicketState(lineSepSpace[2], lineSepSpace[3], lineSepSpace[4]);
                                 System.out.println("ticket new: ok\n");
                                 break;
                             case "add":
                                 if (productController.productoID(Integer.parseInt(lineSepSpace[2])) != null) {
-                                    ticketController.add(productController.productoID(Integer.parseInt(lineSepSpace[2])), Integer.parseInt(lineSepSpace[3]));
+                                    ticketController.add(productController
+                                            .productoID(Integer.parseInt(lineSepSpace[2])),
+                                            Integer.parseInt(lineSepSpace[3]));
                                     System.out.println("ticket add: ok\n");
                                 } else {
                                     System.out.println("ID no existe");
@@ -93,14 +103,15 @@ public class App {
                                 break;
                             case "remove":
                                 if (productController.productoID(Integer.parseInt(lineSepSpace[2])) != null) {
-                                    ticketController.remove(productController.productoID(Integer.parseInt(lineSepSpace[2])));
+                                    ticketController.remove(productController
+                                            .productoID(Integer.parseInt(lineSepSpace[2])));
                                     System.out.println("ticket remove: ok\n");
                                 } else {
                                     System.out.println("ID no existe");
                                 }
                                 break;
                             case "print":
-                                ticketController.print();
+                                ticketController.print(lineSepSpace[2], lineSepSpace[3]);
                                 System.out.println("ticket print: ok\n");
                                 break;
                             default:
