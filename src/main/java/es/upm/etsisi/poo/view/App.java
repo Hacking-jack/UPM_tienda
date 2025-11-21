@@ -191,7 +191,7 @@ public class App {
                 throw new NumberFormatException("Formato de comando no válido");
             }
         }
-        mergeQuotedInput(split);
+        juntarComillas(split);
         return command;
     }
 
@@ -207,7 +207,7 @@ public class App {
         return pers;
     }
 
-    private static void mergeQuotedInput(String[] split) {
+    private static void juntarComillas(String[] split) {
         boolean inQuotes = false;
         StringBuilder current = new StringBuilder();
         int indice = 0;
