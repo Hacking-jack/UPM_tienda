@@ -1,26 +1,40 @@
 package es.upm.etsisi.poo.models;
 
-public class Client extends Users {
-    private String dni;
-    private Cashier cajeroAlta;
+import es.upm.etsisi.poo.BASES_DE_DATOS.HumanDB;
 
-    public Client(String nombre, String dni, String email, Cashier cajeroAlta) {
-        super(nombre, email);
-        this.dni = dni;
+public class Client extends Human {
+
+    private String cajeroAlta;
+
+    public Client(String nombre, String dni, String email, String cajeroAlta) {
+        this.id = dni;
         this.cajeroAlta = cajeroAlta;
     }
+    public Client(String nombre, String dni, String email, Cashier cajeroAlta) {
+        this.id = dni;
+        this.cajeroAlta = cajeroAlta.getId();
+    }
 
-    public String getId() { return dni; }
-    public Cashier getCajeroAlta() { return cajeroAlta; }
+    public String getId() {
+        return this.id;
+    }
+
+    public Cashier getCajeroAlta() {
+        Human p = HumanDB.findId(cajeroAlta);
+        if (p instanceof Cashier) {
+            return (Cashier) p;
+        }
+        return null;
+    }
 
     @Override
     public String toString() {
         String cashId;
         if (cajeroAlta != null) {
-            cashId = cajeroAlta.getId();
+            cashId = cajeroAlta;
         } else {
             cashId = "null";
         }
-        return "Client{identifier='" + dni + "', name='" + nombre + "', email='" + email + "', cash=" + cashId + "}";
+        return "Client{identifier='" + this.id + "', name='" + nombre + "', email='" + email + "', cash=" + cashId + "}";
     }
 }

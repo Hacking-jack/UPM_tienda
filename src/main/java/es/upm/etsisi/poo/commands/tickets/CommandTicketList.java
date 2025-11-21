@@ -12,9 +12,10 @@ public class CommandTicketList implements Command {
         this.ticketController = ticketController;
     }
 
+    //TODO hacer la lista de tickets
     @Override
     public boolean execute() {
-        ticketController.list()//FALTA TODO
+        ticketController.list()
         return true;
     }
 }

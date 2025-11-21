@@ -10,10 +10,8 @@ import java.time.temporal.ChronoUnit;
 
 public class ProductFoodMeetingController extends ProductController{
 
-    public ProductFoodMeetingController() {
-        super();
-    }
 
+// UNIFICAR ESTO CON PRDUT CONTROLLER, SOLO ES HERENCIA.
     public void add(int id, String name, String categories, double price, String date, int maxParticipantes, boolean isFood) {
         LocalDate fecha=LocalDate.parse(date);
         int dias= (int) ChronoUnit.DAYS.between(LocalDate.now(), fecha);

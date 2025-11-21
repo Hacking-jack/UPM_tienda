@@ -3,6 +3,7 @@ package es.upm.etsisi.poo.controler;
 import java.util.ArrayList;
 
 
+import es.upm.etsisi.poo.BASES_DE_DATOS.ProductDB;
 import es.upm.etsisi.poo.models.Categories;
 import es.upm.etsisi.poo.models.Product;
 
@@ -14,99 +15,70 @@ prod remove <id>
  */
 public class ProductController {
 
-    protected static ArrayList<Product> products;
-    protected static int counter;
-
-    public ProductController() {
-        products = new ArrayList<>();
-        counter = 0;
-    }
-
-
-
     public void add(int id, String name, String categories, double price) {
-        if(categorieControl(categories)){
-            if (existeId(id) != -1) {
+        if (categorieControl(categories)) {
+            if (ProductDB.findId(id) != null) {
                 System.out.println("Error. Ya existe el id.");
             } else {
-                if (counter<200) {
-                    Product product = new Product(name, price, Categories.valueOf(categories), id);
-                    products.add(product);
+                if (ProductDB.countProduct() < 200) {
+                    Product product = new Product(name, Categories.valueOf(categories), price, id);
+                    ProductDB.addProduct(product);
                     System.out.println(product.toString());
-                    counter++;
-                }else{
+                } else {
                     System.out.println("Catálogo de productos lleno.");
                 }
             }
         }
     }
-
+    // TODO: Mirar Clase de PoductDB para entender su uso
     public void list() {
         System.out.println("Catalog:");
-        for (int i = 0; i < products.size(); i++) {
-            System.out.println(products.get(i).toString());
+        ArrayList<Product> products = ProductDB.listProducts();
+        for (Product p : products)
+        {
+            System.out.println(p.toString());
         }
     }
 
     public void update(int id, String campo, String valor) {
-        int position = existeId(id)-1;
-        if (existeId(id) == -1) {
+
+        Product p = ProductDB.findId(id);
+        if ( p == null) {
             System.out.println("Error. No existe el id para actualizar.");
         } else {
             switch (campo.toUpperCase()) {
                 case "NAME":
-                    products.get(position).setName(valor);
+                    p.setName(valor);
                     break;
                 case "CATEGORY":
                     if(categorieControl(valor)) {
                         Categories categorie = Categories.valueOf(valor.toUpperCase());
-                        products.get(position).setCategories(categorie);
+                        p.setCategories(categorie);
                     }
                     break;
                 case "PRICE":
-                    products.get(position).setPrice(Double.parseDouble(valor));
+                    p.setPrice(Double.parseDouble(valor));
                     break;
                 default:
                     System.out.println("Campo no valido");
                     break;
             }
-            System.out.println(products.get(position).toString());
+            System.out.println(p.toString());
         }
     }
 
     public void remove(int id) {
-        int position = existeId(id)-1;
-        if (position == -2) {
+        Product p = ProductDB.findId(id);
+        if (p == null) {
             System.out.println("Error. No existe el id para borrar.");
         } else {
-            System.out.println(products.get(position).toString());
-            products.remove(products.get(position));
-            counter--;
+            System.out.println(p.toString());
+            ProductDB.removeProduct(p);
         }
     }
 
-    public int existeId(int id) {
-        boolean encontrado = false;
-        int i = 0;
-        while (!encontrado && i < products.size()) {
-            if (products.get(i).getId() == id) {
-                encontrado = true;
-            }
-            i++;
-        }
-        if (!encontrado) {
-            i = -1;
-        }
-        return i;
-    }
 
-    public Product productoID(int id){
-        if(existeId(id)!=-1)
-            return products.get((existeId(id))-1);
-        else{
-            return null;
-        }
-    }
+
     public boolean categorieControl(String categorie){
         try{
             categorie=categorie.toUpperCase();

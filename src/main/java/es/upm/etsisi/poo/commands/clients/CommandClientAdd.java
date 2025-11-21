@@ -2,7 +2,6 @@ package es.upm.etsisi.poo.commands.clients;
 
 import es.upm.etsisi.poo.commands.Command;
 import es.upm.etsisi.poo.controler.ClientController;
-import es.upm.etsisi.poo.models.Client;
 
 public class CommandClientAdd implements Command {
 

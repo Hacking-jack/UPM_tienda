@@ -1,42 +1,52 @@
 package es.upm.etsisi.poo.models;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 
-public class ProductFoodMeeting extends Product{
+public class ProductMeeting extends Product {
 
-    private LocalDate date;
-    private int maxParticipantes=100;
+    private LocalDateTime date;
+    private int maxParticipantes;
     private boolean isFood; //true==comida, false==reunion
     private int asistentes;
 
-    public ProductFoodMeeting(String name, double price, int id, LocalDate date, int maxParticipantes, boolean isFood){
-        super(name, price, null, id);
-        try{
+    public ProductMeeting(String name, double price) {
+        super(name, price, null);
+    }
+
+    public ProductMeeting(String name, double price, LocalDateTime date, int maxParticipantes, boolean isFood) {
+        super(name, price, null);
+        try {
             this.date = date;
-            if(maxParticipantes<=100){
-                this.maxParticipantes=maxParticipantes;
-            }else{
+            if (maxParticipantes <= 100)
+                this.maxParticipantes = maxParticipantes;
+            else {
+                this.maxParticipantes = 100;
                 System.out.println("Se ha establecido el máximo de asistentes en 100, el máximo permitido");
             }
-            this.isFood=isFood;
-            this.asistentes=0;
-        }catch (DateTimeParseException ex){
+            this.isFood = isFood;
+            this.asistentes = 0;
+        } catch (DateTimeParseException ex) {
             System.out.println("El formato de la fecha debe ser yyyy-MM-dd");
         }
 
     }
 
-    public void añadirAsistentes(int asistentes){
-        if(this.asistentes+asistentes>maxParticipantes){
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
+
+    public void setAsistentes(int asistentes) {
+        if (this.asistentes + asistentes > maxParticipantes) {
             System.out.println("No se han podido añadir todos los asistentes, se han añadido hasta llegar al maximo");
-            this.asistentes=maxParticipantes;
-        }else{
-            this.asistentes+=asistentes;
+            this.asistentes = maxParticipantes;
+        } else {
+            this.asistentes += asistentes;
         }
     }
 
-    public LocalDate getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
@@ -52,20 +62,16 @@ public class ProductFoodMeeting extends Product{
         return asistentes;
     }
 
-    public void setAsistentes(int asistentes){
-        this.asistentes=asistentes;
-    }
-
     @Override
-    public double getPrice(){
-        return price*asistentes;
+    public double getPrice() {
+        return price * asistentes;
     }
 
     @Override
     public String toString() {
         return "{class:" + ((isFood) ? "Food" : "Meeting") +
                 ", id:" + id + ", name:" + name + ", price:" + price * asistentes + ", date of Event:" + date +
-                ", max people allowed:" + maxParticipantes+"}";
+                ", max people allowed:" + maxParticipantes + "}";
     }
 }
 

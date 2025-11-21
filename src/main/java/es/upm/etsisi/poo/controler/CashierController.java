@@ -7,7 +7,6 @@ import java.util.Comparator;
 import java.util.List;
 public class CashierController {
 
-    private ArrayList<Cashier> cajeros;
     private HistorySalesController  historyController;
 
     public CashierController() {

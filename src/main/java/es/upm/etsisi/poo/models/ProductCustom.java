@@ -6,15 +6,15 @@ public class ProductCustom extends Product{
     private String[] listaPers;
     private int persAct;
 
-    public ProductCustom(String name, double price, Categories categories, int id, int maxPers){
-        super(name, price, categories, id);
+    public ProductCustom(String name, double price, Categories categories, int maxPers){
+        super(name, price, categories);
         this.maxPers = maxPers;
         listaPers=new String[this.maxPers];
         this.persAct=0;
     }
 
     public void addPers(String pers){
-        if(persAct<maxPers){
+        if(persAct < maxPers){
             listaPers[persAct]=pers;
             persAct++;
         }else{

@@ -2,24 +2,15 @@ package es.upm.etsisi.poo.models;
 
 import java.util.Random;
 
-public class Cashier extends Users {
+public class Cashier extends Human {
 
-    private String id;
 
-    public Cashier(String id, String nombre, String email) {
-        super(nombre, email);
-        if (id == null || id.isEmpty()) {
-            this.id = generarId();
-        } else {
-            this.id = id;
-        }
+    public Cashier(String nombre, String email) {
+        this.id = "UW" + (1_000_000 + new Random().nextInt(9_000_000));
+        this.nombre = nombre;
+        this.email = email;
     }
 
-    private String generarId() {
-        Random r = new Random();
-        int num = r.nextInt(10_000_000);
-        return "UW" + String.format("%07d", num);
-    }
 
     public String getId() {
         return id;

@@ -1,5 +1,8 @@
 package es.upm.etsisi.poo.view;
 
+import es.upm.etsisi.poo.BASES_DE_DATOS.ProductDB;
+import es.upm.etsisi.poo.BASES_DE_DATOS.TicketDB;
+import es.upm.etsisi.poo.BASES_DE_DATOS.HumanDB;
 import es.upm.etsisi.poo.commands.cash.CommandCashAdd;
 import es.upm.etsisi.poo.commands.cash.CommandCashList;
 import es.upm.etsisi.poo.commands.cash.CommandCashRemove;
@@ -13,14 +16,12 @@ import es.upm.etsisi.poo.commands.general.CommandHelp;
 import es.upm.etsisi.poo.commands.products.*;
 import es.upm.etsisi.poo.commands.tickets.*;
 import es.upm.etsisi.poo.controler.*;
-import es.upm.etsisi.poo.models.Product;
-import es.upm.etsisi.poo.models.Ticket;
 import es.upm.etsisi.poo.commands.*;
 
-import java.util.HashMap;
-import java.util.Objects;
 import java.util.Scanner;
 
+
+//TODO adaptar y terminar de estructurar bien el App al los controladores con las dependencias arregladas.
 /*
 Aqui va help, exit, etc... Las fnc visuales
 help (lista los comandos)
@@ -28,6 +29,10 @@ echo “<texto>” (imprime el texto en el valor texto)
 exit
  */
 public class App {
+    private HumanDB baseDeUsuarios;
+    private TicketDB baseDeTickets;
+    private ProductDB baseDeProductos;
+
     private ProductController productController;
     private TicketController ticketController;
     private CashierController cashierController;
@@ -45,12 +50,12 @@ public class App {
     }
 
     private void iniciar() {
+
         this.productController = new ProductController();
         this.historyController = new HistorySalesController();
         this.cashierController = new CashierController();
-        this.clientController = new ClientController(cashierController);
-        this.ticketController = new TicketController(this.historyController, this.cashierController,
-                this.clientController);
+        this.clientController = new ClientController();
+        this.ticketController = new TicketController();
         System.out.println("Welcome to the ticket module App\nTicket module. Type 'help' to see commands");
     }
 

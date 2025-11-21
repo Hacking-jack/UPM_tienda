@@ -24,7 +24,7 @@ public class CommandTicketAddProduct implements Command {
         this.ticketController = ticketController;
         this.productController = productController;
     }
-
+    //TODO existe esta otacion que te sale en intellij como una lista de tareas
     @Override
     public boolean execute() {
         if(pers[0]==null) {// sin pers

@@ -1,19 +1,28 @@
 package es.upm.etsisi.poo.models;
 
 
-public class Product {
+import java.util.Random;
+import java.util.UUID;
 
+public class Product {
 
     protected String name;
     protected Categories categories;
     protected double price;
     protected int id;
 
-    public Product(String name, double price, Categories categories, int id) {
+    public Product(String name, Categories categories, double price, int id) {
+        this.name = name;
+        this.categories = categories;
+        this.price = price;
+        this.id = id;
+    }
+
+    public Product(String name, double price, Categories categories) {
+        this.id =  10000000 + new Random().nextInt(90000000);
         this.name = name;
         this.price = price;
         this.categories = categories;
-        this.id=id;
     }
 
     public String getName() {
@@ -36,8 +45,6 @@ public class Product {
         return categories;
     }
 
-
-
     public void setCategories(Categories categories) {
         this.categories = categories;
     }
@@ -45,7 +52,6 @@ public class Product {
     public int getId() {
         return id;
     }
-
 
     @Override
     public String toString() {
