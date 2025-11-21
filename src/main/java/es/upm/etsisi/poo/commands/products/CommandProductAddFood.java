@@ -14,9 +14,13 @@ public class CommandProductAddFood implements Command {
     private final int maxPeople;
     private final ProductFoodMeetingController productFoodMeetingController;
 
-    public CommandProductAddFood(int id, String name, double price, String date, int maxPeople,
+    public CommandProductAddFood(Integer id, String name, double price, String date, int maxPeople,
                                  ProductFoodMeetingController productFoodMeetingController) {
-        this.id = id;
+        if(id!=null) {
+            this.id = id;
+        }else{
+            this.id=generarId();
+        }
         this.name = name;
         this.price = price;
         this.date = date;

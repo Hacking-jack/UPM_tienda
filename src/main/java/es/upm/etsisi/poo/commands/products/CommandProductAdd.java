@@ -13,9 +13,13 @@ public class CommandProductAdd implements Command {
     private final ProductController productController;
     private final ProductCustomController productCustomController;
 
-    public CommandProductAdd(int id, String name, String category, double price, Integer maxPers,
+    public CommandProductAdd(Integer id, String name, String category, double price, Integer maxPers,
                              ProductController productController, ProductCustomController productCustomController) {
-        this.id = id;
+        if(id!=null){
+            this.id=id;
+        }else{
+            this.id=generarId();   //TODO generar id
+        }
         this.name = name;
         this.category = category;
         this.price = price;

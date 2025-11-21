@@ -52,6 +52,8 @@ public class App {
     private void iniciar() {
 
         this.productController = new ProductController();
+        this.productCustomController = new ProductCustomController();
+        this.productFoodMeetingController = new ProductFoodMeetingController();
         this.historyController = new HistorySalesController();
         this.cashierController = new CashierController();
         this.clientController = new ClientController();
@@ -71,6 +73,7 @@ public class App {
                 Command cmd = null;
                 switch (comando) {
                     case "client add":
+                        removeComillas(args, 0);
                         cmd = new CommandClientAdd(args[0], args[1], args[2], args[3], clientController);
                         break;
 
@@ -83,7 +86,13 @@ public class App {
                         break;
 
                     case "cash add":
-                        cmd = new CommandCashAdd(args[0], args[1], args[2], cashierController);
+                        if(!args[0].startsWith("\"")) {
+                            removeComillas(args,1);
+                            cmd = new CommandCashAdd(args[0], args[1], args[2], cashierController);
+                        }else{
+                            removeComillas(args, 0);
+                            cmd = new CommandCashAdd(null, args[0], args[1], cashierController);
+                        }
                         break;
 
                     case "cash remove":
@@ -99,11 +108,15 @@ public class App {
                         break;
 
                     case "ticket new":
-                        cmd = new CommandTicketNew(args[0], args[1], args[2], ticketController);
+                        if(args[2].equals(" ")){
+                            cmd = new CommandTicketNew(null, args[0], args[1], ticketController);
+                        }else {
+                            cmd = new CommandTicketNew(args[0], args[1], args[2], ticketController);
+                        }
                         break;
 
                     case "ticket add":
-                        String[] pers = new String[args.length];
+                        String[] pers;
                         pers = obtenerPers(args);
                         cmd = new CommandTicketAddProduct(args[0], args[1], args[2], Integer.parseInt(args[3]), pers,
                                 ticketController, productController);
@@ -123,23 +136,48 @@ public class App {
                         break;
 
                     case "prod add":
-                        cmd = new CommandProductAdd(Integer.parseInt(args[0]), args[1], args[2],
-                                Double.parseDouble(args[3]), Integer.parseInt(args[4]), productController,
-                                productCustomController);
+                        if(!args[0].startsWith("\"")) {
+                            removeComillas(args, 1);
+                            cmd = new CommandProductAdd(Integer.parseInt(args[0]), args[1], args[2],
+                                    Double.parseDouble(args[3]), Integer.parseInt(args[4]), productController,
+                                    productCustomController);
+                        }else{
+                            removeComillas(args, 0);
+                            cmd = new CommandProductAdd(null, args[0], args[1], Double.parseDouble(args[2]),
+                                    Integer.parseInt(args[3]), productController,
+                                    productCustomController);
+                        }
                         break;
 
                     case "prod update":
+                        if(args[1].startsWith("\"")){
+                            removeComillas(args, 1);
+                        }
                         cmd = new CommandProductUpdate(Integer.parseInt(args[0]), args[1], args[2], productController);
                         break;
 
                     case "prod addFood":
-                        cmd = new CommandProductAddFood(Integer.parseInt(args[0]), args[1], Double.parseDouble(args[2]),
-                                args[3], Integer.parseInt(args[4]), productFoodMeetingController);
+                        if(!args[0].startsWith("\"")) {
+                            removeComillas(args, 1);
+                            cmd = new CommandProductAddFood(Integer.parseInt(args[0]), args[1], Double.parseDouble(args[2]),
+                                    args[3], Integer.parseInt(args[4]), productFoodMeetingController);
+                        }else{
+                            removeComillas(args, 0);
+                            cmd = new CommandProductAddFood(null, args[0], Double.parseDouble(args[1]),
+                                    args[2], Integer.parseInt(args[3]), productFoodMeetingController);
+                        }
                         break;
 
                     case "prod addMeeting":
-                        cmd = new CommandProductAddMeeting(Integer.parseInt(args[0]), args[1], Double.parseDouble(args[2]),
-                                args[3], Integer.parseInt(args[4]), productFoodMeetingController);
+                        if(!args[0].startsWith("\"")) {
+                            removeComillas(args, 1);
+                            cmd = new CommandProductAddMeeting(Integer.parseInt(args[0]), args[1], Double.parseDouble(args[2]),
+                                    args[3], Integer.parseInt(args[4]), productFoodMeetingController);
+                        }else{
+                            removeComillas(args, 0);
+                            cmd = new CommandProductAddMeeting(null, args[0], Double.parseDouble(args[1]),
+                                    args[2], Integer.parseInt(args[3]), productFoodMeetingController);
+                        }
                         break;
 
                     case "prod list":
@@ -164,6 +202,7 @@ public class App {
                         break;
                 }
                 bucle = cmd.execute();
+                System.out.println(comando+": ok");
             } catch (NumberFormatException | ArrayIndexOutOfBoundsException | NullPointerException ex) {
                 System.out.println("Formato del comando incorrecto. Use help para ver los comandos");
             }
@@ -217,12 +256,12 @@ public class App {
             if (!inQuotes) {
                 if (part.startsWith("\"") && !part.endsWith("\"")) {    //empiezan comillas
                     inQuotes = true;
-                    current.append(part.substring(1)).append(" ");
+                    current.append(part).append(" ");
                     indice = i;
                 }
             } else {
                 if (part.endsWith("\"")) {
-                    current.append(part, 0, part.length() - 1);
+                    current.append(part);
                     split[indice] = current.toString();
                     reordenarArray(split, indice, i - indice);
                     current.setLength(0);
@@ -232,6 +271,10 @@ public class App {
                 }
             }
         }
+    }
+
+    private static  void removeComillas(String[] array, int indice){
+        array[indice]=array[indice].substring(1,array[indice].length()-1);
     }
 
     private static void reordenarArray(String[] split, int i1, int dif) {
