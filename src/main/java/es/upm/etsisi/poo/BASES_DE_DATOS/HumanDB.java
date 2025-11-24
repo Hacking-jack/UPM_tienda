@@ -25,4 +25,8 @@ public class HumanDB {
     static public void removeHuman(Human p) {
         human.remove(p);
     }
+
+    static public ArrayList<Human> list(){
+        return human;
+    }
 }

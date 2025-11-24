@@ -42,4 +42,7 @@ public class ProductDB {
     public static int getCounter() {
         return counter;
     }
+    //TODO hacer un addClone y poner un contador para los limmites (el addClone no sube el cont)
+
+
 }

@@ -90,4 +90,13 @@ public class ProductController {
         }
     }
 
+    public int generarId(){
+        int id =  (int) (Math.random()*9999);
+        if(ProductDB.findId(id)==null){
+            return id;
+        }else{
+            return generarId();
+        }
+    }
+
 }

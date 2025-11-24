@@ -23,14 +23,14 @@ public class Ticket {
         this.idTicket = date.format(formatter).toString() + random5.toString();
     }
 
-  /*  public Ticket(String idTicket, LocalDateTime date,
-                  List<Product> products, double finalPrice, States estado) {
+    public Ticket(String idTicket, LocalDateTime date,
+                  ArrayList<Product> products, double finalPrice, States estado) {
         this.products = new ArrayList<>(products);
-        this.finalPrice = finalPrice;
-        this.idTicket = idTicket;
+        this.idTicket = String.format(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yy-MM-dd-HH:mm-"))
+                + String.format("%05d", idTicket));
         this.date = date;
         this.estado = States.VACIO;
-    }*/
+    }
 
 
     //TODO despues de cada addProduct hay qeu hacer un print

@@ -14,7 +14,7 @@ public class CommandCashAdd implements Command {
         if(id!=null) {
             this.id = id;
         }else{
-            this.id = generarId();
+            this.id = cashierController.generarId();
         }
         this.name = name;
         this.email = email;

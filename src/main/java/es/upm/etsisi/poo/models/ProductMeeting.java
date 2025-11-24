@@ -10,13 +10,9 @@ public class ProductMeeting extends Product {
     private int maxParticipantes;
     private boolean isFood; //true==comida, false==reunion
     private int asistentes;
-    //TODO constructor con id
-    public ProductMeeting(String name, double price) {
-        super(name, price, null);
-    }
 
-    public ProductMeeting(String name, double price, LocalDateTime date, int maxParticipantes, boolean isFood) {
-        super(name, price, null);
+    public ProductMeeting(int id, String name, double price, LocalDateTime date, int maxParticipantes, boolean isFood) {
+        super(name, null, price, id);
         try {
             this.date = date;
             if (maxParticipantes <= 100)

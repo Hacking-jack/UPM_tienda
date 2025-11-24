@@ -19,7 +19,7 @@ public class CommandProductAddMeeting implements Command {
         if(id!=null) {
             this.id = id;
         }else{
-            this.id=generarId();
+            this.id=productFoodMeetingController.generarId();
         }
         this.name = name;
         this.price = price;

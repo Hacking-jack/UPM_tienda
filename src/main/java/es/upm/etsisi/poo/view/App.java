@@ -3,16 +3,9 @@ package es.upm.etsisi.poo.view;
 import es.upm.etsisi.poo.BASES_DE_DATOS.ProductDB;
 import es.upm.etsisi.poo.BASES_DE_DATOS.TicketDB;
 import es.upm.etsisi.poo.BASES_DE_DATOS.HumanDB;
-import es.upm.etsisi.poo.commands.cash.CommandCashAdd;
-import es.upm.etsisi.poo.commands.cash.CommandCashList;
-import es.upm.etsisi.poo.commands.cash.CommandCashRemove;
-import es.upm.etsisi.poo.commands.cash.CommandCashTickets;
-import es.upm.etsisi.poo.commands.clients.CommandClientAdd;
-import es.upm.etsisi.poo.commands.clients.CommandClientList;
-import es.upm.etsisi.poo.commands.clients.CommandClientRemove;
-import es.upm.etsisi.poo.commands.general.CommandEcho;
-import es.upm.etsisi.poo.commands.general.CommandExit;
-import es.upm.etsisi.poo.commands.general.CommandHelp;
+import es.upm.etsisi.poo.commands.cash.*;
+import es.upm.etsisi.poo.commands.clients.*;
+import es.upm.etsisi.poo.commands.general.*;
 import es.upm.etsisi.poo.commands.products.*;
 import es.upm.etsisi.poo.commands.tickets.*;
 import es.upm.etsisi.poo.controler.*;
@@ -40,7 +33,6 @@ public class App {
     private TicketController ticketController;
     private CashierController cashierController;
     private ClientController clientController;
-    private HistorySalesController historyController;
     private ProductFoodMeetingController productFoodMeetingController;
     private ProductCustomController productCustomController;
 
@@ -61,7 +53,6 @@ public class App {
         this.productController = new ProductController();
         this.productCustomController = new ProductCustomController();
         this.productFoodMeetingController = new ProductFoodMeetingController();
-        this.historyController = new HistorySalesController();
         this.cashierController = new CashierController();
         this.clientController = new ClientController();
         this.ticketController = new TicketController();

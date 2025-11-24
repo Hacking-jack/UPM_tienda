@@ -18,7 +18,7 @@ public class CommandProductAdd implements Command {
         if(id!=null){
             this.id=id;
         }else{
-            this.id=generarId();   //TODO generar id
+            this.id=productController.generarId();
         }
         this.name = name;
         this.category = category;

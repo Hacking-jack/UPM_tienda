@@ -1,30 +1,29 @@
 package es.upm.etsisi.poo.controler;
+import es.upm.etsisi.poo.BASES_DE_DATOS.HumanDB;
 import es.upm.etsisi.poo.models.Cashier;
+import es.upm.etsisi.poo.models.Human;
 import es.upm.etsisi.poo.models.Ticket;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Random;
+
 public class CashierController {
 
-    private HistorySalesController  historyController;
 
     public CashierController() {
-        this.cajeros = new ArrayList<>();
+
     }
-    public void setHistoryController(HistorySalesController historyController) {
-        this.historyController = historyController;
-    }
+
 
     public void add(String id, String nombre, String email) {
-
         if (id != null && searchId(id) != null) {
             System.out.println("Error. Ya existe un cajero con ese id.");
             return;
         }
-
         Cashier nuevo = new Cashier(id, nombre, email);
-        cajeros.add(nuevo);
+        HumanDB.addUser(nuevo);
         System.out.println(nuevo);
     }
 
@@ -34,25 +33,24 @@ public class CashierController {
             System.out.println("Error. Cajero no encontrado.");
             return;
         }
-
         System.out.println(c);
-        cajeros.remove(c);
+        HumanDB.removeHuman(c);
     }
 
     public void list() {
-        Comparator<Cashier> comparador = Comparator.comparing(Cashier::getNombre);
-        cajeros.sort(comparador);
-        for (int i = 0; i < cajeros.size(); i++) {
-            Cashier cajero = cajeros.get(i);
-            System.out.println(cajero);
+        for (Human human:HumanDB.list()) {
+            if(human instanceof Cashier){
+                System.out.println(human.toString());
+            }
         }
     }
 
+
+
     public Cashier searchId(String id) {
-        for (int i = 0; i < cajeros.size(); i++) {
-            Cashier cajero = cajeros.get(i);
-            if (cajero.getId().equals(id)) {
-                return cajero;
+        for (Human h:HumanDB.list()) {
+            if(h instanceof Cashier && h.getId().equals(id)){
+                return (Cashier) h;
             }
         }
         return null;
@@ -78,6 +76,10 @@ public class CashierController {
             System.out.printf("  %s->%s\n", ticket.getIdTicket(), status);
         }
         System.out.println("cash tickets: ok");
+    }
+
+    public String generarId(){
+        return "UW" + (1_000_000 + new Random().nextInt(9_000_000));
     }
 }
 

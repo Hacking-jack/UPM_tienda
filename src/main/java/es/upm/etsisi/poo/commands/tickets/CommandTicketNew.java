@@ -13,7 +13,7 @@ public class CommandTicketNew implements Command {
         if(id!=null) {
             this.id = id;
         }else{
-            this.id= generarId();
+            this.id= ticketController.generarId();
         }
         this.cashId = cashId;
         this.clientId = clientId;

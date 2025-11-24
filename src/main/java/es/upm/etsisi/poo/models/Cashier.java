@@ -5,8 +5,9 @@ import java.util.Random;
 public class Cashier extends Human {
 
 
-    public Cashier(String nombre, String email) {
-        this.id = "UW" + (1_000_000 + new Random().nextInt(9_000_000));
+    public Cashier(String id, String nombre, String email) {
+        //TODO revisar que no se repitan ids
+        this.id = id;
         this.nombre = nombre;
         this.email = email;
     }

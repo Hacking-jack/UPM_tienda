@@ -4,22 +4,19 @@ import es.upm.etsisi.poo.BASES_DE_DATOS.ProductDB;
 import es.upm.etsisi.poo.BASES_DE_DATOS.TicketDB;
 import es.upm.etsisi.poo.models.*;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
  // TODO tengo que pensar como interactuar con la base de datos
 public class TicketController {
 
     private Ticket ticket;
-    private Client client;
-    private Cashier cashier;
 
-    public TicketController(Client client, Cashier cashier) {
+
+    public TicketController() {
         this.ticket = new Ticket();
         TicketDB.addTicket(ticket);
-        this.cashier = cashier;
-        this.client = client;
-        cashier.addTicket(ticket.getIdTicket());
-        client.addTicket(ticket.getIdTicket());
     }
 
     public void addProduct(Product product, int quantity) {
@@ -43,7 +40,7 @@ public class TicketController {
             }
             ((ProductCustom) product).addPers(pers);
         }else{
-            System.out.println("No se puede personalizar u nobjeto no personalizable");
+            System.out.println("No se puede personalizar un objeto no personalizable");
         }
 
     }
@@ -51,7 +48,11 @@ public class TicketController {
        ticket.removeProduct(product);
     }
     public void list(){
-        ArrayList<Ticket> tickets = TicketDB.
+        ArrayList<Ticket> tickets = TicketDB.listProducts();
+    }
+    public String generarId(){
+        return String.format(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yy-MM-dd-HH:mm-"))
+                + String.format("%05d", (int)(Math.random() * 100000)));
     }
 
 
