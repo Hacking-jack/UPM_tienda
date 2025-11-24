@@ -21,7 +21,7 @@ public class CommandProductAdd implements Command {
             this.id=productController.generarId();
         }
         this.name = name;
-        this.category = category;
+        this.category = category.toUpperCase();
         this.price = price;
         this.maxPers = maxPers;
         this.productController = productController;
