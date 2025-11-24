@@ -1,8 +1,9 @@
 package es.upm.etsisi.poo.controler;
 
 
+import es.upm.etsisi.poo.BASES_DE_DATOS.ProductDB;
 import es.upm.etsisi.poo.models.Product;
-import es.upm.etsisi.poo.models.ProductFoodMeeting;
+import es.upm.etsisi.poo.models.ProductMeeting;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -13,18 +14,17 @@ public class ProductFoodMeetingController extends ProductController{
 
 // UNIFICAR ESTO CON PRDUT CONTROLLER, SOLO ES HERENCIA.
     public void add(int id, String name, String categories, double price, String date, int maxParticipantes, boolean isFood) {
-        LocalDate fecha=LocalDate.parse(date);
+        LocalDateTime fecha=LocalDateTime.parse(date);
         int dias= (int) ChronoUnit.DAYS.between(LocalDate.now(), fecha);
         if(categorieControl(categories)){
-            if (existeId(id) != -1) {
+            if (ProductDB.findId(id)==null) {
                 System.out.println("Error. Ya existe el id.");
             } else {
-                if (counter<200) {
+                if (ProductDB.getCounter()<200) {
                     if((isFood && dias>=3) || (!isFood && (dias>=1 || (dias==0 && LocalDateTime.now().getHour()<=12)))) {
-                        Product product = new ProductFoodMeeting(name, price, id, fecha, maxParticipantes, isFood);
-                        products.add(product);
+                        Product product = new ProductMeeting(id,name, price, fecha, maxParticipantes, isFood);
+                        ProductDB.addProduct(product);
                         System.out.println(product.toString());
-                        counter++;
                     }
                 }else{
                     System.out.println("Catálogo de productos lleno.");

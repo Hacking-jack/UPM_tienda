@@ -13,9 +13,25 @@ public class Ticket {
     //private double finalPrice;
     private LocalDateTime date;
     private States estado;
+    private String cashierId;
+    private String clientId;
 
 
-    public Ticket() {
+    public String getClientId() {
+        return clientId;
+    }
+
+    public States getEstado() {
+        return estado;
+    }
+
+    public String getCashierId() {
+        return cashierId;
+    }
+
+    public Ticket(String cashierId, String clientId) {
+        this.cashierId=cashierId;
+        this.clientId=clientId;
         this.products = new ArrayList<Product>();
         this.date = LocalDateTime.now();
         Integer random5 = 10000 + new Random().nextInt(90000);
@@ -24,7 +40,9 @@ public class Ticket {
     }
 
     public Ticket(String idTicket, LocalDateTime date,
-                  ArrayList<Product> products, double finalPrice, States estado) {
+                  ArrayList<Product> products, double finalPrice, States estado, String cashierId, String clientId) {
+        this.clientId=clientId;
+        this.cashierId=cashierId;
         this.products = new ArrayList<>(products);
         this.idTicket = String.format(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yy-MM-dd-HH:mm-"))
                 + String.format("%05d", idTicket));

@@ -1,5 +1,6 @@
 package es.upm.etsisi.poo.controler;
 import es.upm.etsisi.poo.BASES_DE_DATOS.HumanDB;
+import es.upm.etsisi.poo.BASES_DE_DATOS.TicketDB;
 import es.upm.etsisi.poo.models.Cashier;
 import es.upm.etsisi.poo.models.Human;
 import es.upm.etsisi.poo.models.Ticket;
@@ -57,25 +58,14 @@ public class CashierController {
     }
 
     public void cashTickets(String cashId) {
-        List<Ticket> ticketsDelCajero = historyController.searchTicketsByCashier(cashId);
+        List<Ticket> ticketsDelCajero = TicketDB.listProducts();
+        System.out.println("Tickets:");
 
-        if (ticketsDelCajero.isEmpty()) {
-            System.out.println("Tickets: \ncash tickets: ok");
-            return;
+        for(Ticket t:ticketsDelCajero){
+            if(t.getCashierId().equals(cashId)){
+                System.out.print(t.toString()+"->"+t.getEstado());
+            }
         }
-
-        System.out.println("Tickets: ");
-
-        ticketsDelCajero.sort(Comparator.comparing(Ticket::getDate));
-
-        for (int i = 0; i < ticketsDelCajero.size(); i++) {
-            Ticket ticket = ticketsDelCajero.get(i);
-
-            String status = ticket.getProducts().isEmpty() ? "EMPTY" : "CLOSE";
-
-            System.out.printf("  %s->%s\n", ticket.getIdTicket(), status);
-        }
-        System.out.println("cash tickets: ok");
     }
 
     public String generarId(){
