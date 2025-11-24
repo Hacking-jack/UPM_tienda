@@ -1,6 +1,5 @@
 package es.upm.etsisi.poo.controler;
 
-import es.upm.etsisi.poo.BASES_DE_DATOS.ProductDB;
 import es.upm.etsisi.poo.BASES_DE_DATOS.TicketDB;
 import es.upm.etsisi.poo.models.*;
 
@@ -14,14 +13,13 @@ public class TicketController {
     private Ticket ticket;
 
 
-    public TicketController() {
-        this.ticket = new Ticket();
-        TicketDB.addTicket(ticket);
+    public void newTicket(String id){
+        this.ticket=new Ticket(id);
     }
 
     public void addProduct(Product product, int quantity) {
         for (int i = 0; i < quantity; i++) {
-            if (!ticket.addPoduct(product)) {
+            if (!ticket.addProduct(product)) {
                 System.out.println("No se pudieron añadir todos los productos, se han añadido " + i +
                         " hasta llegar al limite de 100");
                 break;
@@ -32,7 +30,7 @@ public class TicketController {
         if(product instanceof ProductCustom){
             Product clone=product.clone();
             for (int i = 0; i < quantity; i++) {
-                if (!ticket.addPoduct(clone)) {
+                if (!ticket.addProduct(clone)) {
                     System.out.println("No se pudieron añadir todos los productos, se han añadido " + i +
                             " hasta llegar al limite de 100");
                     break;
@@ -57,6 +55,10 @@ public class TicketController {
     public String generarId(){
         return String.format(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yy-MM-dd-HH:mm-"))
                 + String.format("%05d", (int)(Math.random() * 100000)));
+    }
+
+    public void print(String ticketId){
+        System.out.println(TicketDB.findId(ticketId));
     }
 
 

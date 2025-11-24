@@ -128,16 +128,16 @@ public class App {
 
                         case "ticket new":
                             if (args[2].equals(" ")) {
-                                cmd = new CommandTicketNew(null, args[0], args[1], ticketController);
+                                cmd = new CommandTicketNew(null, args[0], args[1], ticketController, clientController, cashierController);
                             } else {
-                                cmd = new CommandTicketNew(args[0], args[1], args[2], ticketController);
+                                cmd = new CommandTicketNew(args[0], args[1], args[2], ticketController, clientController, cashierController);
                             }
                             break;
 
                         case "ticket add":
                             String[] pers;
                             pers = obtenerPers(args);
-                            cmd = new CommandTicketAddProduct(args[0], args[1], args[2], Integer.parseInt(args[3]), pers,
+                            cmd = new CommandTicketAddProduct(args[0], args[1], Integer.parseInt(args[2]), Integer.parseInt(args[3]), pers,
                                     ticketController, productController);
                             break;
 

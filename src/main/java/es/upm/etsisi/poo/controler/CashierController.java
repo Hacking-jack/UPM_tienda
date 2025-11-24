@@ -58,13 +58,11 @@ public class CashierController {
     }
 
     public void cashTickets(String cashId) {
-        List<Ticket> ticketsDelCajero = TicketDB.listProducts();
         System.out.println("Tickets:");
 
-        for(Ticket t:ticketsDelCajero){
-            if(t.getCashierId().equals(cashId)){
-                System.out.print(t.toString()+"->"+t.getEstado());
-            }
+        Cashier aux=(Cashier)HumanDB.findId(cashId);
+        for(String t:aux.getTickets()){
+            System.out.println(TicketDB.findId(t));
         }
     }
 

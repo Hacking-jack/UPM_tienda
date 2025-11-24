@@ -46,6 +46,15 @@ public class ClientController {
         }
     }
 
+    public Client searchId(String id) {
+        for (Human h:HumanDB.list()) {
+            if(h instanceof Client && h.getId().equals(id)){
+                return (Client) h;
+            }
+        }
+        return null;
+    }
+
 }
 
 //o client add "<nombre>" <DNI> <email> <cashId>

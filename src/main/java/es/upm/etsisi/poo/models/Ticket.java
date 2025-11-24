@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Random;
 
 public class Ticket {
     private ArrayList<Product> products;
@@ -13,46 +12,26 @@ public class Ticket {
     //private double finalPrice;
     private LocalDateTime date;
     private States estado;
-    private String cashierId;
-    private String clientId;
-
-
-    public String getClientId() {
-        return clientId;
-    }
 
     public States getEstado() {
         return estado;
     }
 
-    public String getCashierId() {
-        return cashierId;
+    public Ticket(){
+        this(LocalDateTime.now()
+                .format(DateTimeFormatter.ofPattern("yy-MM-dd-HH:mm-"))
+                + String.format("%05d", (int)(Math.random()*10000)));
     }
 
-    public Ticket(String cashierId, String clientId) {
-        this.cashierId=cashierId;
-        this.clientId=clientId;
-        this.products = new ArrayList<Product>();
+    public Ticket(String id) {
+        this.idTicket=id;
+        this.estado=States.VACIO;
         this.date = LocalDateTime.now();
-        Integer random5 = 10000 + new Random().nextInt(90000);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy-MM-dd-HH:mm-");
-        this.idTicket = date.format(formatter).toString() + random5.toString();
-    }
-
-    public Ticket(String idTicket, LocalDateTime date,
-                  ArrayList<Product> products, double finalPrice, States estado, String cashierId, String clientId) {
-        this.clientId=clientId;
-        this.cashierId=cashierId;
         this.products = new ArrayList<>(products);
-        this.idTicket = String.format(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yy-MM-dd-HH:mm-"))
-                + String.format("%05d", idTicket));
-        this.date = date;
-        this.estado = States.VACIO;
     }
-
 
     //TODO despues de cada addProduct hay qeu hacer un print
-    public boolean addPoduct(Product product) {
+    public boolean addProduct(Product product) {
         if (products.isEmpty())
             this.estado = States.ACTIVO;
         if (this.products.size() < 100)
