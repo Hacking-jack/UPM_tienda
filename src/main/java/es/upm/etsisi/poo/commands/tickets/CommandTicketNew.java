@@ -10,7 +10,11 @@ public class CommandTicketNew implements Command {
     private final TicketController ticketController;
 
     public CommandTicketNew(String id, String cashId, String clientId, TicketController ticketController) {
-        this.id = id;
+        if(id!=null) {
+            this.id = id;
+        }else{
+            this.id= generarId();
+        }
         this.cashId = cashId;
         this.clientId = clientId;
         this.ticketController = ticketController;

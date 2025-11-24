@@ -11,7 +11,11 @@ public class CommandCashAdd implements Command {
     private final CashierController cashierController;
 
     public CommandCashAdd(String id, String name, String email, CashierController cashierController) {
-        this.id = id;
+        if(id!=null) {
+            this.id = id;
+        }else{
+            this.id = generarId();
+        }
         this.name = name;
         this.email = email;
         this.cashierController = cashierController;

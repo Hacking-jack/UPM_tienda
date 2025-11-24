@@ -5,7 +5,7 @@ public class ProductCustom extends Product{
     public int maxPers;
     private String[] listaPers;
     private int persAct;
-
+    //TODO constructor con id
     public ProductCustom(String name, double price, Categories categories, int maxPers){
         super(name, price, categories);
         this.maxPers = maxPers;

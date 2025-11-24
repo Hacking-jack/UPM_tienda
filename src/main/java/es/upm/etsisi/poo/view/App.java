@@ -278,10 +278,10 @@ public class App {
     }
 
     private static void reordenarArray(String[] split, int i1, int dif) {
-        for (int i = i1 + 1; i < split.length; i++) {
+        for (int i = i1 + 1; i < split.length - dif; i++) {
             split[i] = split[i + dif];
         }
-        for(int i=split.length-dif-1; i< split.length;i++){
+        for(int i=split.length-dif; i< split.length;i++){
             split[i]=" ";
         }
     }

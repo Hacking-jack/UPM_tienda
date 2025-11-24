@@ -10,7 +10,7 @@ public class ProductMeeting extends Product {
     private int maxParticipantes;
     private boolean isFood; //true==comida, false==reunion
     private int asistentes;
-
+    //TODO constructor con id
     public ProductMeeting(String name, double price) {
         super(name, price, null);
     }

@@ -33,9 +33,9 @@ public class Ticket {
     }*/
 
 
-
+    //TODO despues de cada addProduct hay qeu hacer un print
     public boolean addPoduct(Product product) {
-        if (products.size() == 0)
+        if (products.isEmpty())
             this.estado = States.ACTIVO;
         if (this.products.size() < 100)
             return products.add(product);
