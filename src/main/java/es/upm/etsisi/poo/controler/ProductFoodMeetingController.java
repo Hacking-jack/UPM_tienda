@@ -2,7 +2,7 @@ package es.upm.etsisi.poo.controler;
 
 
 import es.upm.etsisi.poo.models.Product;
-import es.upm.etsisi.poo.models.ProductFoodMeeting;
+import es.upm.etsisi.poo.models.ProductMeeting;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
