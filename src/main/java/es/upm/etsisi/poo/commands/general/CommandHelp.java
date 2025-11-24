@@ -7,7 +7,7 @@ public class CommandHelp implements Command {
     @Override
     public boolean execute() {
         System.out.println("Commands:" +
-                "\n client add \"<nombre>\" <DNI> <email> <cashId>\n" +
+                "\n client add \"<nombre>\" <DNI> <email> <cashId>\n " +
                 "client remove <DNI>\n " +
                 "client list\n " +
                 "cash add [<id>] \"<nombre>\"<email>\n " +
