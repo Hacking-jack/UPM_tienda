@@ -49,7 +49,11 @@ public class TicketController {
     }
     public void list(){
         ArrayList<Ticket> tickets = TicketDB.listProducts();
+        for(Ticket t:tickets){
+            System.out.println(t.toString());
+        }
     }
+
     public String generarId(){
         return String.format(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yy-MM-dd-HH:mm-"))
                 + String.format("%05d", (int)(Math.random() * 100000)));

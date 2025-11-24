@@ -15,7 +15,7 @@ public class CommandTicketList implements Command {
     //TODO hacer la lista de tickets
     @Override
     public boolean execute() {
-        ticketController.list()
+        ticketController.list();
         return true;
     }
 }
