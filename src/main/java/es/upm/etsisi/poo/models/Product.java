@@ -1,6 +1,8 @@
 package es.upm.etsisi.poo.models;
 
 
+import es.upm.etsisi.poo.BASES_DE_DATOS.ProductDB;
+
 import java.util.Random;
 import java.util.UUID;
 
@@ -51,6 +53,12 @@ public class Product {
 
     public int getId() {
         return id;
+    }
+
+    public Product clone(){
+        Product p = new Product(this.name, this.categories, this.price, this.id);
+        ProductDB.addProduct(p);
+        return p;
     }
 
     @Override
