@@ -29,14 +29,14 @@ public class App {
     private TicketDB baseDeTickets;
     private ProductDB baseDeProductos;
 
-    private ProductController productController;
-    private TicketController ticketController;
-    private CashierController cashierController;
-    private ClientController clientController;
-    private ProductFoodMeetingController productFoodMeetingController;
-    private ProductCustomController productCustomController;
+    private static ProductController productController;
+    private static TicketController ticketController;
+    private static CashierController cashierController;
+    private static ClientController clientController;
+    private static ProductFoodMeetingController productFoodMeetingController;
+    private static ProductCustomController productCustomController;
 
-    public void main(String[] args) {
+    public static void main(String[] args) {
         App aplicacion = new App();
         aplicacion.iniciar();
         if (args.length == 1)
@@ -59,14 +59,14 @@ public class App {
         System.out.println("Welcome to the ticket module App\nTicket module. Type 'help' to see commands");
     }
 
-    public void runInteractive() {
+    public static void runInteractive() {
         BufferedReader consoleReader =
                 new BufferedReader(new InputStreamReader(System.in));
 
         run(consoleReader, false);
     }
 
-    public void runFromFile(String filename) {
+    public static void runFromFile(String filename) {
         try (BufferedReader fileReader = new BufferedReader(new FileReader(filename))) {
             run(fileReader, true);
         } catch (IOException e) {
@@ -74,14 +74,17 @@ public class App {
         }
     }
 
-    private void run(BufferedReader input, boolean esArchivo) {
+    private static void run(BufferedReader input, boolean esArchivo) {
         boolean bucle = true;
         String line;
         while (bucle) {
             try {
-                while (bucle && (line = input.readLine()) != null) {
-
+                while (bucle) {
                     System.out.print("tUPM> ");
+                    line = input.readLine();
+                    if(line==null) break;
+
+                    //System.out.print("tUPM> ");
                     if(esArchivo){
                         System.out.println(line);
                     }
@@ -93,15 +96,15 @@ public class App {
                     switch (comando) {
                         case "client add":
                             removeComillas(args, 0);
-                            cmd = new CommandClientAdd(args[0], args[1], args[2], args[3], clientController);
+                            cmd = new CommandClientAdd(args[0], args[1], args[2], args[3], new ClientController());
                             break;
 
                         case "client remove":
-                            cmd = new CommandClientRemove(args[0], clientController);
+                            cmd = new CommandClientRemove(args[0], new ClientController());
                             break;
 
                         case "client list":
-                            cmd = new CommandClientList(clientController);
+                            cmd = new CommandClientList(new ClientController());
                             break;
 
                         case "cash add":
@@ -128,9 +131,9 @@ public class App {
 
                         case "ticket new":
                             if (args[2].equals(" ")) {
-                                cmd = new CommandTicketNew(null, args[0], args[1], ticketController, clientController, cashierController);
+                                cmd = new CommandTicketNew(null, args[0], args[1], ticketController, new ClientController(), cashierController);
                             } else {
-                                cmd = new CommandTicketNew(args[0], args[1], args[2], ticketController, clientController, cashierController);
+                                cmd = new CommandTicketNew(args[0], args[1], args[2], ticketController, new ClientController(), cashierController);
                             }
                             break;
 
@@ -157,14 +160,26 @@ public class App {
                         case "prod add":
                             if (!args[0].startsWith("\"")) {
                                 removeComillas(args, 1);
-                                cmd = new CommandProductAdd(Integer.parseInt(args[0]), args[1], args[2],
-                                        Double.parseDouble(args[3]), Integer.parseInt(args[4]), productController,
-                                        productCustomController);
+                                if(args[4]==null) {
+                                    cmd = new CommandProductAdd(Integer.parseInt(args[0]), args[1], args[2],
+                                            Double.parseDouble(args[3]), null, productController,
+                                            productCustomController);
+                                }else{
+                                    cmd = new CommandProductAdd(Integer.parseInt(args[0]), args[1], args[2],
+                                            Double.parseDouble(args[3]), Integer.parseInt(args[4]), productController,
+                                            productCustomController);
+                                }
                             } else {
                                 removeComillas(args, 0);
-                                cmd = new CommandProductAdd(null, args[0], args[1], Double.parseDouble(args[2]),
-                                        Integer.parseInt(args[3]), productController,
-                                        productCustomController);
+                                if(args[3]==null) {
+                                    cmd = new CommandProductAdd(null, args[0], args[1], Double.parseDouble(args[2]),
+                                            null, productController,
+                                            productCustomController);
+                                }else{
+                                    cmd = new CommandProductAdd(null, args[0], args[1], Double.parseDouble(args[2]),
+                                            Integer.parseInt(args[3]), productController,
+                                            productCustomController);
+                                }
                             }
                             break;
 
@@ -237,7 +252,7 @@ public class App {
             System.out.println("Closing application.\nGoodbye!\n");
         }
 
-        private String ordenarSplit(String[] split) throws NumberFormatException {
+        private static String ordenarSplit(String[] split) throws NumberFormatException {
             String command;
             String firsWord = split[0];
             if (firsWord.equalsIgnoreCase("client") || firsWord.equalsIgnoreCase("cash") ||
@@ -257,7 +272,7 @@ public class App {
             return command;
         }
 
-        private String[] obtenerPers(String[] args) {
+        private static String[] obtenerPers(String[] args) {
             int i = 4;// indice en el que empiezan las pers
             while (!args[i].equals(" ")) {
                 i++;
@@ -275,22 +290,24 @@ public class App {
             int indice = 0;
 
             for (int i = 0; i < split.length; i++) {
-                String part = split[i];
-                if (!inQuotes) {
-                    if (part.startsWith("\"") && !part.endsWith("\"")) {    //empiezan comillas
-                        inQuotes = true;
-                        current.append(part).append(" ");
-                        indice = i;
-                    }
-                } else {
-                    if (part.endsWith("\"")) {
-                        current.append(part);
-                        split[indice] = current.toString();
-                        reordenarArray(split, indice, i - indice);
-                        current.setLength(0);
-                        inQuotes = false;
+                if (split[i] != null) {
+                    String part = split[i];
+                    if (!inQuotes) {
+                        if (part.startsWith("\"") && !part.endsWith("\"")) {    //empiezan comillas
+                            inQuotes = true;
+                            current.append(part).append(" ");
+                            indice = i;
+                        }
                     } else {
-                        current.append(part).append(" ");
+                        if (part.endsWith("\"")) {
+                            current.append(part);
+                            split[indice] = current.toString();
+                            reordenarArray(split, indice, i - indice);
+                            current.setLength(0);
+                            inQuotes = false;
+                        } else {
+                            current.append(part).append(" ");
+                        }
                     }
                 }
             }
@@ -305,7 +322,7 @@ public class App {
                 split[i] = split[i + dif];
             }
             for (int i = split.length - dif; i < split.length; i++) {
-                split[i] = " ";
+                split[i] = null;
             }
         }
 
