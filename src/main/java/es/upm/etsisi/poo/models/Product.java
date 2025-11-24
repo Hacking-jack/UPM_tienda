@@ -57,7 +57,7 @@ public class Product {
 
     public Product clone(){
         Product p = new Product(this.name, this.categories, this.price, this.id);
-        ProductDB.addProduct(p);
+        ProductDB.addProductClone(p);
         return p;
     }
 

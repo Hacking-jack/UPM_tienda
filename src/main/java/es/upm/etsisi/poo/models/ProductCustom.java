@@ -18,6 +18,7 @@ public class ProductCustom extends Product{
     public void addPers(String[] pers){
         if(pers.length < maxPers){
             listaPers=pers;
+            persAct = pers.length;
         }else{
             System.out.println("No se ha podido añadir la personalización "+pers+", se ha alcanzado el maximo " +
                     "de personalizaciones");
@@ -49,7 +50,7 @@ public class ProductCustom extends Product{
     @Override
     public ProductCustom clone(){
         ProductCustom p = new ProductCustom(this.name, this.price, this.categories, this.maxPers);
-        ProductDB.addProduct(p);
+        ProductDB.addProductClone(p);
         return p;
     }
 }

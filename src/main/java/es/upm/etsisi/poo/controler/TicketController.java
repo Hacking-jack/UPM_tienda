@@ -1,5 +1,6 @@
 package es.upm.etsisi.poo.controler;
 
+import es.upm.etsisi.poo.BASES_DE_DATOS.ProductDB;
 import es.upm.etsisi.poo.BASES_DE_DATOS.TicketDB;
 import es.upm.etsisi.poo.models.*;
 
@@ -28,6 +29,21 @@ public class TicketController {
                         " hasta llegar al limite de 100");
                 break;
             }
+        }
+    }
+    public void addProductPers(Product product, int quantity, String[] pers){
+        if(product instanceof ProductCustom){
+            Product clone=product.clone();
+            for (int i = 0; i < quantity; i++) {
+                if (!ticket.addPoduct(clone)) {
+                    System.out.println("No se pudieron añadir todos los productos, se han añadido " + i +
+                            " hasta llegar al limite de 100");
+                    break;
+                }
+            }
+            ((ProductCustom) product).addPers(pers);
+        }else{
+            System.out.println("No se puede personalizar u nobjeto no personalizable");
         }
 
     }
