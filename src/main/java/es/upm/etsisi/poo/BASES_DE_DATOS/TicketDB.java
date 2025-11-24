@@ -1,5 +1,6 @@
 package es.upm.etsisi.poo.BASES_DE_DATOS;
 
+import es.upm.etsisi.poo.models.Product;
 import es.upm.etsisi.poo.models.Ticket;
 
 import java.util.ArrayList;
@@ -12,5 +13,22 @@ public class TicketDB {
     static public void addTicket(Ticket t) {
         tickets.add(t);
     }
-    //TODO hacer el resto de consultas como si fuera una base de datos SQL, mirar ProductDB
+
+    static public Ticket findId(String id){
+        for (Ticket t : tickets)
+        {
+            if(t.getIdTicket().equals(id))
+                return (t);
+        }
+        return null;
+    }
+
+    static public void removeTicket(Ticket t){
+        tickets.remove(t);
+    }
+
+    //Equivalente a Select * from products;
+    static public ArrayList<Ticket> listProducts(){
+        return tickets;
+    }
 }
