@@ -15,7 +15,8 @@ public class TicketController {
         TicketDB.addTicket(new Ticket(id));
     }
 
-    public static void addProduct(Ticket ticket, Product product, int quantity) {
+    public static void addProduct(String ticketId, Product product, int quantity) {
+        Ticket ticket = findId(ticketId);
         for (int i = 0; i < quantity; i++) {
             if (!ticket.addProduct(product)) {
                 System.out.println("No se pudieron añadir todos los productos, se han añadido " + i +
@@ -25,13 +26,14 @@ public class TicketController {
         }
     }
 
-    public static void addProductPers(Ticket ticket ,Product product, int quantity, String[] pers) {
+    public static void addProductPers(String ticketId, Product product, int quantity, String[] pers) {
         if (product instanceof ProductCustom) {
+            Ticket ticket = findId(ticketId);
             Product clone = product.clone();
             for (int i = 0; i < quantity; i++) {
                 if (!ticket.addProduct(clone)) {
                     System.out.println("No se pudieron añadir todos los productos, se han añadido " + i +
-                            " hasta llegar al limite de 100");
+                            " hasta llegar al limite de 100.");
                     break;
                 }
             }
@@ -39,10 +41,9 @@ public class TicketController {
         } else {
             System.out.println("No se puede personalizar un objeto no personalizable");
         }
-
     }
-    static public Ticket findId(String id)
-    {
+
+    static public Ticket findId(String id) {
         return TicketDB.findId(id);
     }
 

@@ -14,21 +14,20 @@ public class TicketDB {
         tickets.add(t);
     }
 
-    static public Ticket findId(String id){
-        for (Ticket t : tickets)
-        {
-            if(t.getIdTicket().equals(id))
+    static public Ticket findId(String id) {
+        for (Ticket t : tickets) {
+            if (t.getIdTicket().equals(id))
                 return (t);
         }
         return null;
     }
 
-    static public void removeTicket(Ticket t){
+    static public void removeTicket(Ticket t) {
         tickets.remove(t);
     }
 
     //Equivalente a Select * from products;
-    static public ArrayList<Ticket> listProducts(){
+    static public ArrayList<Ticket> listProducts() {
         return tickets;
     }
 }

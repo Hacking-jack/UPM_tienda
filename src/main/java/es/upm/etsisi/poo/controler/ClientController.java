@@ -21,7 +21,7 @@ public class ClientController {
             System.out.println("Error. Cajero no encontrado.");
             return;
         }
-        Client u = new Client(nombre,dni,email,cashId);
+        Client u = new Client(nombre, dni, email, cashId);
         HumanDB.addUser(u);
         System.out.println(u);
     }
@@ -39,8 +39,8 @@ public class ClientController {
     }
 
     public static void list() {
-        for (Human human:HumanDB.list()) {
-            if(human instanceof Client){
+        for (Human human : HumanDB.list()) {
+            if (human instanceof Client) {
                 System.out.println(human.toString());
             }
         }

@@ -30,12 +30,12 @@ public class ProductController {
             }
         }
     }
+
     // TODO: Mirar Clase de PoductDB para entender su uso
     public static void list() {
         System.out.println("Catalog:");
         ArrayList<Product> products = ProductDB.listProducts();
-        for (Product p : products)
-        {
+        for (Product p : products) {
             System.out.println(p.toString());
         }
     }
@@ -43,7 +43,7 @@ public class ProductController {
     public static void update(int id, String campo, String valor) {
 
         Product p = ProductDB.findId(id);
-        if ( p == null) {
+        if (p == null) {
             System.out.println("Error. No existe el id para actualizar.");
         } else {
             switch (campo.toUpperCase()) {
@@ -51,7 +51,7 @@ public class ProductController {
                     p.setName(valor);
                     break;
                 case "CATEGORY":
-                    if(categorieControl(valor)) {
+                    if (categorieControl(valor)) {
                         Categories categorie = Categories.valueOf(valor.toUpperCase());
                         p.setCategories(categorie);
                     }
@@ -77,28 +77,27 @@ public class ProductController {
         }
     }
 
-    public static Product findId(int id){
+    public static Product findId(int id) {
         return ProductDB.findId(id);
     }
 
 
-
-    public static boolean categorieControl(String categorie){
-        try{
-            categorie=categorie.toUpperCase();
+    public static boolean categorieControl(String categorie) {
+        try {
+            categorie = categorie.toUpperCase();
             Categories.valueOf(categorie);
             return true;
-        }catch(IllegalArgumentException ex){
+        } catch (IllegalArgumentException ex) {
             System.out.println("Categoría no válida");
             return false;
         }
     }
 
-    public static int generarId(){
-        int id =  (int) (Math.random()*9999);
-        if(ProductDB.findId(id)==null){
+    public static int generarId() {
+        int id = (int) (Math.random() * 9999);
+        if (ProductDB.findId(id) == null) {
             return id;
-        }else{
+        } else {
             return generarId();
         }
     }

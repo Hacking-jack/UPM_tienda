@@ -6,7 +6,6 @@ import es.upm.etsisi.poo.controler.CashierController;
 public class CommandCashList implements Command {
 
 
-
     @Override
     public boolean execute() {
         CashierController.list();

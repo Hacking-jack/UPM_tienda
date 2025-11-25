@@ -13,7 +13,7 @@ public class CommandTicketAddProduct implements Command {
     private final int amount;
     private final String[] pers; // --p<txt>
 
-//TODO controller esta ,mal
+    //TODO controller esta ,mal
     public CommandTicketAddProduct(String ticketId, String cashId, int productId, int amount, String[] pers) {
         this.ticketId = ticketId;
         this.cashId = cashId;
@@ -21,15 +21,14 @@ public class CommandTicketAddProduct implements Command {
         this.amount = amount;
         this.pers = pers;
     }
+
     //TODO existe esta otacion que te sale en intellij como una lista de tareas
     @Override
-    public boolean execute() {//hacer dos add, uno con personalizacion y otro sin
-        Ticket t = TicketController.findId(ticketId);
-
-        if(pers[0]==null) {// sin pers
-            TicketController.addProductPers(t,ProductController.findId(productId), amount, pers);//Lo dejo asi para que no se nos olvide hacerlo
-        }else{
-            TicketController.addProduct(t,ProductDB.findId(productId), amount);//con pers
+    public boolean execute() {// hacer dos add, uno con personalizacion y otro sin
+        if (pers[0] == null) {// sin pers
+            TicketController.addProductPers(this.ticketId, ProductController.findId(this.productId), this.amount, this.pers);//Lo dejo asi para que no se nos olvide hacerlo
+        } else {
+            TicketController.addProduct(this.ticketId, ProductDB.findId(this.productId), this.amount);// con pers
         }
         return true;
     }

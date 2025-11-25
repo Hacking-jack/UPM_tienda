@@ -7,7 +7,7 @@ public class Client extends Human {
     private String cajeroAlta;
 
     public Client(String nombre, String dni, String email, String cajeroAlta) {
-        this.nombre=nombre;
+        this.nombre = nombre;
         this.id = dni;
         this.cajeroAlta = cajeroAlta;
         this.email = email;

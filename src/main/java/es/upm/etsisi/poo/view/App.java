@@ -75,10 +75,10 @@ public class App {
                 while (bucle) {
                     System.out.print("tUPM> ");
                     line = input.readLine();
-                    if(line==null) break;
+                    if (line == null) break;
 
                     //System.out.print("tUPM> ");
-                    if(esArchivo){
+                    if (esArchivo) {
                         System.out.println(line);
                     }
 
@@ -151,19 +151,19 @@ public class App {
                         case "prod add":
                             if (!args[0].startsWith("\"")) {
                                 removeComillas(args, 1);
-                                if(args[4]==null) {
+                                if (args[4] == null) {
                                     cmd = new CommandProductAdd(Integer.parseInt(args[0]), args[1], args[2],
                                             Double.parseDouble(args[3]), null);
-                                }else{
+                                } else {
                                     cmd = new CommandProductAdd(Integer.parseInt(args[0]), args[1], args[2],
                                             Double.parseDouble(args[3]), Integer.parseInt(args[4]));
                                 }
                             } else {
                                 removeComillas(args, 0);
-                                if(args[3]==null) {
+                                if (args[3] == null) {
                                     cmd = new CommandProductAdd(null, args[0], args[1], Double.parseDouble(args[2]),
                                             null);
-                                }else{
+                                } else {
                                     cmd = new CommandProductAdd(null, args[0], args[1], Double.parseDouble(args[2]),
                                             Integer.parseInt(args[3]));
                                 }
@@ -235,82 +235,82 @@ public class App {
     }
 
 
-        public void end() {
-            System.out.println("Closing application.\nGoodbye!\n");
-        }
+    public void end() {
+        System.out.println("Closing application.\nGoodbye!\n");
+    }
 
-        private static String ordenarSplit(String[] split) throws NumberFormatException {
-            String command;
-            String firsWord = split[0];
-            if (firsWord.equalsIgnoreCase("client") || firsWord.equalsIgnoreCase("cash") ||
-                    firsWord.equalsIgnoreCase("ticket") || firsWord.equalsIgnoreCase("prod")) {
-                command = firsWord + " " + split[1];
-                reordenarArray(split, -1, 2);
+    private static String ordenarSplit(String[] split) throws NumberFormatException {
+        String command;
+        String firsWord = split[0];
+        if (firsWord.equalsIgnoreCase("client") || firsWord.equalsIgnoreCase("cash") ||
+                firsWord.equalsIgnoreCase("ticket") || firsWord.equalsIgnoreCase("prod")) {
+            command = firsWord + " " + split[1];
+            reordenarArray(split, -1, 2);
+        } else {
+            if (firsWord.equalsIgnoreCase("exit") || firsWord.equalsIgnoreCase("help")
+                    || firsWord.equalsIgnoreCase("echo")) {
+                command = firsWord;
+                reordenarArray(split, -1, 1);
             } else {
-                if (firsWord.equalsIgnoreCase("exit") || firsWord.equalsIgnoreCase("help")
-                        || firsWord.equalsIgnoreCase("echo")) {
-                    command = firsWord;
-                    reordenarArray(split, -1, 1);
+                throw new NumberFormatException("Formato de comando no válido");
+            }
+        }
+        juntarComillas(split);
+        return command;
+    }
+
+    private static String[] obtenerPers(String[] args) {
+        int i = 4;// indice en el que empiezan las pers
+        while (!args[i].equals(" ")) {
+            i++;
+        }
+        String[] pers = new String[i - 4];
+        for (int j = 4; j < i; j++) {
+            pers[j - 4] = args[j];
+        }
+        return pers;
+    }
+
+    private static void juntarComillas(String[] split) {
+        boolean inQuotes = false;
+        StringBuilder current = new StringBuilder();
+        int indice = 0;
+
+        for (int i = 0; i < split.length; i++) {
+            if (split[i] != null) {
+                String part = split[i];
+                if (!inQuotes) {
+                    if (part.startsWith("\"") && !part.endsWith("\"")) {    //empiezan comillas
+                        inQuotes = true;
+                        current.append(part).append(" ");
+                        indice = i;
+                    }
                 } else {
-                    throw new NumberFormatException("Formato de comando no válido");
-                }
-            }
-            juntarComillas(split);
-            return command;
-        }
-
-        private static String[] obtenerPers(String[] args) {
-            int i = 4;// indice en el que empiezan las pers
-            while (!args[i].equals(" ")) {
-                i++;
-            }
-            String[] pers = new String[i - 4];
-            for (int j = 4; j < i; j++) {
-                pers[j - 4] = args[j];
-            }
-            return pers;
-        }
-
-        private static void juntarComillas(String[] split) {
-            boolean inQuotes = false;
-            StringBuilder current = new StringBuilder();
-            int indice = 0;
-
-            for (int i = 0; i < split.length; i++) {
-                if (split[i] != null) {
-                    String part = split[i];
-                    if (!inQuotes) {
-                        if (part.startsWith("\"") && !part.endsWith("\"")) {    //empiezan comillas
-                            inQuotes = true;
-                            current.append(part).append(" ");
-                            indice = i;
-                        }
+                    if (part.endsWith("\"")) {
+                        current.append(part);
+                        split[indice] = current.toString();
+                        reordenarArray(split, indice, i - indice);
+                        current.setLength(0);
+                        inQuotes = false;
                     } else {
-                        if (part.endsWith("\"")) {
-                            current.append(part);
-                            split[indice] = current.toString();
-                            reordenarArray(split, indice, i - indice);
-                            current.setLength(0);
-                            inQuotes = false;
-                        } else {
-                            current.append(part).append(" ");
-                        }
+                        current.append(part).append(" ");
                     }
                 }
             }
         }
-
-        private static void removeComillas(String[] array, int indice) {
-            array[indice] = array[indice].substring(1, array[indice].length() - 1);
-        }
-
-        private static void reordenarArray(String[] split, int i1, int dif) {
-            for (int i = i1 + 1; i < split.length - dif; i++) {
-                split[i] = split[i + dif];
-            }
-            for (int i = split.length - dif; i < split.length; i++) {
-                split[i] = null;
-            }
-        }
-
     }
+
+    private static void removeComillas(String[] array, int indice) {
+        array[indice] = array[indice].substring(1, array[indice].length() - 1);
+    }
+
+    private static void reordenarArray(String[] split, int i1, int dif) {
+        for (int i = i1 + 1; i < split.length - dif; i++) {
+            split[i] = split[i + dif];
+        }
+        for (int i = split.length - dif; i < split.length; i++) {
+            split[i] = null;
+        }
+    }
+
+}

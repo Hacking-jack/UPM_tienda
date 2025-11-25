@@ -16,9 +16,9 @@ public class CommandTicketPrint implements Command {
 
     @Override
     public boolean execute() {
-        if(HumanDB.findId(cashId).getTickets().contains(TicketDB.findId(ticketId))) {
+        if (HumanDB.findId(cashId).getTickets().contains(TicketDB.findId(ticketId))) {
             TicketController.print(ticketId);
-        }else{
+        } else {
             System.out.println("Ese ticket no pertenece al cajero indicado");
         }
         return true;

@@ -10,9 +10,9 @@ public class CommandCashAdd implements Command {
     private final String email;
 
     public CommandCashAdd(String id, String name, String email) {
-        if(id!=null) {
+        if (id != null) {
             this.id = id;
-        }else{
+        } else {
             this.id = CashierController.generarId();
         }
         this.name = name;

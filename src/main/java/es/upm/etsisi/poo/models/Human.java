@@ -21,7 +21,7 @@ public abstract class Human {
         tickets.add(ticketId);
     }
 
-    public ArrayList<String> getTickets(){
+    public ArrayList<String> getTickets() {
         return tickets;
     }
 

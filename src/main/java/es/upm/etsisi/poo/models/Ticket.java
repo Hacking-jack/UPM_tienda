@@ -17,15 +17,15 @@ public class Ticket {
         return estado;
     }
 
-    public Ticket(){
+    public Ticket() {
         this(LocalDateTime.now()
                 .format(DateTimeFormatter.ofPattern("yy-MM-dd-HH:mm-"))
-                + String.format("%05d", (int)(Math.random()*10000)));
+                + String.format("%05d", (int) (Math.random() * 10000)));
     }
 
     public Ticket(String id) {
-        this.idTicket=id;
-        this.estado=States.VACIO;
+        this.idTicket = id;
+        this.estado = States.VACIO;
         this.date = LocalDateTime.now();
         this.products = new ArrayList<>(products);
     }
@@ -48,6 +48,7 @@ public class Ticket {
             products.remove(product);
         }
     }
+
     public boolean hasDiscount(int counterStationary, int counterClothes, int counterBook, int counterElectronic,
                                Categories categories) {
         boolean correct = false;
@@ -75,13 +76,14 @@ public class Ticket {
         }
         return correct;
     }
-    public void closeTicket()
-    {
+
+    public void closeTicket() {
         print();
         this.estado = States.CERRADO;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("-yy-MM-dd-HH:mm");
         this.idTicket += LocalDateTime.now().format(formatter);
     }
+
     public void print() {
         if (products.isEmpty()) {
             System.out.println("Error. El ticket está vacío.");

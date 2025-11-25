@@ -14,10 +14,10 @@ public class CommandTicketNew implements Command {
     private final String clientId;
 
     public CommandTicketNew(String id, String cashId, String clientId) {
-        if(id!=null) {
+        if (id != null) {
             this.id = id;
-        }else{
-            this.id= TicketController.generarId();
+        } else {
+            this.id = TicketController.generarId();
         }
         this.cashId = cashId;
         this.clientId = clientId;

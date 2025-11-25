@@ -21,12 +21,13 @@ public class HumanDB {
         }
         return null;
     }
+
     //EQuivalente a conulta de borrado de una fila de la tabla
     static public void removeHuman(Human p) {
         human.remove(p);
     }
 
-    static public ArrayList<Human> list(){
+    static public ArrayList<Human> list() {
         return human;
     }
 }

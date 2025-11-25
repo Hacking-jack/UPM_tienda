@@ -21,7 +21,7 @@ public class Product {
     }
 
     public Product(String name, double price, Categories categories) {
-        this.id =  10000000 + new Random().nextInt(90000000);
+        this.id = 10000000 + new Random().nextInt(90000000);
         this.name = name;
         this.price = price;
         this.categories = categories;
@@ -30,6 +30,7 @@ public class Product {
     public String getName() {
         return name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -55,15 +56,13 @@ public class Product {
         return id;
     }
 
-    public Product clone(){
-        Product p = new Product(this.name, this.categories, this.price, this.id);
-        ProductDB.addProductClone(p);
-        return p;
+    public Product clone() {
+        return new Product(this.name, this.categories, this.price, this.id);
     }
 
     @Override
     public String toString() {
         return "{class:Product," + "id:" + id + ", name:'"
-                + name + '\''+", category:" + categories +", price:"+ price + '}';
+                + name + '\'' + ", category:" + categories + ", price:" + price + '}';
     }
 }

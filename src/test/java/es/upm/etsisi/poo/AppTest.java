@@ -15,17 +15,15 @@ import java.nio.file.Files;
 /**
  * Unit test for simple App.
  */
-public class AppTest 
-    extends TestCase
-{
+public class AppTest
+        extends TestCase {
     /**
      * Create the test case
      *
      * @param testName name of the test case
      */
-    public AppTest( String testName )
-    {
-        super( testName );
+    public AppTest(String testName) {
+        super(testName);
     }
 
     public void testSalidaIgualAArchivo() throws IOException {
@@ -36,7 +34,7 @@ public class AppTest
 
         try {
             // Ejecutar tu programa con el parámetro deseado
-            App.main(new String[] { "enunciados/input E2" });
+            App.main(new String[]{"enunciados/input E2"});
         } finally {
             // Restaurar stdout
             System.setOut(originalOut);
@@ -48,7 +46,7 @@ public class AppTest
         String expectedOutput = new String(bytes, StandardCharsets.UTF_8);
 
         // Salida real del programa
-        String actualOutput = new String( outContent.toByteArray(),(StandardCharsets.UTF_8));
+        String actualOutput = new String(outContent.toByteArray(), (StandardCharsets.UTF_8));
 
         // Comparar
         assertEquals(expectedOutput.trim(), actualOutput.trim());
@@ -57,16 +55,14 @@ public class AppTest
     /**
      * @return the suite of tests being tested
      */
-    public static Test suite()
-    {
-        return new TestSuite( AppTest.class );
+    public static Test suite() {
+        return new TestSuite(AppTest.class);
     }
 
     /**
      * Rigourous Test :-)
      */
-    public void testApp()
-    {
-        assertTrue( true );
+    public void testApp() {
+        assertTrue(true);
     }
 }

@@ -6,8 +6,9 @@ public enum Categories {
     CLOTHES,
     BOOK,
     ELECTRONICS;
-    public static double getDiscount(Categories categorie){
-        switch (categorie){
+
+    public static double getDiscount(Categories categorie) {
+        switch (categorie) {
             case MERCH:
                 return 0;
             case STATIONERY:

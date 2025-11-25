@@ -1,4 +1,5 @@
 package es.upm.etsisi.poo.controler;
+
 import es.upm.etsisi.poo.BASES_DE_DATOS.HumanDB;
 import es.upm.etsisi.poo.BASES_DE_DATOS.TicketDB;
 import es.upm.etsisi.poo.models.Cashier;
@@ -39,18 +40,17 @@ public class CashierController {
     }
 
     public static void list() {
-        for (Human human:HumanDB.list()) {
-            if(human instanceof Cashier){
+        for (Human human : HumanDB.list()) {
+            if (human instanceof Cashier) {
                 System.out.println(human.toString());
             }
         }
     }
 
 
-
     public static Cashier searchId(String id) {
-        for (Human h:HumanDB.list()) {
-            if(h instanceof Cashier && h.getId().equals(id)){
+        for (Human h : HumanDB.list()) {
+            if (h instanceof Cashier && h.getId().equals(id)) {
                 return (Cashier) h;
             }
         }
@@ -60,13 +60,13 @@ public class CashierController {
     public static void cashTickets(String cashId) {
         System.out.println("Tickets:");
 
-        Cashier aux=(Cashier)HumanDB.findId(cashId);
-        for(String t:aux.getTickets()){
+        Cashier aux = (Cashier) HumanDB.findId(cashId);
+        for (String t : aux.getTickets()) {
             System.out.println(TicketDB.findId(t));
         }
     }
 
-    public static String generarId(){
+    public static String generarId() {
         return "UW" + (1_000_000 + new Random().nextInt(9_000_000));
     }
 }

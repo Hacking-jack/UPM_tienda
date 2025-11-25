@@ -22,9 +22,9 @@ public class CommandTicketRemoveProduct implements Command {
 
     @Override
     public boolean execute() {//TODO chapuza
-        if(HumanDB.findId(cashId).getTickets().contains(TicketController.findId(ticketId))) {
-            TicketController.remove(TicketController.findId(ticketId) , ProductController.findId(productId));
-        }else{
+        if (HumanDB.findId(cashId).getTickets().contains(TicketController.findId(ticketId))) {
+            TicketController.remove(TicketController.findId(ticketId), ProductController.findId(productId));
+        } else {
             System.out.println("Ese ticket no pertenece al cajero indicado");
         }
         return true;
