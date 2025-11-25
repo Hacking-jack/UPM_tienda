@@ -15,7 +15,7 @@ prod remove <id>
  */
 public class ProductController {
 
-    public void add(int id, String name, String categories, double price) {
+    public static void add(int id, String name, String categories, double price) {
         if (categorieControl(categories)) {
             if (ProductDB.findId(id) != null) {
                 System.out.println("Error. Ya existe el id.");
@@ -31,7 +31,7 @@ public class ProductController {
         }
     }
     // TODO: Mirar Clase de PoductDB para entender su uso
-    public void list() {
+    public static void list() {
         System.out.println("Catalog:");
         ArrayList<Product> products = ProductDB.listProducts();
         for (Product p : products)
@@ -40,7 +40,7 @@ public class ProductController {
         }
     }
 
-    public void update(int id, String campo, String valor) {
+    public static void update(int id, String campo, String valor) {
 
         Product p = ProductDB.findId(id);
         if ( p == null) {
@@ -67,7 +67,7 @@ public class ProductController {
         }
     }
 
-    public void remove(int id) {
+    public static void remove(int id) {
         Product p = ProductDB.findId(id);
         if (p == null) {
             System.out.println("Error. No existe el id para borrar.");
@@ -90,7 +90,7 @@ public class ProductController {
         }
     }
 
-    public int generarId(){
+    public static int generarId(){
         int id =  (int) (Math.random()*9999);
         if(ProductDB.findId(id)==null){
             return id;

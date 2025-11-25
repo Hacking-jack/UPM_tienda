@@ -8,22 +8,20 @@ public class CommandCashAdd implements Command {
     private final String id;
     private final String name;
     private final String email;
-    private final CashierController cashierController;
 
-    public CommandCashAdd(String id, String name, String email, CashierController cashierController) {
+    public CommandCashAdd(String id, String name, String email) {
         if(id!=null) {
             this.id = id;
         }else{
-            this.id = cashierController.generarId();
+            this.id = CashierController.generarId();
         }
         this.name = name;
         this.email = email;
-        this.cashierController = cashierController;
     }
 
     @Override
     public boolean execute() {
-        cashierController.add(id, name, email);
+        CashierController.add(id, name, email);
         return true;
     }
 }

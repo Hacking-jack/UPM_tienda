@@ -10,30 +10,25 @@ public class CommandProductAdd implements Command {
     private final String category;
     private final double price;
     private final Integer maxPers; // null si no es personalizado
-    private final ProductController productController;
-    private final ProductCustomController productCustomController;
 
-    public CommandProductAdd(Integer id, String name, String category, double price, Integer maxPers,
-                             ProductController productController, ProductCustomController productCustomController) {
-        if(id!=null){
-            this.id=id;
-        }else{
-            this.id=productController.generarId();
+    public CommandProductAdd(Integer id, String name, String category, double price, Integer maxPers) {
+        if (id != null) {
+            this.id = id;
+        } else {
+            this.id = ProductController.generarId();
         }
         this.name = name;
         this.category = category.toUpperCase();
         this.price = price;
         this.maxPers = maxPers;
-        this.productController = productController;
-        this.productCustomController = productCustomController;
     }
 
     @Override
     public boolean execute() {
         if (maxPers == null) {
-            productController.add(id, name, category, price);
+            ProductController.add(id, name, category, price);
         } else {
-            productCustomController.add(id, name, category, price, maxPers);
+            ProductCustomController.add(id, name, category, price, maxPers);
         }
         return true;
     }

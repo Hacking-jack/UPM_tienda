@@ -9,19 +9,17 @@ public class CommandClientAdd implements Command {
     private final String dni;
     private final String email;
     private final String cashId;
-    private final ClientController clientController;
 
-    public CommandClientAdd(String name, String dni, String email, String cashId, ClientController clientController) {
+    public CommandClientAdd(String name, String dni, String email, String cashId) {
         this.name = name;
         this.dni = dni;
         this.email = email;
         this.cashId = cashId;
-        this.clientController = clientController;
     }
 
     @Override
     public boolean execute() {
-        clientController.add(name, dni, email, cashId);
+        ClientController.add(name, dni, email, cashId);
         return true;
     }
 }

@@ -8,18 +8,16 @@ public class CommandProductUpdate implements Command {
     private final int id;
     private final String field;
     private final String value;
-    private final ProductController productController;
 
-    public CommandProductUpdate(int id, String field, String value, ProductController productController) {
+    public CommandProductUpdate(int id, String field, String value) {
         this.id = id;
         this.field = field;
         this.value = value;
-        this.productController = productController;
     }
 
     @Override
     public boolean execute() {
-        productController.update(id, field, value);
+        ProductController.update(id, field, value);
         return true;
     }
 }

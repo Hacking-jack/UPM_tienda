@@ -7,16 +7,14 @@ import java.util.Calendar;
 
 public class CommandCashRemove implements Command {
     private final String id;
-    private final CashierController cashierController;
 
-    public CommandCashRemove(String id, CashierController cashierController) {
+    public CommandCashRemove(String id) {
         this.id = id;
-        this.cashierController = cashierController;
     }
 
     @Override
     public boolean execute() {
-        cashierController.remove(id);
+        CashierController.remove(id);
         return true;
     }
 }

@@ -49,13 +49,6 @@ public class App {
     }
 
     private void iniciar() {
-
-        this.productController = new ProductController();
-        this.productCustomController = new ProductCustomController();
-        this.productFoodMeetingController = new ProductFoodMeetingController();
-        this.cashierController = new CashierController();
-        this.clientController = new ClientController();
-        this.ticketController = new TicketController();
         System.out.println("Welcome to the ticket module App\nTicket module. Type 'help' to see commands");
     }
 
@@ -96,7 +89,7 @@ public class App {
                     switch (comando) {
                         case "client add":
                             removeComillas(args, 0);
-                            cmd = new CommandClientAdd(args[0], args[1], args[2], args[3], new ClientController());
+                            cmd = new CommandClientAdd(args[0], args[1], args[2], args[3]);
                             break;
 
                         case "client remove":
@@ -110,51 +103,49 @@ public class App {
                         case "cash add":
                             if (!args[0].startsWith("\"")) {
                                 removeComillas(args, 1);
-                                cmd = new CommandCashAdd(args[0], args[1], args[2], cashierController);
+                                cmd = new CommandCashAdd(args[0], args[1], args[2]);
                             } else {
                                 removeComillas(args, 0);
-                                cmd = new CommandCashAdd(null, args[0], args[1], cashierController);
+                                cmd = new CommandCashAdd(null, args[0], args[1]);
                             }
                             break;
 
                         case "cash remove":
-                            cmd = new CommandCashRemove(args[0], cashierController);
+                            cmd = new CommandCashRemove(args[0]);
                             break;
 
                         case "cash list":
-                            cmd = new CommandCashList(cashierController);
+                            cmd = new CommandCashList();
                             break;
 
                         case "cash tickets":
-                            cmd = new CommandCashTickets(args[0], cashierController);
+                            cmd = new CommandCashTickets(args[0]);
                             break;
 
                         case "ticket new":
                             if (args[2].equals(" ")) {
-                                cmd = new CommandTicketNew(null, args[0], args[1], ticketController, new ClientController(), cashierController);
+                                cmd = new CommandTicketNew(null, args[0], args[1]);
                             } else {
-                                cmd = new CommandTicketNew(args[0], args[1], args[2], ticketController, new ClientController(), cashierController);
+                                cmd = new CommandTicketNew(args[0], args[1], args[2]);
                             }
                             break;
 
                         case "ticket add":
                             String[] pers;
                             pers = obtenerPers(args);
-                            cmd = new CommandTicketAddProduct(args[0], args[1], Integer.parseInt(args[2]), Integer.parseInt(args[3]), pers,
-                                    ticketController, productController);
+                            cmd = new CommandTicketAddProduct(args[0], args[1], Integer.parseInt(args[2]), Integer.parseInt(args[3]), pers);
                             break;
 
                         case "ticket remove":
-                            cmd = new CommandTicketRemoveProduct(args[0], args[1], Integer.parseInt(args[2]),
-                                    ticketController, productController);
+                            cmd = new CommandTicketRemoveProduct(args[0], args[1], Integer.parseInt(args[2]));
                             break;
 
                         case "ticket print":
-                            cmd = new CommandTicketPrint(args[0], args[1], ticketController);
+                            cmd = new CommandTicketPrint(args[0], args[1]);
                             break;
 
                         case "ticket list":
-                            cmd = new CommandTicketList(ticketController);
+                            cmd = new CommandTicketList();
                             break;
 
                         case "prod add":
@@ -162,23 +153,19 @@ public class App {
                                 removeComillas(args, 1);
                                 if(args[4]==null) {
                                     cmd = new CommandProductAdd(Integer.parseInt(args[0]), args[1], args[2],
-                                            Double.parseDouble(args[3]), null, productController,
-                                            productCustomController);
+                                            Double.parseDouble(args[3]), null);
                                 }else{
                                     cmd = new CommandProductAdd(Integer.parseInt(args[0]), args[1], args[2],
-                                            Double.parseDouble(args[3]), Integer.parseInt(args[4]), productController,
-                                            productCustomController);
+                                            Double.parseDouble(args[3]), Integer.parseInt(args[4]));
                                 }
                             } else {
                                 removeComillas(args, 0);
                                 if(args[3]==null) {
                                     cmd = new CommandProductAdd(null, args[0], args[1], Double.parseDouble(args[2]),
-                                            null, productController,
-                                            productCustomController);
+                                            null);
                                 }else{
                                     cmd = new CommandProductAdd(null, args[0], args[1], Double.parseDouble(args[2]),
-                                            Integer.parseInt(args[3]), productController,
-                                            productCustomController);
+                                            Integer.parseInt(args[3]));
                                 }
                             }
                             break;
@@ -187,18 +174,18 @@ public class App {
                             if (args[1].startsWith("\"")) {
                                 removeComillas(args, 1);
                             }
-                            cmd = new CommandProductUpdate(Integer.parseInt(args[0]), args[1], args[2], productController);
+                            cmd = new CommandProductUpdate(Integer.parseInt(args[0]), args[1], args[2]);
                             break;
 
                         case "prod addFood":
                             if (!args[0].startsWith("\"")) {
                                 removeComillas(args, 1);
                                 cmd = new CommandProductAddFood(Integer.parseInt(args[0]), args[1], Double.parseDouble(args[2]),
-                                        args[3], Integer.parseInt(args[4]), productFoodMeetingController);
+                                        args[3], Integer.parseInt(args[4]));
                             } else {
                                 removeComillas(args, 0);
                                 cmd = new CommandProductAddFood(null, args[0], Double.parseDouble(args[1]),
-                                        args[2], Integer.parseInt(args[3]), productFoodMeetingController);
+                                        args[2], Integer.parseInt(args[3]));
                             }
                             break;
 
@@ -206,20 +193,20 @@ public class App {
                             if (!args[0].startsWith("\"")) {
                                 removeComillas(args, 1);
                                 cmd = new CommandProductAddMeeting(Integer.parseInt(args[0]), args[1], Double.parseDouble(args[2]),
-                                        args[3], Integer.parseInt(args[4]), productFoodMeetingController);
+                                        args[3], Integer.parseInt(args[4]));
                             } else {
                                 removeComillas(args, 0);
                                 cmd = new CommandProductAddMeeting(null, args[0], Double.parseDouble(args[1]),
-                                        args[2], Integer.parseInt(args[3]), productFoodMeetingController);
+                                        args[2], Integer.parseInt(args[3]));
                             }
                             break;
 
                         case "prod list":
-                            cmd = new CommandProductList(productController, productCustomController, productFoodMeetingController);
+                            cmd = new CommandProductList();
                             break;
 
                         case "prod remove":
-                            cmd = new CommandProductRemove(Integer.parseInt(args[0]), productController);
+                            cmd = new CommandProductRemove(Integer.parseInt(args[0]));
                         case "help":
                             cmd = new CommandHelp();
                             break;
