@@ -14,7 +14,7 @@ public class ProductFoodMeetingController extends ProductController{
 
 // UNIFICAR ESTO CON PRDUT CONTROLLER, SOLO ES HERENCIA.
     public void add(int id, String name, String categories, double price, String date, int maxParticipantes, boolean isFood) {
-        LocalDateTime fecha=LocalDateTime.parse(date);
+        LocalDate fecha=LocalDate.parse(date);
         int dias= (int) ChronoUnit.DAYS.between(LocalDate.now(), fecha);
         if(categorieControl(categories)){
             if (ProductDB.findId(id)==null) {

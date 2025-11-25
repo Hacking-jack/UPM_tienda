@@ -6,12 +6,12 @@ import java.time.format.DateTimeParseException;
 
 public class ProductMeeting extends Product {
 
-    private LocalDateTime date;
+    private LocalDate date;
     private int maxParticipantes;
     private boolean isFood; //true==comida, false==reunion
     private int asistentes;
 
-    public ProductMeeting(int id, String name, double price, LocalDateTime date, int maxParticipantes, boolean isFood) {
+    public ProductMeeting(int id, String name, double price, LocalDate date, int maxParticipantes, boolean isFood) {
         super(name, null, price, id);
         try {
             this.date = date;
@@ -29,7 +29,7 @@ public class ProductMeeting extends Product {
 
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
@@ -42,7 +42,7 @@ public class ProductMeeting extends Product {
         }
     }
 
-    public LocalDateTime getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
