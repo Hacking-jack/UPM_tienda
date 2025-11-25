@@ -10,6 +10,7 @@ public class Client extends Human {
         this.nombre=nombre;
         this.id = dni;
         this.cajeroAlta = cajeroAlta;
+        this.email = email;
     }
     public Client(String nombre, String dni, String email, Cashier cajeroAlta) {
         this.id = dni;
