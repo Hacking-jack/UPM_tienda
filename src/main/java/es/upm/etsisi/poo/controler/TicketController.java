@@ -7,7 +7,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-// TODO tengo que pensar como interactuar con la base de datos
 public class TicketController {
 
 

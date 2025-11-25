@@ -6,7 +6,7 @@ import es.upm.etsisi.poo.controler.ClientController;
 public class CommandClientRemove implements Command {
     private final String dni;
 
-    public CommandClientRemove(String dni, ClientController clientController) {
+    public CommandClientRemove(String dni) {
         this.dni = dni;
     }
 

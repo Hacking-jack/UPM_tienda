@@ -4,7 +4,6 @@ import es.upm.etsisi.poo.BASES_DE_DATOS.ProductDB;
 import es.upm.etsisi.poo.commands.Command;
 import es.upm.etsisi.poo.controler.ProductController;
 import es.upm.etsisi.poo.controler.TicketController;
-import es.upm.etsisi.poo.models.Ticket;
 
 public class CommandTicketAddProduct implements Command {
     private final String ticketId;

@@ -9,14 +9,11 @@ import es.upm.etsisi.poo.commands.general.*;
 import es.upm.etsisi.poo.commands.products.*;
 import es.upm.etsisi.poo.commands.tickets.*;
 import es.upm.etsisi.poo.controler.*;
-import es.upm.etsisi.poo.commands.*;
+import es.upm.etsisi.poo.commands.Command;
 
 import java.io.*;
-import java.nio.channels.ScatteringByteChannel;
-import java.util.Scanner;
 
 
-//TODO adaptar y terminar de estructurar bien el App al los controladores con las dependencias arregladas.
 
 /*
 Aqui va help, exit, etc... Las fnc visuales
@@ -25,16 +22,6 @@ echo “<texto>” (imprime el texto en el valor texto)
 exit
  */
 public class App {
-    private HumanDB baseDeUsuarios;
-    private TicketDB baseDeTickets;
-    private ProductDB baseDeProductos;
-
-    private static ProductController productController;
-    private static TicketController ticketController;
-    private static CashierController cashierController;
-    private static ClientController clientController;
-    private static ProductFoodMeetingController productFoodMeetingController;
-    private static ProductCustomController productCustomController;
 
     public static void main(String[] args) {
         App aplicacion = new App();
@@ -43,13 +30,12 @@ public class App {
             runFromFile(args[0]);
         else
             runInteractive();
-        //aplicacion.run();
         aplicacion.end();
 
     }
 
     private void iniciar() {
-        System.out.println("Welcome to the ticket module App\nTicket module. Type 'help' to see commands");
+        System.out.println("Welcome to the ticket module App.\nTicket module. Type 'help' to see commands.");
     }
 
     public static void runInteractive() {
@@ -93,11 +79,11 @@ public class App {
                             break;
 
                         case "client remove":
-                            cmd = new CommandClientRemove(args[0], new ClientController());
+                            cmd = new CommandClientRemove(args[0]);
                             break;
 
                         case "client list":
-                            cmd = new CommandClientList(new ClientController());
+                            cmd = new CommandClientList();
                             break;
 
                         case "cash add":
@@ -207,6 +193,8 @@ public class App {
 
                         case "prod remove":
                             cmd = new CommandProductRemove(Integer.parseInt(args[0]));
+                            break;
+
                         case "help":
                             cmd = new CommandHelp();
                             break;
@@ -223,7 +211,7 @@ public class App {
                             break;
                     }
                     bucle = cmd.execute();
-                    System.out.println(comando + ": ok");
+                    //System.out.println(comando + ": ok");
                 }
             } catch (NumberFormatException | ArrayIndexOutOfBoundsException | NullPointerException ex) {
                 System.out.println("Formato del comando incorrecto. Use help para ver los comandos");
