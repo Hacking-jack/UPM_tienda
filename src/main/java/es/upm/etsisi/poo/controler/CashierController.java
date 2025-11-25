@@ -18,7 +18,7 @@ public class CashierController {
     }
 
 
-    public void add(String id, String nombre, String email) {
+    public static void add(String id, String nombre, String email) {
         if (id != null && searchId(id) != null) {
             System.out.println("Error. Ya existe un cajero con ese id.");
             return;
@@ -28,7 +28,7 @@ public class CashierController {
         System.out.println(nuevo);
     }
 
-    public void remove(String id) {
+    public static void remove(String id) {
         Cashier c = searchId(id);
         if (c == null) {
             System.out.println("Error. Cajero no encontrado.");
@@ -38,7 +38,7 @@ public class CashierController {
         HumanDB.removeHuman(c);
     }
 
-    public void list() {
+    public static void list() {
         for (Human human:HumanDB.list()) {
             if(human instanceof Cashier){
                 System.out.println(human.toString());
@@ -48,7 +48,7 @@ public class CashierController {
 
 
 
-    public Cashier searchId(String id) {
+    public static Cashier searchId(String id) {
         for (Human h:HumanDB.list()) {
             if(h instanceof Cashier && h.getId().equals(id)){
                 return (Cashier) h;
@@ -57,7 +57,7 @@ public class CashierController {
         return null;
     }
 
-    public void cashTickets(String cashId) {
+    public static void cashTickets(String cashId) {
         System.out.println("Tickets:");
 
         Cashier aux=(Cashier)HumanDB.findId(cashId);
@@ -66,7 +66,7 @@ public class CashierController {
         }
     }
 
-    public String generarId(){
+    public static String generarId(){
         return "UW" + (1_000_000 + new Random().nextInt(9_000_000));
     }
 }

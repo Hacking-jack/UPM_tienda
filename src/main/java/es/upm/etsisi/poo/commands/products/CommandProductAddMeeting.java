@@ -12,25 +12,22 @@ public class CommandProductAddMeeting implements Command {
     private final double price;
     private final String date;
     private final int maxPeople;
-    private final ProductFoodMeetingController productFoodMeetingController;
 
-    public CommandProductAddMeeting(Integer id, String name, double price, String date, int maxPeople,
-                                    ProductFoodMeetingController productFoodMeetingController) {
+    public CommandProductAddMeeting(Integer id, String name, double price, String date, int maxPeople) {
         if(id!=null) {
             this.id = id;
         }else{
-            this.id=productFoodMeetingController.generarId();
+            this.id=ProductFoodMeetingController.generarId();
         }
         this.name = name;
         this.price = price;
         this.date = date;
         this.maxPeople = maxPeople;
-        this.productFoodMeetingController = productFoodMeetingController;
     }
 
     @Override
     public boolean execute() {
-        productFoodMeetingController.add(id, name, null, price, date, maxPeople, false);
+        ProductFoodMeetingController.add(id, name, null, price, date, maxPeople, false);
         return true;
     }
 }

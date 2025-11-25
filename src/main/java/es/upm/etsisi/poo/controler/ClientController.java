@@ -12,7 +12,7 @@ import java.util.Comparator;
 // Mirar ejemplo de uso en ProductControler
 public class ClientController {
 
-    public void add(String nombre, String dni, String email, String cashId) {
+    public static void add(String nombre, String dni, String email, String cashId) {
         if (HumanDB.findId(dni) != null) {
             System.out.println("Error. Ya existe un cliente con ese DNI.");
             return;
@@ -26,7 +26,7 @@ public class ClientController {
         System.out.println(u);
     }
 
-    public void remove(String id) {
+    public static void remove(String id) {
 
         Human p = HumanDB.findId(id);
         if (p == null) {
@@ -38,7 +38,7 @@ public class ClientController {
         HumanDB.removeHuman(p);
     }
 
-    public void list() {
+    public static void list() {
         for (Human human:HumanDB.list()) {
             if(human instanceof Client){
                 System.out.println(human.toString());
@@ -46,13 +46,8 @@ public class ClientController {
         }
     }
 
-    public Client searchId(String id) {
-        for (Human h:HumanDB.list()) {
-            if(h instanceof Client && h.getId().equals(id)){
-                return (Client) h;
-            }
-        }
-        return null;
+    public static Client searchId(String id) {
+        return (Client) HumanDB.findId(id);
     }
 
 }

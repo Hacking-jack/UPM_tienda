@@ -8,21 +8,20 @@ import es.upm.etsisi.poo.controler.TicketController;
 public class CommandTicketPrint implements Command {
     private final String ticketId;
     private final String cashId;
-    private final TicketController ticketController;
 
-    public CommandTicketPrint(String ticketId, String cashId, TicketController ticketController) {
+    public CommandTicketPrint(String ticketId, String cashId) {
         this.ticketId = ticketId;
         this.cashId = cashId;
-        this.ticketController = ticketController;
     }
 
     @Override
     public boolean execute() {
         if(HumanDB.findId(cashId).getTickets().contains(TicketDB.findId(ticketId))) {
-            ticketController.print(ticketId);
+            TicketController.print(ticketId);
         }else{
             System.out.println("Ese ticket no pertenece al cajero indicado");
         }
         return true;
     }
 }
+//TODO revisar esto

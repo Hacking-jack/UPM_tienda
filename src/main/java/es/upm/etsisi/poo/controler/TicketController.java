@@ -7,17 +7,15 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
- // TODO tengo que pensar como interactuar con la base de datos
+// TODO tengo que pensar como interactuar con la base de datos
 public class TicketController {
 
-    private Ticket ticket;
 
-
-    public void newTicket(String id){
-        this.ticket=new Ticket(id);
+    public static void newTicket(String id) {
+        TicketDB.addTicket(new Ticket(id));
     }
 
-    public void addProduct(Product product, int quantity) {
+    public static void addProduct(Ticket ticket, Product product, int quantity) {
         for (int i = 0; i < quantity; i++) {
             if (!ticket.addProduct(product)) {
                 System.out.println("No se pudieron añadir todos los productos, se han añadido " + i +
@@ -26,9 +24,10 @@ public class TicketController {
             }
         }
     }
-    public void addProductPers(Product product, int quantity, String[] pers){
-        if(product instanceof ProductCustom){
-            Product clone=product.clone();
+
+    public static void addProductPers(Ticket ticket ,Product product, int quantity, String[] pers) {
+        if (product instanceof ProductCustom) {
+            Product clone = product.clone();
             for (int i = 0; i < quantity; i++) {
                 if (!ticket.addProduct(clone)) {
                     System.out.println("No se pudieron añadir todos los productos, se han añadido " + i +
@@ -37,30 +36,35 @@ public class TicketController {
                 }
             }
             ((ProductCustom) product).addPers(pers);
-        }else{
+        } else {
             System.out.println("No se puede personalizar un objeto no personalizable");
         }
 
     }
-    public void remove(Product product) {
-       ticket.removeProduct(product);
+    static public Ticket findId(String id)
+    {
+        return TicketDB.findId(id);
     }
-    public void list(){
+
+    public static void remove(Ticket ticket, Product product) {
+        ticket.removeProduct(product);
+    }
+
+    public static void list() {
         ArrayList<Ticket> tickets = TicketDB.listProducts();
-        for(Ticket t:tickets){
+        for (Ticket t : tickets) {
             System.out.println(t.toString());
         }
     }
 
-    public String generarId(){
+    public static String generarId() {
         return String.format(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yy-MM-dd-HH:mm-"))
-                + String.format("%05d", (int)(Math.random() * 100000)));
+                + String.format("%05d", (int) (Math.random() * 100000)));
     }
 
-    public void print(String ticketId){
+    public static void print(String ticketId) {
         System.out.println(TicketDB.findId(ticketId));
     }
-
 
 
 }
