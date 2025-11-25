@@ -11,7 +11,7 @@ public class CommandEcho implements Command {
 
     @Override
     public boolean execute() {
-        System.out.println(text);
+        System.out.println(text+" \n");
         return true;
     }
 }

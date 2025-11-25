@@ -3,12 +3,9 @@ package es.upm.etsisi.poo.controler;
 import es.upm.etsisi.poo.BASES_DE_DATOS.HumanDB;
 import es.upm.etsisi.poo.BASES_DE_DATOS.TicketDB;
 import es.upm.etsisi.poo.models.Cashier;
+import es.upm.etsisi.poo.models.Client;
 import es.upm.etsisi.poo.models.Human;
-import es.upm.etsisi.poo.models.Ticket;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
 import java.util.Random;
 
 public class CashierController {
@@ -49,12 +46,7 @@ public class CashierController {
 
 
     public static Cashier searchId(String id) {
-        for (Human h : HumanDB.list()) {
-            if (h instanceof Cashier && h.getId().equals(id)) {
-                return (Cashier) h;
-            }
-        }
-        return null;
+        return (Cashier) HumanDB.findId(id);
     }
 
     public static void cashTickets(String cashId) {

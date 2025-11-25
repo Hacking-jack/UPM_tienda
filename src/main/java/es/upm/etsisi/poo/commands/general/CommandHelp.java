@@ -15,9 +15,9 @@ public class CommandHelp implements Command {
                 "cash list\n  " +
                 "cash tickets <id>\n  " +
                 "ticket new [<id>] <cashId> <userId>\n  " +
-                "ticket add <ticketId><cashId> <prodId> <amount> [--p<txt> --p<txt>]\n  " +
-                "ticket remove <ticketId><cashId> <prodId>\n  " +
-                "ticket print <ticketId> <cashId>\n  " +
+                "ticket add <ticketId><cashId> <prodId> <amount> [--p<txt> --p<txt>] \n  " +
+                "ticket remove <ticketId><cashId> <prodId> \n  " +
+                "ticket print <ticketId> <cashId> \n  " +
                 "ticket list\n  " +
                 "prod add <id> \"<name>\" <category> <price>\n  " +
                 "prod update <id> NAME|CATEGORY|PRICE <value>\n  " +
@@ -26,7 +26,7 @@ public class CommandHelp implements Command {
                 "prod list\n  " +
                 "prod remove <id>\n  " +
                 "help\n  " +
-                "echo “<text>”\n  " +
+                "echo “<text>” \n  " +
                 "exit\n\n" +
 
 

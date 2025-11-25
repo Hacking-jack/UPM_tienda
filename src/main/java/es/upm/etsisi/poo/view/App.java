@@ -116,7 +116,7 @@ public class App {
                             break;
 
                         case "ticket new":
-                            if (args[2].equals(" ")) {
+                            if (args[2]==null) {
                                 cmd = new CommandTicketNew(null, args[0], args[1]);
                             } else {
                                 cmd = new CommandTicketNew(args[0], args[1], args[2]);
@@ -218,7 +218,7 @@ public class App {
                             break;
 
                         case "echo":
-                            cmd = new CommandEcho(line);
+                            cmd = new CommandEcho(args[0]);
                             break;
 
                         case "exit":
