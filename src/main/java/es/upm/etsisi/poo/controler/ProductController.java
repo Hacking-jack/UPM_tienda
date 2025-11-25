@@ -77,9 +77,13 @@ public class ProductController {
         }
     }
 
+    public static Product findId(int id){
+        return ProductDB.findId(id);
+    }
 
 
-    public boolean categorieControl(String categorie){
+
+    public static boolean categorieControl(String categorie){
         try{
             categorie=categorie.toUpperCase();
             Categories.valueOf(categorie);
