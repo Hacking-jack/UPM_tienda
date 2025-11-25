@@ -12,10 +12,6 @@ public class Client extends Human {
         this.cajeroAlta = cajeroAlta;
         this.email = email;
     }
-    public Client(String nombre, String dni, String email, Cashier cajeroAlta) {
-        this.id = dni;
-        this.cajeroAlta = cajeroAlta.getId();
-    }
 
     public String getId() {
         return this.id;
