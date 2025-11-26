@@ -251,7 +251,9 @@ public class App {
                 command = firsWord;
                 reordenarArray(split, -1, 1);
             } else {
-                throw new NumberFormatException("Formato de comando no válido");
+                //throw new NumberFormatException("Formato de comando no válido");
+                System.out.println("Comando no valido");//TODO quitar esto para entregar, esta para hacer pruebas y que no pete
+                return null;
             }
         }
         juntarComillas(split);
