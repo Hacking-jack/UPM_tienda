@@ -16,13 +16,16 @@ public class CashierController {
 
 
     public static void add(String id, String nombre, String email) {
-        if (id != null && searchId(id) != null) {
-            System.out.println("Error. Ya existe un cajero con ese id.");
-            return;
-        }
-        Cashier nuevo = new Cashier(id, nombre, email);
-        HumanDB.addUser(nuevo);
-        System.out.println(nuevo);
+        if(id.matches("^UW\\d{7}$")) {
+            if (id != null && searchId(id) != null) {
+                System.out.println("Error. Ya existe un cajero con ese id.");
+                return;
+            }
+            Cashier nuevo = new Cashier(id, nombre, email);
+            HumanDB.addUser(nuevo);
+            System.out.println(nuevo);
+        }else
+            System.out.println("El id no es válido");
     }
 
     public static void remove(String id) {
