@@ -33,7 +33,7 @@ public class ProductCustom extends Product {
     @Override
     public String toString() {
         StringBuilder s = new StringBuilder("{class:ProductPersonalized" +
-                ", id:" + id + ", name:'" + name +  "', category:" + categories +", price:" + price +
+                ", id:" + id + ", name:'" + name +  "', category:" + categories +
                 ", price:" + price + ", maxPersonal:" + maxPers + "}");
         if (persAct > 0) {
             s.append("personalizationList:[");

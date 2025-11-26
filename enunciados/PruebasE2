@@ -1,0 +1,97 @@
+Welcome to the ticket module App.
+Ticket module. Type 'help' to see commands.
+tUPM> prod add 3 "Libro POO repetido Error" BOOK 25
+{class:Product, id:3, name:'Libro POO repetido Error', category:BOOK, price:25.0}
+prod add: ok
+
+tUPM> prod remove 3
+{class:Product, id:3, name:'Libro POO repetido Error', category:BOOK, price:25.0}
+prod remove: ok
+
+tUPM> cash add UW1234567 "pepecurro3" pepe0@upm.es
+Cash{identifier='UW1234567', name='pepecurro3', email='pepe0@upm.es'}
+cash add: ok
+
+tUPM> client add "Pepe2" 98948334B pepe2@upm.es UW1234567
+Client{identifier='98948334B', name='Pepe2', email='pepe2@upm.es', cash=UW1234567}
+client add: ok
+
+tUPM> prod addMeeting 23456 "Reunion Rotonda" 12 2026-11-21 100
+{class:Meeting, id:23456, name:'Reunion Rotonda', price:0.0, date of Event:2026-11-21, max people allowed:100}
+prod addMeeting: ok
+
+tUPM> prod addMeeting 23457 "Graduacion ETSISI" 40 2026-11-21 30
+{class:Meeting, id:23457, name:'Graduacion ETSISI', price:0.0, date of Event:2026-11-21, max people allowed:30}
+prod addMeeting: ok
+
+tUPM> prod addFood 23458 "Cafeteria ETSISI" 5 2026-11-21 300
+Error processing ->prod addFood ->Error adding product
+
+tUPM> prod addFood 23459 "Restaurante Asador" 50 2026-11-21 40
+{class:Food, id:23459, name:'Restaurante Asador', price:0.0, date of Event:2026-11-21, max people allowed:40}
+prod addFood: ok
+
+tUPM> prod add 5 "Camiseta talla:M UPM" CLOTHES 15 3
+{class:ProductPersonalized, id:5, name:'Camiseta talla:M UPM', category:CLOTHES, price:15.0, maxPersonal:3}
+prod add: ok
+
+tUPM> prod add 6 "Camiseta talla:L UPM" CLOTHES 20 4
+{class:ProductPersonalized, id:6, name:'Camiseta talla:L UPM', category:CLOTHES, price:20.0, maxPersonal:4}
+prod add: ok
+
+tUPM> ticket new 212128 UW1234567 98948334B
+Ticket : 212128
+  Total price: 0.0
+  Total discount: 0.0
+  Final Price: 0.0
+ticket new: ok
+
+tUPM> ticket add 212128 UW1234567 5 1
+Ticket : 212128
+  {class:ProductPersonalized, id:5, name:'Camiseta talla:M UPM', category:CLOTHES, price:15.0, maxPersonal:3}
+  Total price: 15.0
+  Total discount: 0.0
+  Final Price: 15.0
+ticket add: ok
+
+tUPM> ticket add 212128 UW1234567 5 3 --pred --pblue --pgreen
+Ticket : 212128
+  {class:ProductPersonalized, id:5, name:'Camiseta talla:M UPM', category:CLOTHES, price:15.0, maxPersonal:3} **discount -1.05
+  {class:ProductPersonalized, id:5, name:'Camiseta talla:M UPM', category:CLOTHES, price:19.5, maxPersonal:3, personalizationList:[red, blue, green]} **discount -1.365
+  {class:ProductPersonalized, id:5, name:'Camiseta talla:M UPM', category:CLOTHES, price:19.5, maxPersonal:3, personalizationList:[red, blue, green]} **discount -1.365
+  {class:ProductPersonalized, id:5, name:'Camiseta talla:M UPM', category:CLOTHES, price:19.5, maxPersonal:3, personalizationList:[red, blue, green]} **discount -1.365
+  Total price: 73.5
+  Total discount: 5.145
+  Final Price: 68.355
+ticket add: ok
+
+tUPM> ticket add 212128 UW1234567 6 3 --pred --pblue
+Ticket : 212128
+  {class:ProductPersonalized, id:6, name:'Camiseta talla:L UPM', category:CLOTHES, price:24.0, maxPersonal:4, personalizationList:[red, blue]} **discount -1.68
+  {class:ProductPersonalized, id:6, name:'Camiseta talla:L UPM', category:CLOTHES, price:24.0, maxPersonal:4, personalizationList:[red, blue]} **discount -1.68
+  {class:ProductPersonalized, id:6, name:'Camiseta talla:L UPM', category:CLOTHES, price:24.0, maxPersonal:4, personalizationList:[red, blue]} **discount -1.68
+  {class:ProductPersonalized, id:5, name:'Camiseta talla:M UPM', category:CLOTHES, price:15.0, maxPersonal:3} **discount -1.05
+  {class:ProductPersonalized, id:5, name:'Camiseta talla:M UPM', category:CLOTHES, price:19.5, maxPersonal:3, personalizationList:[red, blue, green]} **discount -1.365
+  {class:ProductPersonalized, id:5, name:'Camiseta talla:M UPM', category:CLOTHES, price:19.5, maxPersonal:3, personalizationList:[red, blue, green]} **discount -1.365
+  {class:ProductPersonalized, id:5, name:'Camiseta talla:M UPM', category:CLOTHES, price:19.5, maxPersonal:3, personalizationList:[red, blue, green]} **discount -1.365
+  Total price: 145.5
+  Total discount: 10.184999
+  Final Price: 135.315
+ticket add: ok
+
+tUPM> ticket print 212128 UW1234567
+Ticket : 212128-25-11-14-18:21
+  {class:ProductPersonalized, id:6, name:'Camiseta talla:L UPM', category:CLOTHES, price:24.0, maxPersonal:4, personalizationList:[red, blue]} **discount -1.68
+  {class:ProductPersonalized, id:6, name:'Camiseta talla:L UPM', category:CLOTHES, price:24.0, maxPersonal:4, personalizationList:[red, blue]} **discount -1.68
+  {class:ProductPersonalized, id:6, name:'Camiseta talla:L UPM', category:CLOTHES, price:24.0, maxPersonal:4, personalizationList:[red, blue]} **discount -1.68
+  {class:ProductPersonalized, id:5, name:'Camiseta talla:M UPM', category:CLOTHES, price:15.0, maxPersonal:3} **discount -1.05
+  {class:ProductPersonalized, id:5, name:'Camiseta talla:M UPM', category:CLOTHES, price:19.5, maxPersonal:3, personalizationList:[red, blue, green]} **discount -1.365
+  {class:ProductPersonalized, id:5, name:'Camiseta talla:M UPM', category:CLOTHES, price:19.5, maxPersonal:3, personalizationList:[red, blue, green]} **discount -1.365
+  {class:ProductPersonalized, id:5, name:'Camiseta talla:M UPM', category:CLOTHES, price:19.5, maxPersonal:3, personalizationList:[red, blue, green]} **discount -1.365
+  Total price: 145.5
+  Total discount: 10.184999
+  Final Price: 135.315
+ticket print: ok
+tUPM> exit
+Closing application.
+Goodbye!

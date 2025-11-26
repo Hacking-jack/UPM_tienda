@@ -16,6 +16,7 @@ public class TicketController {
         }
             if(!TicketDB.existeId(id)) {
                 TicketDB.addTicket(new Ticket(id));
+                TicketDB.findId(id).print();
             }else{
                 System.out.println("Ya existe un ticket con ese id");
             }
@@ -82,9 +83,8 @@ public class TicketController {
     }
 
     public static void print(String ticketId) {
-        Ticket t=TicketDB.findId(ticketId);
-        if(t!=null) {
-            t.print();
+        if(TicketDB.existeId(ticketId)) {
+            TicketDB.findId(ticketId).printAndClose();
         }else{
             System.out.println("Ticket no encontrado");
         }

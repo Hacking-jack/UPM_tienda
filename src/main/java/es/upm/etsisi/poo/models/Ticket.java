@@ -123,11 +123,8 @@ public class Ticket {
 
         double descuentoTotal = 0;
 
-        // ⭐⭐ LÍNEAS DE DEFINICIÓN AÑADIDAS ⭐⭐
-        LocalDateTime now = LocalDateTime.now();
-        String finalTicketId = this.idTicket + "-" + now.format(DateTimeFormatter.ofPattern("dd-MM-yy-HH:mm"));
 
-        System.out.printf("Ticket : %s%n", finalTicketId); // ⭐ Se usa finalTicketId aquí
+        System.out.printf("Ticket : %s%n", idTicket); // ⭐ Se usa finalTicketId aquí
 
         for (int i = 0; i < products.size(); i++) {
             Product p = products.get(i);
