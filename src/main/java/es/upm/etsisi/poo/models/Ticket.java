@@ -57,27 +57,29 @@ public class Ticket {
     public boolean hasDiscount(int counterStationary, int counterClothes, int counterBook, int counterElectronic,
                                Categories categories) {
         boolean correct = false;
-        switch (categories) {
-            case STATIONERY:
-                if (counterStationary >= 2) {
-                    correct = true;
-                }
-                break;
-            case CLOTHES:
-                if (counterClothes >= 2) {
-                    correct = true;
-                }
-                break;
-            case BOOK:
-                if (counterBook >= 2) {
-                    correct = true;
-                }
-                break;
-            case ELECTRONICS:
-                if (counterElectronic >= 2) {
-                    correct = true;
-                }
-                break;
+        if(categories!=null) {
+            switch (categories) {
+                case STATIONERY:
+                    if (counterStationary >= 2) {
+                        correct = true;
+                    }
+                    break;
+                case CLOTHES:
+                    if (counterClothes >= 2) {
+                        correct = true;
+                    }
+                    break;
+                case BOOK:
+                    if (counterBook >= 2) {
+                        correct = true;
+                    }
+                    break;
+                case ELECTRONICS:
+                    if (counterElectronic >= 2) {
+                        correct = true;
+                    }
+                    break;
+            }
         }
         return correct;
     }

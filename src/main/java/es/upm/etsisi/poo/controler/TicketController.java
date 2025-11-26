@@ -29,11 +29,13 @@ public class TicketController {
             if (!ticket.addProduct(product)) {
                 System.out.println("No se pudieron añadir todos los productos, se han añadido " + i +
                         " hasta llegar al limite de 100");
+                ticket.print();
                 break;
             }
         }
+        ticket.print();
     }
-
+    //TODO  addProductPers puede llamar a addProduct para reducri codigo
     public static void addProductPers(String ticketId, Product product, int quantity, String[] pers) {
         if (product instanceof ProductCustom) {
             Ticket ticket = findId(ticketId);
@@ -42,10 +44,12 @@ public class TicketController {
                 if (!ticket.addProduct(clone)) {
                     System.out.println("No se pudieron añadir todos los productos, se han añadido " + i +
                             " hasta llegar al limite de 100.");
+                    ticket.print();
                     break;
                 }
             }
             ((ProductCustom) product).addPers(pers);
+            ticket.print();
         } else {
             System.out.println("No se puede personalizar un objeto no personalizable");
         }

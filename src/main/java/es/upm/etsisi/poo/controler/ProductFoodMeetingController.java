@@ -24,6 +24,12 @@ public class ProductFoodMeetingController extends ProductController {
                         Product product = new ProductMeeting(id, name, price, fecha, maxParticipantes, isFood);
                         ProductDB.addProduct(product);
                         System.out.println(product.toString());
+                    }else{
+                        if(isFood) {
+                            System.out.println("No cumple el requisito minimo de tiempo, para una comida el tiempo es de 3 dias");
+                        }else{
+                            System.out.println("No cumple el requisito minimo de tiempo, para una reunion el tiempo es de 12 horas");
+                        }
                     }
                 } else {
                     System.out.println("Catálogo de productos lleno.");
