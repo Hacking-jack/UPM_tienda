@@ -69,7 +69,7 @@ public class TicketController {
     public static void print(String ticketId) {
         Ticket t=TicketDB.findId(ticketId);
         if(t!=null) {
-            t.print();
+            t.printAndClose();
         }else{
             System.out.println("Ticket no encontrado");
         }
