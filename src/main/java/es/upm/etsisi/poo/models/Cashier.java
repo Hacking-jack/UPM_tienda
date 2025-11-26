@@ -1,6 +1,6 @@
 package es.upm.etsisi.poo.models;
 
-import java.util.Random;
+import java.util.ArrayList;
 
 public class Cashier extends Human {
 
@@ -10,6 +10,7 @@ public class Cashier extends Human {
         this.id = id;
         this.nombre = nombre;
         this.email = email;
+        this.tickets=new ArrayList<>();
     }
 
 

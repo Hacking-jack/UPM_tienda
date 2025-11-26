@@ -1,6 +1,5 @@
 package es.upm.etsisi.poo.models;
 
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -27,10 +26,10 @@ public class Ticket {
         this.idTicket = id;
         this.estado = States.VACIO;
         this.date = LocalDateTime.now();
-        this.products = new ArrayList<>(products);
+        this.products = new ArrayList<>();
     }
 
-    //TODO despues de cada addProduct hay qeu hacer un print
+    //TODO despues de cada addProduct hay qeu hacer un print, revisar no añadir a tickets cerrados
     public boolean addProduct(Product product) {
         if (products.isEmpty())
             this.estado = States.ACTIVO;
@@ -77,12 +76,17 @@ public class Ticket {
         return correct;
     }
 
-    public void closeTicket() {
-        print();
+    public void printAndClose() {
         this.estado = States.CERRADO;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("-yy-MM-dd-HH:mm");
         this.idTicket += LocalDateTime.now().format(formatter);
+        print();
     }
+
+    public void title(){
+        System.out.println(this.idTicket+"->"+this.estado.toString()+" ");
+    }
+//TODO toString para comando print y toString para intermedios
 
     public void print() {
         if (products.isEmpty()) {

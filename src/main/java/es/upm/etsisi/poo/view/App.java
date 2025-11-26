@@ -54,6 +54,8 @@ public class App {
     }
 
     private static void run(BufferedReader input, boolean esArchivo) {
+        new CommandCashAdd("UW1","cash","mail").execute();
+        new CommandClientAdd("cliente","1","mail", "UW1").execute();
         boolean bucle = true;
         String line;
         while (bucle) {
@@ -63,7 +65,6 @@ public class App {
                     line = input.readLine();
                     if (line == null) break;
 
-                    //System.out.print("tUPM> ");
                     if (esArchivo) {
                         System.out.println(line);
                     }
@@ -230,8 +231,8 @@ public class App {
                     }
                     bucle = cmd.execute();
                 }
-            } catch (NumberFormatException | ArrayIndexOutOfBoundsException | NullPointerException ex) {
-                System.out.println("Formato del comando incorrecto. Use help para ver los comandos");
+            //} catch (NumberFormatException | ArrayIndexOutOfBoundsException | NullPointerException ex) {
+            //    System.out.println("Formato del comando incorrecto. Use help para ver los comandos");
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }

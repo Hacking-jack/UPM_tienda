@@ -2,6 +2,8 @@ package es.upm.etsisi.poo.models;
 
 import es.upm.etsisi.poo.BASES_DE_DATOS.HumanDB;
 
+import java.util.ArrayList;
+
 public class Client extends Human {
 
     private String cajeroAlta;
@@ -11,6 +13,7 @@ public class Client extends Human {
         this.id = dni;
         this.cajeroAlta = cajeroAlta;
         this.email = email;
+        this.tickets=new ArrayList<>();
     }
 
     public String getId() {

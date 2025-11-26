@@ -30,4 +30,13 @@ public class TicketDB {
     static public ArrayList<Ticket> listProducts() {
         return tickets;
     }
+
+    static public void title(String ticketId){
+        Ticket t=findId(ticketId);
+        if(t!=null) {
+            t.title();
+        }else{
+            System.out.println("Ticket no encontrado");
+        }
+    }
 }

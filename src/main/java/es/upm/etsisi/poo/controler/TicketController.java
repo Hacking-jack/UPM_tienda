@@ -11,7 +11,11 @@ public class TicketController {
 
 
     public static void newTicket(String id) {
-        TicketDB.addTicket(new Ticket(id));
+        if(id==null){
+            TicketDB.addTicket(new Ticket());
+        }else{
+            TicketDB.addTicket(new Ticket(id));
+        }
     }
 
     public static void addProduct(String ticketId, Product product, int quantity) {
@@ -57,14 +61,12 @@ public class TicketController {
         }
     }
 
-    public static String generarId() {
-        return String.format(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yy-MM-dd-HH:mm-"))
-                + String.format("%05d", (int) (Math.random() * 100000)));
-    }
-
     public static void print(String ticketId) {
-        System.out.println(TicketDB.findId(ticketId));
+        Ticket t=TicketDB.findId(ticketId);
+        if(t!=null) {
+            t.printAndClose();
+        }else{
+            System.out.println("Ticket no encontrado");
+        }
     }
-
-
 }

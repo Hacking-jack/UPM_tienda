@@ -3,7 +3,6 @@ package es.upm.etsisi.poo.controler;
 import es.upm.etsisi.poo.BASES_DE_DATOS.HumanDB;
 import es.upm.etsisi.poo.BASES_DE_DATOS.TicketDB;
 import es.upm.etsisi.poo.models.Cashier;
-import es.upm.etsisi.poo.models.Client;
 import es.upm.etsisi.poo.models.Human;
 
 import java.util.Random;
@@ -50,11 +49,11 @@ public class CashierController {
     }
 
     public static void cashTickets(String cashId) {
-        System.out.println("Tickets:");
+        System.out.print("Tickets:\n ");
 
         Cashier aux = (Cashier) HumanDB.findId(cashId);
         for (String t : aux.getTickets()) {
-            System.out.println(TicketDB.findId(t));
+                TicketDB.title(t);
         }
     }
 

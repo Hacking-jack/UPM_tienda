@@ -25,5 +25,9 @@ public abstract class Human {
         return tickets;
     }
 
+    public boolean contains(Ticket ticket){
+        return tickets.contains(ticket);
+    }
+
     public abstract String getId();
 }

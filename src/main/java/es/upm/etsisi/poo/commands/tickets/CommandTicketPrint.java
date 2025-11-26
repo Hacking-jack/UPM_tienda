@@ -3,6 +3,7 @@ package es.upm.etsisi.poo.commands.tickets;
 import es.upm.etsisi.poo.BASES_DE_DATOS.HumanDB;
 import es.upm.etsisi.poo.BASES_DE_DATOS.TicketDB;
 import es.upm.etsisi.poo.commands.Command;
+import es.upm.etsisi.poo.controler.CashierController;
 import es.upm.etsisi.poo.controler.TicketController;
 
 public class CommandTicketPrint implements Command {
@@ -16,7 +17,7 @@ public class CommandTicketPrint implements Command {
 
     @Override
     public boolean execute() {
-        if (HumanDB.findId(cashId).getTickets().contains(TicketDB.findId(ticketId))) {
+        if (CashierController.searchId(cashId).contains(TicketController.findId(ticketId))) {
             TicketController.print(ticketId);
         } else {
             System.out.println("Ese ticket no pertenece al cajero indicado");
