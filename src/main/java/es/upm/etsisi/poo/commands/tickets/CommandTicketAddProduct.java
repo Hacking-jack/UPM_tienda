@@ -27,14 +27,15 @@ public class CommandTicketAddProduct implements Command {
     //TODO existe esta otacion que te sale en intellij como una lista de tareas
     @Override
     public boolean execute() {// hacer dos add, uno con personalizacion y otro sin
+        Product product = ProductController.findId(this.productId);
         if (!(ProductController.findId(this.productId) instanceof ProductMeeting)) {
             if (pers != null) {
-                TicketController.addProductPers(this.ticketId, ProductController.findId(this.productId), this.amount, this.pers);// con pers
+                TicketController.addProductPers(this.ticketId, product, this.amount, this.pers);// con pers
             } else {
-                TicketController.addProduct(this.ticketId, ProductController.findId(this.productId), this.amount);// sin pers
+                TicketController.addProduct(this.ticketId, product, this.amount);// sin pers
             }
         }else
-             TicketController.addMeeting(this.ticketId, (ProductMeeting) ProductController.findId(this.productId), this.amount);
+             TicketController.addMeeting(this.ticketId, (ProductMeeting) product, this.amount);
         return true;
 
     }

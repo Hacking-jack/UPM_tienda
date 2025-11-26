@@ -9,6 +9,8 @@ prod addFood 23459 "Restaurante Asador" 50 2026-11-21 40
 prod add 5 "Camiseta talla:M UPM" CLOTHES 15 3
 prod add 6 "Camiseta talla:L UPM" CLOTHES 20 4
 ticket new 212128 UW1234567 98948334B
+ticket add 212128 UW1234567 23458 15
+ticket add 212128 UW1234567 23458 60
 ticket add 212128 UW1234567 5 1
 ticket add 212128 UW1234567 5 3 --pred --pblue --pgreen
 ticket add 212128 UW1234567 6 3 --pred --pblue

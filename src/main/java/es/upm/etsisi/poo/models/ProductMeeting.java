@@ -34,11 +34,11 @@ public class ProductMeeting extends Product {
     }
 
     public void setAsistentes(int asistentes) {
-        if (this.asistentes + asistentes > maxParticipantes) {
+        if (asistentes > maxParticipantes) {
             System.out.println("No se han podido añadir todos los asistentes, se han añadido hasta llegar al maximo");
             this.asistentes = maxParticipantes;
         } else {
-            this.asistentes += asistentes;
+            this.asistentes = asistentes;
         }
     }
 
@@ -65,9 +65,19 @@ public class ProductMeeting extends Product {
 
     @Override
     public String toString() {
+        if(asistentes == 0)
         return "{class:" + ((isFood) ? "Food" : "Meeting") +
                 ", id:" + id + ", name:'" + name + "', price:" + price * asistentes + ", date of Event:" + date +
                 ", max people allowed:" + maxParticipantes + "}";
+        else
+            return "{class:" + ((isFood) ? "Food" : "Meeting") +
+                    ", id:" + id + ", name:'" + name + "', price:" + price * asistentes + ", date of Event:" + date +
+                    ", max people allowed:" + maxParticipantes + ", actual people in event:"+ asistentes + "}";
+    }
+
+    @Override
+    public ProductMeeting clone() {
+        return new ProductMeeting(id, name, price, date, maxParticipantes, isFood);
     }
 }
 

@@ -52,6 +52,7 @@ public class Ticket {
                 tmp = (ProductMeeting) product;
                 asistentes =  tmp.getAsistentes();
                 productMeeting.setAsistentes(productMeeting.getAsistentes() + asistentes);
+                removeProduct(product);
                 break;
             }
         }

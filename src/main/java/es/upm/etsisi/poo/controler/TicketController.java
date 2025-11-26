@@ -69,8 +69,9 @@ public class TicketController {
     static public void addMeeting(String ticketId, ProductMeeting product, int quantity)
     {
         Ticket ticket = findId(ticketId);
-        product.setAsistentes(quantity);
-        ticket.addMeeting(product);
+        ProductMeeting clone = product.clone();
+        clone.setAsistentes(quantity);
+        ticket.addMeeting(clone);
     }
 
     static public Ticket findId(String id) {
