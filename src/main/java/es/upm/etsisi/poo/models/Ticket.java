@@ -44,6 +44,19 @@ public class Ticket {
             }
         }
     }
+    public boolean addMeeting(ProductMeeting productMeeting){
+        int asistentes = 0;
+        ProductMeeting tmp;
+        for(Product product : products){
+            if (product.getId() == productMeeting.getId()){
+                tmp = (ProductMeeting) product;
+                asistentes =  tmp.getAsistentes();
+                productMeeting.setAsistentes(productMeeting.getAsistentes() + asistentes);
+                break;
+            }
+        }
+        return addProduct(productMeeting);
+    }
 
     //TODO revisar si es util una resuesta
     public void removeProduct(Product product) {

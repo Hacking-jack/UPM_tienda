@@ -66,6 +66,12 @@ public class TicketController {
             System.out.println("No se puede personalizar un objeto no personalizable");
         }
     }
+    static public void addMeeting(String ticketId, ProductMeeting product, int quantity)
+    {
+        Ticket ticket = findId(ticketId);
+        product.setAsistentes(quantity);
+        ticket.addMeeting(product);
+    }
 
     static public Ticket findId(String id) {
         return TicketDB.findId(id);
