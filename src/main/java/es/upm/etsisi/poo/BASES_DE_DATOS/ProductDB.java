@@ -1,6 +1,7 @@
 package es.upm.etsisi.poo.BASES_DE_DATOS;
 
 import es.upm.etsisi.poo.Exceptions.ProductNotFound;
+import es.upm.etsisi.poo.models.Human;
 import es.upm.etsisi.poo.models.Product;
 
 import java.util.ArrayList;
@@ -25,6 +26,14 @@ public class ProductDB {
                 return (p);
         }
         throw new ProductNotFound("No se encontro el producto con id "+id);
+    }
+
+    static public boolean existeId(int id){
+        for (Product p : products) {
+            if (p.getId()==id)
+                return true;
+        }
+        return false;
     }
 
     //Equivalente  DELETE FROM table_name WHERE id = id;

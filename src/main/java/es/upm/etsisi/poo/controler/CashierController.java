@@ -17,7 +17,7 @@ public class CashierController {
 
     public static void add(String id, String nombre, String email) {
         if(id.matches("^UW\\d{7}$")) {
-            if (id != null && searchId(id) != null) {
+            if (HumanDB.existeId(id)) {
                 System.out.println("Error. Ya existe un cajero con ese id.");
                 return;
             }

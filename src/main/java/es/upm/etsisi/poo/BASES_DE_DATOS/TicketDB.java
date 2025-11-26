@@ -1,6 +1,7 @@
 package es.upm.etsisi.poo.BASES_DE_DATOS;
 
 import es.upm.etsisi.poo.Exceptions.TicketNotFound;
+import es.upm.etsisi.poo.models.Human;
 import es.upm.etsisi.poo.models.Product;
 import es.upm.etsisi.poo.models.Ticket;
 
@@ -21,6 +22,14 @@ public class TicketDB {
                 return (t);
         }
         throw new TicketNotFound("No se encontró el ticket con id "+id);
+    }
+
+    static public boolean existeId(String id){
+        for (Ticket t : tickets) {
+            if (t.getIdTicket().equals(id))
+                return true;
+        }
+        return false;
     }
 
     static public void removeTicket(Ticket t) {

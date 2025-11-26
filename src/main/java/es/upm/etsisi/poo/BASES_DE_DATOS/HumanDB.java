@@ -22,7 +22,15 @@ public class HumanDB {
             if (p.getId().equals(id))
                 return (p);
         }
-        throw new UserNotFound("No se encontro el usuario con id +"+id);
+        throw new UserNotFound("No se encontro el usuario con id "+id);
+    }
+
+    static public boolean existeId(String id){
+        for (Human p : human) {
+            if (p.getId().equals(id))
+                return true;
+        }
+        return false;
     }
 
     //EQuivalente a conulta de borrado de una fila de la tabla

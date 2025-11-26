@@ -12,7 +12,7 @@ public class ProductMeeting extends Product {
     private int asistentes;
 
     public ProductMeeting(int id, String name, double price, LocalDate date, int maxParticipantes, boolean isFood) {
-        super(name, null, price, id);
+        super(id, name, null, price);
         try {
             this.date = date;
             if (maxParticipantes <= 100)
@@ -66,7 +66,7 @@ public class ProductMeeting extends Product {
     @Override
     public String toString() {
         return "{class:" + ((isFood) ? "Food" : "Meeting") +
-                ", id:" + id + ", name:" + name + ", price:" + price * asistentes + ", date of Event:" + date +
+                ", id:" + id + ", name:'" + name + "', price:" + price * asistentes + ", date of Event:" + date +
                 ", max people allowed:" + maxParticipantes + "}";
     }
 }

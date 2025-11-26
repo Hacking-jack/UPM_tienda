@@ -12,13 +12,24 @@ public class TicketController {
 
     public static String newTicket(String id) {
         if(id==null){
-            Ticket t=new Ticket();
-            TicketDB.addTicket(t);
-            return t.getIdTicket();
-        }else{
-            TicketDB.addTicket(new Ticket(id));
-            return id;
+            id=generarId();
         }
+            if(!TicketDB.existeId(id)) {
+                TicketDB.addTicket(new Ticket(id));
+            }else{
+                System.out.println("Ya existe un ticket con ese id");
+            }
+            return id;
+    }
+
+    public static String generarId(){
+        String s = LocalDateTime.now()
+                .format(DateTimeFormatter.ofPattern("yy-MM-dd-HH:mm-"))
+                + String.format("%05d", (int) (Math.random() * 10000));
+        if(TicketDB.existeId(s)){
+            return generarId();
+        }
+        return s;
     }
 
     public static void addProduct(String ticketId, Product product, int quantity) {

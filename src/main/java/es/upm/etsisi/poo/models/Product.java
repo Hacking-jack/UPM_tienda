@@ -13,18 +13,11 @@ public class Product {
     protected double price;
     protected int id;
 
-    public Product(String name, Categories categories, double price, int id) {
+    public Product(int id, String name, Categories categories, double price) {
         this.name = name;
         this.categories = categories;
         this.price = price;
         this.id = id;
-    }
-
-    public Product(String name, double price, Categories categories) {
-        this.id = 10000000 + new Random().nextInt(90000000);
-        this.name = name;
-        this.price = price;
-        this.categories = categories;
     }
 
     public String getName() {
@@ -57,7 +50,7 @@ public class Product {
     }
 
     public Product clone() {
-        return new Product(this.name, this.categories, this.price, this.id);
+        return new Product(this.id, this.name, this.categories, this.price);
     }
 
     @Override

@@ -17,11 +17,11 @@ public class ProductController {
 
     public static void add(int id, String name, String categories, double price) {
         if (categorieControl(categories)) {
-            if (ProductDB.findId(id) != null) {
+            if (ProductDB.existeId(id)) {
                 System.out.println("Error. Ya existe el id.");
             } else {
                 if (ProductDB.countProduct() < 200) {
-                    Product product = new Product(name, Categories.valueOf(categories), price, id);
+                    Product product = new Product(id, name, Categories.valueOf(categories), price);
                     ProductDB.addProduct(product);
                     System.out.println(product.toString());
                 } else {
@@ -94,8 +94,8 @@ public class ProductController {
     }
 
     public static int generarId() {
-        int id = (int) (Math.random() * 9999);
-        if (ProductDB.findId(id) == null) {
+        int id = (int) (Math.random() * 10000);
+        if (!ProductDB.existeId(id)) {
             return id;
         } else {
             return generarId();
