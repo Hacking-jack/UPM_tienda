@@ -5,14 +5,12 @@ import es.upm.etsisi.poo.models.Product;
 import java.util.ArrayList;
 
 public class ProductDB {
-    private static int counter = 0;
     //Equivalente a una tabla Products en SQL
     static private ArrayList<Product> products = new ArrayList<>();
 
     //Equivalente a un insert
     static public void addProduct(Product p) {
         products.add(p);
-        counter++;
     }
 
     static public void addProductClone(Product p) {
@@ -42,11 +40,5 @@ public class ProductDB {
     static public ArrayList<Product> listProducts() {
         return products;
     }
-
-    public static int getCounter() {
-        return counter;
-    }
-    //TODO hacer un addClone y poner un contador para los limmites (el addClone no sube el cont)
-
 
 }

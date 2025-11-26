@@ -17,7 +17,7 @@ public class CommandTicketPrint implements Command {
 
     @Override
     public boolean execute() {
-        if (CashierController.searchId(cashId).contains(TicketController.findId(ticketId))) {
+        if (CashierController.searchId(cashId).getTickets().contains(TicketController.findId(ticketId).getIdTicket())) {
             TicketController.print(ticketId);
         } else {
             System.out.println("Ese ticket no pertenece al cajero indicado");
@@ -25,4 +25,3 @@ public class CommandTicketPrint implements Command {
         return true;
     }
 }
-//TODO revisar esto

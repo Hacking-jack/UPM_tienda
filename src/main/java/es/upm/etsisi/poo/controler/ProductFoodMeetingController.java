@@ -19,7 +19,7 @@ public class ProductFoodMeetingController extends ProductController {
             if (ProductDB.findId(id) != null) {
                 System.out.println("Error. Ya existe el id.");
             } else {
-                if (ProductDB.getCounter() < 200) {
+                if (ProductDB.countProduct() < 200) {
                     if ((isFood && dias >= 3) || (!isFood && (dias >= 1 || (dias == 0 && LocalDateTime.now().getHour() <= 12)))) {
                         Product product = new ProductMeeting(id, name, price, fecha, maxParticipantes, isFood);
                         ProductDB.addProduct(product);

@@ -27,7 +27,7 @@ public class Ticket {
         this.estado = States.VACIO;
         this.date = LocalDateTime.now();
         this.products = new ArrayList<>();
-        print();
+        // print();
     }
 
     //TODO despues de cada addProduct hay qeu hacer un print, revisar no añadir a tickets cerrados
@@ -148,6 +148,23 @@ public class Ticket {
         System.out.printf("  Total price: %.2f%n", precioTotal);
         System.out.printf("  Total discount: %.2f%n", descuentoTotal);
         System.out.printf("  Final Price: %.2f%n", precioFinal);
+    }
+
+    @Override
+    public String toString() {
+
+
+
+        return "Ticket{" +
+                "products=" + products +
+                ", idTicket='" + idTicket + '\'' +
+                ", date=" + date +
+                ", estado=" + estado +
+                '}';
+    }
+
+    public void setEstado(States estado) {
+        this.estado = estado;
     }
 
     public LocalDateTime getDate() {

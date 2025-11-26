@@ -14,7 +14,7 @@ public class ProductCustomController extends ProductController {
             if (ProductDB.findId(id) != null) {
                 System.out.println("Error. Ya existe el id.");
             } else {
-                if (ProductDB.getCounter() < 200) {
+                if (ProductDB.countProduct() < 200) {
                     Product product = new ProductCustom(name, price, Categories.valueOf(categories), maxPers);
                     ProductDB.addProduct(product);
                     System.out.println(product.toString());

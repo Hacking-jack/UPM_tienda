@@ -23,6 +23,8 @@ public class TicketController {
 
     public static void addProduct(String ticketId, Product product, int quantity) {
         Ticket ticket = findId(ticketId);
+        if (ticket.getEstado() == States.VACIO)
+            ticket.setEstado(States.ACTIVO);
         for (int i = 0; i < quantity; i++) {
             if (!ticket.addProduct(product)) {
                 System.out.println("No se pudieron añadir todos los productos, se han añadido " + i +
@@ -67,7 +69,7 @@ public class TicketController {
     public static void print(String ticketId) {
         Ticket t=TicketDB.findId(ticketId);
         if(t!=null) {
-            t.printAndClose();
+            t.print();
         }else{
             System.out.println("Ticket no encontrado");
         }
