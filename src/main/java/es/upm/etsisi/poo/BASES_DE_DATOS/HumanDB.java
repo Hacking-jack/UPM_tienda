@@ -1,5 +1,6 @@
 package es.upm.etsisi.poo.BASES_DE_DATOS;
 
+import es.upm.etsisi.poo.Exceptions.UserNotFound;
 import es.upm.etsisi.poo.models.Human;
 
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ public class HumanDB {
             if (p.getId().equals(id))
                 return (p);
         }
-        return null;
+        throw new UserNotFound("No se encontro el usuario con id +"+id);
     }
 
     //EQuivalente a conulta de borrado de una fila de la tabla
