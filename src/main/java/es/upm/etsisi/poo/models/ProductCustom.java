@@ -16,7 +16,7 @@ public class ProductCustom extends Product {
     }
 
     public void addPers(String[] pers) {
-        if (pers.length < maxPers) {
+        if (pers.length <= maxPers) {
             listaPers = pers;
             persAct = pers.length;
         } else {

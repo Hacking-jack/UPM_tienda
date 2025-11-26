@@ -8,7 +8,6 @@ import java.util.Comparator;
 public class Ticket {
     private ArrayList<Product> products;
     private String idTicket;
-    //private double finalPrice;
     private LocalDateTime date;
     private States estado;
 
@@ -27,7 +26,6 @@ public class Ticket {
         this.estado = States.VACIO;
         this.date = LocalDateTime.now();
         this.products = new ArrayList<>();
-        // print();
     }
 
     //TODO despues de cada addProduct hay qeu hacer un print, revisar no añadir a tickets cerrados
@@ -85,10 +83,10 @@ public class Ticket {
     }
 
     public void printAndClose() {
+        print();
         this.estado = States.CERRADO;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("-yy-MM-dd-HH:mm");
         this.idTicket += LocalDateTime.now().format(formatter);
-        print();
     }
 
     public String list(){
@@ -98,7 +96,7 @@ public class Ticket {
     public void title(){
         System.out.println(this.idTicket+"->"+this.estado.toString());
     }
-//TODO toString para comando print y toString para intermedios
+  //TODO toString para comando print y toString para intermedios
 
     public void print() {
         if (products.isEmpty()) {

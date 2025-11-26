@@ -51,7 +51,8 @@ public class TicketController {
     public static void addProductPers(String ticketId, Product product, int quantity, String[] pers) {
         if (product instanceof ProductCustom) {
             Ticket ticket = findId(ticketId);
-            Product clone = product.clone();
+            ProductCustom clone = (ProductCustom) product.clone();
+            clone.addPers(pers);
             for (int i = 0; i < quantity; i++) {
                 if (!ticket.addProduct(clone)) {
                     System.out.println("No se pudieron añadir todos los productos, se han añadido " + i +
@@ -60,7 +61,6 @@ public class TicketController {
                     break;
                 }
             }
-            ((ProductCustom) product).addPers(pers);
             ticket.print();
         } else {
             System.out.println("No se puede personalizar un objeto no personalizable");
