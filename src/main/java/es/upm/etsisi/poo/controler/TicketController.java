@@ -10,13 +10,15 @@ import java.util.ArrayList;
 public class TicketController {
 
 
-    public static void newTicket(String id) {
+    public static String newTicket(String id) {
         if(id==null){
-            TicketDB.addTicket(new Ticket());
+            Ticket t=new Ticket();
+            TicketDB.addTicket(t);
+            return t.getIdTicket();
         }else{
             TicketDB.addTicket(new Ticket(id));
+            return id;
         }
-
     }
 
     public static void addProduct(String ticketId, Product product, int quantity) {
@@ -56,8 +58,8 @@ public class TicketController {
     }
 
     public static void list() {
-        ArrayList<Ticket> tickets = TicketDB.listProducts();
-        for (Ticket t : tickets) {
+        System.out.println("Ticket List:");
+        for (Ticket t : TicketDB.listProducts()) {
             System.out.println(t.list());
         }
     }

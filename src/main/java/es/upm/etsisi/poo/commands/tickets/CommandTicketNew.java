@@ -9,7 +9,7 @@ import es.upm.etsisi.poo.controler.TicketController;
 import javax.swing.event.CaretListener;
 
 public class CommandTicketNew implements Command {
-    private final String id; // null si no se da
+    private String id; // null si no se da
     private final String cashId;
     private final String clientId;
 
@@ -21,9 +21,9 @@ public class CommandTicketNew implements Command {
 
     @Override
     public boolean execute() {
+        this.id = TicketController.newTicket(id);
         ClientController.searchId(clientId).addTicket(id);
         CashierController.searchId(cashId).addTicket(id);
-        TicketController.newTicket(id);
         return true;
     }//TODO revisar
 }

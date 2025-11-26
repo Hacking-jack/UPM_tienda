@@ -34,11 +34,16 @@ public class Ticket {
     public boolean addProduct(Product product) {
         if (products.isEmpty())
             this.estado = States.ACTIVO;
-        if (this.products.size() < 100)
-            return products.add(product);
-        else {
-            System.out.println("Ticket lleno.");
+        if(this.estado==States.CERRADO){
+            System.out.println("Error, no se pueden añadir productos a un ticket cerrado");
             return false;
+        }else {
+            if (this.products.size() < 100)
+                return products.add(product);
+            else {
+                System.out.println("Ticket lleno.");
+                return false;
+            }
         }
     }
 
@@ -89,7 +94,7 @@ public class Ticket {
     }
 
     public void title(){
-        System.out.println(this.idTicket+"->"+this.estado.toString()+" ");
+        System.out.println(this.idTicket+"->"+this.estado.toString());
     }
 //TODO toString para comando print y toString para intermedios
 
@@ -145,17 +150,9 @@ public class Ticket {
         System.out.printf("  Final Price: %.2f%n", precioFinal);
     }
 
-  /*  public ArrayList<Product> getProducts() {
-        return products;
-    }*/
-
     public LocalDateTime getDate() {
         return date;
     }
-
-    /*public double getFinalPrice() {
-        return finalPrice;
-    }*/
 
     public String getIdTicket() {
         return idTicket;
