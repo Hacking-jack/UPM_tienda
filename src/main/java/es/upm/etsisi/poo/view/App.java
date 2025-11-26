@@ -61,6 +61,7 @@ public class App {
         while (bucle) {
             try {
                 while (bucle) {
+                    boolean esGeneral=false;
                     System.out.print("tUPM> ");
                     line = input.readLine();
                     if (line == null) break;
@@ -77,17 +78,14 @@ public class App {
                         case "client add":
                             removeComillas(args, 0);
                             cmd = new CommandClientAdd(args[0], args[1], args[2], args[3]);
-                            System.out.println(comando + ": ok");
                             break;
 
                         case "client remove":
                             cmd = new CommandClientRemove(args[0]);
-                            System.out.println(comando + ": ok");
                             break;
 
                         case "client list":
                             cmd = new CommandClientList();
-                            System.out.println(comando + ": ok");
                             break;
 
                         case "cash add":
@@ -98,22 +96,18 @@ public class App {
                                 removeComillas(args, 0);
                                 cmd = new CommandCashAdd(null, args[0], args[1]);
                             }
-                            System.out.println(comando + ": ok");
                             break;
 
                         case "cash remove":
                             cmd = new CommandCashRemove(args[0]);
-                            System.out.println(comando + ": ok");
                             break;
 
                         case "cash list":
                             cmd = new CommandCashList();
-                            System.out.println(comando + ": ok");
                             break;
 
                         case "cash tickets":
                             cmd = new CommandCashTickets(args[0]);
-                            System.out.println(comando + ": ok");
                             break;
 
                         case "ticket new":
@@ -122,29 +116,24 @@ public class App {
                             } else {
                                 cmd = new CommandTicketNew(args[0], args[1], args[2]);
                             }
-                            System.out.println(comando + ": ok");
                             break;
 
                         case "ticket add":
                             String[] pers;
                             pers = obtenerPers(args);
                             cmd = new CommandTicketAddProduct(args[0], args[1], Integer.parseInt(args[2]), Integer.parseInt(args[3]), pers);
-                            System.out.println(comando + ": ok");
                             break;
 
                         case "ticket remove":
                             cmd = new CommandTicketRemoveProduct(args[0], args[1], Integer.parseInt(args[2]));
-                            System.out.println(comando + ": ok");
                             break;
 
                         case "ticket print":
                             cmd = new CommandTicketPrint(args[0], args[1]);
-                            System.out.println(comando + ": ok");
                             break;
 
                         case "ticket list":
                             cmd = new CommandTicketList();
-                            System.out.println(comando + ": ok");
                             break;
 
                         case "prod add":
@@ -167,15 +156,13 @@ public class App {
                                             Integer.parseInt(args[3]));
                                 }
                             }
-                            System.out.println(comando + ": ok");
                             break;
 
                         case "prod update":
-                            if (args[1].startsWith("\"")) {
-                                removeComillas(args, 1);
+                            if (args[1].equals("NAME")) {
+                                removeComillas(args, 2);
                             }
                             cmd = new CommandProductUpdate(Integer.parseInt(args[0]), args[1], args[2]);
-                            System.out.println(comando + ": ok");
                             break;
 
                         case "prod addFood":
@@ -188,7 +175,6 @@ public class App {
                                 cmd = new CommandProductAddFood(null, args[0], Double.parseDouble(args[1]),
                                         args[2], Integer.parseInt(args[3]));
                             }
-                            System.out.println(comando + ": ok");
                             break;
 
                         case "prod addMeeting":
@@ -201,35 +187,42 @@ public class App {
                                 cmd = new CommandProductAddMeeting(null, args[0], Double.parseDouble(args[1]),
                                         args[2], Integer.parseInt(args[3]));
                             }
-                            System.out.println(comando + ": ok");
                             break;
 
                         case "prod list":
                             cmd = new CommandProductList();
-                            System.out.println(comando + ": ok");
                             break;
 
                         case "prod remove":
                             cmd = new CommandProductRemove(Integer.parseInt(args[0]));
-                            System.out.println(comando + ": ok");
                             break;
 
                         case "help":
                             cmd = new CommandHelp();
+                            esGeneral=true;
                             break;
 
                         case "echo":
                             cmd = new CommandEcho(args[0]);
+                            esGeneral=true;
                             break;
 
                         case "exit":
                             cmd = new CommandExit();
+                            esGeneral=true;
                             break;
 
                         default:
                             break;
                     }
-                    bucle = cmd.execute();
+                    if(cmd==null){
+                        System.out.println("Comando no valido");
+                    }else {
+                        bucle = cmd.execute();
+                        if(!esGeneral){
+                            System.out.println(comando+": ok\n");
+                        }
+                    }
                 }
             //} catch (NumberFormatException | ArrayIndexOutOfBoundsException | NullPointerException ex) {
             //    System.out.println("Formato del comando incorrecto. Use help para ver los comandos");
@@ -266,15 +259,19 @@ public class App {
     }
 
     private static String[] obtenerPers(String[] args) {
-        int i = 4;// indice en el que empiezan las pers
-        while (!args[i].equals(" ")) {
-            i++;
+        if(args[4]!=null) {
+            int i = 4;// indice en el que empiezan las pers
+            while (args[i]!=null) {
+                i++;
+            }
+            String[] pers = new String[i - 4];
+            for (int j = 4; j < i; j++) {
+                pers[j - 4] = args[j].substring(3);
+            }
+            return pers;
+        }else{
+            return null;
         }
-        String[] pers = new String[i - 4];
-        for (int j = 4; j < i; j++) {
-            pers[j - 4] = args[j];
-        }
-        return pers;
     }
 
     private static void juntarComillas(String[] split) {

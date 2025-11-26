@@ -3,6 +3,7 @@ package es.upm.etsisi.poo.BASES_DE_DATOS;
 import es.upm.etsisi.poo.models.Human;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class HumanDB {
     //Tabla Humanos de base de datos, se guarda clientes y cajeros
@@ -11,6 +12,7 @@ public class HumanDB {
 
     static public void addUser(Human u) {
         human.add(u);
+        human.sort(Comparator.comparing(Human::getNombre));
     }
 
     //Equivalente a Select * from Human where id = id;

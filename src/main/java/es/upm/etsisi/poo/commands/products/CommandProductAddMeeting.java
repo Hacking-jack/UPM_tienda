@@ -27,7 +27,7 @@ public class CommandProductAddMeeting implements Command {
 
     @Override
     public boolean execute() {
-        ProductFoodMeetingController.add(id, name, null, price, date, maxPeople, false);
+        ProductFoodMeetingController.add(id, name, price, date, maxPeople, false);
         return true;
     }
 }

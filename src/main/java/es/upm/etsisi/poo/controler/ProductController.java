@@ -36,7 +36,7 @@ public class ProductController {
         System.out.println("Catalog:");
         ArrayList<Product> products = ProductDB.listProducts();
         for (Product p : products) {
-            System.out.println(p.toString());
+            System.out.println("  "+p.toString());
         }
     }
 

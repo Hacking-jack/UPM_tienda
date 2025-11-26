@@ -34,14 +34,14 @@ public class ClientController {
             return;
         }
 
-        System.out.println(p);
         HumanDB.removeHuman(p);
     }
 
     public static void list() {
+        System.out.println("Client:");
         for (Human human : HumanDB.list()) {
             if (human instanceof Client) {
-                System.out.println(human.toString());
+                System.out.println("  "+human.toString());
             }
         }
     }

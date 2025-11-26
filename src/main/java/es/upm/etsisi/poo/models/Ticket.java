@@ -27,6 +27,7 @@ public class Ticket {
         this.estado = States.VACIO;
         this.date = LocalDateTime.now();
         this.products = new ArrayList<>();
+        print();
     }
 
     //TODO despues de cada addProduct hay qeu hacer un print, revisar no añadir a tickets cerrados
@@ -81,6 +82,10 @@ public class Ticket {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("-yy-MM-dd-HH:mm");
         this.idTicket += LocalDateTime.now().format(formatter);
         print();
+    }
+
+    public String list(){
+        return this.idTicket+" - "+this.estado.toString();
     }
 
     public void title(){

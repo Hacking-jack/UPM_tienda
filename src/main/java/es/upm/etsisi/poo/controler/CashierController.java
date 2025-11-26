@@ -31,14 +31,14 @@ public class CashierController {
             System.out.println("Error. Cajero no encontrado.");
             return;
         }
-        System.out.println(c);
         HumanDB.removeHuman(c);
     }
 
     public static void list() {
+        System.out.println("Cash:");
         for (Human human : HumanDB.list()) {
             if (human instanceof Cashier) {
-                System.out.println(human.toString());
+                System.out.println("  "+human.toString());
             }
         }
     }
@@ -49,7 +49,7 @@ public class CashierController {
     }
 
     public static void cashTickets(String cashId) {
-        System.out.print("Tickets:\n ");
+        System.out.print("Tickets: \n");
 
         Cashier aux = (Cashier) HumanDB.findId(cashId);
         for (String t : aux.getTickets()) {

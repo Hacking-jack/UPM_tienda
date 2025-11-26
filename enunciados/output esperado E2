@@ -57,11 +57,9 @@ tUPM> prod update 1 NAME "Libro POO V2"
 {class:Product, id:1, name:'Libro POO V2', category:BOOK, price:25.0}
 prod update: ok
 
-
 tUPM> prod update 1 PRICE 30
 {class:Product, id:1, name:'Libro POO V2', category:BOOK, price:30.0}
 prod update: ok
-
 
 tUPM> echo "inserto libro repetido y lo borro"
 "inserto libro repetido y lo borro" 

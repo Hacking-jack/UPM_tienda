@@ -16,6 +16,7 @@ public class TicketController {
         }else{
             TicketDB.addTicket(new Ticket(id));
         }
+
     }
 
     public static void addProduct(String ticketId, Product product, int quantity) {
@@ -57,7 +58,7 @@ public class TicketController {
     public static void list() {
         ArrayList<Ticket> tickets = TicketDB.listProducts();
         for (Ticket t : tickets) {
-            System.out.println(t.toString());
+            System.out.println(t.list());
         }
     }
 
