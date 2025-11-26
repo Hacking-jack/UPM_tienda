@@ -3,6 +3,9 @@ package es.upm.etsisi.poo.view;
 import es.upm.etsisi.poo.BASES_DE_DATOS.ProductDB;
 import es.upm.etsisi.poo.BASES_DE_DATOS.TicketDB;
 import es.upm.etsisi.poo.BASES_DE_DATOS.HumanDB;
+import es.upm.etsisi.poo.Exceptions.ProductNotFound;
+import es.upm.etsisi.poo.Exceptions.TicketNotFound;
+import es.upm.etsisi.poo.Exceptions.UserNotFound;
 import es.upm.etsisi.poo.commands.cash.*;
 import es.upm.etsisi.poo.commands.clients.*;
 import es.upm.etsisi.poo.commands.general.*;
@@ -61,7 +64,7 @@ public class App {
         while (bucle) {
             try {
                 while (bucle) {
-                    boolean esGeneral=false;
+                    boolean esGeneral = false;
                     System.out.print("tUPM> ");
                     line = input.readLine();
                     if (line == null) break;
@@ -111,7 +114,7 @@ public class App {
                             break;
 
                         case "ticket new":
-                            if (args[2]==null) {
+                            if (args[2] == null) {
                                 cmd = new CommandTicketNew(null, args[0], args[1]);
                             } else {
                                 cmd = new CommandTicketNew(args[0], args[1], args[2]);
@@ -199,31 +202,33 @@ public class App {
 
                         case "help":
                             cmd = new CommandHelp();
-                            esGeneral=true;
+                            esGeneral = true;
                             break;
 
                         case "echo":
                             cmd = new CommandEcho(args[0]);
-                            esGeneral=true;
+                            esGeneral = true;
                             break;
 
                         case "exit":
                             cmd = new CommandExit();
-                            esGeneral=true;
+                            esGeneral = true;
                             break;
 
                         default:
                             break;
                     }
-                    if(cmd==null){
+                    if (cmd == null) {
                         System.out.println("Comando no valido");
-                    }else {
+                    } else {
                         bucle = cmd.execute();
-                        if(!esGeneral){
-                            System.out.println(comando+": ok\n");
+                        if (!esGeneral) {
+                            System.out.println(comando + ": ok\n");
                         }
                     }
                 }
+            }catch (ProductNotFound | TicketNotFound | UserNotFound ex){
+                System.out.println(ex.getMessage());
             //} catch (NumberFormatException | ArrayIndexOutOfBoundsException | NullPointerException ex) {
             //    System.out.println("Formato del comando incorrecto. Use help para ver los comandos");
             } catch (IOException e) {

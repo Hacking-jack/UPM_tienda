@@ -13,11 +13,11 @@ import java.util.Comparator;
 public class ClientController {
 
     public static void add(String nombre, String dni, String email, String cashId) {
-        if (HumanDB.findId(dni) != null) {
+        if (HumanDB.existeId(dni)) {
             System.out.println("Error. Ya existe un cliente con ese DNI.");
             return;
         }
-        if (HumanDB.findId(cashId) == null) {
+        if (!HumanDB.existeId(cashId)) {
             System.out.println("Error. Cajero no encontrado.");
             return;
         }

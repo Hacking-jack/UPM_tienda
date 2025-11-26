@@ -57,27 +57,29 @@ public class Ticket {
     public boolean hasDiscount(int counterStationary, int counterClothes, int counterBook, int counterElectronic,
                                Categories categories) {
         boolean correct = false;
-        switch (categories) {
-            case STATIONERY:
-                if (counterStationary >= 2) {
-                    correct = true;
-                }
-                break;
-            case CLOTHES:
-                if (counterClothes >= 2) {
-                    correct = true;
-                }
-                break;
-            case BOOK:
-                if (counterBook >= 2) {
-                    correct = true;
-                }
-                break;
-            case ELECTRONICS:
-                if (counterElectronic >= 2) {
-                    correct = true;
-                }
-                break;
+        if(categories!=null) {
+            switch (categories) {
+                case STATIONERY:
+                    if (counterStationary >= 2) {
+                        correct = true;
+                    }
+                    break;
+                case CLOTHES:
+                    if (counterClothes >= 2) {
+                        correct = true;
+                    }
+                    break;
+                case BOOK:
+                    if (counterBook >= 2) {
+                        correct = true;
+                    }
+                    break;
+                case ELECTRONICS:
+                    if (counterElectronic >= 2) {
+                        correct = true;
+                    }
+                    break;
+            }
         }
         return correct;
     }
@@ -121,11 +123,8 @@ public class Ticket {
 
         double descuentoTotal = 0;
 
-        // ⭐⭐ LÍNEAS DE DEFINICIÓN AÑADIDAS ⭐⭐
-        LocalDateTime now = LocalDateTime.now();
-        String finalTicketId = this.idTicket + "-" + now.format(DateTimeFormatter.ofPattern("dd-MM-yy-HH:mm"));
 
-        System.out.printf("Ticket : %s%n", finalTicketId); // ⭐ Se usa finalTicketId aquí
+        System.out.printf("Ticket : %s%n", idTicket); // ⭐ Se usa finalTicketId aquí
 
         for (int i = 0; i < products.size(); i++) {
             Product p = products.get(i);

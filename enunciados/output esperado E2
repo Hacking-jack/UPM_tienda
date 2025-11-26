@@ -404,19 +404,19 @@ ticket list: ok
 tUPM> echo "Trabajamos con productos de personas"
 "Trabajamos con productos de personas" 
 
-tUPM> prod addMeeting 23456 "Reunion Rotonda" 12 2025-11-21 100
-{class:Meeting, id:23456, name:'Reunion Rotonda', price:0.0, date of Event:2025-11-21, max people allowed:100}
+tUPM> prod addMeeting 23456 "Reunion Rotonda" 12 2026-11-21 100
+{class:Meeting, id:23456, name:'Reunion Rotonda', price:0.0, date of Event:2026-11-21, max people allowed:100}
 prod addMeeting: ok
 
-tUPM> prod addMeeting 23457 "Graduacion ETSISI" 40 2025-11-21 30
-{class:Meeting, id:23457, name:'Graduacion ETSISI', price:0.0, date of Event:2025-11-21, max people allowed:30}
+tUPM> prod addMeeting 23457 "Graduacion ETSISI" 40 2026-11-21 30
+{class:Meeting, id:23457, name:'Graduacion ETSISI', price:0.0, date of Event:2026-11-21, max people allowed:30}
 prod addMeeting: ok
 
-tUPM> prod addFood 23458 "Cafeteria ETSISI" 5 2025-11-21 300
+tUPM> prod addFood 23458 "Cafeteria ETSISI" 5 2026-11-21 300
 Error processing ->prod addFood ->Error adding product
 
-tUPM> prod addFood 23459 "Restaurante Asador" 50 2025-11-21 40
-{class:Food, id:23459, name:'Restaurante Asador', price:0.0, date of Event:2025-11-21, max people allowed:40}
+tUPM> prod addFood 23459 "Restaurante Asador" 50 2026-11-21 40
+{class:Food, id:23459, name:'Restaurante Asador', price:0.0, date of Event:2026-11-21, max people allowed:40}
 prod addFood: ok
 
 tUPM> prod list

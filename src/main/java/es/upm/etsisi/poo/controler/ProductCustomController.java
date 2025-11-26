@@ -9,13 +9,14 @@ public class ProductCustomController extends ProductController {
 
     //ESTO SE HACE EN EL PRODUCT CONTROLLER NORMAL, SOLO LE CAMBIAS EL NOMBRE AL METODO NO HACE FALTA EXTENDER NADA.
 
-    public static void add(int id, String name, String categories, double price, int maxPers) {
+    public static void add(Integer id, String name, String categories, double price, int maxPers) {
         if (categorieControl(categories)) {
-            if (ProductDB.findId(id) != null) {
+            if (ProductDB.existeId(id)) {
                 System.out.println("Error. Ya existe el id.");
             } else {
                 if (ProductDB.countProduct() < 200) {
-                    Product product = new ProductCustom(name, price, Categories.valueOf(categories), maxPers);
+                    Product product;
+                        product = new ProductCustom(name, price, Categories.valueOf(categories), maxPers, id);
                     ProductDB.addProduct(product);
                     System.out.println(product.toString());
                 } else {

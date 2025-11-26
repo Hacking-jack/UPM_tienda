@@ -12,13 +12,25 @@ public class TicketController {
 
     public static String newTicket(String id) {
         if(id==null){
-            Ticket t=new Ticket();
-            TicketDB.addTicket(t);
-            return t.getIdTicket();
-        }else{
-            TicketDB.addTicket(new Ticket(id));
-            return id;
+            id=generarId();
         }
+            if(!TicketDB.existeId(id)) {
+                TicketDB.addTicket(new Ticket(id));
+                TicketDB.findId(id).print();
+            }else{
+                System.out.println("Ya existe un ticket con ese id");
+            }
+            return id;
+    }
+
+    public static String generarId(){
+        String s = LocalDateTime.now()
+                .format(DateTimeFormatter.ofPattern("yy-MM-dd-HH:mm-"))
+                + String.format("%05d", (int) (Math.random() * 10000));
+        if(TicketDB.existeId(s)){
+            return generarId();
+        }
+        return s;
     }
 
     public static void addProduct(String ticketId, Product product, int quantity) {
@@ -29,11 +41,13 @@ public class TicketController {
             if (!ticket.addProduct(product)) {
                 System.out.println("No se pudieron añadir todos los productos, se han añadido " + i +
                         " hasta llegar al limite de 100");
+                ticket.print();
                 break;
             }
         }
+        ticket.print();
     }
-
+    //TODO  addProductPers puede llamar a addProduct para reducri codigo
     public static void addProductPers(String ticketId, Product product, int quantity, String[] pers) {
         if (product instanceof ProductCustom) {
             Ticket ticket = findId(ticketId);
@@ -42,10 +56,12 @@ public class TicketController {
                 if (!ticket.addProduct(clone)) {
                     System.out.println("No se pudieron añadir todos los productos, se han añadido " + i +
                             " hasta llegar al limite de 100.");
+                    ticket.print();
                     break;
                 }
             }
             ((ProductCustom) product).addPers(pers);
+            ticket.print();
         } else {
             System.out.println("No se puede personalizar un objeto no personalizable");
         }
@@ -67,9 +83,8 @@ public class TicketController {
     }
 
     public static void print(String ticketId) {
-        Ticket t=TicketDB.findId(ticketId);
-        if(t!=null) {
-            t.printAndClose();
+        if(TicketDB.existeId(ticketId)) {
+            TicketDB.findId(ticketId).printAndClose();
         }else{
             System.out.println("Ticket no encontrado");
         }

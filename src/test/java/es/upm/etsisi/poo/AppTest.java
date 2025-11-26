@@ -52,6 +52,32 @@ public class AppTest
         assertEquals(expectedOutput.trim(), actualOutput.trim());
     }
 
+    /*public void testSalidaIgualAArchivo2() throws IOException {
+        // Capturar la salida estándar
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        PrintStream originalOut = System.out;
+        System.setOut(new PrintStream(outContent));
+
+        try {
+            // Ejecutar tu programa con el parámetro deseado
+            App.main(new String[]{"enunciados/input PruebasE2"});
+        } finally {
+            // Restaurar stdout
+            System.setOut(originalOut);
+        }
+
+        // Leer archivo esperado
+        File expectedFile = new File("enunciados/PruebasE2");
+        byte[] bytes = Files.readAllBytes(expectedFile.toPath());
+        String expectedOutput = new String(bytes, StandardCharsets.UTF_8);
+
+        // Salida real del programa
+        String actualOutput = new String(outContent.toByteArray(), (StandardCharsets.UTF_8));
+
+        // Comparar
+        assertEquals(expectedOutput.trim(), actualOutput.trim());
+    }*/
+
     /**
      * @return the suite of tests being tested
      */

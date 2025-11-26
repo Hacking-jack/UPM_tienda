@@ -8,9 +8,8 @@ public class ProductCustom extends Product {
     private String[] listaPers;
     private int persAct;
 
-    //TODO constructor con id
-    public ProductCustom(String name, double price, Categories categories, int maxPers) {
-        super(name, price, categories);
+    public ProductCustom(String name, double price, Categories categories, int maxPers, int id) {
+        super(id, name, categories,price);
         this.maxPers = maxPers;
         listaPers = new String[this.maxPers];
         this.persAct = 0;
@@ -34,7 +33,7 @@ public class ProductCustom extends Product {
     @Override
     public String toString() {
         StringBuilder s = new StringBuilder("{class:ProductPersonalized" +
-                ", id:" + id + ", name:" + name + ", price:" + price + ", category:" + categories +
+                ", id:" + id + ", name:'" + name +  "', category:" + categories +
                 ", price:" + price + ", maxPersonal:" + maxPers + "}");
         if (persAct > 0) {
             s.append("personalizationList:[");
@@ -51,7 +50,7 @@ public class ProductCustom extends Product {
 
     @Override
     public ProductCustom clone() {
-        ProductCustom p = new ProductCustom(this.name, this.price, this.categories, this.maxPers);
+        ProductCustom p = new ProductCustom(this.name, this.price, this.categories, this.maxPers, this.id);
         ProductDB.addProductClone(p);
         return p;
     }
