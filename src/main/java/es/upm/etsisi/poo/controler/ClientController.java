@@ -7,9 +7,7 @@ import es.upm.etsisi.poo.models.Client;
 
 import java.util.Comparator;
 
-// Unificaria esta clase con Human Controller, al igual que Cashier son hijos de Human
-// Mirar uso de "instance of"
-// Mirar ejemplo de uso en ProductControler
+
 public class ClientController {
 
     public static void add(String nombre, String dni, String email, String cashId) {
@@ -51,7 +49,3 @@ public class ClientController {
     }
 
 }
-
-//o client add "<nombre>" <DNI> <email> <cashId>
-//o client remove <DNI>
-//o client list ( incluye el dato del cash que lo creo y ordenados por nombre)

@@ -47,7 +47,7 @@ public class TicketController {
         }
         ticket.print();
     }
-    //TODO  addProductPers puede llamar a addProduct para reducri codigo
+    //TODO  addProductPers puede llamar a addProduct para reducir codigo
     public static void addProductPers(String ticketId, Product product, int quantity, String[] pers) {
         if (product instanceof ProductCustom) {
             Ticket ticket = findId(ticketId);
@@ -72,6 +72,7 @@ public class TicketController {
         ProductMeeting clone = product.clone();
         clone.setAsistentes(quantity);
         ticket.addMeeting(clone);
+        ticket.print();
     }
 
     static public Ticket findId(String id) {

@@ -20,7 +20,7 @@ public class CommandCashAdd implements Command {
     }
 
     @Override
-    public boolean execute() {// TODO comprobar formato del id
+    public boolean execute() {
         CashierController.add(id, name, email);
         return true;
     }

@@ -31,7 +31,7 @@ public class ProductController {
         }
     }
 
-    // TODO: Mirar Clase de PoductDB para entender su uso
+
     public static void list() {
         System.out.println("Catalog:");
         ArrayList<Product> products = ProductDB.listProducts();

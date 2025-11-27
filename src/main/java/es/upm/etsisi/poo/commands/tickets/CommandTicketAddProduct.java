@@ -1,6 +1,8 @@
 package es.upm.etsisi.poo.commands.tickets;
 
+import es.upm.etsisi.poo.BASES_DE_DATOS.HumanDB;
 import es.upm.etsisi.poo.BASES_DE_DATOS.ProductDB;
+import es.upm.etsisi.poo.BASES_DE_DATOS.TicketDB;
 import es.upm.etsisi.poo.commands.Command;
 import es.upm.etsisi.poo.controler.ProductController;
 import es.upm.etsisi.poo.controler.TicketController;
@@ -15,7 +17,7 @@ public class CommandTicketAddProduct implements Command {
     private final int amount;
     private final String[] pers; // --p<txt>
 
-    //TODO controller esta ,mal
+
     public CommandTicketAddProduct(String ticketId, String cashId, int productId, int amount, String[] pers) {
         this.ticketId = ticketId;
         this.cashId = cashId;
@@ -26,16 +28,20 @@ public class CommandTicketAddProduct implements Command {
 
     //TODO existe esta otacion que te sale en intellij como una lista de tareas
     @Override
-    public boolean execute() {// hacer dos add, uno con personalizacion y otro sin
+    public boolean execute() {
         Product product = ProductController.findId(this.productId);
-        if (!(product instanceof ProductMeeting)) {
-            if (pers != null) {
-                TicketController.addProductPers(this.ticketId, product, this.amount, this.pers);// con pers
-            } else {
-                TicketController.addProduct(this.ticketId, product, this.amount);// sin pers
-            }
-        }else
-             TicketController.addMeeting(this.ticketId, (ProductMeeting) product, this.amount);
+        if(HumanDB.findId(cashId).getTickets().contains(ticketId)) {
+            if (!(product instanceof ProductMeeting)) {
+                if (pers != null) { //con pers
+                    TicketController.addProductPers(this.ticketId, product, this.amount, this.pers);
+                } else { //sin pers
+                    TicketController.addProduct(this.ticketId, product, this.amount);
+                }
+            } else //foodMeeting
+                TicketController.addMeeting(this.ticketId, (ProductMeeting) product, this.amount);
+        }else{
+            System.out.println("Ese ticket no pertenece a ese cajero");
+        }
         return true;
 
     }

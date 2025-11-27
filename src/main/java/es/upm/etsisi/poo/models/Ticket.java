@@ -28,7 +28,7 @@ public class Ticket {
         this.products = new ArrayList<>();
     }
 
-    //TODO despues de cada addProduct hay qeu hacer un print, revisar no añadir a tickets cerrados
+
     public boolean addProduct(Product product) {
         if (products.isEmpty())
             this.estado = States.ACTIVO;
@@ -59,7 +59,6 @@ public class Ticket {
         return addProduct(productMeeting);
     }
 
-    //TODO revisar si es util una resuesta
     public void removeProduct(Product product) {
         while (this.products.contains(product)) {
             products.remove(product);

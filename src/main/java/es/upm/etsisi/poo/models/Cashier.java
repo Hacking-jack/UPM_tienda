@@ -6,7 +6,6 @@ public class Cashier extends Human {
 
 
     public Cashier(String id, String nombre, String email) {
-        //TODO revisar que no se repitan ids
         this.id = id;
         this.nombre = nombre;
         this.email = email;

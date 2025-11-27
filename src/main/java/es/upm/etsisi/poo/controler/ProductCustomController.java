@@ -7,7 +7,7 @@ import es.upm.etsisi.poo.models.ProductCustom;
 
 public class ProductCustomController extends ProductController {
 
-    //ESTO SE HACE EN EL PRODUCT CONTROLLER NORMAL, SOLO LE CAMBIAS EL NOMBRE AL METODO NO HACE FALTA EXTENDER NADA.
+    //TODO ESTO SE HACE EN EL PRODUCT CONTROLLER NORMAL, SOLO LE CAMBIAS EL NOMBRE AL METODO NO HACE FALTA EXTENDER NADA.
 
     public static void add(Integer id, String name, String categories, double price, int maxPers) {
         if (categorieControl(categories)) {

@@ -25,5 +25,5 @@ public class CommandTicketNew implements Command {
         ClientController.searchId(clientId).addTicket(id);
         CashierController.searchId(cashId).addTicket(id);
         return true;
-    }//TODO revisar
+    }
 }

@@ -23,8 +23,12 @@ public class CommandTicketRemoveProduct implements Command {
     @Override
     public boolean execute() {//TODO chapuza
         if (HumanDB.findId(cashId).getTickets().contains(TicketController.findId(ticketId).getIdTicket())) {
-            TicketController.remove(TicketController.findId(ticketId), ProductController.findId(productId));
-            TicketController.findId(ticketId).print();
+            if(ProductDB.existeId(productId)) {
+                TicketController.remove(TicketController.findId(ticketId), ProductController.findId(productId));
+                TicketController.findId(ticketId).print();
+            }else{
+                System.out.println("No existe un producto con el id:"+productId);
+            }
         } else {
             System.out.println("Ese ticket no pertenece al cajero indicado");
         }

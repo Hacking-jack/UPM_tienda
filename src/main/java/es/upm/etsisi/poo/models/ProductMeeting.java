@@ -80,11 +80,3 @@ public class ProductMeeting extends Product {
         return new ProductMeeting(id, name, price, date, maxParticipantes, isFood);
     }
 }
-
-//prod add [<id>] "<name>" <category> <price> [<maxPers>]
-// si tiene <maxPers> se considerara que el producto es personalizable)
-//o prod update <id> NAME|CATEGORY|PRICE <value>
-//o prod addFood [<id>] "< name>" <price> <expiration: yyyy-MM-dd> <max_people>
-// El precio es por persona apuntada
-//o prod addMeeting [<id>] "<name>" <price> < expiration: yyyy-MM-dd> < max_people >
-// El precio es por persona apuntada
