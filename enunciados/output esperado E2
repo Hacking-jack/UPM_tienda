@@ -423,9 +423,9 @@ tUPM> prod list
 Catalog:
   {class:Product, id:1, name:'Libro POO V2', category:BOOK, price:30.0}
   {class:Product, id:2, name:'Camiseta talla:M UPM', category:CLOTHES, price:15.0}
-  {class:Meeting, id:23456, name:'Reunion Rotonda', price:0.0, date of Event:2025-11-21, max people allowed:100}
-  {class:Meeting, id:23457, name:'Graduacion ETSISI', price:0.0, date of Event:2025-11-21, max people allowed:30}
-  {class:Food, id:23459, name:'Restaurante Asador', price:0.0, date of Event:2025-11-21, max people allowed:40}
+  {class:Meeting, id:23456, name:'Reunion Rotonda', price:0.0, date of Event:2026-11-21, max people allowed:100}
+  {class:Meeting, id:23457, name:'Graduacion ETSISI', price:0.0, date of Event:2026-11-21, max people allowed:30}
+  {class:Food, id:23459, name:'Restaurante Asador', price:0.0, date of Event:2026-11-21, max people allowed:40}
 prod list: ok
 
 tUPM> ticket new 212127 UW1234567 98948334B
@@ -437,7 +437,7 @@ ticket new: ok
 
 tUPM> ticket add 212127 UW1234567 23456 20
 Ticket : 212127
-  {class:Meeting, id:23456, name:'Reunion Rotonda', price:240.0, date of Event:2025-11-21, max people allowed:100, actual people in event:20}
+  {class:Meeting, id:23456, name:'Reunion Rotonda', price:240.0, date of Event:2026-11-21, max people allowed:100, actual people in event:20}
   Total price: 240.0
   Total discount: 0.0
   Final Price: 240.0
@@ -448,7 +448,7 @@ Ticket : 212127
   {class:Product, id:2, name:'Camiseta talla:M UPM', category:CLOTHES, price:15.0} **discount -1.05
   {class:Product, id:2, name:'Camiseta talla:M UPM', category:CLOTHES, price:15.0} **discount -1.05
   {class:Product, id:2, name:'Camiseta talla:M UPM', category:CLOTHES, price:15.0} **discount -1.05
-  {class:Meeting, id:23456, name:'Reunion Rotonda', price:240.0, date of Event:2025-11-21, max people allowed:100, actual people in event:20}
+  {class:Meeting, id:23456, name:'Reunion Rotonda', price:240.0, date of Event:2026-11-21, max people allowed:100, actual people in event:20}
   Total price: 285.0
   Total discount: 3.1499999
   Final Price: 281.85
@@ -459,7 +459,7 @@ Ticket : 212127-25-11-14-18:21
   {class:Product, id:2, name:'Camiseta talla:M UPM', category:CLOTHES, price:15.0} **discount -1.05
   {class:Product, id:2, name:'Camiseta talla:M UPM', category:CLOTHES, price:15.0} **discount -1.05
   {class:Product, id:2, name:'Camiseta talla:M UPM', category:CLOTHES, price:15.0} **discount -1.05
-  {class:Meeting, id:23456, name:'Reunion Rotonda', price:240.0, date of Event:2025-11-21, max people allowed:100, actual people in event:20}
+  {class:Meeting, id:23456, name:'Reunion Rotonda', price:240.0, date of Event:2026-11-21, max people allowed:100, actual people in event:20}
   Total price: 285.0
   Total discount: 3.1499999
   Final Price: 281.85

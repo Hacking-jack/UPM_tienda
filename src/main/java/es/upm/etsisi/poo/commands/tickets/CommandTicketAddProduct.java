@@ -28,7 +28,7 @@ public class CommandTicketAddProduct implements Command {
     @Override
     public boolean execute() {// hacer dos add, uno con personalizacion y otro sin
         Product product = ProductController.findId(this.productId);
-        if (!(ProductController.findId(this.productId) instanceof ProductMeeting)) {
+        if (!(product instanceof ProductMeeting)) {
             if (pers != null) {
                 TicketController.addProductPers(this.ticketId, product, this.amount, this.pers);// con pers
             } else {

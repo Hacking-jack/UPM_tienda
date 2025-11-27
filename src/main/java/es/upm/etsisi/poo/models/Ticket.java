@@ -97,10 +97,10 @@ public class Ticket {
     }
 
     public void printAndClose() {
-        print();
         this.estado = States.CERRADO;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("-yy-MM-dd-HH:mm");
         this.idTicket += LocalDateTime.now().format(formatter);
+        print();
     }
 
     public String list(){
@@ -110,13 +110,8 @@ public class Ticket {
     public void title(){
         System.out.println(this.idTicket+"->"+this.estado.toString());
     }
-  //TODO toString para comando print y toString para intermedios
 
     public void print() {
-        if (products.isEmpty()) {
-            System.out.println("Error. El ticket está vacío.");
-            return;
-        }
         products.sort(Comparator.comparing(Product::getName));
         double precioTotal = 0;
         int counterStationary = 0, counterClothes = 0, counterBook = 0, counterElectronic = 0;
@@ -136,7 +131,7 @@ public class Ticket {
         double descuentoTotal = 0;
 
 
-        System.out.printf("Ticket : %s%n", idTicket); // ⭐ Se usa finalTicketId aquí
+        System.out.printf("Ticket : %s%n", idTicket);
 
         for (int i = 0; i < products.size(); i++) {
             Product p = products.get(i);

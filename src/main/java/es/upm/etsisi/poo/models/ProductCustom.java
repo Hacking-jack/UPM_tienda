@@ -34,7 +34,7 @@ public class ProductCustom extends Product {
     public String toString() {
         StringBuilder s = new StringBuilder("{class:ProductPersonalized" +
                 ", id:" + id + ", name:'" + name +  "', category:" + categories +
-                ", price:" + price + ", maxPersonal:" + maxPers + "}");
+                ", price:" + getPrice() + ", maxPersonal:" + maxPers + ",");
         if (persAct > 0) {
             s.append("personalizationList:[");
             for (int i = 0; i < persAct; i++) {
@@ -43,8 +43,9 @@ public class ProductCustom extends Product {
                     s.append(", ");
                 }
             }
-            s.append("]}");
+            s.append("]");
         }
+        s.append("}");
         return s.toString();
     }
 

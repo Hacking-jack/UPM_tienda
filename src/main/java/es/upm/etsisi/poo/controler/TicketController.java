@@ -85,7 +85,7 @@ public class TicketController {
     public static void list() {
         System.out.println("Ticket List:");
         for (Ticket t : TicketDB.listProducts()) {
-            System.out.println(t.list());
+            System.out.println("  "+t.list());
         }
     }
 
