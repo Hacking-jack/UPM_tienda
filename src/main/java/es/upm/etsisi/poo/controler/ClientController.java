@@ -48,4 +48,8 @@ public class ClientController {
         return (Client) HumanDB.findId(id);
     }
 
+    public static boolean existeId(String id){
+        return HumanDB.existeId(id);
+    }
+
 }

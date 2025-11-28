@@ -52,16 +52,24 @@ public class CashierController {
     }
 
     public static void cashTickets(String cashId) {
-        System.out.print("Tickets: \n");
+        if(HumanDB.existeId(cashId) && HumanDB.findId(cashId) instanceof Cashier) {
+            System.out.print("Tickets: \n");
 
-        Cashier aux = (Cashier) HumanDB.findId(cashId);
-        for (String t : aux.getTickets()) {
+            Cashier aux = (Cashier) HumanDB.findId(cashId);
+            for (String t : aux.getTickets()) {
                 TicketDB.title(t);
+            }
+        }else{
+            System.out.println("No existe el cajero");
         }
     }
 
     public static String generarId() {
         return "UW" + (1_000_000 + new Random().nextInt(9_000_000));
+    }
+
+    public static boolean existeId(String id){
+        return HumanDB.existeId(id);
     }
 }
 

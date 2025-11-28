@@ -21,9 +21,13 @@ public class CommandTicketNew implements Command {
 
     @Override
     public boolean execute() {
-        this.id = TicketController.newTicket(id);
-        ClientController.searchId(clientId).addTicket(id);
-        CashierController.searchId(cashId).addTicket(id);
+        if(ClientController.existeId(clientId)&&CashierController.existeId(cashId)) {
+            this.id = TicketController.newTicket(id);
+            ClientController.searchId(clientId).addTicket(id);
+            CashierController.searchId(cashId).addTicket(id);
+        }else{
+            System.out.println("Alguno de los usuarios no existe");
+        }
         return true;
     }
 }
