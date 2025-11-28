@@ -70,8 +70,8 @@ public class TicketController {
     {
         Ticket ticket = findId(ticketId);
         ProductMeeting clone = product.clone();
-        clone.setAsistentes(quantity);
-        ticket.addMeeting(clone);
+        if(clone.setAsistentes(quantity))
+            ticket.addMeeting(clone);
         ticket.print();
     }
 

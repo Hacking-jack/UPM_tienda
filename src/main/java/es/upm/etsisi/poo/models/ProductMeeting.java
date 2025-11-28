@@ -33,12 +33,14 @@ public class ProductMeeting extends Product {
         this.date = date;
     }
 
-    public void setAsistentes(int asistentes) {
+    public boolean setAsistentes(int asistentes) {
         if (asistentes > maxParticipantes) {
-            System.out.println("No se han podido añadir todos los asistentes, se han añadido hasta llegar al maximo");
-            this.asistentes = maxParticipantes;
+            System.out.println("No se pueden añadir mas de " + this.maxParticipantes+" participantes." +
+                    " Intentalo de nuevo con un numero valido de integrantes");
+            return false;
         } else {
             this.asistentes = asistentes;
+            return true;
         }
     }
 
