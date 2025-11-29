@@ -1,6 +1,8 @@
 package es.upm.etsisi.poo.models;
 
 
+import es.upm.etsisi.poo.exceptions.NegativeNumException;
+
 public class Product {
 
     protected String name;
@@ -11,7 +13,10 @@ public class Product {
     public Product(int id, String name, Categories categories, double price) {
         this.name = name;
         this.categories = categories;
-        this.price = price;
+            if (price >= 0)
+                this.price = price;
+            else
+                throw new NegativeNumException("No se puede añadir precios negativos a los productos");
         this.id = id;
     }
 
