@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import es.upm.etsisi.poo.BASES_DE_DATOS.ProductDB;
 import es.upm.etsisi.poo.models.Categories;
 import es.upm.etsisi.poo.models.Product;
+import es.upm.etsisi.poo.models.ProductMeeting;
 
 /*
 prod add <id> "<nombre>" <categoria> <precio> (agrega un producto con nuevo id)
@@ -51,9 +52,13 @@ public class ProductController {
                     p.setName(valor);
                     break;
                 case "CATEGORY":
-                    if (categorieControl(valor)) {
-                        Categories categorie = Categories.valueOf(valor.toUpperCase());
-                        p.setCategories(categorie);
+                    if(p instanceof ProductMeeting){
+                        System.out.println("No se puede aplicar una categoria a comidas o reuniones");
+                    }else {
+                        if (categorieControl(valor)) {
+                            Categories categorie = Categories.valueOf(valor.toUpperCase());
+                            p.setCategories(categorie);
+                        }
                     }
                     break;
                 case "PRICE":

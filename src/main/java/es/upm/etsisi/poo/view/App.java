@@ -124,6 +124,9 @@ public class App {
                         case "ticket add":
                             String[] pers;
                             pers = obtenerPers(args);
+                            if(pers==null){
+                                break;
+                            }
                             cmd = new CommandTicketAddProduct(args[0], args[1], Integer.parseInt(args[2]), Integer.parseInt(args[3]), pers);
                             break;
 
@@ -269,6 +272,10 @@ public class App {
         if(args[4]!=null) {
             int i = 4;// indice en el que empiezan las pers
             while (args[i]!=null) {
+                if(!args[i].startsWith("--p")){
+                    System.out.println("las personalizaciones deben tener el formato --p<Texto>");
+                    return null;
+                }
                 i++;
             }
             String[] pers = new String[i - 4];
