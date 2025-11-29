@@ -1,8 +1,6 @@
 package es.upm.etsisi.poo.view;
 
-import es.upm.etsisi.poo.exceptions.ProductNotFound;
-import es.upm.etsisi.poo.exceptions.TicketNotFound;
-import es.upm.etsisi.poo.exceptions.UserNotFound;
+import es.upm.etsisi.poo.exceptions.*;
 import es.upm.etsisi.poo.commands.cash.*;
 import es.upm.etsisi.poo.commands.clients.*;
 import es.upm.etsisi.poo.commands.general.*;
@@ -217,7 +215,7 @@ public class App {
                         }
                     }
                 }
-            } catch (ProductNotFound | TicketNotFound | UserNotFound | IOException ex) {
+            } catch (ProductNotFound | TicketNotFound | UserNotFound | IOException | MaxAssistantOutOfBounds ex) {
                 System.out.println(ex.getMessage());
             } catch (NumberFormatException | ArrayIndexOutOfBoundsException | NullPointerException ex) {
                 System.out.println("Formato del comando incorrecto. Use help para ver los comandos");

@@ -1,5 +1,7 @@
 package es.upm.etsisi.poo.models;
 
+import es.upm.etsisi.poo.exceptions.MaxAssistantOutOfBounds;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
@@ -17,8 +19,7 @@ public class ProductMeeting extends Product {
             if (maxParticipantes <= 100)
                 this.maxParticipantes = maxParticipantes;
             else {
-                this.maxParticipantes = 100;
-                System.out.println("Se ha establecido el máximo de asistentes en 100, el máximo permitido");
+                throw new MaxAssistantOutOfBounds("Las reuniones y las comidas pueden tener como máximo 100 asistentes");
             }
             this.isFood = isFood;
             this.asistentes = 0;
