@@ -46,8 +46,6 @@ public class App {
     }
 
     private static void run(BufferedReader input, boolean esArchivo) {
-        new CommandCashAdd("UW0000001", "cash", "mail").execute();
-        new CommandClientAdd("cliente", "1", "mail", "UW0000001").execute();
         boolean bucle = true;
         String line;
         while (bucle) {
