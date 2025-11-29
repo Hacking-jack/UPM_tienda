@@ -124,6 +124,9 @@ public class App {
                         case "ticket add":
                             String[] pers;
                             pers = obtenerPers(args);
+                            if(pers!=null && pers[0]==null){// formato erroneo de pers
+                                break;
+                            }
                             cmd = new CommandTicketAddProduct(args[0], args[1], Integer.parseInt(args[2]), Integer.parseInt(args[3]), pers);
                             break;
 
@@ -271,7 +274,8 @@ public class App {
             while (args[i]!=null) {
                 if(!args[i].startsWith("--p")){
                     System.out.println("las personalizaciones deben tener el formato --p<Texto>");
-                    return null;
+                    String[] nulo={null};
+                    return nulo;
                 }
                 i++;
             }
