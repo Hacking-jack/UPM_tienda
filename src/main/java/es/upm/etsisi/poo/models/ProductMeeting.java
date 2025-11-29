@@ -1,6 +1,7 @@
 package es.upm.etsisi.poo.models;
 
 import es.upm.etsisi.poo.exceptions.MaxAssistantOutOfBounds;
+import es.upm.etsisi.poo.exceptions.NegativeNumException;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
@@ -17,7 +18,10 @@ public class ProductMeeting extends Product {
         try {
             this.date = date;
             if (maxParticipantes <= 100)
-                this.maxParticipantes = maxParticipantes;
+                if (maxParticipantes > 0)
+                    this.maxParticipantes = maxParticipantes;
+                else
+                    throw new NegativeNumException("No se pueden añadir participantes negativos");
             else {
                 throw new MaxAssistantOutOfBounds("Las reuniones y las comidas pueden tener como máximo 100 asistentes");
             }
@@ -35,7 +39,12 @@ public class ProductMeeting extends Product {
                     " Intentalo de nuevo con un numero valido de integrantes");
             return false;
         } else {
-            this.asistentes = asistentes;
+            if (asistentes > 0)
+                this.asistentes = asistentes;
+            else{
+                System.out.println("No se pueden añadir participantes negativos");
+                return false;
+            }
             return true;
         }
     }
