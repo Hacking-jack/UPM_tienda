@@ -1,11 +1,8 @@
 package es.upm.etsisi.poo.controler;
 
-import es.upm.etsisi.poo.BASES_DE_DATOS.HumanDB;
-import es.upm.etsisi.poo.models.Cashier;
+import es.upm.etsisi.poo.dataBase.HumanDB;
 import es.upm.etsisi.poo.models.Human;
 import es.upm.etsisi.poo.models.Client;
-
-import java.util.Comparator;
 
 
 public class ClientController {
@@ -25,13 +22,7 @@ public class ClientController {
     }
 
     public static void remove(String id) {
-
         Human p = HumanDB.findId(id);
-        if (p == null) {
-            System.out.println("Error. No existe ese cliente.");
-            return;
-        }
-
         HumanDB.removeHuman(p);
     }
 
@@ -39,7 +30,7 @@ public class ClientController {
         System.out.println("Client:");
         for (Human human : HumanDB.list()) {
             if (human instanceof Client) {
-                System.out.println("  "+human.toString());
+                System.out.println("  " + human.toString());
             }
         }
     }
@@ -48,7 +39,7 @@ public class ClientController {
         return (Client) HumanDB.findId(id);
     }
 
-    public static boolean existeId(String id){
+    public static boolean existeId(String id) {
         return HumanDB.existeId(id);
     }
 

@@ -1,29 +1,18 @@
 package es.upm.etsisi.poo.view;
 
-import es.upm.etsisi.poo.BASES_DE_DATOS.ProductDB;
-import es.upm.etsisi.poo.BASES_DE_DATOS.TicketDB;
-import es.upm.etsisi.poo.BASES_DE_DATOS.HumanDB;
-import es.upm.etsisi.poo.Exceptions.ProductNotFound;
-import es.upm.etsisi.poo.Exceptions.TicketNotFound;
-import es.upm.etsisi.poo.Exceptions.UserNotFound;
+import es.upm.etsisi.poo.exceptions.ProductNotFound;
+import es.upm.etsisi.poo.exceptions.TicketNotFound;
+import es.upm.etsisi.poo.exceptions.UserNotFound;
 import es.upm.etsisi.poo.commands.cash.*;
 import es.upm.etsisi.poo.commands.clients.*;
 import es.upm.etsisi.poo.commands.general.*;
 import es.upm.etsisi.poo.commands.products.*;
 import es.upm.etsisi.poo.commands.tickets.*;
-import es.upm.etsisi.poo.controler.*;
 import es.upm.etsisi.poo.commands.Command;
 
 import java.io.*;
 
 
-
-/*
-Aqui va help, exit, etc... Las fnc visuales
-help (lista los comandos)
-echo “<texto>” (imprime el texto en el valor texto)
-exit
- */
 public class App {
 
     public static void main(String[] args) {
@@ -57,8 +46,8 @@ public class App {
     }
 
     private static void run(BufferedReader input, boolean esArchivo) {
-        new CommandCashAdd("UW0000001","cash","mail").execute();
-        new CommandClientAdd("cliente","1","mail", "UW0000001").execute();
+        new CommandCashAdd("UW0000001", "cash", "mail").execute();
+        new CommandClientAdd("cliente", "1", "mail", "UW0000001").execute();
         boolean bucle = true;
         String line;
         while (bucle) {
@@ -124,7 +113,7 @@ public class App {
                         case "ticket add":
                             String[] pers;
                             pers = obtenerPers(args);
-                            if(pers!=null && pers[0]==null){// formato erroneo de pers
+                            if (pers != null && pers[0] == null) {// formato erróneo de pers
                                 break;
                             }
                             cmd = new CommandTicketAddProduct(args[0], args[1], Integer.parseInt(args[2]), Integer.parseInt(args[3]), pers);
@@ -230,12 +219,10 @@ public class App {
                         }
                     }
                 }
-            }catch (ProductNotFound | TicketNotFound | UserNotFound ex){
+            } catch (ProductNotFound | TicketNotFound | UserNotFound | IOException ex) {
                 System.out.println(ex.getMessage());
-            //} catch (NumberFormatException | ArrayIndexOutOfBoundsException | NullPointerException ex) {
-            //    System.out.println("Formato del comando incorrecto. Use help para ver los comandos");
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
+            } catch (NumberFormatException | ArrayIndexOutOfBoundsException | NullPointerException ex) {
+                System.out.println("Formato del comando incorrecto. Use help para ver los comandos");
             }
         }
 
@@ -269,13 +256,12 @@ public class App {
     }
 
     private static String[] obtenerPers(String[] args) {
-        if(args[4]!=null) {
-            int i = 4;// indice en el que empiezan las pers
-            while (args[i]!=null) {
-                if(!args[i].startsWith("--p")){
+        if (args[4] != null) {
+            int i = 4;// índice en el que empiezan las pers
+            while (args[i] != null) {
+                if (!args[i].startsWith("--p")) {
                     System.out.println("las personalizaciones deben tener el formato --p<Texto>");
-                    String[] nulo={null};
-                    return nulo;
+                    return new String[]{null};
                 }
                 i++;
             }
@@ -284,7 +270,7 @@ public class App {
                 pers[j - 4] = args[j].substring(3);
             }
             return pers;
-        }else{
+        } else {
             return null;
         }
     }

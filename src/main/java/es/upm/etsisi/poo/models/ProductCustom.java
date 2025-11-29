@@ -1,15 +1,15 @@
 package es.upm.etsisi.poo.models;
 
-import es.upm.etsisi.poo.BASES_DE_DATOS.ProductDB;
+import es.upm.etsisi.poo.dataBase.ProductDB;
 
 public class ProductCustom extends Product {
 
-    public int maxPers;
+    public final int maxPers;
     private String[] listaPers;
     private int persAct;
 
     public ProductCustom(String name, double price, Categories categories, int maxPers, int id) {
-        super(id, name, categories,price);
+        super(id, name, categories, price);
         this.maxPers = maxPers;
         listaPers = new String[this.maxPers];
         this.persAct = 0;
@@ -20,7 +20,7 @@ public class ProductCustom extends Product {
             listaPers = pers;
             persAct = pers.length;
         } else {
-            System.out.println("No se ha podido añadir la personalización " + pers + ", se ha alcanzado el maximo " +
+            System.out.println("No se ha podido añadir las personalizaciones se ha alcanzado el máximo " +
                     "de personalizaciones");
         }
     }
@@ -33,7 +33,7 @@ public class ProductCustom extends Product {
     @Override
     public String toString() {
         StringBuilder s = new StringBuilder("{class:ProductPersonalized" +
-                ", id:" + id + ", name:'" + name +  "', category:" + categories +
+                ", id:" + id + ", name:'" + name + "', category:" + categories +
                 ", price:" + getPrice() + ", maxPersonal:" + maxPers);
         if (persAct > 0) {
             s.append(", personalizationList:[");

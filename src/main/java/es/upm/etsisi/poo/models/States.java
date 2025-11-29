@@ -7,8 +7,8 @@ public enum States {
 
     @Override
     public String toString() {
-        String string=null;
-        switch(this){
+        String string = null;
+        switch (this) {
             case VACIO:
                 string = "EMPTY";
                 break;

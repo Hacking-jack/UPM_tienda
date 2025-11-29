@@ -1,12 +1,9 @@
 package es.upm.etsisi.poo.commands.tickets;
 
-import es.upm.etsisi.poo.BASES_DE_DATOS.TicketDB;
 import es.upm.etsisi.poo.commands.Command;
 import es.upm.etsisi.poo.controler.CashierController;
 import es.upm.etsisi.poo.controler.ClientController;
 import es.upm.etsisi.poo.controler.TicketController;
-
-import javax.swing.event.CaretListener;
 
 public class CommandTicketNew implements Command {
     private String id; // null si no se da
@@ -21,11 +18,11 @@ public class CommandTicketNew implements Command {
 
     @Override
     public boolean execute() {
-        if(ClientController.existeId(clientId)&&CashierController.existeId(cashId)) {
+        if (ClientController.existeId(clientId) && CashierController.existeId(cashId)) {
             this.id = TicketController.newTicket(id);
             ClientController.searchId(clientId).addTicket(id);
             CashierController.searchId(cashId).addTicket(id);
-        }else{
+        } else {
             System.out.println("Alguno de los usuarios no existe");
         }
         return true;

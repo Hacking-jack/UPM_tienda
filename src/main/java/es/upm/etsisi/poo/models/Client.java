@@ -1,31 +1,23 @@
 package es.upm.etsisi.poo.models;
 
-import es.upm.etsisi.poo.BASES_DE_DATOS.HumanDB;
+import es.upm.etsisi.poo.dataBase.HumanDB;
 
 import java.util.ArrayList;
 
 public class Client extends Human {
 
-    private String cajeroAlta;
+    private final String cajeroAlta;
 
     public Client(String nombre, String dni, String email, String cajeroAlta) {
         this.nombre = nombre;
         this.id = dni;
         this.cajeroAlta = cajeroAlta;
         this.email = email;
-        this.tickets=new ArrayList<>();
+        this.tickets = new ArrayList<>();
     }
 
     public String getId() {
         return this.id;
-    }
-
-    public Cashier getCajeroAlta() {
-        Human p = HumanDB.findId(cajeroAlta);
-        if (p instanceof Cashier) {
-            return (Cashier) p;
-        }
-        return null;
     }
 
     @Override

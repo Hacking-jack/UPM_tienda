@@ -1,14 +1,13 @@
-package es.upm.etsisi.poo.BASES_DE_DATOS;
+package es.upm.etsisi.poo.dataBase;
 
-import es.upm.etsisi.poo.Exceptions.ProductNotFound;
-import es.upm.etsisi.poo.models.Human;
+import es.upm.etsisi.poo.exceptions.ProductNotFound;
 import es.upm.etsisi.poo.models.Product;
 
 import java.util.ArrayList;
 
 public class ProductDB {
     //Equivalente a una tabla Products en SQL
-    static private ArrayList<Product> products = new ArrayList<>();
+    static private final ArrayList<Product> products = new ArrayList<>();
 
     //Equivalente a un insert
     static public void addProduct(Product p) {
@@ -25,12 +24,12 @@ public class ProductDB {
             if (p.getId() == id)
                 return (p);
         }
-        throw new ProductNotFound("No se encontro el producto con id "+id);
+        throw new ProductNotFound("No se encontró el producto con id " + id);
     }
 
-    static public boolean existeId(int id){
+    static public boolean existeId(int id) {
         for (Product p : products) {
-            if (p.getId()==id)
+            if (p.getId() == id)
                 return true;
         }
         return false;

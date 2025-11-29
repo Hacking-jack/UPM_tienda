@@ -1,4 +1,4 @@
-package es.upm.etsisi.poo.Exceptions;
+package es.upm.etsisi.poo.exceptions;
 
 public class ProductNotFound extends RuntimeException {
     public ProductNotFound(String message) {

@@ -1,17 +1,12 @@
 package es.upm.etsisi.poo.models;
 
 
-import es.upm.etsisi.poo.BASES_DE_DATOS.ProductDB;
-
-import java.util.Random;
-import java.util.UUID;
-
 public class Product {
 
     protected String name;
     protected Categories categories;
     protected double price;
-    protected int id;
+    protected final int id;
 
     public Product(int id, String name, Categories categories, double price) {
         this.name = name;

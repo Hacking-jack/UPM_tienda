@@ -1,6 +1,6 @@
 package es.upm.etsisi.poo.controler;
 
-import es.upm.etsisi.poo.BASES_DE_DATOS.ProductDB;
+import es.upm.etsisi.poo.dataBase.ProductDB;
 import es.upm.etsisi.poo.models.Categories;
 import es.upm.etsisi.poo.models.Product;
 import es.upm.etsisi.poo.models.ProductCustom;
@@ -16,7 +16,7 @@ public class ProductCustomController extends ProductController {
             } else {
                 if (ProductDB.countProduct() < 200) {
                     Product product;
-                        product = new ProductCustom(name, price, Categories.valueOf(categories), maxPers, id);
+                    product = new ProductCustom(name, price, Categories.valueOf(categories), maxPers, id);
                     ProductDB.addProduct(product);
                     System.out.println(product.toString());
                 } else {

@@ -6,19 +6,13 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 public class Ticket {
-    private ArrayList<Product> products;
+    private final ArrayList<Product> products;
     private String idTicket;
-    private LocalDateTime date;
+    private final LocalDateTime date;
     private States estado;
 
     public States getEstado() {
         return estado;
-    }
-
-    public Ticket() {
-        this(LocalDateTime.now()
-                .format(DateTimeFormatter.ofPattern("yy-MM-dd-HH:mm-"))
-                + String.format("%05d", (int) (Math.random() * 10000)));
     }
 
     public Ticket(String id) {
@@ -32,10 +26,10 @@ public class Ticket {
     public boolean addProduct(Product product) {
         if (products.isEmpty())
             this.estado = States.ACTIVO;
-        if(this.estado==States.CERRADO){
+        if (this.estado == States.CERRADO) {
             System.out.println("Error, no se pueden añadir productos a un ticket cerrado");
             return false;
-        }else {
+        } else {
             if (this.products.size() < 100)
                 return products.add(product);
             else {
@@ -44,19 +38,20 @@ public class Ticket {
             }
         }
     }
-    public boolean addMeeting(ProductMeeting productMeeting){
+
+    public void addMeeting(ProductMeeting productMeeting) {
         int asistentes = 0;
         ProductMeeting tmp;
-        for(Product product : products){
-            if (product.getId() == productMeeting.getId()){
+        for (Product product : products) {
+            if (product.getId() == productMeeting.getId()) {
                 tmp = (ProductMeeting) product;
-                asistentes =  tmp.getAsistentes();
+                asistentes = tmp.getAsistentes();
                 productMeeting.setAsistentes(productMeeting.getAsistentes() + asistentes);
                 removeProduct(product);
                 break;
             }
         }
-        return addProduct(productMeeting);
+        addProduct(productMeeting);
     }
 
     public void removeProduct(Product product) {
@@ -68,7 +63,7 @@ public class Ticket {
     public boolean hasDiscount(int counterStationary, int counterClothes, int counterBook, int counterElectronic,
                                Categories categories) {
         boolean correct = false;
-        if(categories!=null) {
+        if (categories != null) {
             switch (categories) {
                 case STATIONERY:
                     if (counterStationary >= 2) {
@@ -102,12 +97,12 @@ public class Ticket {
         print();
     }
 
-    public String list(){
-        return this.idTicket+" - "+this.estado.toString();
+    public String list() {
+        return this.idTicket + " - " + this.estado.toString();
     }
 
-    public void title(){
-        System.out.println(this.idTicket+"->"+this.estado.toString());
+    public void title() {
+        System.out.println(this.idTicket + "->" + this.estado.toString());
     }
 
     public void print() {
@@ -159,7 +154,6 @@ public class Ticket {
     public String toString() {
 
 
-
         return "Ticket{" +
                 "products=" + products +
                 ", idTicket='" + idTicket + '\'' +
@@ -170,10 +164,6 @@ public class Ticket {
 
     public void setEstado(States estado) {
         this.estado = estado;
-    }
-
-    public LocalDateTime getDate() {
-        return date;
     }
 
     public String getIdTicket() {

@@ -1,7 +1,5 @@
 package es.upm.etsisi.poo.commands.tickets;
 
-import es.upm.etsisi.poo.BASES_DE_DATOS.HumanDB;
-import es.upm.etsisi.poo.BASES_DE_DATOS.TicketDB;
 import es.upm.etsisi.poo.commands.Command;
 import es.upm.etsisi.poo.controler.CashierController;
 import es.upm.etsisi.poo.controler.TicketController;

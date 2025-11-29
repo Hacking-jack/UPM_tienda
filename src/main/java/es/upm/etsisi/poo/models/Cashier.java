@@ -9,7 +9,7 @@ public class Cashier extends Human {
         this.id = id;
         this.nombre = nombre;
         this.email = email;
-        this.tickets=new ArrayList<>();
+        this.tickets = new ArrayList<>();
     }
 
 

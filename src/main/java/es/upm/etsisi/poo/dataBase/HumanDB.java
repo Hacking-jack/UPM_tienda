@@ -1,6 +1,6 @@
-package es.upm.etsisi.poo.BASES_DE_DATOS;
+package es.upm.etsisi.poo.dataBase;
 
-import es.upm.etsisi.poo.Exceptions.UserNotFound;
+import es.upm.etsisi.poo.exceptions.UserNotFound;
 import es.upm.etsisi.poo.models.Human;
 
 import java.util.ArrayList;
@@ -8,7 +8,7 @@ import java.util.Comparator;
 
 public class HumanDB {
     //Tabla Humanos de base de datos, se guarda clientes y cajeros
-    static private ArrayList<Human> human = new ArrayList<>();
+    static private final ArrayList<Human> human = new ArrayList<>();
 
 
     static public void addUser(Human u) {
@@ -22,10 +22,10 @@ public class HumanDB {
             if (p.getId().equals(id))
                 return (p);
         }
-        throw new UserNotFound("No se encontro el usuario con id "+id);
+        throw new UserNotFound("No se encontró el usuario con id " + id);
     }
 
-    static public boolean existeId(String id){
+    static public boolean existeId(String id) {
         for (Human p : human) {
             if (p.getId().equals(id))
                 return true;
@@ -33,7 +33,7 @@ public class HumanDB {
         return false;
     }
 
-    //EQuivalente a conulta de borrado de una fila de la tabla
+    //Equivalente a consulta de borrado de una fila de la tabla
     static public void removeHuman(Human p) {
         human.remove(p);
     }

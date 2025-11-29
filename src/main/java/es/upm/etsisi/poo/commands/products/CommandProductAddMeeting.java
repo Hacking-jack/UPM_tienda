@@ -3,8 +3,6 @@ package es.upm.etsisi.poo.commands.products;
 import es.upm.etsisi.poo.commands.Command;
 import es.upm.etsisi.poo.controler.ProductFoodMeetingController;
 
-import java.time.LocalDate;
-
 public class CommandProductAddMeeting implements Command {
 
     private final int id;

@@ -1,13 +1,10 @@
 package es.upm.etsisi.poo.commands.tickets;
 
-import es.upm.etsisi.poo.BASES_DE_DATOS.HumanDB;
-import es.upm.etsisi.poo.BASES_DE_DATOS.ProductDB;
-import es.upm.etsisi.poo.BASES_DE_DATOS.TicketDB;
+import es.upm.etsisi.poo.dataBase.HumanDB;
 import es.upm.etsisi.poo.commands.Command;
 import es.upm.etsisi.poo.controler.ProductController;
 import es.upm.etsisi.poo.controler.TicketController;
 import es.upm.etsisi.poo.models.Product;
-import es.upm.etsisi.poo.models.ProductCustom;
 import es.upm.etsisi.poo.models.ProductMeeting;
 
 public class CommandTicketAddProduct implements Command {
@@ -30,7 +27,7 @@ public class CommandTicketAddProduct implements Command {
     @Override
     public boolean execute() {
         Product product = ProductController.findId(this.productId);
-        if(HumanDB.findId(cashId).getTickets().contains(ticketId)) {
+        if (HumanDB.findId(cashId).getTickets().contains(ticketId)) {
             if (!(product instanceof ProductMeeting)) {
                 if (pers != null) { //con pers
                     TicketController.addProductPers(this.ticketId, product, this.amount, this.pers);
@@ -39,7 +36,7 @@ public class CommandTicketAddProduct implements Command {
                 }
             } else //foodMeeting
                 TicketController.addMeeting(this.ticketId, (ProductMeeting) product, this.amount);
-        }else{
+        } else {
             System.out.println("Ese ticket no pertenece a ese cajero");
         }
         return true;

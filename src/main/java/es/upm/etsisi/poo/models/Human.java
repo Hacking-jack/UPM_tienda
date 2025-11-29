@@ -13,10 +13,6 @@ public abstract class Human {
         return nombre;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
     public void addTicket(String ticketId) {
         tickets.add(ticketId);
     }
@@ -25,7 +21,7 @@ public abstract class Human {
         return tickets;
     }
 
-    public boolean contains(Ticket ticket){
+    public boolean contains(Ticket ticket) {
         return tickets.contains(ticket);
     }
 

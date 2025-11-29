@@ -1,4 +1,4 @@
-package es.upm.etsisi.poo.Exceptions;
+package es.upm.etsisi.poo.exceptions;
 
 public class UserNotFound extends RuntimeException {
     public UserNotFound(String message) {

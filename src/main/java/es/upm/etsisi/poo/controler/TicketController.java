@@ -1,33 +1,32 @@
 package es.upm.etsisi.poo.controler;
 
-import es.upm.etsisi.poo.BASES_DE_DATOS.TicketDB;
+import es.upm.etsisi.poo.dataBase.TicketDB;
 import es.upm.etsisi.poo.models.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 
 public class TicketController {
 
 
     public static String newTicket(String id) {
-        if(id==null){
-            id=generarId();
+        if (id == null) {
+            id = generarId();
         }
-            if(!TicketDB.existeId(id)) {
-                TicketDB.addTicket(new Ticket(id));
-                TicketDB.findId(id).print();
-            }else{
-                System.out.println("Ya existe un ticket con ese id");
-            }
-            return id;
+        if (!TicketDB.existeId(id)) {
+            TicketDB.addTicket(new Ticket(id));
+            TicketDB.findId(id).print();
+        } else {
+            System.out.println("Ya existe un ticket con ese id");
+        }
+        return id;
     }
 
-    public static String generarId(){
+    public static String generarId() {
         String s = LocalDateTime.now()
                 .format(DateTimeFormatter.ofPattern("yy-MM-dd-HH:mm-"))
                 + String.format("%05d", (int) (Math.random() * 10000));
-        if(TicketDB.existeId(s)){
+        if (TicketDB.existeId(s)) {
             return generarId();
         }
         return s;
@@ -47,7 +46,8 @@ public class TicketController {
         }
         ticket.print();
     }
-    //TODO  addProductPers puede llamar a addProduct para reducir codigo
+
+    //TODO  addProductPers puede llamar a addProduct para reducir código
     public static void addProductPers(String ticketId, Product product, int quantity, String[] pers) {
         if (product instanceof ProductCustom) {
             Ticket ticket = findId(ticketId);
@@ -66,11 +66,11 @@ public class TicketController {
             System.out.println("No se puede personalizar un objeto no personalizable");
         }
     }
-    static public void addMeeting(String ticketId, ProductMeeting product, int quantity)
-    {
+
+    static public void addMeeting(String ticketId, ProductMeeting product, int quantity) {
         Ticket ticket = findId(ticketId);
         ProductMeeting clone = product.clone();
-        if(clone.setAsistentes(quantity))
+        if (clone.setAsistentes(quantity))
             ticket.addMeeting(clone);
         ticket.print();
     }
@@ -86,14 +86,14 @@ public class TicketController {
     public static void list() {
         System.out.println("Ticket List:");
         for (Ticket t : TicketDB.listProducts()) {
-            System.out.println("  "+t.list());
+            System.out.println("  " + t.list());
         }
     }
 
     public static void print(String ticketId) {
-        if(TicketDB.existeId(ticketId)) {
+        if (TicketDB.existeId(ticketId)) {
             TicketDB.findId(ticketId).printAndClose();
-        }else{
+        } else {
             System.out.println("Ticket no encontrado");
         }
     }

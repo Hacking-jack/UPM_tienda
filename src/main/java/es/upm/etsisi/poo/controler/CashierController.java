@@ -1,7 +1,7 @@
 package es.upm.etsisi.poo.controler;
 
-import es.upm.etsisi.poo.BASES_DE_DATOS.HumanDB;
-import es.upm.etsisi.poo.BASES_DE_DATOS.TicketDB;
+import es.upm.etsisi.poo.dataBase.HumanDB;
+import es.upm.etsisi.poo.dataBase.TicketDB;
 import es.upm.etsisi.poo.models.Cashier;
 import es.upm.etsisi.poo.models.Human;
 
@@ -10,13 +10,8 @@ import java.util.Random;
 public class CashierController {
 
 
-    public CashierController() {
-
-    }
-
-
     public static void add(String id, String nombre, String email) {
-        if(id.matches("^UW\\d{7}$")) {
+        if (id.matches("^UW\\d{7}$")) {
             if (HumanDB.existeId(id)) {
                 System.out.println("Error. Ya existe un cajero con ese id.");
                 return;
@@ -24,16 +19,12 @@ public class CashierController {
             Cashier nuevo = new Cashier(id, nombre, email);
             HumanDB.addUser(nuevo);
             System.out.println(nuevo);
-        }else
+        } else
             System.out.println("El id no es válido");
     }
 
     public static void remove(String id) {
         Cashier c = searchId(id);
-        if (c == null) {
-            System.out.println("Error. Cajero no encontrado.");
-            return;
-        }
         HumanDB.removeHuman(c);
     }
 
@@ -41,7 +32,7 @@ public class CashierController {
         System.out.println("Cash:");
         for (Human human : HumanDB.list()) {
             if (human instanceof Cashier) {
-                System.out.println("  "+human.toString());
+                System.out.println("  " + human.toString());
             }
         }
     }
@@ -52,14 +43,14 @@ public class CashierController {
     }
 
     public static void cashTickets(String cashId) {
-        if(HumanDB.existeId(cashId) && HumanDB.findId(cashId) instanceof Cashier) {
+        if (HumanDB.existeId(cashId) && HumanDB.findId(cashId) instanceof Cashier) {
             System.out.print("Tickets: \n");
 
             Cashier aux = (Cashier) HumanDB.findId(cashId);
             for (String t : aux.getTickets()) {
                 TicketDB.title(t);
             }
-        }else{
+        } else {
             System.out.println("No existe el cajero");
         }
     }
@@ -68,7 +59,7 @@ public class CashierController {
         return "UW" + (1_000_000 + new Random().nextInt(9_000_000));
     }
 
-    public static boolean existeId(String id){
+    public static boolean existeId(String id) {
         return HumanDB.existeId(id);
     }
 }

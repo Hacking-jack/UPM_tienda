@@ -1,7 +1,6 @@
 package es.upm.etsisi.poo.models;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 
 public class ProductMeeting extends Product {
@@ -29,31 +28,15 @@ public class ProductMeeting extends Product {
 
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
     public boolean setAsistentes(int asistentes) {
         if (asistentes > maxParticipantes) {
-            System.out.println("No se pueden añadir mas de " + this.maxParticipantes+" participantes." +
+            System.out.println("No se pueden añadir mas de " + this.maxParticipantes + " participantes." +
                     " Intentalo de nuevo con un numero valido de integrantes");
             return false;
         } else {
             this.asistentes = asistentes;
             return true;
         }
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public int getMaxParticipantes() {
-        return maxParticipantes;
-    }
-
-    public boolean isFood() {
-        return isFood;
     }
 
     public int getAsistentes() {
@@ -67,14 +50,14 @@ public class ProductMeeting extends Product {
 
     @Override
     public String toString() {
-        if(asistentes == 0)
-        return "{class:" + ((isFood) ? "Food" : "Meeting") +
-                ", id:" + id + ", name:'" + name + "', price:" + price * asistentes + ", date of Event:" + date +
-                ", max people allowed:" + maxParticipantes + "}";
+        if (asistentes == 0)
+            return "{class:" + ((isFood) ? "Food" : "Meeting") +
+                    ", id:" + id + ", name:'" + name + "', price:" + price * asistentes + ", date of Event:" + date +
+                    ", max people allowed:" + maxParticipantes + "}";
         else
             return "{class:" + ((isFood) ? "Food" : "Meeting") +
                     ", id:" + id + ", name:'" + name + "', price:" + price * asistentes + ", date of Event:" + date +
-                    ", max people allowed:" + maxParticipantes + ", actual people in event:"+ asistentes + "}";
+                    ", max people allowed:" + maxParticipantes + ", actual people in event:" + asistentes + "}";
     }
 
     @Override

@@ -3,17 +3,11 @@ package es.upm.etsisi.poo.controler;
 import java.util.ArrayList;
 
 
-import es.upm.etsisi.poo.BASES_DE_DATOS.ProductDB;
+import es.upm.etsisi.poo.dataBase.ProductDB;
 import es.upm.etsisi.poo.models.Categories;
 import es.upm.etsisi.poo.models.Product;
 import es.upm.etsisi.poo.models.ProductMeeting;
 
-/*
-prod add <id> "<nombre>" <categoria> <precio> (agrega un producto con nuevo id)
-prod list (lista productos actuales)
-prod update <id> campo valor (campos: nombre|categoria|precio)
-prod remove <id>
- */
 public class ProductController {
 
     public static void add(int id, String name, String categories, double price) {
@@ -37,49 +31,42 @@ public class ProductController {
         System.out.println("Catalog:");
         ArrayList<Product> products = ProductDB.listProducts();
         for (Product p : products) {
-            System.out.println("  "+p.toString());
+            System.out.println("  " + p.toString());
         }
     }
 
     public static void update(int id, String campo, String valor) {
 
         Product p = ProductDB.findId(id);
-        if (p == null) {
-            System.out.println("Error. No existe el id para actualizar.");
-        } else {
-            switch (campo.toUpperCase()) {
-                case "NAME":
-                    p.setName(valor);
-                    break;
-                case "CATEGORY":
-                    if(p instanceof ProductMeeting){
-                        System.out.println("No se puede aplicar una categoria a comidas o reuniones");
-                    }else {
-                        if (categorieControl(valor)) {
-                            Categories categorie = Categories.valueOf(valor.toUpperCase());
-                            p.setCategories(categorie);
-                        }
+        switch (campo.toUpperCase()) {
+            case "NAME":
+                p.setName(valor);
+                break;
+            case "CATEGORY":
+                if (p instanceof ProductMeeting) {
+                    System.out.println("No se puede aplicar una categoría a comidas o reuniones");
+                } else {
+                    if (categorieControl(valor)) {
+                        Categories categorie = Categories.valueOf(valor.toUpperCase());
+                        p.setCategories(categorie);
                     }
-                    break;
-                case "PRICE":
-                    p.setPrice(Double.parseDouble(valor));
-                    break;
-                default:
-                    System.out.println("Campo no valido");
-                    break;
-            }
-            System.out.println(p.toString());
+                }
+                break;
+            case "PRICE":
+                p.setPrice(Double.parseDouble(valor));
+                break;
+            default:
+                System.out.println("Campo no valido");
+                break;
         }
+        System.out.println(p.toString());
+
     }
 
     public static void remove(int id) {
         Product p = ProductDB.findId(id);
-        if (p == null) {
-            System.out.println("Error. No existe el id para borrar.");
-        } else {
-            System.out.println(p.toString());
-            ProductDB.removeProduct(p);
-        }
+        System.out.println(p.toString());
+        ProductDB.removeProduct(p);
     }
 
     public static Product findId(int id) {
