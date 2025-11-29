@@ -124,9 +124,6 @@ public class App {
                         case "ticket add":
                             String[] pers;
                             pers = obtenerPers(args);
-                            if(pers==null){
-                                break;
-                            }
                             cmd = new CommandTicketAddProduct(args[0], args[1], Integer.parseInt(args[2]), Integer.parseInt(args[3]), pers);
                             break;
 
