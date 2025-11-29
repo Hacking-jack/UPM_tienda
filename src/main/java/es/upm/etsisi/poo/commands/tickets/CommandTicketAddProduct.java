@@ -23,7 +23,6 @@ public class CommandTicketAddProduct implements Command {
         this.pers = pers;
     }
 
-    //TODO existe esta otacion que te sale en intellij como una lista de tareas
     @Override
     public boolean execute() {
         Product product = ProductController.findId(this.productId);

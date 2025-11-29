@@ -66,7 +66,7 @@ public class TicketController {
             System.out.println("No se puede personalizar un objeto no personalizable");
         }
     }
-
+    //TODO revisar esto que es un poco chapuza
     static public void addMeeting(String ticketId, ProductMeeting product, int quantity) {
         Ticket ticket = findId(ticketId);
         ProductMeeting clone = product.clone();
