@@ -6,188 +6,223 @@ skinparam packageStyle rectangle
 skinparam shadowing false
 skinparam backgroundColor #FEFEFE
 skinparam defaultFontName Arial
+skinparam abstractFontStyle bold
 
-title UPM Tienda - Class Diagram\n<size:12>Store Management System with Product Catalog and Ticket Processing</size>
+title UPM Tienda - Class Diagram (Entrega 2)\n<size:12>Store Management System with Users, Products, Databases, and Command Pattern</size>
 
 package "view" <<Rectangle>> #E8F5E9 {
     class App {
         - ticket: Ticket
         - productController: ProductController
         - ticketController: TicketController
+        - clientController: ClientController
+        - cashierController: CashierController
         __Constructors__
         + App()
         __Methods__
         + {static} main(args: String[]): void
         - iniciar(): void
         - run(): void
-        + end(): void
-        + help(): void
-        + reordenarSplitNombre(array: String[], inicioNombre: int): void
+    }
+}
+
+package "database" <<Rectangle>> #FFF3E0 {
+    class HumanDB {
+        + addHuman(human: Human): void
+        + removeHuman(dni: String): void
+        + listHumans(): ArrayList<Human>
+    }
+    class ProductDB {
+        + addProduct(product: Product): void
+        + removeProduct(id: int): void
+        + getProduct(id: int): Product
+        + {static} addProductClone(product: Product): void ' Usado por ProductCustom.clone()
+    }
+    class TicketDB {
+        + addTicket(ticket: Ticket): void
+        + getTicket(id: String): Ticket
     }
 }
 
 package "controller" <<Rectangle>> #E3F2FD {
-    class ProductController {
-        - products: ArrayList<Product>
+    abstract class HumanController {
+        # humanDB: HumanDB
+    }
+
+    class ClientController extends HumanController {
+        __Client Operations__
+        + addClient(name: String, dni: String, email: String, cashier: Cashier): void
+        + removeClient(dni: String): void
+        + listClients(): void
+    }
+
+    class CashierController extends HumanController {
+        __Cashier Operations__
+        + addCashier(id: String, name: String, email: String): void
+        + removeCashier(id: String): void
+        + listCashiers(): void
+    }
+
+    abstract class ProductController {
+        # productDB: ProductDB
         - counter: int
-        __Constructors__
-        + ProductController()
         __CRUD Operations__
-        + add(id: int, name: String, categories: String, price: double): void
+        + add(...)
         + list(): void
-        + update(id: int, campo: String, valor: String): void
+        + update(...)
         + remove(id: int): void
         __Queries__
         + existeId(id: int): int
         + productoID(id: int): Product
-        __Validation__
-        + categorieControl(categorie: String): boolean
     }
 
+    class ProductCustomController extends ProductController {}
+    class ProductFoodMeetingController extends ProductController {}
+
     class TicketController {
+        - ticketDB: TicketDB
         - ticket: Ticket
         - counter: int
-        __Constructors__
-        + TicketController(ticket: Ticket)
         __Ticket Operations__
         + newTicket(): void
         + add(product: Product, quantity: int): void
         + remove(product: Product): void
         + print(): void
-        __Business Logic__
-        + hasDiscount(counterStationary: int, counterClothes: int, \n  counterBook: int, counterElectronic: int, categories: Categories): boolean
-    }
-
-    class Loader {
-        - {static} DB_PATH: String = "database.json"
-        - gson: Gson
-        __Constructors__
-        + Loader()
     }
 }
 
+package "commands" <<Rectangle>> #FFFDE7 {
+    interface Command {
+        + execute(): void
+    }
+    class CommandCashAdd implements Command {}
+    class CommandClientAdd implements Command {}
+    class CommandProductAdd implements Command {}
+    class CommandProductAddFood implements Command {}
+    class CommandTicketAddProduct implements Command {}
+}
+
+
 package "models" <<Rectangle>> #FCE4EC {
-    class Product {
-        - name: String
-        - categories: Categories
-        - price: double
-        - id: int
+    abstract class Human {
+        # id: String
+        # nombre: String
+        # email: String
+        # tickets: ArrayList<String>
+        __Methods__
+        + addTicket(ticketId: String): void
+        + {abstract} getId(): String
+    }
+
+    class Client extends Human {
+        - cajeroAlta: String
         __Constructors__
-        + Product(name: String, price: double, categories: Categories, id: int)
-        __Getters__
-        + getPrice(): double
-        + getCategories(): Categories
-        + getId(): int
-        __Setters__
-        + setName(name: String): void
-        + setPrice(price: double): void
-        + setCategories(categories: Categories): void
-        __Object Methods__
+        + Client(nombre: String, dni: String, email: String, cajeroAlta: String)
+        __Methods__
         + toString(): String
+    }
+
+    class Cashier extends Human {
+        __Constructors__
+        + Cashier(id: String, nombre: String, email: String)
+        __Methods__
+        + toString(): String
+    }
+
+    class Product {
+        # name: String
+        # categories: Categories
+        # price: double
+        + id: int {readOnly}
+        __Methods__
+        + getPrice(): double
+        + clone(): Product
+    }
+
+    class ProductCustom extends Product {
+        + maxPers: int
+        - listaPers: String[]
+        - persAct: int
+        __Methods__
+        + addPers(pers: String[]): void
+        + getPrice(): double
+        + clone(): ProductCustom
+    }
+
+    class ProductMeeting extends Product {
+        - date: LocalDate
+        - maxParticipantes: int
+        - isFood: boolean
+        - asistentes: int
+        __Methods__
+        + setAsistentes(asistentes: int): boolean
+        + getPrice(): double
+        + clone(): ProductMeeting
     }
 
     class Ticket {
         - products: ArrayList<Product>
-        __Constructors__
-        + Ticket()
-        __Getters__
-        + getProducts(): ArrayList<Product>
+        - idTicket: String
+        - date: LocalDateTime
+        - estado: States
+        __Methods__
+        + addProduct(product: Product): boolean
+        + addMeeting(productMeeting: ProductMeeting): void ' Especializado
+        + removeProduct(product: Product): void
+        + printAndClose(): void
+    }
+
+    enum States {
+        VACIO
+        ACTIVO
+        CERRADO
     }
 
     enum Categories {
-        {field} MERCH
-        {field} STATIONERY
-        {field} CLOTHES
-        {field} BOOK
-        {field} ELECTRONICS
+        MERCH, STATIONERY, CLOTHES, BOOK, ELECTRONICS
         __Static Methods__
         + {static} getDiscount(categorie: Categories): double
     }
 }
 
-' ============ Relationships ============
 
-' View Layer Dependencies
-App "1" *-down- "1" ProductController : manages >
-App "1" *-down- "1" TicketController : manages >
-App "1" *-down- "1" Ticket : creates >
-
-' Controller to Models
-ProductController "1" o-right- "0..200" Product : <<manages>>
-TicketController "1" -down-> "1" Ticket : <<controls>>
-TicketController .up.> Product : <<uses>>
-TicketController .right.> Categories : <<queries>>
-
-' Models relationships
-Ticket "1" o-left- "0..100" Product : <<contains>>
+Ticket "1" *-- "0..100" Product : <<contains>>
 Product "1" *-down- "1" Categories : <<categorized by>>
+Ticket "1" *-- "1" States : <<has state>>
+Client "0..*" o-- "1" Cashier : <<registered by>>
 
-' Dependencies
-ProductController .down.> Categories : <<validates>>
-Loader .right.> Product : <<serializes>>
+' Controller to Database Dependencies
+ClientController .down.> HumanDB : <<uses>>
+CashierController .down.> HumanDB : <<uses>>
 
-' ============ Constraints & Notes ============
+ProductController .down.> ProductDB : <<uses>>
+TicketController .down.> TicketDB : <<uses>>
 
-note right of ProductController
-  <b>Business Rules:</b>
-  • Maximum 200 products allowed
-  • Unique IDs enforced
-  • CRUD operations for catalog
-  • Category validation
+ProductCustomController .down.> ProductDB : <<uses>>
+ProductFoodMeetingController .down.> ProductDB : <<uses>>
 
-  <b>Returns:</b>
-  existeId(): position+1 or -1
-end note
+Command <|.. CommandClientAdd
+CommandClientAdd .down.> ClientController : <<requests>>
+Command <|.. CommandCashAdd
+CommandCashAdd .down.> CashierController : <<requests>>
 
-note right of TicketController
-  <b>Business Rules:</b>
-  • Maximum 100 products per ticket
-  • Discount: 2+ items same category
-  • Calculates total, discount, final price
+Command <|.. CommandProductAddFood
+CommandProductAddFood .right.> ProductFoodMeetingController : <<requests>>
 
-  <b>Discount Logic:</b>
-  Applied per product if category
-  has ≥2 items in ticket
-end note
+Command <|.. CommandTicketAddProduct
+CommandTicketAddProduct .left.> TicketController : <<requests>>
 
-note bottom of Categories
-  <b>Discount Rates (%):</b>
-  • MERCH: 0%
-  • STATIONERY: 5%
-  • CLOTHES: 7%
-  • BOOK: 10%
-  • ELECTRONICS: 3%
-
-  Discount applied when ≥2 units
-  of same category in ticket
-end note
-
-note top of Ticket
-  <b>Responsibility:</b>
-  Aggregates products
-  for purchase processing
-
-  <b>Capacity:</b> 0-100 products
-end note
-
-note left of App
-  <b>Main Application:</b>
-  • CLI Interface
-  • Command Parser
-  • User Interaction
-
-  <b>Commands:</b>
-  prod, ticket, help, exit
-end note
+ProductCustom .up.> ProductDB : <<static uses>>
 
 legend right
   |= Symbol |= Meaning |
+  | <|-- | Inheritance (Generalization) |
   | *-- | Composition |
   | o-- | Aggregation |
-  | --> | Association |
   | ..> | Dependency |
+  | <|.. | Realization (Interface) |
 
-  <b>Design Pattern:</b> MVC (Model-View-Controller)
+  <b>Patterns:</b> MVC, Command
 endlegend
 
 @enduml

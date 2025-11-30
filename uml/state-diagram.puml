@@ -86,85 +86,51 @@ state "Product Lifecycle" as ProductLife {
 
 state "Ticket Lifecycle" as TicketLife {
 
-  [*] --> Empty
+  [*] --> VACIO
 
-  state Empty {
-    Empty : No products
-    Empty : counter = 0
-    Empty : Ready for items
+  state VACIO {
+    VACIO : estado = States.VACIO
+    VACIO : No products (0)
   }
 
-  Empty --> WithProducts
+  state ACTIVO {
+    ACTIVO : estado = States.ACTIVO
+    ACTIVO : Contains 1-100 products
+    ACTIVO : Checks capacity internally (100 max)
 
-  state WithProducts {
-    WithProducts : Contains 1-99 products
-    WithProducts : Tracks category counts
-    WithProducts : Can calculate discounts
+    state "Capacity Check" as CapCheck
+    state "Discount Calculation" as DiscountCalc
 
-    state "Calculating Receipt" as CalcReceipt {
-      CalcReceipt : Count products per category
-      CalcReceipt : Calculate total price
-      CalcReceipt : Apply discounts (>=2 same cat)
-      CalcReceipt : Calculate final price
-    }
+    [*] --> CapCheck : [addProduct]
+    CapCheck --> DiscountCalc : [capacity < 100]
+    CapCheck --> ACTIVO : [capacity = 100] (No se puede añadir)
+
+    DiscountCalc --> ACTIVO
   }
 
-  WithProducts --> WithProducts
-  WithProducts --> Full
-
-  state Full {
-    Full : Maximum capacity reached
-    Full : Cannot add more products
-    Full : Can still remove items
+  state CERRADO {
+    CERRADO : estado = States.CERRADO
+    CERRADO : No se pueden añadir productos
   }
 
-  Full --> WithProducts
-  WithProducts --> Empty
+  VACIO --> ACTIVO : addProduct [products.isEmpty()]
+  ACTIVO --> VACIO : removeProduct [products.size() = 0]
 
-  WithProducts --> Printing
-  Full --> Printing
+  ACTIVO --> CERRADO : printAndClose()
 
-  state Printing {
-    Printing : entry / Initialize counters
-    Printing : do / Count categories
-    Printing : do / Calculate prices
-    Printing : do / Apply discounts
-    Printing : do / Display receipt
-    Printing : exit / Print totals
-  }
-
-  Printing --> WithProducts
-
-  WithProducts --> [*]
-  Full --> [*]
-  Empty --> [*]
+  CERRADO --> [*]
 }
 
-note right of ProductLife
-  <b>Product States</b>
-  Created - Initial validation
-  Active - Available in catalog
-  Updating - Modification in progress
-  InTicket - Referenced by tickets
-  Removed - Deleted from catalog
-
-  <b>Constraints</b>
-  Max 200 products
-  Unique IDs
-  Valid categories only
-end note
-
 note right of TicketLife
-  <b>Ticket States</b>
-  Empty - No products (0)
-  WithProducts - 1-99 products
-  Full - 100 products (max)
-  Printing - Calculating receipt
+  <b>Ticket States (States Enum)</b>
+  VACIO - No products.
+  ACTIVO - 1 to 100 products (includes logic for capacity check).
+  CERRADO - Finalized, cannot be modified.
 
   <b>Business Rules</b>
   Discount >=2 same category
-  Products added by reference
-  Auto-print on add
+  Capacity max 100 products
+  Closure occurs upon 'printAndClose()'
 end note
 
 note bottom
@@ -175,6 +141,7 @@ note bottom
   entry / Actions when entering state
   do / Actions while in state
   exit / Actions when leaving state
+  [Guard] / Condition for transition
 end note
 
 @enduml

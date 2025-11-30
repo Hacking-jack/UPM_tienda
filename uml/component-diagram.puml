@@ -10,174 +10,109 @@ skinparam packageBorderColor #4CAF50
 skinparam interfaceBackgroundColor #FFF9C4
 skinparam interfaceBorderColor #FBC02D
 
-title UPM Tienda - Component Diagram\n<size:12>System Architecture and Component Dependencies</size>
+title UPM Tienda - Component Diagram\n<size:12>System Architecture: Layers, Command Pattern, and Persistence</size>
 
-package "Presentation Layer" #E8F5E9 {
-  component "CLI Application" as CLI {
+package "Presentation Layer (view)" #E8F5E9 {
+  component "CLI Application (App)" as CLI {
     portin "User Input" as UserIn
     portout "System Output" as SysOut
 
     component [Command Parser] as Parser
-    component [Help System] as Help
     component [Output Formatter] as Output
   }
 }
 
-package "Business Logic Layer" #E3F2FD {
+package "Command Layer (commands)" #FFFDE7 {
+    interface "Command Interface" as ICommand
+    component "Command Implementations" as Cmds {
+        ICommand -- Cmds
+    }
+}
+
+
+package "Business Logic Layer (controller)" #E3F2FD {
+
   component "Product Management" as ProdMgmt {
     portin "Product Operations" as ProdOps
-    portout "Product Data" as ProdData
-
-    component [CRUD Controller] as CRUD
-    component [Validation Engine] as Validator
-    component [ID Manager] as IDMgr
+    component [General Controller (ProductController)] as PC
+    component [Specialized Controllers] as SpecialPC
+    ProdOps --> PC
+    ProdOps --> SpecialPC
   }
 
   component "Ticket Management" as TicketMgmt {
     portin "Ticket Operations" as TicketOps
-    portout "Receipt Data" as ReceiptData
+    component [Ticket Controller] as TC
+  }
 
-    component [Ticket Controller] as TicketCtrl
-    component [Discount Calculator] as DiscCalc
-    component [Receipt Printer] as Receipt
+  component "Human Management" as HumanMgmt {
+    portin "Human Operations" as HumanOps
+    component [Human Controller (Base)] as HC
+    component [Client Controller] as ClientC
+    component [Cashier Controller] as CashierC
+
+    HC <|-down- ClientC
+    HC <|-down- CashierC
+    HumanOps --> ClientC
+    HumanOps --> CashierC
   }
 }
 
-package "Data Layer" #FCE4EC {
-  component "Domain Model" as Model {
-    component [Product] as Prod
-    component [Ticket] as Tick
-    component [Categories] as Cat
-  }
+package "Data Layer (models, database)" #FCE4EC {
+  component "Domain Model" as Model
 
-  component "Persistence" as Persist {
-    component [Loader] as Load
-    component [JSON Serializer] as JSON
-  }
+  component "Product DB" as PDB
+  component "Ticket DB" as TDB
+  component "Human DB" as HDB
 }
 
-package "External Libraries" #FFF9C4 {
-  component [Google GSON] as GSON
-  component [Java Collections] as Collections
-  component [Java I/O] as IO
-}
 
-' Interfaces
-interface "IProductController" as IProdCtrl
-interface "ITicketController" as ITicketCtrl
-interface "ICommandParser" as ICmdParser
-interface "ICategoryValidator" as ICatValid
+CLI --> Cmds : executes
 
-' CLI connections
-UserIn --> Parser : commands
-Parser --> IProdCtrl
-Parser --> ITicketCtrl
-Parser --> Help
-Output --> SysOut : formatted output
+Cmds --> ProdMgmt : requests product logic
+Cmds --> TicketMgmt : requests ticket logic
+Cmds --> HumanMgmt : requests human logic
 
-' Business Logic connections
-IProdCtrl --> ProdOps
-ProdData --> Parser
-CRUD --> Validator : validate
-CRUD --> IDMgr : check uniqueness
-Validator --> ICatValid
+ProdMgmt --> Model : manages/validates
+TicketMgmt --> Model : manages/references
+HumanMgmt --> Model : manages
 
-ITicketCtrl --> TicketOps
-ReceiptData --> Output
-TicketCtrl --> DiscCalc : calculate
-TicketCtrl --> Receipt : format
+PC --> PDB : manages products
+SpecialPC --> PDB : manages specialized products
 
-' Data Layer connections
-CRUD --> Prod : create/update/delete
-TicketCtrl --> Tick : manage
-Validator --> Cat : validate
-DiscCalc --> Cat : getDiscount()
-Tick --> Prod : contains
+TC --> TDB : manages tickets
+ClientC --> HDB : manages clients
+CashierC --> HDB : manages cashiers
 
-' Persistence
-Load --> JSON : serialize/deserialize
-JSON --> GSON : use
-ProdMgmt --> Persist : save/load
-Persist --> Prod : read/write
-
-' External libraries
-Collections --> Tick : ArrayList
-Collections --> ProdMgmt : ArrayList
-IO --> CLI : Scanner
-GSON --> JSON : provided by
-
-note right of CLI
-  <b>Responsibilities:</b>
-  • Parse user commands
-  • Display help information
-  • Format output messages
-  • Handle user interaction loop
-
-  <b>Commands Supported:</b>
-  prod, ticket, help, echo, exit
-end note
 
 note right of ProdMgmt
   <b>Responsibilities:</b>
-  • Manage product catalog
   • CRUD operations
-  • Validate categories
-  • Ensure unique IDs
-  • Enforce capacity (200 max)
-
-  <b>Public Methods:</b>
-  add(), list(), update(), remove(),
-  existeId(), productoID()
+  • Specialization for ProductMeeting/Custom
+  • Interacts with ProductDB
 end note
 
-note right of TicketMgmt
-  <b>Responsibilities:</b>
-  • Manage ticket lifecycle
-  • Add/remove products
-  • Calculate discounts
-  • Generate receipts
-  • Enforce capacity (100 max)
-
-  <b>Discount Logic:</b>
-  ≥2 products same category
+note right of Cmds
+  <b>Patrón Command:</b>
+  • Decouples CLI (Invoker) from Controllers (Receiver).
+  • All user actions flow through this layer.
 end note
 
-note bottom of Model
-  <b>Domain Objects:</b>
-
-  <b>Product:</b> id, name, category, price
-  <b>Ticket:</b> ArrayList<Product>
-  <b>Categories:</b> MERCH, STATIONERY,
-    CLOTHES, BOOK, ELECTRONICS
-
-  Follows JavaBeans pattern
-  with getters/setters
-end note
-
-note bottom of Persist
-  <b>Persistence Strategy:</b>
-  • JSON file format
-  • database.json path
-  • GSON library for serialization
-
-  <b>Note:</b> Currently not fully
-  implemented in code
+note right of PDB
+  <b>Persistence:</b>
+  • Concrete implementation of data storage
+  • Used exclusively by controllers
 end note
 
 legend right
-  <b>Component Types:</b>
-  □ Component
-  ○ Port (entry/exit points)
-  ─ Dependency
-
   <b>Architecture Pattern:</b>
-  Layered Architecture (3-tier)
-  • Presentation Layer (View)
+  Layered Architecture (4-tier conceptual)
+  • Presentation (CLI)
+  • Command (Decoupling)
   • Business Logic (Controller)
-  • Data Layer (Model)
+  • Data (Model/DB)
 
-  Follows MVC principles
+  Follows Command Pattern & MVC principles
 endlegend
 
 @enduml
-
