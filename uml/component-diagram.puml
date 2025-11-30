@@ -1,0 +1,118 @@
+@startuml Component_Diagram
+
+skinparam backgroundColor #FEFEFE
+skinparam defaultFontName Arial
+skinparam componentStyle uml2
+skinparam componentBackgroundColor #E3F2FD
+skinparam componentBorderColor #1976D2
+skinparam packageBackgroundColor #E8F5E9
+skinparam packageBorderColor #4CAF50
+skinparam interfaceBackgroundColor #FFF9C4
+skinparam interfaceBorderColor #FBC02D
+
+title UPM Tienda - Component Diagram\n<size:12>System Architecture: Layers, Command Pattern, and Persistence</size>
+
+package "Presentation Layer (view)" #E8F5E9 {
+  component "CLI Application (App)" as CLI {
+    portin "User Input" as UserIn
+    portout "System Output" as SysOut
+
+    component [Command Parser] as Parser
+    component [Output Formatter] as Output
+  }
+}
+
+package "Command Layer (commands)" #FFFDE7 {
+    interface "Command Interface" as ICommand
+    component "Command Implementations" as Cmds {
+        ICommand -- Cmds
+    }
+}
+
+
+package "Business Logic Layer (controller)" #E3F2FD {
+
+  component "Product Management" as ProdMgmt {
+    portin "Product Operations" as ProdOps
+    component [General Controller (ProductController)] as PC
+    component [Specialized Controllers] as SpecialPC
+    ProdOps --> PC
+    ProdOps --> SpecialPC
+  }
+
+  component "Ticket Management" as TicketMgmt {
+    portin "Ticket Operations" as TicketOps
+    component [Ticket Controller] as TC
+  }
+
+  component "Human Management" as HumanMgmt {
+    portin "Human Operations" as HumanOps
+    component [Human Controller (Base)] as HC
+    component [Client Controller] as ClientC
+    component [Cashier Controller] as CashierC
+
+    HC <|-down- ClientC
+    HC <|-down- CashierC
+    HumanOps --> ClientC
+    HumanOps --> CashierC
+  }
+}
+
+package "Data Layer (models, database)" #FCE4EC {
+  component "Domain Model" as Model
+
+  component "Product DB" as PDB
+  component "Ticket DB" as TDB
+  component "Human DB" as HDB
+}
+
+
+CLI --> Cmds : executes
+
+Cmds --> ProdMgmt : requests product logic
+Cmds --> TicketMgmt : requests ticket logic
+Cmds --> HumanMgmt : requests human logic
+
+ProdMgmt --> Model : manages/validates
+TicketMgmt --> Model : manages/references
+HumanMgmt --> Model : manages
+
+PC --> PDB : manages products
+SpecialPC --> PDB : manages specialized products
+
+TC --> TDB : manages tickets
+ClientC --> HDB : manages clients
+CashierC --> HDB : manages cashiers
+
+
+note right of ProdMgmt
+  <b>Responsibilities:</b>
+  • CRUD operations
+  • Specialization for ProductMeeting/Custom
+  • Interacts with ProductDB
+end note
+
+note right of Cmds
+  <b>Patrón Command:</b>
+  • Decouples CLI (Invoker) from Controllers (Receiver).
+  • All user actions flow through this layer.
+end note
+
+note right of PDB
+  <b>Persistence:</b>
+  • Concrete implementation of data storage
+  • Used exclusively by controllers
+end note
+
+legend right
+  <b>Architecture Pattern:</b>
+  Layered Architecture (4-tier conceptual)
+  • Presentation (CLI)
+  • Command (Decoupling)
+  • Business Logic (Controller)
+  • Data (Model/DB)
+
+  Follows Command Pattern & MVC principles
+endlegend
+
+@enduml
