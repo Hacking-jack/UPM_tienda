@@ -1,0 +1,390 @@
+@startuml
+class es.upm.etsisi.poo.controler.ProductController {
++ {static} void add(int,String,String,double)
++ {static} void list()
++ {static} void update(int,String,String)
++ {static} void remove(int)
++ {static} Product findId(int)
++ {static} boolean categorieControl(String)
++ {static} int generarId()
+}
+
+class es.upm.etsisi.poo.models.Ticket {
+- ArrayList<Product> products
+- String idTicket
+- LocalDateTime date
+- States estado
++ States getEstado()
++ boolean addProduct(Product)
++ void addMeeting(ProductMeeting)
++ void removeProduct(Product)
++ boolean hasDiscount(int,int,int,int,Categories)
++ void printAndClose()
++ String list()
++ void title()
++ void print()
++ String toString()
++ void setEstado(States)
++ String getIdTicket()
+}
+
+
+class es.upm.etsisi.poo.controler.ClientController {
++ {static} void add(String,String,String,String)
++ {static} void remove(String)
++ {static} void list()
++ {static} Client searchId(String)
++ {static} boolean existeId(String)
+}
+
+class es.upm.etsisi.poo.commands.products.CommandProductAddFood {
+- int id
+- String name
+- double price
+- String date
+- int maxPeople
++ boolean execute()
+}
+
+
+class es.upm.etsisi.poo.exceptions.NegativeNumException {
+}
+class es.upm.etsisi.poo.models.Cashier {
++ String getId()
++ String toString()
+}
+
+class es.upm.etsisi.poo.commands.products.CommandProductUpdate {
+- int id
+- String field
+- String value
++ boolean execute()
+}
+
+
+class es.upm.etsisi.poo.exceptions.TicketNotFound {
+}
+class es.upm.etsisi.poo.commands.general.CommandHelp {
++ boolean execute()
+}
+
+interface es.upm.etsisi.poo.commands.Command {
+~ boolean execute()
+}
+
+class es.upm.etsisi.poo.commands.general.CommandEcho {
+- String text
++ boolean execute()
+}
+
+
+class es.upm.etsisi.poo.view.App {
++ {static} void main(String[])
+- void iniciar()
++ {static} void runInteractive()
++ {static} void runFromFile(String)
+- {static} void run(BufferedReader,boolean)
++ void end()
+- {static} String ordenarSplit(String[])
+- {static} String[] obtenerPers(String[])
+- {static} void juntarComillas(String[])
+- {static} void removeComillas(String[],int)
+- {static} void reordenarArray(String[],int,int)
+}
+
+class es.upm.etsisi.poo.commands.cash.CommandCashRemove {
+- String id
++ boolean execute()
+}
+
+
+class es.upm.etsisi.poo.commands.products.CommandProductRemove {
+- int id
++ boolean execute()
+}
+
+
+class es.upm.etsisi.poo.commands.products.CommandProductAdd {
+- int id
+- String name
+- String category
+- double price
+- Integer maxPers
++ boolean execute()
+}
+
+
+class es.upm.etsisi.poo.commands.clients.CommandClientAdd {
+- String name
+- String dni
+- String email
+- String cashId
++ boolean execute()
+}
+
+
+class es.upm.etsisi.poo.dataBase.HumanDB {
+- {static} ArrayList<Human> human
++ {static} void addUser(Human)
++ {static} Human findId(String)
++ {static} boolean existeId(String)
++ {static} void removeHuman(Human)
++ {static} ArrayList<Human> list()
+}
+
+
+class es.upm.etsisi.poo.controler.CashierController {
++ {static} void add(String,String,String)
++ {static} void remove(String)
++ {static} void list()
++ {static} Cashier searchId(String)
++ {static} void cashTickets(String)
++ {static} String generarId()
++ {static} boolean existeId(String)
+}
+
+class es.upm.etsisi.poo.commands.cash.CommandCashList {
++ boolean execute()
+}
+
+class es.upm.etsisi.poo.commands.tickets.CommandTicketAddProduct {
+- String ticketId
+- String cashId
+- int productId
+- int amount
+- String[] pers
++ boolean execute()
+}
+
+
+class es.upm.etsisi.poo.commands.tickets.CommandTicketList {
++ boolean execute()
+}
+
+class es.upm.etsisi.poo.controler.TicketController {
++ {static} String newTicket(String)
++ {static} String generarId()
++ {static} void addProduct(String,Product,int)
++ {static} void addProductPers(String,Product,int,String[])
++ {static} void addMeeting(String,ProductMeeting,int)
++ {static} Ticket findId(String)
++ {static} void remove(Ticket,Product)
++ {static} void list()
++ {static} void print(String)
+}
+
+class es.upm.etsisi.poo.controler.ProductCustomController {
++ {static} void add(Integer,String,String,double,int)
+}
+
+class es.upm.etsisi.poo.commands.products.CommandProductAddMeeting {
+- int id
+- String name
+- double price
+- String date
+- int maxPeople
++ boolean execute()
+}
+
+
+enum es.upm.etsisi.poo.models.States {
++  VACIO
++  ACTIVO
++  CERRADO
++ String toString()
+}
+
+
+class es.upm.etsisi.poo.dataBase.ProductDB {
+- {static} ArrayList<Product> products
++ {static} void addProduct(Product)
++ {static} void addProductClone(Product)
++ {static} Product findId(int)
++ {static} boolean existeId(int)
++ {static} void removeProduct(Product)
++ {static} int countProduct()
++ {static} ArrayList<Product> listProducts()
+}
+
+
+class es.upm.etsisi.poo.exceptions.MaxAssistantOutOfBounds {
+}
+class es.upm.etsisi.poo.models.ProductCustom {
++ int maxPers
+- String[] listaPers
+- int persAct
++ void addPers(String[])
++ double getPrice()
++ String toString()
++ ProductCustom clone()
+}
+
+
+abstract class es.upm.etsisi.poo.models.Human {
+# String id
+# String nombre
+# String email
+# ArrayList<String> tickets
++ String getNombre()
++ void addTicket(String)
++ ArrayList<String> getTickets()
++ boolean contains(Ticket)
++ {abstract}String getId()
+}
+
+
+class es.upm.etsisi.poo.models.Product {
+# String name
+# Categories categories
+# double price
+# int id
++ String getName()
++ void setName(String)
++ double getPrice()
++ void setPrice(double)
++ Categories getCategories()
++ void setCategories(Categories)
++ int getId()
++ Product clone()
++ String toString()
+}
+
+
+class es.upm.etsisi.poo.commands.tickets.CommandTicketPrint {
+- String ticketId
+- String cashId
++ boolean execute()
+}
+
+
+enum es.upm.etsisi.poo.models.Categories {
++  MERCH
++  STATIONERY
++  CLOTHES
++  BOOK
++  ELECTRONICS
++ {static} double getDiscount(Categories)
+}
+
+
+class es.upm.etsisi.poo.commands.clients.CommandClientList {
++ boolean execute()
+}
+
+class es.upm.etsisi.poo.commands.clients.CommandClientRemove {
+- String dni
++ boolean execute()
+}
+
+
+class es.upm.etsisi.poo.models.ProductMeeting {
+- LocalDate date
+- int maxParticipantes
+- boolean isFood
+- int asistentes
++ boolean setAsistentes(int)
++ int getAsistentes()
++ double getPrice()
++ String toString()
++ ProductMeeting clone()
+}
+
+
+class es.upm.etsisi.poo.commands.products.CommandProductList {
++ boolean execute()
+}
+
+class es.upm.etsisi.poo.controler.ProductFoodMeetingController {
++ {static} void add(int,String,double,String,int,boolean)
+}
+
+class es.upm.etsisi.poo.dataBase.TicketDB {
+- {static} ArrayList<Ticket> tickets
++ {static} void addTicket(Ticket)
++ {static} Ticket findId(String)
++ {static} boolean existeId(String)
++ {static} ArrayList<Ticket> listProducts()
++ {static} void title(String)
+}
+
+
+class es.upm.etsisi.poo.exceptions.UserNotFound {
+}
+class es.upm.etsisi.poo.commands.tickets.CommandTicketNew {
+- String id
+- String cashId
+- String clientId
++ boolean execute()
+}
+
+
+class es.upm.etsisi.poo.models.Client {
+- String cajeroAlta
++ String getId()
++ String toString()
+}
+
+
+class es.upm.etsisi.poo.commands.cash.CommandCashAdd {
+- String id
+- String name
+- String email
++ boolean execute()
+}
+
+
+class es.upm.etsisi.poo.exceptions.ProductNotFound {
+}
+class es.upm.etsisi.poo.commands.general.CommandExit {
++ boolean execute()
+}
+
+class es.upm.etsisi.poo.commands.tickets.CommandTicketRemoveProduct {
+- String ticketId
+- String cashId
+- int productId
++ boolean execute()
+}
+
+
+class es.upm.etsisi.poo.commands.cash.CommandCashTickets {
+- String cashId
++ boolean execute()
+}
+
+
+
+
+es.upm.etsisi.poo.commands.Command <|.. es.upm.etsisi.poo.commands.products.CommandProductAddFood
+es.upm.etsisi.poo.exceptions.IllegalArgumentException <|-- es.upm.etsisi.poo.exceptions.NegativeNumException
+es.upm.etsisi.poo.models.Human <|-- es.upm.etsisi.poo.models.Cashier
+es.upm.etsisi.poo.commands.Command <|.. es.upm.etsisi.poo.commands.products.CommandProductUpdate
+es.upm.etsisi.poo.exceptions.RuntimeException <|-- es.upm.etsisi.poo.exceptions.TicketNotFound
+es.upm.etsisi.poo.commands.Command <|.. es.upm.etsisi.poo.commands.general.CommandHelp
+es.upm.etsisi.poo.commands.Command <|.. es.upm.etsisi.poo.commands.general.CommandEcho
+es.upm.etsisi.poo.commands.Command <|.. es.upm.etsisi.poo.commands.cash.CommandCashRemove
+es.upm.etsisi.poo.commands.Command <|.. es.upm.etsisi.poo.commands.products.CommandProductRemove
+es.upm.etsisi.poo.commands.Command <|.. es.upm.etsisi.poo.commands.products.CommandProductAdd
+es.upm.etsisi.poo.commands.Command <|.. es.upm.etsisi.poo.commands.clients.CommandClientAdd
+es.upm.etsisi.poo.commands.Command <|.. es.upm.etsisi.poo.commands.cash.CommandCashList
+es.upm.etsisi.poo.commands.Command <|.. es.upm.etsisi.poo.commands.tickets.CommandTicketAddProduct
+es.upm.etsisi.poo.commands.Command <|.. es.upm.etsisi.poo.commands.tickets.CommandTicketList
+es.upm.etsisi.poo.controler.ProductController <|-- es.upm.etsisi.poo.controler.ProductCustomController
+es.upm.etsisi.poo.commands.Command <|.. es.upm.etsisi.poo.commands.products.CommandProductAddMeeting
+es.upm.etsisi.poo.exceptions.IllegalArgumentException <|-- es.upm.etsisi.poo.exceptions.MaxAssistantOutOfBounds
+es.upm.etsisi.poo.models.Product <|-- es.upm.etsisi.poo.models.ProductCustom
+es.upm.etsisi.poo.commands.Command <|.. es.upm.etsisi.poo.commands.tickets.CommandTicketPrint
+es.upm.etsisi.poo.commands.Command <|.. es.upm.etsisi.poo.commands.clients.CommandClientList
+es.upm.etsisi.poo.commands.Command <|.. es.upm.etsisi.poo.commands.clients.CommandClientRemove
+es.upm.etsisi.poo.models.Product <|-- es.upm.etsisi.poo.models.ProductMeeting
+es.upm.etsisi.poo.commands.Command <|.. es.upm.etsisi.poo.commands.products.CommandProductList
+es.upm.etsisi.poo.controler.ProductController <|-- es.upm.etsisi.poo.controler.ProductFoodMeetingController
+es.upm.etsisi.poo.exceptions.RuntimeException <|-- es.upm.etsisi.poo.exceptions.UserNotFound
+es.upm.etsisi.poo.commands.Command <|.. es.upm.etsisi.poo.commands.tickets.CommandTicketNew
+es.upm.etsisi.poo.models.Human <|-- es.upm.etsisi.poo.models.Client
+es.upm.etsisi.poo.commands.Command <|.. es.upm.etsisi.poo.commands.cash.CommandCashAdd
+es.upm.etsisi.poo.exceptions.RuntimeException <|-- es.upm.etsisi.poo.exceptions.ProductNotFound
+es.upm.etsisi.poo.commands.Command <|.. es.upm.etsisi.poo.commands.general.CommandExit
+es.upm.etsisi.poo.commands.Command <|.. es.upm.etsisi.poo.commands.tickets.CommandTicketRemoveProduct
+es.upm.etsisi.poo.commands.Command <|.. es.upm.etsisi.poo.commands.cash.CommandCashTickets
+@enduml
