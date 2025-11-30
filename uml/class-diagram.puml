@@ -102,7 +102,13 @@ package "commands" <<Rectangle>> #FFFDE7 {
     class CommandTicketAddProduct implements Command {}
 }
 
-
+package "exceptions" <<Rectangle>> #FFFDE7 {
+    class MaxAssistantOutOfBounds {}
+    class NegativeNumException {}
+    class ProductNotFound {}
+    class TicketNotFound {}
+    class UserNotFound {}
+}
 package "models" <<Rectangle>> #FCE4EC {
     abstract class Human {
         # id: String
@@ -186,12 +192,11 @@ package "models" <<Rectangle>> #FCE4EC {
 }
 
 
-Ticket "1" *-- "0..100" Product : <<contains>>
-Product "1" *-down- "1" Categories : <<categorized by>>
-Ticket "1" *-- "1" States : <<has state>>
+Ticket "1" o-- "0..100" Product : <<contains>>
+Product "1" --> "1" Categories : <<categorized by>>
+Ticket "1" --> "1" States : <<has state>>
 Client "0..*" o-- "1" Cashier : <<registered by>>
 
-' Controller to Database Dependencies
 ClientController .down.> HumanDB : <<uses>>
 CashierController .down.> HumanDB : <<uses>>
 
