@@ -1,19 +1,85 @@
-prod add 3 "Libro POO repetido Error" BOOK 25
-prod remove 3
-cash add UW1234567 "pepecurro3" pepe0@upm.es
-client add "Pepe2" 98948334B pepe2@upm.es UW1234567
-prod addMeeting 23456 "Reunion Rotonda" 12 2026-11-21 100
-prod addMeeting 23457 "Graduacion ETSISI" 40 2026-11-21 30
-prod addFood 23458 "Cafeteria ETSISI" 5 2026-11-21 300
-prod addFood 23459 "Restaurante Asador" 50 2026-11-21 40
-prod add 5 "Camiseta talla:M UPM" CLOTHES 15 3
-prod add 6 "Camiseta talla:L UPM" CLOTHES 20 4
-ticket new 212128 UW1234567 98948334B
-ticket add 212128 UW1234567 23458 15
-ticket add 212128 UW1234567 23458 60
-ticket add 212128 UW1234567 5 1
-ticket add 212128 UW1234567 5 3 --pred --pblue --pgreen
-ticket add 212128 UW1234567 6 3 --pred --pblue
-ticket print 212128 UW1234567
+cash add UW0000001 “cajero1” a@a.com
+cash add UW0000002 “cajero2” a@a.com
+cash add UW0000002 “error por id” a@a.com
+cash add UW0000003 “cajero3” a@a.com
+cash add “sinID” a@a.com
+cash list
+cash remove UW0000003
+cash remove UW0000099
+cash list
+client add "<nombre>" <DNI> <email> <cashId>
+client add “cliente1” DNI1 a@a.com UW0000001
+client add “cliente2” DNI2 a@a.com UW0000001
+client add “cliente sin cajero” DNI99 a@a.com UW0000099
+client add “DNI ya existe” DNI1 a@a.com UW0000001
+client list
+client remove DNI2
+client remove DNInoexiste
+client list
+ticket new T1 UW0000001 DNI1
+ticket new UW0000001 DNI1
+ticket new T1 UW00000099 DNI1
+ticket new UW00000099 DNI1
+ticket new T1 UW0000001 DNINoexiste
+ticket new UW0000001 DNINoexiste
+ticket new T1 UW00000099 DNINoexis
+ticket new UW00000099 DNINoexis
+cash tickets UW0000001
+cash tickets Noexiste
+prod add 1001 "Prod normal con id" book 1
+prod add 10011 "Prod normal con id extra" book 1
+prod add "Prod normal sin id" book 1
+prod add 1002 "Prod personalizable con id" book 1 3
+prod add 10021 "Prod personalizable con id extra" book 1 3
+prod add "Prod personalizable sin id" book 1 4
+prod addFood 2001 "Comida con id" 5 2030-01-01 30
+prod addFood 20011 "Comida con id extra" 5 2030-01-01 30
+prod addFood "Comida sin id" 5 2030-01-01 30
+prod addFood 2099 "Comida mas max" 5 2030-01-01 150
+prod addMeeting 3001 "Reunion con id" 5 2030-01-01 30
+prod addMeeting 30011 "Reunion con id extra" 5 2030-01-01 30
+prod addMeeting "Reunion sin id" 5 2030-01-01 30
+prod addMeeting 3099 "Reunion mas max" 5 2030-01-01 150
+prod list
+prod update 1001 NAME “update normal ok”
+prod update 1002 NAME “update pers ok”
+prod update 2001 NAME “update food ok”
+prod update 3001 NAME “update meet ok”
+prod update 1001 PRICE 6
+prod update 1002 PRICE 6
+prod update 2001 PRICE 6
+prod update 3001 PRICE 6
+prod update 1001 CATEGORY electronics
+prod update 1002 CATEGORY electronics
+prod update 2001 CATEGORY electronics
+prod update 3001 CATEGORY electronics
+prod list
+prod remove 10011
+prod remove 10021
+prod remove 20011
+prod remove 30011
+prod list
+ticket add T1 UW0000001 1001 1
+ticket add T1 UW0000001 1002 1
+ticket add T1 UW0000001 1001 1 –pUno –pDos –Ptres
+ticket add T1 UW0000001 99 1 –pUno –pDos –Ptres
+ticket add T1 UW0000001 1002 1 –pUno –pDos –Ptres
+ticket add T1 UW0000001 1002 1 –pUno –pDos –Potro
+ticket add T1 UW0000001 1002 1 –pUno –pDos –Ptres –pExtra
+ticket add T1 UW0000001 2001 1
+ticket add T1 UW0000001 3001 1
+echo “cajero no correspondiente”
+ticket add T1 UW0000002 1002 1
+echo “prod no existente”
+ticket add T1 UW0000001 99 1
+ticket list
+ticket remove T1 UW0000001 1001
+ticket remove T1 UW0000001 10011
+ticket remove T1 UW0000002 1002
+ticket remove T99 UW0000001 2001
+ticket remove T1 UW0000001 1099
+ticket print T2 UW000001
+ticket print T1 UW0000002
+ticket print T1 UW000001
 ticket list
 exit
