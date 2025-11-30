@@ -26,7 +26,6 @@ box "models" #FCE4EC
     participant "<<enumeration>>\nCategories" as Cat
 end box
 
-
 autonumber "<b>[0]"
 
 User -> App ++: ticket add <prodId> <quantity>
@@ -35,53 +34,63 @@ activate User
 App -> App: parse command (prodId, quantity)
 
 App -> Cmd **: new CommandTicketAddProduct(args)
+activate Cmd
 App -> Cmd ++: execute()
 
 Cmd -> PC ++: productoID(prodId)
+activate PC
 
 PC -> PDB ++: getProduct(prodId)
+activate PDB
 
 alt Product exists
-    PDB --> PC --: return Product
-    PC --> Cmd --: return Product ' Producto encontrado
+    PDB --> PC --: Product
+    deactivate PDB
+    PC --> Cmd --: Product
+    deactivate PC
 
     Cmd -> TC ++: add(product, quantity)
+    activate TC
 
     alt counter < 100 (capacity check)
-
         loop for i = 0 to quantity
             TC -> Ticket ++: addProduct(product)
-            note right
+            activate Ticket
+            Ticket --> TC --: success
+            deactivate Ticket
+            note right of TC
               Incluye check products.size() < 100
             end note
-            return boolean (success)
-
-            TC -> TC: counter++
+            TC -> TC: update counter
         end loop
 
-        TC -> TC ++: print() ' Imprime el ticket (Método complejo)
-
+        TC -> TC: print()
         TC -> Cat ++: getDiscount(category)
-        return discount percentage
-        TC --> Cat --
-
-        TC --> TC --: // print() complete
+        Cat --> TC --: discount
+        deactivate Cat
 
         TC --> Cmd --: void
+        deactivate TC
 
-        Cmd --> App --: "ticket add: ok\n"
-        App -> User: "ticket add: ok\n"
+        Cmd --> App --: "ticket add: ok"
+        deactivate Cmd
+        App -> User: "ticket add: ok"
 
     else counter >= 100 (ticket full)
         TC --> Cmd --: "Ticket lleno."
+        deactivate TC
         Cmd --> App --: "Ticket lleno."
+        deactivate Cmd
         App -> User: "Ticket lleno."
     end
 
 else Product doesn't exist
-    PDB --> PC --: return null
-    PC --> Cmd --: return null
+    PDB --> PC --: null
+    deactivate PDB
+    PC --> Cmd --: null
+    deactivate PC
     Cmd --> App --: "ID no existe"
+    deactivate Cmd
     App -> User: "ID no existe"
 end
 

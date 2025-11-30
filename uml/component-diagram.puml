@@ -29,13 +29,17 @@ package "Command Layer (commands)" #FFFDE7 {
     }
 }
 
-
 package "Business Logic Layer (controller)" #E3F2FD {
+
+  interface "IProductOps" as IProdOps
+  interface "ITicketOps" as ITickOps
+  interface "IHumanOps" as IHumOps
 
   component "Product Management" as ProdMgmt {
     portin "Product Operations" as ProdOps
     component [General Controller (ProductController)] as PC
     component [Specialized Controllers] as SpecialPC
+    IProdOps -- ProdOps
     ProdOps --> PC
     ProdOps --> SpecialPC
   }
@@ -43,6 +47,8 @@ package "Business Logic Layer (controller)" #E3F2FD {
   component "Ticket Management" as TicketMgmt {
     portin "Ticket Operations" as TicketOps
     component [Ticket Controller] as TC
+    ITickOps -- TicketOps
+    TicketOps --> TC
   }
 
   component "Human Management" as HumanMgmt {
@@ -50,25 +56,24 @@ package "Business Logic Layer (controller)" #E3F2FD {
     component [Human Controller (Base)] as HC
     component [Client Controller] as ClientC
     component [Cashier Controller] as CashierC
-
-    HC <|-down- ClientC
-    HC <|-down- CashierC
+    IHumOps -- HumanOps
     HumanOps --> ClientC
     HumanOps --> CashierC
   }
 }
 
-package "Data Layer (models, database)" #FCE4EC {
+package "Domain Layer (models)" #FCE4EC {
   component "Domain Model" as Model
+}
 
+package "Data Layer (database)" #FFF3E0 {
   component "Product DB" as PDB
   component "Ticket DB" as TDB
   component "Human DB" as HDB
 }
 
-
+' Relaciones entre capas
 CLI --> Cmds : executes
-
 Cmds --> ProdMgmt : requests product logic
 Cmds --> TicketMgmt : requests ticket logic
 Cmds --> HumanMgmt : requests human logic
@@ -79,11 +84,9 @@ HumanMgmt --> Model : manages
 
 PC --> PDB : manages products
 SpecialPC --> PDB : manages specialized products
-
 TC --> TDB : manages tickets
 ClientC --> HDB : manages clients
 CashierC --> HDB : manages cashiers
-
 
 note right of ProdMgmt
   <b>Responsibilities:</b>
@@ -110,7 +113,8 @@ legend right
   • Presentation (CLI)
   • Command (Decoupling)
   • Business Logic (Controller)
-  • Data (Model/DB)
+  • Domain (Model)
+  • Data (DB)
 
   Follows Command Pattern & MVC principles
 endlegend

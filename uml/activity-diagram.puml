@@ -34,47 +34,44 @@ repeat
     :Create Command instance\n[e.g., CommandProductAddFood];
 
     switch (Command Type?)
+      case (help/echo/exit)
+        :Execute simple command;
 
-    case (help, echo, exit)
-      :Execute simple command;
+      case (prod/ticket/cash/client)
+        :Execute business logic command;
 
-    case (prod, ticket, cash, client)
-      :Execute business logic command;
+        partition "Controller (Business Logic)" #E3F2FD {
+          :Call method on appropriate Controller\n[e.g., ProductFoodMeetingController.add(...)];
+          note right
+            <b>Controller Responsibilities:</b>
+            • Business rules (capacity, discounts)
+            • Data access (via DBs)
+            • State changes (Ticket state)
+          end note
 
-      partition "Controller (Business Logic)" #E3F2FD {
-        :Call method on appropriate Controller\n[e.g., ProductFoodMeetingController.add(...)];
-        note right
-          <b>Controller Responsibilities:</b>
-          • Business rules (capacity, discounts)
-          • Data access (via DBs)
-          • State changes (Ticket state)
-        end note
+          switch (Operation Type)
+            case (Add Product)
+              :Validate category & ID;
+              :Check catalog capacity (200 max);
+              :Save via ProductDB;
 
-        switch (Operation Type)
-        case (Add Product)
-          :Validate category & ID;
-          :Check catalog capacity (200 max);
-          :Save via ProductDB;
+            case (Add to Ticket)
+              :Check product ID existence (via DB);
+              :Check ticket capacity (100 max);
+              :Update Ticket state (VACIO -> ACTIVO);
+              :Calculate and print receipt;
 
-        case (Add to Ticket)
-          :Check product ID existence (via DB);
-          :Check ticket capacity (100 max);
-          :Update Ticket state (VACIO -> ACTIVO);
-          :Calculate and print receipt;
+            case (Remove Product)
+              :Check ID existence;
+              :Remove from ProductDB;
 
-        case (Remove Product)
-          :Check ID existence;
-          :Remove from ProductDB;
+            case (Print Ticket)
+              :Execute printAndClose() on Ticket;
+              :Update Ticket state (ACTIVO -> CERRADO);
+          endswitch
+        }
 
-        case (Print Ticket)
-          :Execute printAndClose() on Ticket;
-          :Update Ticket state (ACTIVO -> CERRADO);
-
-        endswitch
-      }
-
-      :Process result from Controller;
-
+        :Process result from Controller;
     endswitch
   }
 
@@ -86,8 +83,7 @@ repeat
     endif
   }
 
-repeat while (Exit command?) is (not executed)
-->exit executed;
+repeat while (Exit command? == false)
 
 partition "View (App)" {
   :Display "Closing application";
@@ -101,4 +97,5 @@ legend left
   • Yellow: Decoupling (Command)
   • Blue: Core Logic (Controller)
 endlegend
+
 @enduml

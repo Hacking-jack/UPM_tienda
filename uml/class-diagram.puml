@@ -36,7 +36,7 @@ package "database" <<Rectangle>> #FFF3E0 {
         + addProduct(product: Product): void
         + removeProduct(id: int): void
         + getProduct(id: int): Product
-        + {static} addProductClone(product: Product): void ' Usado por ProductCustom.clone()
+        + {static} addProductClone(product: Product): void
     }
     class TicketDB {
         + addTicket(ticket: Ticket): void
@@ -50,14 +50,12 @@ package "controller" <<Rectangle>> #E3F2FD {
     }
 
     class ClientController extends HumanController {
-        __Client Operations__
         + addClient(name: String, dni: String, email: String, cashier: Cashier): void
         + removeClient(dni: String): void
         + listClients(): void
     }
 
     class CashierController extends HumanController {
-        __Cashier Operations__
         + addCashier(id: String, name: String, email: String): void
         + removeCashier(id: String): void
         + listCashiers(): void
@@ -66,13 +64,11 @@ package "controller" <<Rectangle>> #E3F2FD {
     abstract class ProductController {
         # productDB: ProductDB
         - counter: int
-        __CRUD Operations__
-        + add(...)
+        + add(product: Product): void
         + list(): void
-        + update(...)
+        + update(product: Product): void
         + remove(id: int): void
-        __Queries__
-        + existeId(id: int): int
+        + existeId(id: int): boolean
         + productoID(id: int): Product
     }
 
@@ -83,7 +79,6 @@ package "controller" <<Rectangle>> #E3F2FD {
         - ticketDB: TicketDB
         - ticket: Ticket
         - counter: int
-        __Ticket Operations__
         + newTicket(): void
         + add(product: Product, quantity: int): void
         + remove(product: Product): void
@@ -102,36 +97,33 @@ package "commands" <<Rectangle>> #FFFDE7 {
     class CommandTicketAddProduct implements Command {}
 }
 
-package "exceptions" <<Rectangle>> #FFFDE7 {
-    class MaxAssistantOutOfBounds {}
-    class NegativeNumException {}
-    class ProductNotFound {}
-    class TicketNotFound {}
-    class UserNotFound {}
+package "exceptions" <<Rectangle>> #FFEBEE {
+    abstract class AppException extends Exception
+    class MaxAssistantOutOfBounds extends AppException {}
+    class NegativeNumException extends AppException {}
+    class ProductNotFound extends AppException {}
+    class TicketNotFound extends AppException {}
+    class UserNotFound extends AppException {}
 }
+
 package "models" <<Rectangle>> #FCE4EC {
     abstract class Human {
         # id: String
         # nombre: String
         # email: String
         # tickets: ArrayList<String>
-        __Methods__
         + addTicket(ticketId: String): void
         + {abstract} getId(): String
     }
 
     class Client extends Human {
         - cajeroAlta: String
-        __Constructors__
         + Client(nombre: String, dni: String, email: String, cajeroAlta: String)
-        __Methods__
         + toString(): String
     }
 
     class Cashier extends Human {
-        __Constructors__
         + Cashier(id: String, nombre: String, email: String)
-        __Methods__
         + toString(): String
     }
 
@@ -140,7 +132,6 @@ package "models" <<Rectangle>> #FCE4EC {
         # categories: Categories
         # price: double
         + id: int {readOnly}
-        __Methods__
         + getPrice(): double
         + clone(): Product
     }
@@ -149,7 +140,6 @@ package "models" <<Rectangle>> #FCE4EC {
         + maxPers: int
         - listaPers: String[]
         - persAct: int
-        __Methods__
         + addPers(pers: String[]): void
         + getPrice(): double
         + clone(): ProductCustom
@@ -160,7 +150,6 @@ package "models" <<Rectangle>> #FCE4EC {
         - maxParticipantes: int
         - isFood: boolean
         - asistentes: int
-        __Methods__
         + setAsistentes(asistentes: int): boolean
         + getPrice(): double
         + clone(): ProductMeeting
@@ -171,9 +160,8 @@ package "models" <<Rectangle>> #FCE4EC {
         - idTicket: String
         - date: LocalDateTime
         - estado: States
-        __Methods__
         + addProduct(product: Product): boolean
-        + addMeeting(productMeeting: ProductMeeting): void ' Especializado
+        + addMeeting(productMeeting: ProductMeeting): void
         + removeProduct(product: Product): void
         + printAndClose(): void
     }
@@ -185,39 +173,38 @@ package "models" <<Rectangle>> #FCE4EC {
     }
 
     enum Categories {
-        MERCH, STATIONERY, CLOTHES, BOOK, ELECTRONICS
-        __Static Methods__
+        MERCH
+        STATIONERY
+        CLOTHES
+        BOOK
+        ELECTRONICS
         + {static} getDiscount(categorie: Categories): double
     }
 }
 
-
+' Relaciones principales
 Ticket "1" o-- "0..100" Product : <<contains>>
 Product "1" --> "1" Categories : <<categorized by>>
 Ticket "1" --> "1" States : <<has state>>
 Client "0..*" o-- "1" Cashier : <<registered by>>
 
-ClientController .down.> HumanDB : <<uses>>
-CashierController .down.> HumanDB : <<uses>>
-
-ProductController .down.> ProductDB : <<uses>>
-TicketController .down.> TicketDB : <<uses>>
-
-ProductCustomController .down.> ProductDB : <<uses>>
-ProductFoodMeetingController .down.> ProductDB : <<uses>>
+ClientController ..> HumanDB : <<uses>>
+CashierController ..> HumanDB : <<uses>>
+ProductController ..> ProductDB : <<uses>>
+TicketController ..> TicketDB : <<uses>>
+ProductCustomController ..> ProductDB : <<uses>>
+ProductFoodMeetingController ..> ProductDB : <<uses>>
 
 Command <|.. CommandClientAdd
-CommandClientAdd .down.> ClientController : <<requests>>
+CommandClientAdd ..> ClientController : <<requests>>
 Command <|.. CommandCashAdd
-CommandCashAdd .down.> CashierController : <<requests>>
-
+CommandCashAdd ..> CashierController : <<requests>>
 Command <|.. CommandProductAddFood
-CommandProductAddFood .right.> ProductFoodMeetingController : <<requests>>
-
+CommandProductAddFood ..> ProductFoodMeetingController : <<requests>>
 Command <|.. CommandTicketAddProduct
-CommandTicketAddProduct .left.> TicketController : <<requests>>
+CommandTicketAddProduct ..> TicketController : <<requests>>
 
-ProductCustom .up.> ProductDB : <<static uses>>
+ProductCustom ..> ProductDB : <<static uses>>
 
 legend right
   |= Symbol |= Meaning |

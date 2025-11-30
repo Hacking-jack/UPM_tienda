@@ -32,7 +32,6 @@ box "models" #FCE4EC
     participant "<<enumeration>>\nCategories" as Cat
 end box
 
-
 == Product Add (Specialized Flow: Food/Meeting) ==
 
 autonumber "<b>[0]"
@@ -40,47 +39,55 @@ autonumber "<b>[0]"
 User -> App ++: prod add food <id> <name> <price> <date> <maxPers>
 activate User
 
-App -> App: parse command (args)
-
 App -> CmdAddFood **: new CommandProductAddFood(args)
+activate CmdAddFood
 App -> CmdAddFood ++: execute()
 
 CmdAddFood -> PFMC ++: add(id, name, price, date, maxPers)
+activate PFMC
 
-PFMC -> Cat ++: valueOf(category)
-Cat --> PFMC --: Categories enum
+PFMC -> Cat: valueOf(category)
+Cat --> PFMC: Categories enum
 
 PFMC -> PDB ++: existeId(id)
-PDB --> PFMC --: return boolean
+activate PDB
+PDB --> PFMC: boolean
+deactivate PDB
 
 alt ID doesn't exist
-
-    PFMC -> PFMC: checkCapacity() ' Validar counter < 200
+    PFMC -> PFMC: checkCapacity()
+    note over PFMC: counter < 200 ?
 
     alt counter < 200
         create ProductM
         PFMC -> ProductM **: new ProductMeeting(...)
+        activate ProductM
+        deactivate ProductM
 
         PFMC -> PDB ++: addProduct(productM)
-        PDB --> PFMC --: void
+        activate PDB
+        PDB --> PFMC: void
+        deactivate PDB
 
-        PFMC -> CmdAddFood: return success message
-        PFMC --> CmdAddFood --: void
-
-        CmdAddFood --> App --: "prod add: ok\n"
-        App -> User: "prod add: ok\n"
+        PFMC --> CmdAddFood: success
+        deactivate PFMC
+        CmdAddFood --> App: "prod add: ok"
+        deactivate CmdAddFood
+        App -> User: "prod add: ok"
 
     else counter >= 200
-        PFMC -> CmdAddFood: "Catálogo de productos lleno."
-        PFMC --> CmdAddFood --: void
-        CmdAddFood --> App --: "Catálogo de productos lleno."
-        App -> User: "Catálogo de productos lleno."
+        PFMC --> CmdAddFood: "Catálogo lleno"
+        deactivate PFMC
+        CmdAddFood --> App: "Catálogo lleno"
+        deactivate CmdAddFood
+        App -> User: "Catálogo lleno"
     end
 
 else ID exists
-    PFMC -> CmdAddFood: "Error. Ya existe el id."
-    PFMC --> CmdAddFood --: void
-    CmdAddFood --> App --: "Error. Ya existe el id."
+    PFMC --> CmdAddFood: "Error. Ya existe el id."
+    deactivate PFMC
+    CmdAddFood --> App: "Error. Ya existe el id."
+    deactivate CmdAddFood
     App -> User: "Error. Ya existe el id."
 end
 
@@ -97,25 +104,35 @@ User -> App ++: prod update <id> <field> <value>
 activate User
 
 App -> CmdUpdate **: new CommandProductUpdate(args)
+activate CmdUpdate
 App -> CmdUpdate ++: execute()
 
 CmdUpdate -> PC ++: update(id, field, value)
+activate PC
 
 PC -> PDB ++: getProduct(id)
-PDB --> PC --: return Product
+activate PDB
+PDB --> PC: Product
+deactivate PDB
 
 alt Product exists
-    PC -> Product: update method
-    PC -> PDB ++: updateProduct(product) ' (Asumiendo un método de DB para actualizar)
-    PDB --> PC --: void
+    PC -> Product: update(field, value)
+    PC -> PDB ++: updateProduct(product)
+    activate PDB
+    PDB --> PC: void
+    deactivate PDB
 
-    PC --> CmdUpdate --: "prod update: ok\n"
-    CmdUpdate --> App --: "prod update: ok\n"
-    App -> User: "prod update: ok\n"
+    PC --> CmdUpdate: "prod update: ok"
+    deactivate PC
+    CmdUpdate --> App: "prod update: ok"
+    deactivate CmdUpdate
+    App -> User: "prod update: ok"
 
 else ID doesn't exist
-    PC --> CmdUpdate --: "Error. No existe el id."
-    CmdUpdate --> App --: "Error. No existe el id."
+    PC --> CmdUpdate: "Error. No existe el id."
+    deactivate PC
+    CmdUpdate --> App: "Error. No existe el id."
+    deactivate CmdUpdate
     App -> User: "Error. No existe el id."
 end
 
@@ -132,20 +149,26 @@ User -> App ++: prod list
 activate User
 
 App -> CmdList **: new CommandProductList()
+activate CmdList
 App -> CmdList ++: execute()
 
 CmdList -> PC ++: list()
+activate PC
 
 PC -> PDB ++: listProducts()
-PDB --> PC --: return products: ArrayList<Product>
+activate PDB
+PDB --> PC: ArrayList<Product>
+deactivate PDB
 
 loop for each product
     PC -> CmdList: print product details
 end
 
-PC --> CmdList --: void
-CmdList --> App --: "prod list: ok\n"
-App -> User: "prod list: ok\n"
+PC --> CmdList: void
+deactivate PC
+CmdList --> App: "prod list: ok"
+deactivate CmdList
+App -> User: "prod list: ok"
 
 deactivate User
 deactivate App
@@ -160,21 +183,29 @@ User -> App ++: prod remove <id>
 activate User
 
 App -> CmdRemove **: new CommandProductRemove(id)
+activate CmdRemove
 App -> CmdRemove ++: execute()
 
 CmdRemove -> PC ++: remove(id)
+activate PC
 
 PC -> PDB ++: removeProduct(id)
-return success/error
+activate PDB
+PDB --> PC: success/error
+deactivate PDB
 
 alt Success
-    PC --> CmdRemove --: "prod remove: ok\n"
-    CmdRemove --> App --: "prod remove: ok\n"
-    App -> User: "prod remove: ok\n"
+    PC --> CmdRemove: "prod remove: ok"
+    deactivate PC
+    CmdRemove --> App: "prod remove: ok"
+    deactivate CmdRemove
+    App -> User: "prod remove: ok"
 
 else Error (ID doesn't exist)
-    PC --> CmdRemove --: "Error. ID no existe."
-    CmdRemove --> App --: "Error. ID no existe."
+    PC --> CmdRemove: "Error. ID no existe."
+    deactivate PC
+    CmdRemove --> App: "Error. ID no existe."
+    deactivate CmdRemove
     App -> User: "Error. ID no existe."
 end
 
