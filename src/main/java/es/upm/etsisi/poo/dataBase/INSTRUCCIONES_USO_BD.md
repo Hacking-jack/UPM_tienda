@@ -1,17 +1,8 @@
-# Instrucciones de uso de la Clases BD
+# Uso y razonamiento de "Bases de datos"
 
-Tenemos que emular una base de datos sql, ya que el MVC esta diseñado para ello y vamos a tener que implementar a futuro
-una base de datos simple. Asique *no seamos tontos* y hagamos bien las cosas desde el principio.
+Se construiran funciones que asemejen a las clasicas Create Read Update Delete y se implementaran 
+en el programa intentado realizar el menor número de llamadas a la "Base de datos" como se haria en un programa con una base de datos real.
 
-## Como hago nuevas consultas
-
-Tenemos que pensar las funciones añadir, buscar, actualizar... Como consultas SQL, que si os fijais... , son las mismas
-que las opciones que nos dan a implementar.
-
-Mirad en los archivos como estan implementadas para copiarlas, chat gpt es de mucha ayuda tambien, pero no lo useis sin
-criterio pensad como programais los metodos y como se relacionan con el resto de las clases  **PORFAVOR** que luego hay
-que arreglarlo.
-
-Y POR ULTIMO PERO NO MENOS IMPORTANTE
-
-# SI NO ENTENDEIS ALGO PREGUNTAD.
+En el los reposiorios HumanDB TicketDB ProductDB se encontraran funciones find add remove list update que interactuaran con la estructura de datos que almacena los datos de la aplicacion.
+Se hara nuevas funciones en los controladores que usen estas ultimas manteniendo asi el principio de encapsulacion.
+Esto pese a no ser una **Base de datos real** ni seguir un **CRUD** implementado al 100% nos facilitara mucho el desarrollo y si se pude considerar como uso de patron de repositorio adaptado a las circunstancias particulares del programa.
