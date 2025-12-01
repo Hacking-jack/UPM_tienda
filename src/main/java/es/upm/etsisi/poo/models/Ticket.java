@@ -102,7 +102,7 @@ public class Ticket {
     }
 
     public void title() {
-        System.out.println(this.idTicket + "->" + this.estado.toString());
+        System.out.println("  "+this.idTicket + "->" + this.estado.toString());
     }
 
     public void print() {

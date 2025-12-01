@@ -33,13 +33,13 @@ public class ProductCustom extends Product {
     @Override
     public String toString() {
         StringBuilder s = new StringBuilder("{class:ProductPersonalized" +
-                ", id:" + id + ", name:'" + name + "', category:" + categories +
-                ", price:" + getPrice() + ", maxPersonal:" + maxPers);
-        if (persAct > 0) {
+                ", id:" + this.id + ", name:'" + this.name + "', category:" + this.categories +
+                ", price:" + this.price + (0.1 * this.price * this.persAct) + ", maxPersonal:" + this.maxPers);
+        if (this.persAct > 0) {
             s.append(", personalizationList:[");
-            for (int i = 0; i < persAct; i++) {
-                s.append(listaPers[i]);
-                if (i != persAct - 1) {
+            for (int i = 0; i < this.persAct; i++) {
+                s.append(this.listaPers[i]);
+                if (i != this.persAct - 1) {
                     s.append(", ");
                 }
             }

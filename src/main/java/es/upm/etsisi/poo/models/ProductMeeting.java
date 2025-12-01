@@ -67,7 +67,7 @@ public class ProductMeeting extends Product {
         else
             return "{class:" + ((isFood) ? "Food" : "Meeting") +
                     ", id:" + id + ", name:'" + name + "', price:" + price * asistentes + ", date of Event:" + date +
-                    ", max people allowed:" + maxParticipantes + ", current people in event:" + asistentes + "}";
+                    ", max people allowed:" + maxParticipantes + ", actual people in event:" + asistentes + "}";
     }
 
     @Override
