@@ -3,7 +3,7 @@ package es.upm.etsisi.poo.controler;
 
 import es.upm.etsisi.poo.dataBase.ProductDB;
 import es.upm.etsisi.poo.models.product.ProductBasic;
-import es.upm.etsisi.poo.models.product.ProductBasicMeeting;
+import es.upm.etsisi.poo.models.product.ProductMeetingFood;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -20,7 +20,7 @@ public class ProductFoodMeetingController extends ProductController {
         } else {
             if (ProductDB.countProduct() < 200) {
                 if ((isFood && dias >= 3) || (!isFood && (dias >= 1 || (dias == 0 && LocalDateTime.now().getHour() <= 12)))) {
-                    ProductBasic productBasic = new ProductBasicMeeting(id, name, price, fecha, maxParticipantes, isFood);
+                    ProductBasic productBasic = new ProductMeetingFood(id, name, price, fecha, maxParticipantes, isFood);
                     ProductDB.addProduct(productBasic);
                     System.out.println(productBasic.toString());
                 } else {

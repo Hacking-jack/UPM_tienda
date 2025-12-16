@@ -2,7 +2,7 @@ package es.upm.etsisi.poo.models.ticket;
 
 import es.upm.etsisi.poo.models.product.Categories;
 import es.upm.etsisi.poo.models.product.ProductBasic;
-import es.upm.etsisi.poo.models.product.ProductBasicMeeting;
+import es.upm.etsisi.poo.models.product.ProductMeetingFood;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -43,12 +43,12 @@ public class Ticket {
         }
     }
 
-    public void addMeeting(ProductBasicMeeting productMeeting) {
+    public void addMeeting(ProductMeetingFood productMeeting) {
         int asistentes = 0;
-        ProductBasicMeeting tmp;
+        ProductMeetingFood tmp;
         for (ProductBasic productBasic : productBasics) {
             if (productBasic.getId() == productMeeting.getId()) {
-                tmp = (ProductBasicMeeting) productBasic;
+                tmp = (ProductMeetingFood) productBasic;
                 asistentes = tmp.getAsistentes();
                 productMeeting.setAsistentes(productMeeting.getAsistentes() + asistentes);
                 removeProduct(productBasic);

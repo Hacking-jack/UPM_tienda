@@ -6,14 +6,14 @@ import es.upm.etsisi.poo.exceptions.NegativeNumException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
-public class ProductBasicMeeting extends ProductBasic {
+public class ProductMeetingFood extends ProductBasic {
 
     private LocalDate date;
     private int maxParticipantes;
     private boolean isFood; //true==comida, false==reunion
     private int asistentes;
 
-    public ProductBasicMeeting(int id, String name, double price, LocalDate date, int maxParticipantes, boolean isFood) {
+    public ProductMeetingFood(int id, String name, double price, LocalDate date, int maxParticipantes, boolean isFood) {
         super(id, name, null, price);
         try {
             this.date = date;
@@ -71,7 +71,7 @@ public class ProductBasicMeeting extends ProductBasic {
     }
 
     @Override
-    public ProductBasicMeeting clone() {
-        return new ProductBasicMeeting(id, name, price, date, maxParticipantes, isFood);
+    public ProductMeetingFood clone() {
+        return new ProductMeetingFood(id, name, price, date, maxParticipantes, isFood);
     }
 }

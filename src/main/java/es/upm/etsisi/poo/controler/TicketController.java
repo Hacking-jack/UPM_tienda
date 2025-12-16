@@ -3,7 +3,7 @@ package es.upm.etsisi.poo.controler;
 import es.upm.etsisi.poo.dataBase.TicketDB;
 import es.upm.etsisi.poo.models.product.ProductBasic;
 import es.upm.etsisi.poo.models.product.ProductBasicCustom;
-import es.upm.etsisi.poo.models.product.ProductBasicMeeting;
+import es.upm.etsisi.poo.models.product.ProductMeetingFood;
 import es.upm.etsisi.poo.models.ticket.States;
 import es.upm.etsisi.poo.models.ticket.Ticket;
 
@@ -71,9 +71,9 @@ public class TicketController {
         }
     }
     //TODO revisar esto que es un poco chapuza
-    static public void addMeeting(String ticketId, ProductBasicMeeting product, int quantity) {
+    static public void addMeeting(String ticketId, ProductMeetingFood product, int quantity) {
         Ticket ticket = findId(ticketId);
-        ProductBasicMeeting clone = product.clone();
+        ProductMeetingFood clone = product.clone();
         if (clone.setAsistentes(quantity))
             ticket.addMeeting(clone);
         ticket.print();

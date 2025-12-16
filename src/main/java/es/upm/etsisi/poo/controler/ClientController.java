@@ -44,4 +44,36 @@ public class ClientController {
         return HumanDB.existeId(id);
     }
 
+
+    public static boolean esDocumentoValido(String string) {
+        if (string == null || string.length() != 9) return false;
+
+        string = string.toUpperCase();
+        char letraOriginal = string.charAt(8);
+        String numeros;
+
+        // Letras oficiales
+        char[] letras = {
+                'T','R','W','A','G','M','Y','F','P','D','X',
+                'B','N','J','Z','S','Q','V','H','L','C','K','E'
+        };
+
+        if (string.matches("\\d{8}[A-Z]")) {    // es DNI
+            numeros = string.substring(0, 8);
+        } else if (string.matches("[XYZ]\\d{7}[A-Z]")) {    // es NIE -> hay que convertir X/Y/Z a número
+            numeros = switch (string.charAt(0)) {
+                case 'X' -> "0" + string.substring(1, 8);
+                case 'Y' -> "1" + string.substring(1, 8);
+                case 'Z' -> "2" + string.substring(1, 8);
+                default -> null;
+            };
+            if (numeros == null) return false;
+        } else {//  Formato incorrecto
+            return false;
+        }
+        return letraOriginal == letras[Integer.parseInt(numeros) % 23];
+    }
+
+
+
 }

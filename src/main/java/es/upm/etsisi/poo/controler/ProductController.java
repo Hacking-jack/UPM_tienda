@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import es.upm.etsisi.poo.dataBase.ProductDB;
 import es.upm.etsisi.poo.models.product.Categories;
 import es.upm.etsisi.poo.models.product.ProductBasic;
-import es.upm.etsisi.poo.models.product.ProductBasicMeeting;
+import es.upm.etsisi.poo.models.product.ProductMeetingFood;
 
 public class ProductController {
 
@@ -43,7 +43,7 @@ public class ProductController {
                 p.setName(valor);
                 break;
             case "CATEGORY":
-                if (p instanceof ProductBasicMeeting) {
+                if (p instanceof ProductMeetingFood) {
                     System.out.println("No se puede aplicar una categoría a comidas o reuniones");
                 } else {
                     if (categorieControl(valor)) {

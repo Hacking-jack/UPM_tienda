@@ -6,7 +6,7 @@ import es.upm.etsisi.poo.controler.ProductController;
 import es.upm.etsisi.poo.controler.TicketController;
 import es.upm.etsisi.poo.exceptions.NegativeNumException;
 import es.upm.etsisi.poo.models.product.ProductBasic;
-import es.upm.etsisi.poo.models.product.ProductBasicMeeting;
+import es.upm.etsisi.poo.models.product.ProductMeetingFood;
 
 public class CommandTicketAddProduct implements Command {
     private final String ticketId;
@@ -29,14 +29,14 @@ public class CommandTicketAddProduct implements Command {
         ProductBasic productBasic = ProductController.findId(this.productId);
         if (amount > 0) {
             if (HumanDB.findId(cashId).getTickets().contains(ticketId)) {
-                if (!(productBasic instanceof ProductBasicMeeting)) {
+                if (!(productBasic instanceof ProductMeetingFood)) {
                     if (pers != null) { //con pers
                         TicketController.addProductPers(this.ticketId, productBasic, this.amount, this.pers);
                     } else { //sin pers
                         TicketController.addProduct(this.ticketId, productBasic, this.amount);
                     }
                 } else //foodMeeting
-                    TicketController.addMeeting(this.ticketId, (ProductBasicMeeting) productBasic, this.amount);
+                    TicketController.addMeeting(this.ticketId, (ProductMeetingFood) productBasic, this.amount);
             } else {
                 System.out.println("Ese ticket no pertenece a ese cajero");
             }
