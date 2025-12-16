@@ -2,8 +2,8 @@ package es.upm.etsisi.poo.controler;
 
 
 import es.upm.etsisi.poo.dataBase.ProductDB;
-import es.upm.etsisi.poo.models.Product;
-import es.upm.etsisi.poo.models.ProductMeeting;
+import es.upm.etsisi.poo.models.product.ProductBasic;
+import es.upm.etsisi.poo.models.product.ProductBasicMeeting;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -20,9 +20,9 @@ public class ProductFoodMeetingController extends ProductController {
         } else {
             if (ProductDB.countProduct() < 200) {
                 if ((isFood && dias >= 3) || (!isFood && (dias >= 1 || (dias == 0 && LocalDateTime.now().getHour() <= 12)))) {
-                    Product product = new ProductMeeting(id, name, price, fecha, maxParticipantes, isFood);
-                    ProductDB.addProduct(product);
-                    System.out.println(product.toString());
+                    ProductBasic productBasic = new ProductBasicMeeting(id, name, price, fecha, maxParticipantes, isFood);
+                    ProductDB.addProduct(productBasic);
+                    System.out.println(productBasic.toString());
                 } else {
                     if (isFood) {
                         System.out.println("No cumple el requisito minimo de tiempo, para una comida el tiempo es de 3 dias");

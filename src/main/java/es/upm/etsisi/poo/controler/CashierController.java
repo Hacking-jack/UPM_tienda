@@ -2,8 +2,8 @@ package es.upm.etsisi.poo.controler;
 
 import es.upm.etsisi.poo.dataBase.HumanDB;
 import es.upm.etsisi.poo.dataBase.TicketDB;
-import es.upm.etsisi.poo.models.Cashier;
-import es.upm.etsisi.poo.models.Human;
+import es.upm.etsisi.poo.models.human.Cashier;
+import es.upm.etsisi.poo.models.human.Human;
 
 import java.util.Random;
 

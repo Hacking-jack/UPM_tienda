@@ -1,6 +1,4 @@
-package es.upm.etsisi.poo.models;
-
-import es.upm.etsisi.poo.dataBase.HumanDB;
+package es.upm.etsisi.poo.models.human;
 
 import java.util.ArrayList;
 

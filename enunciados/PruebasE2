@@ -25,7 +25,7 @@ tUPM> prod addMeeting 23457 "Graduacion ETSISI" 40 2026-11-21 30
 prod addMeeting: ok
 
 tUPM> prod addFood 23458 "Cafeteria ETSISI" 5 2026-11-21 300
-Error processing ->prod addFood ->Error adding product
+Error processing ->prod addFood ->Error adding productBasic
 
 tUPM> prod addFood 23459 "Restaurante Asador" 50 2026-11-21 40
 {class:Food, id:23459, name:'Restaurante Asador', price:0.0, date of Event:2026-11-21, max people allowed:40}

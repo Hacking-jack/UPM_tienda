@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 
 import es.upm.etsisi.poo.dataBase.ProductDB;
-import es.upm.etsisi.poo.models.Categories;
-import es.upm.etsisi.poo.models.Product;
-import es.upm.etsisi.poo.models.ProductMeeting;
+import es.upm.etsisi.poo.models.product.Categories;
+import es.upm.etsisi.poo.models.product.ProductBasic;
+import es.upm.etsisi.poo.models.product.ProductBasicMeeting;
 
 public class ProductController {
 
@@ -16,9 +16,9 @@ public class ProductController {
                 System.out.println("Error. Ya existe el id.");
             } else {
                 if (ProductDB.countProduct() < 200) {
-                    Product product = new Product(id, name, Categories.valueOf(categories), price);
-                    ProductDB.addProduct(product);
-                    System.out.println(product.toString());
+                    ProductBasic productBasic = new ProductBasic(id, name, Categories.valueOf(categories), price);
+                    ProductDB.addProduct(productBasic);
+                    System.out.println(productBasic.toString());
                 } else {
                     System.out.println("Catálogo de productos lleno.");
                 }
@@ -29,21 +29,21 @@ public class ProductController {
 
     public static void list() {
         System.out.println("Catalog:");
-        ArrayList<Product> products = ProductDB.listProducts();
-        for (Product p : products) {
+        ArrayList<ProductBasic> productBasics = ProductDB.listProducts();
+        for (ProductBasic p : productBasics) {
             System.out.println("  " + p.toString());
         }
     }
 
     public static void update(int id, String campo, String valor) {
 
-        Product p = ProductDB.findId(id);
+        ProductBasic p = ProductDB.findId(id);
         switch (campo.toUpperCase()) {
             case "NAME":
                 p.setName(valor);
                 break;
             case "CATEGORY":
-                if (p instanceof ProductMeeting) {
+                if (p instanceof ProductBasicMeeting) {
                     System.out.println("No se puede aplicar una categoría a comidas o reuniones");
                 } else {
                     if (categorieControl(valor)) {
@@ -64,12 +64,12 @@ public class ProductController {
     }
 
     public static void remove(int id) {
-        Product p = ProductDB.findId(id);
+        ProductBasic p = ProductDB.findId(id);
         System.out.println(p.toString());
         ProductDB.removeProduct(p);
     }
 
-    public static Product findId(int id) {
+    public static ProductBasic findId(int id) {
         return ProductDB.findId(id);
     }
 

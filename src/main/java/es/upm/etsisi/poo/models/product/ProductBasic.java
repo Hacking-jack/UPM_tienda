@@ -1,16 +1,16 @@
-package es.upm.etsisi.poo.models;
+package es.upm.etsisi.poo.models.product;
 
 
 import es.upm.etsisi.poo.exceptions.NegativeNumException;
 
-public class Product {
+public class ProductBasic {
 
     protected String name;
     protected Categories categories;
     protected double price;
     protected final int id;
 
-    public Product(int id, String name, Categories categories, double price) {
+    public ProductBasic(int id, String name, Categories categories, double price) {
         this.name = name;
         this.categories = categories;
             if (price >= 0)
@@ -49,8 +49,8 @@ public class Product {
         return id;
     }
 
-    public Product clone() {
-        return new Product(this.id, this.name, this.categories, this.price);
+    public ProductBasic clone() {
+        return new ProductBasic(this.id, this.name, this.categories, this.price);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package es.upm.etsisi.poo.models;
+package es.upm.etsisi.poo.models.ticket;
 
 public enum States {
     VACIO,

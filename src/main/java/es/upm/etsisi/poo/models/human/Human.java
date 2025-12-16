@@ -1,4 +1,6 @@
-package es.upm.etsisi.poo.models;
+package es.upm.etsisi.poo.models.human;
+
+import es.upm.etsisi.poo.models.ticket.Ticket;
 
 import java.util.ArrayList;
 

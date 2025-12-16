@@ -1,4 +1,4 @@
-package es.upm.etsisi.poo.models;
+package es.upm.etsisi.poo.models.human;
 
 import java.util.ArrayList;
 

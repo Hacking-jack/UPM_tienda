@@ -1,4 +1,8 @@
-package es.upm.etsisi.poo.models;
+package es.upm.etsisi.poo.models.ticket;
+
+import es.upm.etsisi.poo.models.product.Categories;
+import es.upm.etsisi.poo.models.product.ProductBasic;
+import es.upm.etsisi.poo.models.product.ProductBasicMeeting;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -6,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 public class Ticket {
-    private final ArrayList<Product> products;
+    private final ArrayList<ProductBasic> productBasics;
     private String idTicket;
     private final LocalDateTime date;
     private States estado;
@@ -19,19 +23,19 @@ public class Ticket {
         this.idTicket = id;
         this.estado = States.VACIO;
         this.date = LocalDateTime.now();
-        this.products = new ArrayList<>();
+        this.productBasics = new ArrayList<>();
     }
 
 
-    public boolean addProduct(Product product) {
-        if (products.isEmpty())
+    public boolean addProduct(ProductBasic productBasic) {
+        if (productBasics.isEmpty())
             this.estado = States.ACTIVO;
         if (this.estado == States.CERRADO) {
             System.out.println("Error, no se pueden añadir productos a un ticket cerrado");
             return false;
         } else {
-            if (this.products.size() < 100)
-                return products.add(product);
+            if (this.productBasics.size() < 100)
+                return productBasics.add(productBasic);
             else {
                 System.out.println("Ticket lleno.");
                 return false;
@@ -39,24 +43,24 @@ public class Ticket {
         }
     }
 
-    public void addMeeting(ProductMeeting productMeeting) {
+    public void addMeeting(ProductBasicMeeting productMeeting) {
         int asistentes = 0;
-        ProductMeeting tmp;
-        for (Product product : products) {
-            if (product.getId() == productMeeting.getId()) {
-                tmp = (ProductMeeting) product;
+        ProductBasicMeeting tmp;
+        for (ProductBasic productBasic : productBasics) {
+            if (productBasic.getId() == productMeeting.getId()) {
+                tmp = (ProductBasicMeeting) productBasic;
                 asistentes = tmp.getAsistentes();
                 productMeeting.setAsistentes(productMeeting.getAsistentes() + asistentes);
-                removeProduct(product);
+                removeProduct(productBasic);
                 break;
             }
         }
         addProduct(productMeeting);
     }
 
-    public void removeProduct(Product product) {
-        while (this.products.contains(product)) {
-            products.remove(product);
+    public void removeProduct(ProductBasic productBasic) {
+        while (this.productBasics.contains(productBasic)) {
+            productBasics.remove(productBasic);
         }
     }
 
@@ -106,10 +110,10 @@ public class Ticket {
     }
 
     public void print() {
-        products.sort(Comparator.comparing(Product::getName));
+        productBasics.sort(Comparator.comparing(ProductBasic::getName));
         double precioTotal = 0;
         int counterStationary = 0, counterClothes = 0, counterBook = 0, counterElectronic = 0;
-        for (Product p : products) {
+        for (ProductBasic p : productBasics) {
             precioTotal += p.getPrice();
             if (p.getCategories() == Categories.STATIONERY) {
                 counterStationary++;
@@ -127,8 +131,8 @@ public class Ticket {
 
         System.out.printf("Ticket : %s%n", idTicket);
 
-        for (int i = 0; i < products.size(); i++) {
-            Product p = products.get(i);
+        for (int i = 0; i < productBasics.size(); i++) {
+            ProductBasic p = productBasics.get(i);
             boolean discount = hasDiscount(counterStationary, counterClothes, counterBook, counterElectronic,
                     p.getCategories());
             double discountAmount = 0.0;
@@ -155,7 +159,7 @@ public class Ticket {
 
 
         return "Ticket{" +
-                "products=" + products +
+                "products=" + productBasics +
                 ", idTicket='" + idTicket + '\'' +
                 ", date=" + date +
                 ", estado=" + estado +

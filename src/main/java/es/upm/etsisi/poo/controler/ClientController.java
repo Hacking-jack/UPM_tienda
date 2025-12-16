@@ -1,8 +1,8 @@
 package es.upm.etsisi.poo.controler;
 
 import es.upm.etsisi.poo.dataBase.HumanDB;
-import es.upm.etsisi.poo.models.Human;
-import es.upm.etsisi.poo.models.Client;
+import es.upm.etsisi.poo.models.human.Human;
+import es.upm.etsisi.poo.models.human.Client;
 
 
 public class ClientController {

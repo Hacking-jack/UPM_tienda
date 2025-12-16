@@ -1,7 +1,11 @@
 package es.upm.etsisi.poo.controler;
 
 import es.upm.etsisi.poo.dataBase.TicketDB;
-import es.upm.etsisi.poo.models.*;
+import es.upm.etsisi.poo.models.product.ProductBasic;
+import es.upm.etsisi.poo.models.product.ProductBasicCustom;
+import es.upm.etsisi.poo.models.product.ProductBasicMeeting;
+import es.upm.etsisi.poo.models.ticket.States;
+import es.upm.etsisi.poo.models.ticket.Ticket;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -32,12 +36,12 @@ public class TicketController {
         return s;
     }
 
-    public static void addProduct(String ticketId, Product product, int quantity) {
+    public static void addProduct(String ticketId, ProductBasic productBasic, int quantity) {
         Ticket ticket = findId(ticketId);
         if (ticket.getEstado() == States.VACIO)
             ticket.setEstado(States.ACTIVO);
         for (int i = 0; i < quantity; i++) {
-            if (!ticket.addProduct(product)) {
+            if (!ticket.addProduct(productBasic)) {
                 System.out.println("No se pudieron añadir todos los productos, se han añadido " + i +
                         " hasta llegar al limite de 100");
                 ticket.print();
@@ -48,10 +52,10 @@ public class TicketController {
     }
 
     //TODO  addProductPers puede llamar a addProduct para reducir código
-    public static void addProductPers(String ticketId, Product product, int quantity, String[] pers) {
-        if (product instanceof ProductCustom) {
+    public static void addProductPers(String ticketId, ProductBasic productBasic, int quantity, String[] pers) {
+        if (productBasic instanceof ProductBasicCustom) {
             Ticket ticket = findId(ticketId);
-            ProductCustom clone = (ProductCustom) product.clone();
+            ProductBasicCustom clone = (ProductBasicCustom) productBasic.clone();
             clone.addPers(pers);
             for (int i = 0; i < quantity; i++) {
                 if (!ticket.addProduct(clone)) {
@@ -67,9 +71,9 @@ public class TicketController {
         }
     }
     //TODO revisar esto que es un poco chapuza
-    static public void addMeeting(String ticketId, ProductMeeting product, int quantity) {
+    static public void addMeeting(String ticketId, ProductBasicMeeting product, int quantity) {
         Ticket ticket = findId(ticketId);
-        ProductMeeting clone = product.clone();
+        ProductBasicMeeting clone = product.clone();
         if (clone.setAsistentes(quantity))
             ticket.addMeeting(clone);
         ticket.print();
@@ -79,8 +83,8 @@ public class TicketController {
         return TicketDB.findId(id);
     }
 
-    public static void remove(Ticket ticket, Product product) {
-        ticket.removeProduct(product);
+    public static void remove(Ticket ticket, ProductBasic productBasic) {
+        ticket.removeProduct(productBasic);
     }
 
     public static void list() {

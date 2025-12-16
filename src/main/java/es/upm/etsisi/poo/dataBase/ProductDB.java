@@ -1,26 +1,26 @@
 package es.upm.etsisi.poo.dataBase;
 
 import es.upm.etsisi.poo.exceptions.ProductNotFound;
-import es.upm.etsisi.poo.models.Product;
+import es.upm.etsisi.poo.models.product.ProductBasic;
 
 import java.util.ArrayList;
 
 public class ProductDB {
     //Equivalente a una tabla Products en SQL
-    static private final ArrayList<Product> products = new ArrayList<>();
+    static private final ArrayList<ProductBasic> PRODUCT_BASICS = new ArrayList<>();
 
     //Equivalente a un insert
-    static public void addProduct(Product p) {
-        products.add(p);
+    static public void addProduct(ProductBasic p) {
+        PRODUCT_BASICS.add(p);
     }
 
-    static public void addProductClone(Product p) {
-        products.add(p);
+    static public void addProductClone(ProductBasic p) {
+        PRODUCT_BASICS.add(p);
     }
 
     //Equivalente a Select * from Products where id = id;
-    static public Product findId(int id) {
-        for (Product p : products) {
+    static public ProductBasic findId(int id) {
+        for (ProductBasic p : PRODUCT_BASICS) {
             if (p.getId() == id)
                 return (p);
         }
@@ -28,7 +28,7 @@ public class ProductDB {
     }
 
     static public boolean existeId(int id) {
-        for (Product p : products) {
+        for (ProductBasic p : PRODUCT_BASICS) {
             if (p.getId() == id)
                 return true;
         }
@@ -36,18 +36,18 @@ public class ProductDB {
     }
 
     //Equivalente  DELETE FROM table_name WHERE id = id;
-    static public void removeProduct(Product p) {
-        products.remove(p);
+    static public void removeProduct(ProductBasic p) {
+        PRODUCT_BASICS.remove(p);
     }
 
     //Equivalente SELECT COUNT(*) FROM products
     static public int countProduct() {
-        return products.size();
+        return PRODUCT_BASICS.size();
     }
 
     //Equivalente a Select * from products;
-    static public ArrayList<Product> listProducts() {
-        return products;
+    static public ArrayList<ProductBasic> listProducts() {
+        return PRODUCT_BASICS;
     }
 
 }

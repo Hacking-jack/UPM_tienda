@@ -1,7 +1,7 @@
 package es.upm.etsisi.poo.dataBase;
 
 import es.upm.etsisi.poo.exceptions.TicketNotFound;
-import es.upm.etsisi.poo.models.Ticket;
+import es.upm.etsisi.poo.models.ticket.Ticket;
 
 import java.util.ArrayList;
 
