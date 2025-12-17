@@ -8,7 +8,7 @@ import es.upm.etsisi.poo.models.human.Client;
 public class ClientController {
 
     //TODO mirar formato DNI válido
-    public static void add(String nombre, String dni, String email, String cashId) {
+    public static void addIndividualClient(String nombre, String dni, String email, String cashId) {
         if (HumanDB.existeId(dni)) {
             System.out.println("Error. Ya existe un cliente con ese DNI.");
             return;
@@ -73,6 +73,54 @@ public class ClientController {
         }
         return letraOriginal == letras[Integer.parseInt(numeros) % 23];
     }
+
+
+    //TODO Comprobar código
+    public static boolean esCif(String cif) {
+        if (cif == null) return false;
+
+        cif = cif.toUpperCase();
+
+        // Formato básico: 1 letra + 7 dígitos + 1 control
+        if (!cif.matches("^[ABCDEFGHJNPQRSUVW][0-9]{7}[0-9A-J]$")) {
+            return false;
+        }
+
+        char letraInicial = cif.charAt(0);
+        char control = cif.charAt(8);
+
+        int sumaPares = 0;
+        int sumaImpares = 0;
+
+        // Posiciones 1 a 7 (índices 1 a 7)
+        for (int i = 1; i <= 7; i++) {
+            int digito = Character.getNumericValue(cif.charAt(i));
+
+            if (i % 2 == 0) { // posiciones pares
+                sumaPares += digito;
+            } else { // posiciones impares
+                int doble = digito * 2;
+                sumaImpares += (doble > 9) ? (doble - 9) : doble;
+            }
+        }
+
+        int sumaTotal = sumaPares + sumaImpares;
+        int unidad = sumaTotal % 10;
+        int digitoControl = (unidad == 0) ? 0 : 10 - unidad;
+
+        char controlDigito = (char) ('0' + digitoControl);
+        char controlLetra = "JABCDEFGHI".charAt(digitoControl);
+
+        // Según la letra inicial, el control puede ser número, letra o ambos
+        if ("ABEH".indexOf(letraInicial) >= 0) {
+            return control == controlDigito;
+        } else if ("KPQS".indexOf(letraInicial) >= 0) {
+            return control == controlLetra;
+        } else {
+            return control == controlDigito || control == controlLetra;
+        }
+    }
+
 
 
 

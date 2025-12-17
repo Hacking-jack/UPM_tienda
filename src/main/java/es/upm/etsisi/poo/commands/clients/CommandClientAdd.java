@@ -19,7 +19,11 @@ public class CommandClientAdd implements Command {
 
     @Override
     public boolean execute() {
-        ClientController.add(name, dni, email, cashId);
+        if(ClientController.esDocumentoValido(this.dni)) {
+            ClientController.addIndividualClient(name, dni, email, cashId);
+        } else if (ClientController.esCif(this.dni)) {
+            //TODO ClientController.addBusinessClient();
+        }
         return true;
     }
 }
