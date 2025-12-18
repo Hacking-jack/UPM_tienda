@@ -1,6 +1,6 @@
 package es.upm.etsisi.poo.dataBase;
 
-import es.upm.etsisi.poo.exceptions.TicketNotFound;
+import es.upm.etsisi.poo.exceptions.TicketNotFoundException;
 import es.upm.etsisi.poo.models.ticket.Ticket;
 
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ public class TicketDB {
             if (t.getIdTicket().equals(id))
                 return (t);
         }
-        throw new TicketNotFound("No se encontró el ticket con id " + id);
+        throw new TicketNotFoundException("No se encontró el ticket con id " + id);
     }
 
     static public boolean existeId(String id) {

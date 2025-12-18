@@ -1,6 +1,8 @@
 package es.upm.etsisi.poo.controler.ticket;
 
 import es.upm.etsisi.poo.dataBase.TicketDB;
+import es.upm.etsisi.poo.exceptions.TicketAlreadyClosedException;
+import es.upm.etsisi.poo.exceptions.TicketClosedException;
 import es.upm.etsisi.poo.models.product.ProductBasic;
 import es.upm.etsisi.poo.models.product.ProductBasicCustom;
 import es.upm.etsisi.poo.models.product.ProductMeetingFood;
@@ -38,35 +40,43 @@ public class TicketController {
 
     public static void addProduct(String ticketId, ProductBasic productBasic, int quantity) {
         Ticket ticket = findId(ticketId);
-        if (ticket.getEstado() == States.VACIO)
-            ticket.setEstado(States.ACTIVO);
-        ProductBasic clone=productBasic.clone();
-        for (int i = 0; i < quantity; i++) {
-            if (!ticket.addProduct(clone)) {
-                System.out.println("No se pudieron añadir todos los productos, se han añadido " + i +
-                        " hasta llegar al limite de 100");
-                ticket.print();
-                break;
+        if(ticket.getEstado()!=States.CERRADO) {
+            if (ticket.getEstado() == States.VACIO)
+                ticket.setEstado(States.ACTIVO);
+            ProductBasic clone = productBasic.clone();
+            for (int i = 0; i < quantity; i++) {
+                if (!ticket.addProduct(clone)) {
+                    System.out.println("No se pudieron añadir todos los productos, se han añadido " + i +
+                            " hasta llegar al limite de 100");
+                    ticket.print();
+                    break;
+                }
             }
+            ticket.print();
+        }else{
+            throw new TicketClosedException("No se pueden añadir artículos a un ticket cerrado");
         }
-        ticket.print();
     }
 
     //TODO  addProductPers puede llamar a addProduct para reducir código
     public static void addProductPers(String ticketId, ProductBasic productBasic, int quantity, String[] pers) {
         if (productBasic instanceof ProductBasicCustom) {
             Ticket ticket = findId(ticketId);
-            ProductBasicCustom clone = (ProductBasicCustom) productBasic.clone();
-            clone.addPers(pers);
-            for (int i = 0; i < quantity; i++) {
-                if (!ticket.addProduct(clone)) {
-                    System.out.println("No se pudieron añadir todos los productos, se han añadido " + i +
-                            " hasta llegar al limite de 100.");
-                    ticket.print();
-                    break;
+            if(ticket.getEstado()!=States.CERRADO) {
+                ProductBasicCustom clone = (ProductBasicCustom) productBasic.clone();
+                clone.addPers(pers);
+                for (int i = 0; i < quantity; i++) {
+                    if (!ticket.addProduct(clone)) {
+                        System.out.println("No se pudieron añadir todos los productos, se han añadido " + i +
+                                " hasta llegar al limite de 100.");
+                        ticket.print();
+                        break;
+                    }
                 }
+                ticket.print();
+            }else{
+                throw new TicketClosedException("No se pueden añadir artículos a un ticket cerrado");
             }
-            ticket.print();
         } else {
             System.out.println("No se puede personalizar un objeto no personalizable");
         }
@@ -74,10 +84,14 @@ public class TicketController {
     //TODO revisar esto que es un poco chapuza
     static public void addMeeting(String ticketId, ProductMeetingFood product, int quantity) {
         Ticket ticket = findId(ticketId);
-        ProductMeetingFood clone = product.clone();
-        if (clone.setAsistentes(quantity))
-            ticket.addMeeting(clone);
-        ticket.print();
+        if(ticket.getEstado()!=States.CERRADO) {
+            ProductMeetingFood clone = product.clone();
+            if (clone.setAsistentes(quantity))
+                ticket.addMeeting(clone);
+            ticket.print();
+        }else{
+            throw new TicketClosedException("No se pueden añadir artículos a un ticket cerrado");
+        }
     }
 
     static public Ticket findId(String id) {
@@ -97,7 +111,12 @@ public class TicketController {
 
     public static void print(String ticketId) {
         if (TicketDB.existeId(ticketId)) {
-            TicketDB.findId(ticketId).printAndClose();
+            Ticket ticket = TicketDB.findId(ticketId);
+            if(ticket.getEstado()!=States.CERRADO) {
+                ticket.printAndClose();
+            }else{
+                throw new TicketAlreadyClosedException("No se puede imprimir un ticket ya impreso");
+            }
         } else {
             System.out.println("Ticket no encontrado");
         }

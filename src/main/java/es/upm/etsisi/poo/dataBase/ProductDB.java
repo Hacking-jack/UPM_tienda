@@ -1,6 +1,6 @@
 package es.upm.etsisi.poo.dataBase;
 
-import es.upm.etsisi.poo.exceptions.ProductNotFound;
+import es.upm.etsisi.poo.exceptions.ProductNotFoundException;
 import es.upm.etsisi.poo.models.product.ProductBasic;
 
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ public class ProductDB {
             if (p.getId() == id)
                 return (p);
         }
-        throw new ProductNotFound("No se encontró el producto con id " + id);
+        throw new ProductNotFoundException("No se encontró el producto con id " + id);
     }
 
     static public boolean existeId(int id) {

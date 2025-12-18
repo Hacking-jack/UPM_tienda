@@ -1,6 +1,6 @@
 package es.upm.etsisi.poo.dataBase;
 
-import es.upm.etsisi.poo.exceptions.UserNotFound;
+import es.upm.etsisi.poo.exceptions.UserNotFoundException;
 import es.upm.etsisi.poo.models.human.Human;
 
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ public class HumanDB {
             if (p.getId().equals(id))
                 return (p);
         }
-        throw new UserNotFound("No se encontró el usuario con id " + id);
+        throw new UserNotFoundException("No se encontró el usuario con id " + id);
     }
 
     static public boolean existeId(String id) {
