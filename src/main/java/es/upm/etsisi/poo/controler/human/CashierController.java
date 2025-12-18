@@ -2,7 +2,9 @@ package es.upm.etsisi.poo.controler.human;
 
 import es.upm.etsisi.poo.dataBase.HumanDB;
 import es.upm.etsisi.poo.dataBase.TicketDB;
+import es.upm.etsisi.poo.exceptions.human.DuplicateIdentifierException;
 import es.upm.etsisi.poo.exceptions.human.InvalidDocumentNumberException;
+import es.upm.etsisi.poo.exceptions.human.UserNotFoundException;
 import es.upm.etsisi.poo.models.human.Cashier;
 import es.upm.etsisi.poo.models.human.Human;
 
@@ -14,8 +16,7 @@ public class CashierController {
     public static void add(String id, String nombre, String email) {
         if (id.matches("^UW\\d{7}$")) {
             if (HumanDB.existeId(id)) {
-                System.out.println("Error. Ya existe un cajero con ese id.");
-                return;
+                throw new DuplicateIdentifierException("Error. Ya existe un cajero con ese id.");
             }
             Cashier nuevo = new Cashier(id, nombre, email);
             HumanDB.addUser(nuevo);
@@ -52,7 +53,7 @@ public class CashierController {
                 TicketDB.title(t);
             }
         } else {
-            System.out.println("No existe el cajero");
+            throw new UserNotFoundException("No existe el cajero");
         }
     }
 

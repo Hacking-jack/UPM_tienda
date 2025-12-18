@@ -5,6 +5,7 @@ import es.upm.etsisi.poo.commands.Command;
 import es.upm.etsisi.poo.controler.product.ProductController;
 import es.upm.etsisi.poo.controler.ticket.TicketController;
 import es.upm.etsisi.poo.exceptions.product.NegativeNumException;
+import es.upm.etsisi.poo.exceptions.ticket.CashierTicketMismatchException;
 import es.upm.etsisi.poo.models.product.ProductBasic;
 import es.upm.etsisi.poo.models.product.ProductMeetingFood;
 
@@ -38,7 +39,7 @@ public class CommandTicketAddProduct implements Command {
                 } else //foodMeeting
                     TicketController.addMeeting(this.ticketId, (ProductMeetingFood) productBasic, this.amount);
             } else {
-                System.out.println("Ese ticket no pertenece a ese cajero");
+                throw new CashierTicketMismatchException("Ese ticket no pertenece a ese cajero");
             }
         }else
             throw new NegativeNumException("No se pueden añadir productos negativos");

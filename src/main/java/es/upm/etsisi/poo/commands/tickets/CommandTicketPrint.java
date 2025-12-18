@@ -3,6 +3,7 @@ package es.upm.etsisi.poo.commands.tickets;
 import es.upm.etsisi.poo.commands.Command;
 import es.upm.etsisi.poo.controler.human.CashierController;
 import es.upm.etsisi.poo.controler.ticket.TicketController;
+import es.upm.etsisi.poo.exceptions.ticket.CashierTicketMismatchException;
 
 public class CommandTicketPrint implements Command {
     private final String ticketId;
@@ -18,7 +19,7 @@ public class CommandTicketPrint implements Command {
         if (CashierController.searchId(cashId).getTickets().contains(TicketController.findId(ticketId).getIdTicket())) {
             TicketController.print(ticketId);
         } else {
-            System.out.println("Ese ticket no pertenece al cajero indicado");
+            throw new CashierTicketMismatchException("Ese ticket no pertenece a ese cajero");
         }
         return true;
     }

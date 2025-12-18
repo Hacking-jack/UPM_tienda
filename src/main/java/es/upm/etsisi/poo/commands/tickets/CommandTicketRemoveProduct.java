@@ -5,6 +5,8 @@ import es.upm.etsisi.poo.dataBase.ProductDB;
 import es.upm.etsisi.poo.commands.Command;
 import es.upm.etsisi.poo.controler.product.ProductController;
 import es.upm.etsisi.poo.controler.ticket.TicketController;
+import es.upm.etsisi.poo.exceptions.product.ProductNotFoundException;
+import es.upm.etsisi.poo.exceptions.ticket.CashierTicketMismatchException;
 
 public class CommandTicketRemoveProduct implements Command {
 
@@ -26,10 +28,10 @@ public class CommandTicketRemoveProduct implements Command {
                 TicketController.remove(TicketController.findId(ticketId), ProductController.findId(productId));
                 TicketController.findId(ticketId).print();
             } else {
-                System.out.println("No existe un producto con el id:" + productId);
+                throw new ProductNotFoundException("No existe un producto con el id:" + productId);
             }
         } else {
-            System.out.println("Ese ticket no pertenece al cajero indicado");
+            throw new CashierTicketMismatchException("Ese ticket no pertenece a ese cajero");
         }
         return true;
     }

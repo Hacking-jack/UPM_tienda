@@ -1,6 +1,7 @@
 package es.upm.etsisi.poo.models.product;
 
 import es.upm.etsisi.poo.dataBase.ProductDB;
+import es.upm.etsisi.poo.exceptions.product.PersonalizationsOutOfBoundsExceptions;
 
 public class ProductBasicCustom extends ProductBasic {
 
@@ -20,7 +21,7 @@ public class ProductBasicCustom extends ProductBasic {
             listaPers = pers;
             persAct = pers.length;
         } else {
-            System.out.println("No se ha podido añadir las personalizaciones se ha alcanzado el máximo " +
+            throw new PersonalizationsOutOfBoundsExceptions("No se ha podido añadir las personalizaciones se ha alcanzado el máximo " +
                     "de personalizaciones");
         }
     }

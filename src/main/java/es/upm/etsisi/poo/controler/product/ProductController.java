@@ -4,7 +4,9 @@ import java.util.ArrayList;
 
 
 import es.upm.etsisi.poo.dataBase.ProductDB;
+import es.upm.etsisi.poo.exceptions.product.CategoryMismatchException;
 import es.upm.etsisi.poo.exceptions.product.DuplicateProductIdException;
+import es.upm.etsisi.poo.exceptions.product.FullProductCatalogException;
 import es.upm.etsisi.poo.models.product.Categories;
 import es.upm.etsisi.poo.models.product.ProductBasic;
 import es.upm.etsisi.poo.models.product.ProductMeetingFood;
@@ -21,7 +23,7 @@ public class ProductController {
                     ProductDB.addProduct(productBasic);
                     System.out.println(productBasic.toString());
                 } else {
-                    System.out.println("Catálogo de productos lleno.");
+                    throw new FullProductCatalogException("Catálogo de productos lleno");
                 }
             }
         }
@@ -45,7 +47,7 @@ public class ProductController {
                 break;
             case "CATEGORY":
                 if (p instanceof ProductMeetingFood) {
-                    System.out.println("No se puede aplicar una categoría a comidas o reuniones");
+                    throw new CategoryMismatchException("No se puede aplicar una categoría a comidas o reuniones");
                 } else {
                     if (categorieControl(valor)) {
                         Categories categorie = Categories.valueOf(valor.toUpperCase());
@@ -81,8 +83,7 @@ public class ProductController {
             Categories.valueOf(categorie);
             return true;
         } catch (IllegalArgumentException ex) {
-            System.out.println("Categoría no válida");
-            return false;
+            throw new CategoryMismatchException("Categoría no válida");
         }
     }
 

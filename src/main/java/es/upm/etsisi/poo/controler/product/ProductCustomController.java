@@ -1,6 +1,8 @@
 package es.upm.etsisi.poo.controler.product;
 
 import es.upm.etsisi.poo.dataBase.ProductDB;
+import es.upm.etsisi.poo.exceptions.product.DuplicateProductIdException;
+import es.upm.etsisi.poo.exceptions.product.FullProductCatalogException;
 import es.upm.etsisi.poo.models.product.Categories;
 import es.upm.etsisi.poo.models.product.ProductBasic;
 import es.upm.etsisi.poo.models.product.ProductBasicCustom;
@@ -12,7 +14,7 @@ public class ProductCustomController extends ProductController {
     public static void add(Integer id, String name, String categories, double price, int maxPers) {
         if (categorieControl(categories)) {
             if (ProductDB.existeId(id)) {
-                System.out.println("Error. Ya existe el id.");
+                throw new DuplicateProductIdException("Error. Ya existe un producto con ese id");
             } else {
                 if (ProductDB.countProduct() < 200) {
                     ProductBasic productBasic;
@@ -20,7 +22,7 @@ public class ProductCustomController extends ProductController {
                     ProductDB.addProduct(productBasic);
                     System.out.println(productBasic.toString());
                 } else {
-                    System.out.println("Catálogo de productos lleno.");
+                    throw new FullProductCatalogException("Catálogo de productos lleno.");
                 }
             }
         }

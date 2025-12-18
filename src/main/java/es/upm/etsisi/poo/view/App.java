@@ -9,6 +9,7 @@ import es.upm.etsisi.poo.commands.Command;
 import es.upm.etsisi.poo.exceptions.general.UnknownCommandException;
 import es.upm.etsisi.poo.exceptions.human.UserNotFoundException;
 import es.upm.etsisi.poo.exceptions.product.MaxAssistantOutOfBounds;
+import es.upm.etsisi.poo.exceptions.product.PersonalitationUnformattedException;
 import es.upm.etsisi.poo.exceptions.product.ProductNotFoundException;
 import es.upm.etsisi.poo.exceptions.ticket.TicketNotFoundException;
 
@@ -247,9 +248,7 @@ public class App {
                 command = firsWord;
                 reordenarArray(split, -1, 1);
             } else {
-                //throw new NumberFormatException("Formato de comando no válido");
-                System.out.println("Comando no valido");//TODO quitar esto para entregar, esta para hacer pruebas y que no pete
-                return null;
+                throw new UnknownCommandException("Comando no valido");
             }
         }
         juntarComillas(split);
@@ -261,8 +260,7 @@ public class App {
             int i = 4;// índice en el que empiezan las pers
             while (args[i] != null) {
                 if (!args[i].startsWith("--p")) {
-                    System.out.println("las personalizaciones deben tener el formato --p<Texto>");
-                    return new String[]{null};
+                    throw new PersonalitationUnformattedException("Las personalizaciones deben tener el formato --p<Texto>");
                 }
                 i++;
             }

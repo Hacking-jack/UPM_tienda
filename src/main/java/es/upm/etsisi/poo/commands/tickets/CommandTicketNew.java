@@ -4,6 +4,7 @@ import es.upm.etsisi.poo.commands.Command;
 import es.upm.etsisi.poo.controler.human.CashierController;
 import es.upm.etsisi.poo.controler.human.ClientController;
 import es.upm.etsisi.poo.controler.ticket.TicketController;
+import es.upm.etsisi.poo.exceptions.human.UserNotFoundException;
 
 public class CommandTicketNew implements Command {
     private String id; // null si no se da
@@ -23,7 +24,7 @@ public class CommandTicketNew implements Command {
             ClientController.searchId(clientId).addTicket(id);
             CashierController.searchId(cashId).addTicket(id);
         } else {
-            System.out.println("Alguno de los usuarios no existe");
+            throw new UserNotFoundException("Alguno de los usuarios no existe");
         }
         return true;
     }

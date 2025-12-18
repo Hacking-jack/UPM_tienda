@@ -1,10 +1,8 @@
 package es.upm.etsisi.poo.controler.ticket;
 
 import es.upm.etsisi.poo.dataBase.TicketDB;
-import es.upm.etsisi.poo.exceptions.ticket.DuplicateTicketIdException;
-import es.upm.etsisi.poo.exceptions.ticket.FullTicketException;
-import es.upm.etsisi.poo.exceptions.ticket.TicketAlreadyClosedException;
-import es.upm.etsisi.poo.exceptions.ticket.TicketClosedException;
+import es.upm.etsisi.poo.exceptions.product.NotCustomizableProductException;
+import es.upm.etsisi.poo.exceptions.ticket.*;
 import es.upm.etsisi.poo.models.product.ProductBasic;
 import es.upm.etsisi.poo.models.product.ProductBasicCustom;
 import es.upm.etsisi.poo.models.product.ProductMeetingFood;
@@ -71,7 +69,7 @@ public class TicketController {
                 throw new TicketClosedException("No se pueden añadir artículos a un ticket cerrado");
             }
         } else {
-            System.out.println("No se puede personalizar un objeto no personalizable");
+            throw new NotCustomizableProductException("No se puede personalizar un objeto no personalizable");
         }
     }
     //TODO revisar esto que es un poco chapuza
@@ -111,7 +109,7 @@ public class TicketController {
                 throw new TicketAlreadyClosedException("No se puede imprimir un ticket ya impreso");
             }
         } else {
-            System.out.println("Ticket no encontrado");
+            throw new TicketNotFoundException("Ticket no encontrado");
         }
     }
 }

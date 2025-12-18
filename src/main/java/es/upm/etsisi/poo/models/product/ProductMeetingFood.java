@@ -35,15 +35,13 @@ public class ProductMeetingFood extends ProductBasic {
 
     public boolean setAsistentes(int asistentes) {
         if (asistentes > maxParticipantes) {
-            System.out.println("No se pueden añadir mas de " + this.maxParticipantes + " participantes." +
+            throw new MaxAssistantOutOfBounds("No se pueden añadir mas de " + this.maxParticipantes + " participantes." +
                     " Intentalo de nuevo con un numero valido de integrantes");
-            return false;
         } else {
             if (asistentes > 0)
                 this.asistentes = asistentes;
             else{
-                System.out.println("No se pueden añadir participantes negativos");
-                return false;
+                throw new NegativeNumException("No se pueden añadir participantes negativos");
             }
             return true;
         }

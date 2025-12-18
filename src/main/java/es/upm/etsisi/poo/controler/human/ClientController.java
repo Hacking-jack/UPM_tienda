@@ -1,6 +1,8 @@
 package es.upm.etsisi.poo.controler.human;
 
 import es.upm.etsisi.poo.dataBase.HumanDB;
+import es.upm.etsisi.poo.exceptions.human.DuplicateIdentifierException;
+import es.upm.etsisi.poo.exceptions.human.UserNotFoundException;
 import es.upm.etsisi.poo.models.human.Human;
 import es.upm.etsisi.poo.models.human.Client;
 
@@ -9,12 +11,10 @@ public class ClientController {
 
     public static void addIndividualClient(String nombre, String dni, String email, String cashId) {
         if (HumanDB.existeId(dni)) {
-            System.out.println("Error. Ya existe un cliente con ese DNI.");
-            return;
+            throw new DuplicateIdentifierException("Error. Ya existe un cliente con ese DNI.");
         }
         if (!HumanDB.existeId(cashId)) {
-            System.out.println("Error. Cajero no encontrado.");
-            return;
+            throw new UserNotFoundException("Error. Cajero no encontrado.");
         }
         Client client = new Client(nombre, dni, email, cashId);
         HumanDB.addUser(client);
