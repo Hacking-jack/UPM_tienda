@@ -2,6 +2,7 @@ package es.upm.etsisi.poo.controler.human;
 
 import es.upm.etsisi.poo.dataBase.HumanDB;
 import es.upm.etsisi.poo.dataBase.TicketDB;
+import es.upm.etsisi.poo.exceptions.InvalidDocumentNumberException;
 import es.upm.etsisi.poo.models.human.Cashier;
 import es.upm.etsisi.poo.models.human.Human;
 
@@ -20,7 +21,7 @@ public class CashierController {
             HumanDB.addUser(nuevo);
             System.out.println(nuevo);
         } else
-            System.out.println("El id no es válido");
+            throw new InvalidDocumentNumberException("El id de los cajeros debe ser del formato UW seguido de 7 digitos");
     }
 
     public static void remove(String id) {

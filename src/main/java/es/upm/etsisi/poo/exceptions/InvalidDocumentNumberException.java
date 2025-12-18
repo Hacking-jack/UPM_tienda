@@ -1,0 +1,7 @@
+package es.upm.etsisi.poo.exceptions;
+
+public class InvalidDocumentNumberException extends RuntimeException {
+    public InvalidDocumentNumberException(String message) {
+        super(message);
+    }
+}
