@@ -2,7 +2,7 @@ package es.upm.etsisi.poo.commands.clients;
 
 import es.upm.etsisi.poo.commands.Command;
 import es.upm.etsisi.poo.controler.human.ClientController;
-import es.upm.etsisi.poo.exceptions.InvalidDocumentNumberException;
+import es.upm.etsisi.poo.exceptions.human.InvalidDocumentNumberException;
 
 public class CommandClientAdd implements Command {
 
@@ -23,7 +23,7 @@ public class CommandClientAdd implements Command {
         if(ClientController.esDocumentoValido(this.id)) {
             ClientController.addIndividualClient(name, id, email, cashId);
         } else if (ClientController.esCif(this.id)) {
-            //TODO ClientController.addBusinessClient();
+            //TODO ClientController.addBusinessClient(name, id, email, cashId);
         }else{
             throw new InvalidDocumentNumberException("El numero "+id+" no es un DNI ni un CIF válido, compruébelo e " +
                     "inténtelo de nuevo");

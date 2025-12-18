@@ -1,6 +1,6 @@
 package es.upm.etsisi.poo.dataBase;
 
-import es.upm.etsisi.poo.exceptions.ProductNotFoundException;
+import es.upm.etsisi.poo.exceptions.product.ProductNotFoundException;
 import es.upm.etsisi.poo.models.product.ProductBasic;
 
 import java.util.ArrayList;

@@ -7,7 +7,6 @@ import es.upm.etsisi.poo.models.human.Client;
 
 public class ClientController {
 
-    //TODO mirar formato DNI válido
     public static void addIndividualClient(String nombre, String dni, String email, String cashId) {
         if (HumanDB.existeId(dni)) {
             System.out.println("Error. Ya existe un cliente con ese DNI.");
@@ -20,6 +19,10 @@ public class ClientController {
         Client client = new Client(nombre, dni, email, cashId);
         HumanDB.addUser(client);
         System.out.println(client);
+    }
+
+    public static void addBussinessClient(String nombre, String dni, String email, String cashId){
+
     }
 
     public static void remove(String id) {

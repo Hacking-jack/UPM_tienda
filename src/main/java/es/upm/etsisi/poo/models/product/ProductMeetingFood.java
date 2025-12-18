@@ -1,7 +1,7 @@
 package es.upm.etsisi.poo.models.product;
 
-import es.upm.etsisi.poo.exceptions.MaxAssistantOutOfBounds;
-import es.upm.etsisi.poo.exceptions.NegativeNumException;
+import es.upm.etsisi.poo.exceptions.product.MaxAssistantOutOfBounds;
+import es.upm.etsisi.poo.exceptions.product.NegativeNumException;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;

@@ -2,7 +2,7 @@ package es.upm.etsisi.poo.controler.human;
 
 import es.upm.etsisi.poo.dataBase.HumanDB;
 import es.upm.etsisi.poo.dataBase.TicketDB;
-import es.upm.etsisi.poo.exceptions.InvalidDocumentNumberException;
+import es.upm.etsisi.poo.exceptions.human.InvalidDocumentNumberException;
 import es.upm.etsisi.poo.models.human.Cashier;
 import es.upm.etsisi.poo.models.human.Human;
 

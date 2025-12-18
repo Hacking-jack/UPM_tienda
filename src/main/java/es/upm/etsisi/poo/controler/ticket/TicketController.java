@@ -1,8 +1,8 @@
 package es.upm.etsisi.poo.controler.ticket;
 
 import es.upm.etsisi.poo.dataBase.TicketDB;
-import es.upm.etsisi.poo.exceptions.TicketAlreadyClosedException;
-import es.upm.etsisi.poo.exceptions.TicketClosedException;
+import es.upm.etsisi.poo.exceptions.ticket.TicketAlreadyClosedException;
+import es.upm.etsisi.poo.exceptions.ticket.TicketClosedException;
 import es.upm.etsisi.poo.models.product.ProductBasic;
 import es.upm.etsisi.poo.models.product.ProductBasicCustom;
 import es.upm.etsisi.poo.models.product.ProductMeetingFood;

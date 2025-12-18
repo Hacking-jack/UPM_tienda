@@ -1,6 +1,6 @@
 package es.upm.etsisi.poo.dataBase;
 
-import es.upm.etsisi.poo.exceptions.UserNotFoundException;
+import es.upm.etsisi.poo.exceptions.human.UserNotFoundException;
 import es.upm.etsisi.poo.models.human.Human;
 
 import java.util.ArrayList;
