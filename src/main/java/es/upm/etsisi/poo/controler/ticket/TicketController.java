@@ -1,6 +1,8 @@
 package es.upm.etsisi.poo.controler.ticket;
 
 import es.upm.etsisi.poo.dataBase.TicketDB;
+import es.upm.etsisi.poo.exceptions.ticket.DuplicateTicketIdException;
+import es.upm.etsisi.poo.exceptions.ticket.FullTicketException;
 import es.upm.etsisi.poo.exceptions.ticket.TicketAlreadyClosedException;
 import es.upm.etsisi.poo.exceptions.ticket.TicketClosedException;
 import es.upm.etsisi.poo.models.product.ProductBasic;
@@ -9,34 +11,27 @@ import es.upm.etsisi.poo.models.product.ProductMeetingFood;
 import es.upm.etsisi.poo.models.ticket.States;
 import es.upm.etsisi.poo.models.ticket.Ticket;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
 public class TicketController {
 
 
     public static String newTicket(String id) {
         if (id == null) {
-            id = generarId();
-        }
-        if (!TicketDB.existeId(id)) {
-            TicketDB.addTicket(new Ticket(id));
+            Ticket ticket = new Ticket();
+            id=ticket.getIdTicket();
+            TicketDB.addTicket(ticket);
             TicketDB.findId(id).print();
-        } else {
-            System.out.println("Ya existe un ticket con ese id");
+        }else {
+            if (!TicketDB.existeId(id)) {
+                TicketDB.addTicket(new Ticket(id));
+                TicketDB.findId(id).print();
+            } else {
+                throw new DuplicateTicketIdException("Ya existe un ticket con ese id");
+            }
         }
         return id;
     }
 
-    public static String generarId() {
-        String s = LocalDateTime.now()
-                .format(DateTimeFormatter.ofPattern("yy-MM-dd-HH:mm-"))
-                + String.format("%05d", (int) (Math.random() * 10000));
-        if (TicketDB.existeId(s)) {
-            return generarId();
-        }
-        return s;
-    }
+
 
     public static void addProduct(String ticketId, ProductBasic productBasic, int quantity) {
         Ticket ticket = findId(ticketId);
@@ -46,10 +41,8 @@ public class TicketController {
             ProductBasic clone = productBasic.clone();
             for (int i = 0; i < quantity; i++) {
                 if (!ticket.addProduct(clone)) {
-                    System.out.println("No se pudieron añadir todos los productos, se han añadido " + i +
-                            " hasta llegar al limite de 100");
-                    ticket.print();
-                    break;
+                    throw new FullTicketException("No se pudieron añadir todos los productos, se han añadido " + i +
+                            " hasta llegar al limite de 100\n"+ticket.getStringPrint());
                 }
             }
             ticket.print();

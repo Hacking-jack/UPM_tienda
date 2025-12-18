@@ -6,6 +6,7 @@ import es.upm.etsisi.poo.commands.general.*;
 import es.upm.etsisi.poo.commands.products.*;
 import es.upm.etsisi.poo.commands.tickets.*;
 import es.upm.etsisi.poo.commands.Command;
+import es.upm.etsisi.poo.exceptions.general.UnknownCommandException;
 import es.upm.etsisi.poo.exceptions.human.UserNotFoundException;
 import es.upm.etsisi.poo.exceptions.product.MaxAssistantOutOfBounds;
 import es.upm.etsisi.poo.exceptions.product.ProductNotFoundException;
@@ -210,7 +211,7 @@ public class App {
                             break;
                     }
                     if (cmd == null) {
-                        System.out.println("Comando no valido");
+                        throw new UnknownCommandException("Comando no valido");
                     } else {
                         bucle = cmd.execute();
                         if (!esGeneral) {

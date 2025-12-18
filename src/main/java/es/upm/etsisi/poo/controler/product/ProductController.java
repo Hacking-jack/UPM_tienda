@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 
 import es.upm.etsisi.poo.dataBase.ProductDB;
+import es.upm.etsisi.poo.exceptions.product.DuplicateProductIdException;
 import es.upm.etsisi.poo.models.product.Categories;
 import es.upm.etsisi.poo.models.product.ProductBasic;
 import es.upm.etsisi.poo.models.product.ProductMeetingFood;
@@ -13,7 +14,7 @@ public class ProductController {
     public static void add(int id, String name, String categories, double price) {
         if (categorieControl(categories)) {
             if (ProductDB.existeId(id)) {
-                System.out.println("Error. Ya existe el id.");
+                throw new DuplicateProductIdException("Ya existe un producto con ese id");
             } else {
                 if (ProductDB.countProduct() < 200) {
                     ProductBasic productBasic = new ProductBasic(id, name, Categories.valueOf(categories), price);
