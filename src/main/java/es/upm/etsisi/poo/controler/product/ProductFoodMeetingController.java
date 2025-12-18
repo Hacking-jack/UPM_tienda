@@ -1,4 +1,4 @@
-package es.upm.etsisi.poo.controler;
+package es.upm.etsisi.poo.controler.product;
 
 
 import es.upm.etsisi.poo.dataBase.ProductDB;

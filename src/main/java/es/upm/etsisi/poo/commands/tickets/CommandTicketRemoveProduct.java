@@ -3,8 +3,8 @@ package es.upm.etsisi.poo.commands.tickets;
 import es.upm.etsisi.poo.dataBase.HumanDB;
 import es.upm.etsisi.poo.dataBase.ProductDB;
 import es.upm.etsisi.poo.commands.Command;
-import es.upm.etsisi.poo.controler.ProductController;
-import es.upm.etsisi.poo.controler.TicketController;
+import es.upm.etsisi.poo.controler.product.ProductController;
+import es.upm.etsisi.poo.controler.ticket.TicketController;
 
 public class CommandTicketRemoveProduct implements Command {
 

@@ -1,4 +1,4 @@
-package es.upm.etsisi.poo.controler;
+package es.upm.etsisi.poo.controler.human;
 
 import es.upm.etsisi.poo.dataBase.HumanDB;
 import es.upm.etsisi.poo.models.human.Human;

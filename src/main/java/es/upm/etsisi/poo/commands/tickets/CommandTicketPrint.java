@@ -1,8 +1,8 @@
 package es.upm.etsisi.poo.commands.tickets;
 
 import es.upm.etsisi.poo.commands.Command;
-import es.upm.etsisi.poo.controler.CashierController;
-import es.upm.etsisi.poo.controler.TicketController;
+import es.upm.etsisi.poo.controler.human.CashierController;
+import es.upm.etsisi.poo.controler.ticket.TicketController;
 
 public class CommandTicketPrint implements Command {
     private final String ticketId;

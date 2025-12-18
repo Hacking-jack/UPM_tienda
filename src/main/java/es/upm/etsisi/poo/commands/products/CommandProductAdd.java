@@ -1,8 +1,8 @@
 package es.upm.etsisi.poo.commands.products;
 
 import es.upm.etsisi.poo.commands.Command;
-import es.upm.etsisi.poo.controler.ProductController;
-import es.upm.etsisi.poo.controler.ProductCustomController;
+import es.upm.etsisi.poo.controler.product.ProductController;
+import es.upm.etsisi.poo.controler.product.ProductCustomController;
 
 public class CommandProductAdd implements Command {
     private final int id; // null si no se da

@@ -1,7 +1,7 @@
 package es.upm.etsisi.poo.commands.products;
 
 import es.upm.etsisi.poo.commands.Command;
-import es.upm.etsisi.poo.controler.ProductController;
+import es.upm.etsisi.poo.controler.product.ProductController;
 
 public class CommandProductRemove implements Command {
     private final int id;

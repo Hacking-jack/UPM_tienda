@@ -1,4 +1,4 @@
-package es.upm.etsisi.poo.controler;
+package es.upm.etsisi.poo.controler.ticket;
 
 import es.upm.etsisi.poo.dataBase.TicketDB;
 import es.upm.etsisi.poo.models.product.ProductBasic;

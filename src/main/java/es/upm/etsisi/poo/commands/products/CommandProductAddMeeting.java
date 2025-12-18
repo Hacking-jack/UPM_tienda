@@ -1,7 +1,7 @@
 package es.upm.etsisi.poo.commands.products;
 
 import es.upm.etsisi.poo.commands.Command;
-import es.upm.etsisi.poo.controler.ProductFoodMeetingController;
+import es.upm.etsisi.poo.controler.product.ProductFoodMeetingController;
 
 public class CommandProductAddMeeting implements Command {
 
