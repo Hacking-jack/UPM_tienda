@@ -40,8 +40,9 @@ public class TicketController {
         Ticket ticket = findId(ticketId);
         if (ticket.getEstado() == States.VACIO)
             ticket.setEstado(States.ACTIVO);
+        ProductBasic clone=productBasic.clone();
         for (int i = 0; i < quantity; i++) {
-            if (!ticket.addProduct(productBasic)) {
+            if (!ticket.addProduct(clone)) {
                 System.out.println("No se pudieron añadir todos los productos, se han añadido " + i +
                         " hasta llegar al limite de 100");
                 ticket.print();
