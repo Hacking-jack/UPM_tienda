@@ -103,11 +103,7 @@ public class TicketController {
     public static void print(String ticketId) {
         if (TicketDB.existeId(ticketId)) {
             Ticket ticket = TicketDB.findId(ticketId);
-            if(ticket.getEstado()!=States.CERRADO) {
                 ticket.printAndClose();
-            }else{
-                throw new TicketAlreadyClosedException("No se puede imprimir un ticket ya impreso");
-            }
         } else {
             throw new TicketNotFoundException("Ticket no encontrado");
         }
