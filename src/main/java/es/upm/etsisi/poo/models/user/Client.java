@@ -1,8 +1,8 @@
-package es.upm.etsisi.poo.models.human;
+package es.upm.etsisi.poo.models.user;
 
 import java.util.ArrayList;
 
-public class Client extends Human {
+public class Client extends User {
 
     private final String cajeroAlta;
 

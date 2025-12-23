@@ -1,7 +1,7 @@
 package es.upm.etsisi.poo.commands.cash;
 
 import es.upm.etsisi.poo.commands.Command;
-import es.upm.etsisi.poo.controler.human.CashierController;
+import es.upm.etsisi.poo.controler.user.CashierController;
 
 public class CommandCashRemove implements Command {
     private final String id;

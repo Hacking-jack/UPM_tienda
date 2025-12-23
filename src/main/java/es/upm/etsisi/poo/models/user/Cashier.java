@@ -1,8 +1,8 @@
-package es.upm.etsisi.poo.models.human;
+package es.upm.etsisi.poo.models.user;
 
 import java.util.ArrayList;
 
-public class Cashier extends Human {
+public class Cashier extends User {
 
 
     public Cashier(String id, String nombre, String email) {

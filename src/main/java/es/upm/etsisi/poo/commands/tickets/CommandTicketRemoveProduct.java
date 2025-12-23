@@ -1,6 +1,6 @@
 package es.upm.etsisi.poo.commands.tickets;
 
-import es.upm.etsisi.poo.dataBase.HumanDB;
+import es.upm.etsisi.poo.dataBase.UserDB;
 import es.upm.etsisi.poo.dataBase.ProductDB;
 import es.upm.etsisi.poo.commands.Command;
 import es.upm.etsisi.poo.controler.product.ProductController;
@@ -23,7 +23,7 @@ public class CommandTicketRemoveProduct implements Command {
 
     @Override
     public boolean execute() {//TODO chapuza
-        if (HumanDB.findId(cashId).getTickets().contains(TicketController.findId(ticketId).getIdTicket())) {
+        if (UserDB.findId(cashId).getTickets().contains(TicketController.findId(ticketId).getIdTicket())) {
             if (ProductDB.existeId(productId)) {
                 TicketController.remove(TicketController.findId(ticketId), ProductController.findId(productId));
                 TicketController.findId(ticketId).print();

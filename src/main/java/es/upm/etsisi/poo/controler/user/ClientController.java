@@ -1,23 +1,23 @@
-package es.upm.etsisi.poo.controler.human;
+package es.upm.etsisi.poo.controler.user;
 
-import es.upm.etsisi.poo.dataBase.HumanDB;
-import es.upm.etsisi.poo.exceptions.human.DuplicateIdentifierException;
-import es.upm.etsisi.poo.exceptions.human.UserNotFoundException;
-import es.upm.etsisi.poo.models.human.Human;
-import es.upm.etsisi.poo.models.human.Client;
+import es.upm.etsisi.poo.dataBase.UserDB;
+import es.upm.etsisi.poo.exceptions.user.DuplicateIdentifierException;
+import es.upm.etsisi.poo.exceptions.user.UserNotFoundException;
+import es.upm.etsisi.poo.models.user.User;
+import es.upm.etsisi.poo.models.user.Client;
 
 
 public class ClientController {
 
     public static void addIndividualClient(String nombre, String dni, String email, String cashId) {
-        if (HumanDB.existeId(dni)) {
+        if (UserDB.existeId(dni)) {
             throw new DuplicateIdentifierException(dni);
         }
-        if (!HumanDB.existeId(cashId)) {
+        if (!UserDB.existeId(cashId)) {
             throw new UserNotFoundException("Error. Cajero no encontrado.");
         }
         Client client = new Client(nombre, dni, email, cashId);
-        HumanDB.addUser(client);
+        UserDB.addUser(client);
         System.out.println(client);
     }
 
@@ -26,25 +26,25 @@ public class ClientController {
     }
 
     public static void remove(String id) {
-        Human p = HumanDB.findId(id);
-        HumanDB.removeHuman(p);
+        User p = UserDB.findId(id);
+        UserDB.removeUser(p);
     }
 
     public static void list() {
         System.out.println("Client:");
-        for (Human human : HumanDB.list()) {
-            if (human instanceof Client) {
-                System.out.println("  " + human.toString());
+        for (User user : UserDB.list()) {
+            if (user instanceof Client) {
+                System.out.println("  " + user.toString());
             }
         }
     }
 
     public static Client searchId(String id) {
-        return (Client) HumanDB.findId(id);
+        return (Client) UserDB.findId(id);
     }
 
     public static boolean existeId(String id) {
-        return HumanDB.existeId(id);
+        return UserDB.existeId(id);
     }
 
 

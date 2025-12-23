@@ -1,12 +1,12 @@
-package es.upm.etsisi.poo.controler.human;
+package es.upm.etsisi.poo.controler.user;
 
-import es.upm.etsisi.poo.dataBase.HumanDB;
+import es.upm.etsisi.poo.dataBase.UserDB;
 import es.upm.etsisi.poo.dataBase.TicketDB;
-import es.upm.etsisi.poo.exceptions.human.DuplicateIdentifierException;
-import es.upm.etsisi.poo.exceptions.human.InvalidDocumentNumberException;
-import es.upm.etsisi.poo.exceptions.human.UserNotFoundException;
-import es.upm.etsisi.poo.models.human.Cashier;
-import es.upm.etsisi.poo.models.human.Human;
+import es.upm.etsisi.poo.exceptions.user.DuplicateIdentifierException;
+import es.upm.etsisi.poo.exceptions.user.InvalidDocumentNumberException;
+import es.upm.etsisi.poo.exceptions.user.UserNotFoundException;
+import es.upm.etsisi.poo.models.user.Cashier;
+import es.upm.etsisi.poo.models.user.User;
 
 import java.util.Random;
 
@@ -15,11 +15,11 @@ public class CashierController {
 
     public static void add(String id, String nombre, String email) {
         if (id.matches("^UW\\d{7}$")) {
-            if (HumanDB.existeId(id)) {
+            if (UserDB.existeId(id)) {
                 throw new DuplicateIdentifierException(id);
             }
             Cashier nuevo = new Cashier(id, nombre, email);
-            HumanDB.addUser(nuevo);
+            UserDB.addUser(nuevo);
             System.out.println(nuevo);
         } else
             throw new InvalidDocumentNumberException(id);
@@ -27,28 +27,28 @@ public class CashierController {
 
     public static void remove(String id) {
         Cashier c = searchId(id);
-        HumanDB.removeHuman(c);
+        UserDB.removeUser(c);
     }
 
     public static void list() {
         System.out.println("Cash:");
-        for (Human human : HumanDB.list()) {
-            if (human instanceof Cashier) {
-                System.out.println("  " + human.toString());
+        for (User user : UserDB.list()) {
+            if (user instanceof Cashier) {
+                System.out.println("  " + user.toString());
             }
         }
     }
 
 
     public static Cashier searchId(String id) {
-        return (Cashier) HumanDB.findId(id);
+        return (Cashier) UserDB.findId(id);
     }
 
     public static void cashTickets(String cashId) {
-        if (HumanDB.existeId(cashId) && HumanDB.findId(cashId) instanceof Cashier) {
+        if (UserDB.existeId(cashId) && UserDB.findId(cashId) instanceof Cashier) {
             System.out.print("Tickets: \n");
 
-            Cashier aux = (Cashier) HumanDB.findId(cashId);
+            Cashier aux = (Cashier) UserDB.findId(cashId);
             for (String t : aux.getTickets()) {
                 TicketDB.title(t);
             }
@@ -62,7 +62,7 @@ public class CashierController {
     }
 
     public static boolean existeId(String id) {
-        return HumanDB.existeId(id);
+        return UserDB.existeId(id);
     }
 }
 

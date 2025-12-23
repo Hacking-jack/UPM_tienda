@@ -7,7 +7,7 @@ import es.upm.etsisi.poo.commands.products.*;
 import es.upm.etsisi.poo.commands.tickets.*;
 import es.upm.etsisi.poo.commands.Command;
 import es.upm.etsisi.poo.exceptions.general.UnknownCommandException;
-import es.upm.etsisi.poo.exceptions.human.UserNotFoundException;
+import es.upm.etsisi.poo.exceptions.user.UserNotFoundException;
 import es.upm.etsisi.poo.exceptions.product.MaxAssistantOutOfBounds;
 import es.upm.etsisi.poo.exceptions.product.PersonalitationUnformattedException;
 import es.upm.etsisi.poo.exceptions.product.ProductNotFoundException;

@@ -1,4 +1,4 @@
-package es.upm.etsisi.poo.exceptions.human;
+package es.upm.etsisi.poo.exceptions.user;
 
 public class DuplicateIdentifierException extends RuntimeException {
     public DuplicateIdentifierException(String id) {

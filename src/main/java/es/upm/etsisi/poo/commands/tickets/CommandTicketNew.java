@@ -1,10 +1,10 @@
 package es.upm.etsisi.poo.commands.tickets;
 
 import es.upm.etsisi.poo.commands.Command;
-import es.upm.etsisi.poo.controler.human.CashierController;
-import es.upm.etsisi.poo.controler.human.ClientController;
+import es.upm.etsisi.poo.controler.user.CashierController;
+import es.upm.etsisi.poo.controler.user.ClientController;
 import es.upm.etsisi.poo.controler.ticket.TicketController;
-import es.upm.etsisi.poo.exceptions.human.UserNotFoundException;
+import es.upm.etsisi.poo.exceptions.user.UserNotFoundException;
 
 public class CommandTicketNew implements Command {
     private String id; // null si no se da

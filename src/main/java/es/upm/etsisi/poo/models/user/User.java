@@ -1,10 +1,10 @@
-package es.upm.etsisi.poo.models.human;
+package es.upm.etsisi.poo.models.user;
 
 import es.upm.etsisi.poo.models.ticket.Ticket;
 
 import java.util.ArrayList;
 
-public abstract class Human {
+public abstract class User {
 
     protected String id;
     protected String nombre;

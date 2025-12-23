@@ -1,7 +1,7 @@
 package es.upm.etsisi.poo.commands.tickets;
 
 import es.upm.etsisi.poo.commands.Command;
-import es.upm.etsisi.poo.controler.human.CashierController;
+import es.upm.etsisi.poo.controler.user.CashierController;
 import es.upm.etsisi.poo.controler.ticket.TicketController;
 import es.upm.etsisi.poo.exceptions.ticket.CashierTicketMismatchException;
 

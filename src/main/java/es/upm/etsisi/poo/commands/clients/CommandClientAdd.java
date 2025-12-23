@@ -1,8 +1,8 @@
 package es.upm.etsisi.poo.commands.clients;
 
 import es.upm.etsisi.poo.commands.Command;
-import es.upm.etsisi.poo.controler.human.ClientController;
-import es.upm.etsisi.poo.exceptions.human.InvalidDocumentNumberException;
+import es.upm.etsisi.poo.controler.user.ClientController;
+import es.upm.etsisi.poo.exceptions.user.InvalidDocumentNumberException;
 
 public class CommandClientAdd implements Command {
 

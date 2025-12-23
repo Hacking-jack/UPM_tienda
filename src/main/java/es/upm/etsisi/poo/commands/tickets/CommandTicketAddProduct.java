@@ -1,6 +1,6 @@
 package es.upm.etsisi.poo.commands.tickets;
 
-import es.upm.etsisi.poo.dataBase.HumanDB;
+import es.upm.etsisi.poo.dataBase.UserDB;
 import es.upm.etsisi.poo.commands.Command;
 import es.upm.etsisi.poo.controler.product.ProductController;
 import es.upm.etsisi.poo.controler.ticket.TicketController;
@@ -29,7 +29,7 @@ public class CommandTicketAddProduct implements Command {
     public boolean execute() {
         ProductBasic productBasic = ProductController.findId(this.productId);
         if (amount > 0) {
-            if (HumanDB.findId(cashId).getTickets().contains(ticketId)) {
+            if (UserDB.findId(cashId).getTickets().contains(ticketId)) {
                 if (!(productBasic instanceof ProductMeetingFood)) {
                     if (pers != null) { //con pers
                         TicketController.addProductPers(this.ticketId, productBasic, this.amount, this.pers);
