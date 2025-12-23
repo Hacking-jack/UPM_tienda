@@ -19,7 +19,7 @@ public class CommandTicketPrint implements Command {
         if (CashierController.searchId(cashId).getTickets().contains(TicketController.findId(ticketId).getIdTicket())) {
             TicketController.print(ticketId);
         } else {
-            throw new CashierTicketMismatchException("Ese ticket no pertenece a ese cajero");
+            throw new CashierTicketMismatchException();
         }
         return true;
     }

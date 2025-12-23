@@ -20,13 +20,12 @@ public class CommandClientAdd implements Command {
 
     @Override
     public boolean execute() {
-        if(ClientController.esDocumentoValido(this.id)) {
+        if (ClientController.esDocumentoValido(this.id)) {
             ClientController.addIndividualClient(name, id, email, cashId);
         } else if (ClientController.esCif(this.id)) {
             //TODO ClientController.addBusinessClient(name, id, email, cashId);
-        }else{
-            throw new InvalidDocumentNumberException("El numero "+id+" no es un DNI ni un CIF válido, compruébelo e " +
-                    "inténtelo de nuevo");
+        } else {
+            throw new InvalidDocumentNumberException(id);
         }
         return true;
     }

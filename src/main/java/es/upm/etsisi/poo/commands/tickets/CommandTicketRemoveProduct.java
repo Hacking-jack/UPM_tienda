@@ -28,10 +28,10 @@ public class CommandTicketRemoveProduct implements Command {
                 TicketController.remove(TicketController.findId(ticketId), ProductController.findId(productId));
                 TicketController.findId(ticketId).print();
             } else {
-                throw new ProductNotFoundException("No existe un producto con el id:" + productId);
+                throw new ProductNotFoundException(productId);
             }
         } else {
-            throw new CashierTicketMismatchException("Ese ticket no pertenece a ese cajero");
+            throw new CashierTicketMismatchException();
         }
         return true;
     }

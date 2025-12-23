@@ -1,7 +1,7 @@
 package es.upm.etsisi.poo.exceptions.product;
 
 public class PersonalitationUnformattedException extends RuntimeException {
-    public PersonalitationUnformattedException(String message) {
-        super(message);
+    public PersonalitationUnformattedException() {
+        super("Error, las personalizaciones deben tener el formato --p<Texto>");
     }
 }

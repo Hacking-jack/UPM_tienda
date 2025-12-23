@@ -16,13 +16,13 @@ public class CashierController {
     public static void add(String id, String nombre, String email) {
         if (id.matches("^UW\\d{7}$")) {
             if (HumanDB.existeId(id)) {
-                throw new DuplicateIdentifierException("Error. Ya existe un cajero con ese id.");
+                throw new DuplicateIdentifierException(id);
             }
             Cashier nuevo = new Cashier(id, nombre, email);
             HumanDB.addUser(nuevo);
             System.out.println(nuevo);
         } else
-            throw new InvalidDocumentNumberException("El id de los cajeros debe ser del formato UW seguido de 7 digitos");
+            throw new InvalidDocumentNumberException(id);
     }
 
     public static void remove(String id) {

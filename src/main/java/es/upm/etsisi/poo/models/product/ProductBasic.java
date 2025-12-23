@@ -13,10 +13,10 @@ public class ProductBasic {
     public ProductBasic(int id, String name, Categories categories, double price) {
         this.name = name;
         this.categories = categories;
-            if (price >= 0)
-                this.price = price;
-            else
-                throw new NegativeNumException("No se puede añadir precios negativos a los productos");
+        if (price >= 0)
+            this.price = price;
+        else
+            throw new NegativeNumException();
         this.id = id;
     }
 

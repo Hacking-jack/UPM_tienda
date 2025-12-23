@@ -21,8 +21,7 @@ public class ProductBasicCustom extends ProductBasic {
             listaPers = pers;
             persAct = pers.length;
         } else {
-            throw new PersonalizationsOutOfBoundsExceptions("No se ha podido añadir las personalizaciones se ha alcanzado el máximo " +
-                    "de personalizaciones");
+            throw new PersonalizationsOutOfBoundsExceptions();
         }
     }
 

@@ -7,9 +7,13 @@ Curso 2025/2026
 ---
 
 ## 📖 Descripción
-Este proyecto implementa una aplicación de línea de comandos (CLI) para la **Tienda UPM**, que gestiona la venta de merchandising, papelería, ropa, libros, electrónica y, más adelante, otros servicios como comidas, transportes o espectáculos.
 
-La aplicación está desarrollada en **Java** siguiendo los principios de **Programación Orientada a Objetos (POO)**, buenas prácticas de diseño y mantenibilidad.
+Este proyecto implementa una aplicación de línea de comandos (CLI) para la **Tienda UPM**, que gestiona la venta de
+merchandising, papelería, ropa, libros, electrónica y, más adelante, otros servicios como comidas, transportes o
+espectáculos.
+
+La aplicación está desarrollada en **Java** siguiendo los principios de **Programación Orientada a Objetos (POO)**,
+buenas prácticas de diseño y mantenibilidad.
 
 Se trabaja de forma **incremental en 3 entregas**:
 
@@ -20,6 +24,7 @@ Se trabaja de forma **incremental en 3 entregas**:
 ---
 
 ## 🛠️ Tecnologías utilizadas
+
 - Lenguaje: **Java 24**
 - Build system: **Maven**
 - IDE recomendado: **IntelliJ IDEA**

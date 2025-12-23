@@ -24,7 +24,7 @@ public class ProductDB {
             if (p.getId() == id)
                 return (p);
         }
-        throw new ProductNotFoundException("No se encontró el producto con id " + id);
+        throw new ProductNotFoundException(id);
     }
 
     static public boolean existeId(int id) {

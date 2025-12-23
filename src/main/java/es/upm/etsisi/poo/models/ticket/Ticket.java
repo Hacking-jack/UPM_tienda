@@ -103,10 +103,10 @@ public class Ticket {
     }
 
     public void title() {
-        System.out.println("  "+this.idTicket + "->" + this.estado.toString());
+        System.out.println("  " + this.idTicket + "->" + this.estado.toString());
     }
 
-    public String getStringPrint(){
+    public String getStringPrint() {
         StringBuilder sb = new StringBuilder();
 
         this.productBasics.sort(Comparator.comparing(ProductBasic::getName));

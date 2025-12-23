@@ -14,7 +14,7 @@ public class ProductCustomController extends ProductController {
     public static void add(Integer id, String name, String categories, double price, int maxPers) {
         if (categorieControl(categories)) {
             if (ProductDB.existeId(id)) {
-                throw new DuplicateProductIdException("Error. Ya existe un producto con ese id");
+                throw new DuplicateProductIdException();
             } else {
                 if (ProductDB.countProduct() < 200) {
                     ProductBasic productBasic;
@@ -22,7 +22,7 @@ public class ProductCustomController extends ProductController {
                     ProductDB.addProduct(productBasic);
                     System.out.println(productBasic.toString());
                 } else {
-                    throw new FullProductCatalogException("Catálogo de productos lleno.");
+                    throw new FullProductCatalogException();
                 }
             }
         }

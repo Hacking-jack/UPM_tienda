@@ -7,16 +7,16 @@ public enum Services {
 
     @Override
     public String toString() {
-        String string=null;
-        switch (this){
+        String string = null;
+        switch (this) {
             case SHOW:
-                string="SHOW";
+                string = "SHOW";
                 break;
             case INSURANCE:
-                string="INSURANCE";
+                string = "INSURANCE";
                 break;
             case TRANSPORT:
-                string="TRANSPORT";
+                string = "TRANSPORT";
                 break;
         }
         return string;

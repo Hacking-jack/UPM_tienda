@@ -19,7 +19,7 @@ public class TicketDB {
             if (t.getIdTicket().equals(id))
                 return (t);
         }
-        throw new TicketNotFoundException("No se encontró el ticket con id " + id);
+        throw new TicketNotFoundException(id);
     }
 
     static public boolean existeId(String id) {

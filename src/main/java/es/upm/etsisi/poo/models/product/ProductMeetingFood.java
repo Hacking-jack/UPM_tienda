@@ -1,5 +1,6 @@
 package es.upm.etsisi.poo.models.product;
 
+import es.upm.etsisi.poo.exceptions.product.AssistantOutOfBoundsException;
 import es.upm.etsisi.poo.exceptions.product.MaxAssistantOutOfBounds;
 import es.upm.etsisi.poo.exceptions.product.NegativeNumException;
 
@@ -21,9 +22,9 @@ public class ProductMeetingFood extends ProductBasic {
                 if (maxParticipantes > 0)
                     this.maxParticipantes = maxParticipantes;
                 else
-                    throw new NegativeNumException("No se pueden añadir participantes negativos");
+                    throw new NegativeNumException();
             else {
-                throw new MaxAssistantOutOfBounds("Las reuniones y las comidas pueden tener como máximo 100 asistentes");
+                throw new MaxAssistantOutOfBounds();
             }
             this.isFood = isFood;
             this.asistentes = 0;
@@ -35,13 +36,12 @@ public class ProductMeetingFood extends ProductBasic {
 
     public boolean setAsistentes(int asistentes) {
         if (asistentes > maxParticipantes) {
-            throw new MaxAssistantOutOfBounds("No se pueden añadir mas de " + this.maxParticipantes + " participantes." +
-                    " Intentalo de nuevo con un numero valido de integrantes");
+            throw new AssistantOutOfBoundsException(this.maxParticipantes);
         } else {
             if (asistentes > 0)
                 this.asistentes = asistentes;
-            else{
-                throw new NegativeNumException("No se pueden añadir participantes negativos");
+            else {
+                throw new NegativeNumException();
             }
             return true;
         }

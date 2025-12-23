@@ -11,7 +11,7 @@ public class ClientController {
 
     public static void addIndividualClient(String nombre, String dni, String email, String cashId) {
         if (HumanDB.existeId(dni)) {
-            throw new DuplicateIdentifierException("Error. Ya existe un cliente con ese DNI.");
+            throw new DuplicateIdentifierException(dni);
         }
         if (!HumanDB.existeId(cashId)) {
             throw new UserNotFoundException("Error. Cajero no encontrado.");
@@ -21,7 +21,7 @@ public class ClientController {
         System.out.println(client);
     }
 
-    public static void addBussinessClient(String nombre, String dni, String email, String cashId){
+    public static void addBussinessClient(String nombre, String dni, String email, String cashId) {
 
     }
 
@@ -57,8 +57,8 @@ public class ClientController {
 
         // Letras oficiales
         char[] letras = {
-                'T','R','W','A','G','M','Y','F','P','D','X',
-                'B','N','J','Z','S','Q','V','H','L','C','K','E'
+                'T', 'R', 'W', 'A', 'G', 'M', 'Y', 'F', 'P', 'D', 'X',
+                'B', 'N', 'J', 'Z', 'S', 'Q', 'V', 'H', 'L', 'C', 'K', 'E'
         };
 
         if (string.matches("\\d{8}[A-Z]")) {    // es DNI
@@ -123,8 +123,6 @@ public class ClientController {
             return control == controlDigito || control == controlLetra;
         }
     }
-
-
 
 
 }

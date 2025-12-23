@@ -39,10 +39,10 @@ public class CommandTicketAddProduct implements Command {
                 } else //foodMeeting
                     TicketController.addMeeting(this.ticketId, (ProductMeetingFood) productBasic, this.amount);
             } else {
-                throw new CashierTicketMismatchException("Ese ticket no pertenece a ese cajero");
+                throw new CashierTicketMismatchException();
             }
-        }else
-            throw new NegativeNumException("No se pueden añadir productos negativos");
+        } else
+            throw new NegativeNumException();
         return true;
 
     }

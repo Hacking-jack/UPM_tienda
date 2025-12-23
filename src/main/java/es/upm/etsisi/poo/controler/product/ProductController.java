@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import es.upm.etsisi.poo.dataBase.ProductDB;
 import es.upm.etsisi.poo.exceptions.product.CategoryMismatchException;
 import es.upm.etsisi.poo.exceptions.product.DuplicateProductIdException;
+import es.upm.etsisi.poo.exceptions.product.FoodMeetingCategoryException;
 import es.upm.etsisi.poo.exceptions.product.FullProductCatalogException;
 import es.upm.etsisi.poo.models.product.Categories;
 import es.upm.etsisi.poo.models.product.ProductBasic;
@@ -16,14 +17,14 @@ public class ProductController {
     public static void add(int id, String name, String categories, double price) {
         if (categorieControl(categories)) {
             if (ProductDB.existeId(id)) {
-                throw new DuplicateProductIdException("Ya existe un producto con ese id");
+                throw new DuplicateProductIdException();
             } else {
                 if (ProductDB.countProduct() < 200) {
                     ProductBasic productBasic = new ProductBasic(id, name, Categories.valueOf(categories), price);
                     ProductDB.addProduct(productBasic);
                     System.out.println(productBasic.toString());
                 } else {
-                    throw new FullProductCatalogException("Catálogo de productos lleno");
+                    throw new FullProductCatalogException();
                 }
             }
         }
@@ -47,7 +48,7 @@ public class ProductController {
                 break;
             case "CATEGORY":
                 if (p instanceof ProductMeetingFood) {
-                    throw new CategoryMismatchException("No se puede aplicar una categoría a comidas o reuniones");
+                    throw new FoodMeetingCategoryException();
                 } else {
                     if (categorieControl(valor)) {
                         Categories categorie = Categories.valueOf(valor.toUpperCase());
@@ -83,7 +84,7 @@ public class ProductController {
             Categories.valueOf(categorie);
             return true;
         } catch (IllegalArgumentException ex) {
-            throw new CategoryMismatchException("Categoría no válida");
+            throw new CategoryMismatchException();
         }
     }
 

@@ -212,7 +212,7 @@ public class App {
                             break;
                     }
                     if (cmd == null) {
-                        throw new UnknownCommandException("Comando no valido");
+                        throw new UnknownCommandException();
                     } else {
                         bucle = cmd.execute();
                         if (!esGeneral) {
@@ -248,7 +248,7 @@ public class App {
                 command = firsWord;
                 reordenarArray(split, -1, 1);
             } else {
-                throw new UnknownCommandException("Comando no valido");
+                throw new UnknownCommandException();
             }
         }
         juntarComillas(split);
@@ -260,7 +260,7 @@ public class App {
             int i = 4;// índice en el que empiezan las pers
             while (args[i] != null) {
                 if (!args[i].startsWith("--p")) {
-                    throw new PersonalitationUnformattedException("Las personalizaciones deben tener el formato --p<Texto>");
+                    throw new PersonalitationUnformattedException();
                 }
                 i++;
             }
