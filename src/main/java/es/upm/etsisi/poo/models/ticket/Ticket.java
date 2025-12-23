@@ -48,8 +48,8 @@ public class Ticket {
         for (ProductBasic productBasic : this.productBasics) {
             if (productBasic.getId() == productMeeting.getId()) {
                 tmp = (ProductMeetingFood) productBasic;
-                asistentes = tmp.getAsistentes();
-                productMeeting.setAsistentes(productMeeting.getAsistentes() + asistentes);
+                asistentes = tmp.getAssistants();
+                productMeeting.setAsistentes(productMeeting.getAssistants() + asistentes);
                 removeProduct(productBasic);
                 break;
             }
@@ -92,7 +92,11 @@ public class Ticket {
     }
 
     public void printAndClose() {
-        this.estado = States.CERRADO;
+        if(this.estado!=States.CERRADO) {
+            //TODO aquí comprobar fechas de servicios y de eventos
+            //comprobarCaducidad(); que lance error si hay algo caducado o que avise y lo borre del ticket
+            this.estado = States.CERRADO;
+        }
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("-yy-MM-dd-HH:mm");
         this.idTicket += LocalDateTime.now().format(formatter);
         print();
