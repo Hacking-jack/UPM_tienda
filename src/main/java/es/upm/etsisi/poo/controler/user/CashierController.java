@@ -34,7 +34,7 @@ public class CashierController {
         System.out.println("Cash:");
         for (User user : UserDB.list()) {
             if (user instanceof Cashier) {
-                System.out.println("  " + user.toString());
+                System.out.println("  " + user);
             }
         }
     }

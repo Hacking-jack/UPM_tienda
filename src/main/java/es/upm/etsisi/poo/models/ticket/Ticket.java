@@ -92,7 +92,7 @@ public class Ticket {
     }
 
     public void printAndClose() {
-        if(this.estado!=States.CERRADO) {
+        if (this.estado != States.CERRADO) {
             //TODO aquí comprobar fechas de servicios y de eventos
             //comprobarCaducidad(); que lance error si hay algo caducado o que avise y lo borre del ticket
             this.estado = States.CERRADO;
@@ -140,9 +140,9 @@ public class Ticket {
                 descuentoTotal += discountAmount;
             }
             if (discountAmount == 0.0) {
-                sb.append("  ").append(p.toString()).append("\n");
+                sb.append("  ").append(p).append("\n");
             } else {
-                sb.append("  ").append(p.toString())
+                sb.append("  ").append(p)
                         .append(String.format(" **discount -%.2f%n", discountAmount));
             }
         }

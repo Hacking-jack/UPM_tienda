@@ -25,7 +25,7 @@ public class ProductFoodMeetingController extends ProductController {
                 if ((isFood && dias >= 3) || (!isFood && (dias >= 1 || (dias == 0 && LocalDateTime.now().getHour() <= 12)))) {
                     ProductBasic productBasic = new ProductMeetingFood(id, name, price, fecha, maxParticipantes, isFood);
                     ProductDB.addProduct(productBasic);
-                    System.out.println(productBasic.toString());
+                    System.out.println(productBasic);
                 } else {
                     if (isFood) {
                         throw new NotEnoughTimeException();

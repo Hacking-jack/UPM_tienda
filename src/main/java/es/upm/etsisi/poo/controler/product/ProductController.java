@@ -22,7 +22,7 @@ public class ProductController {
                 if (ProductDB.countProduct() < 200) {
                     ProductBasic productBasic = new ProductBasic(id, name, Categories.valueOf(categories), price);
                     ProductDB.addProduct(productBasic);
-                    System.out.println(productBasic.toString());
+                    System.out.println(productBasic);
                 } else {
                     throw new FullProductCatalogException();
                 }
@@ -63,13 +63,13 @@ public class ProductController {
                 System.out.println("Campo no valido");
                 break;
         }
-        System.out.println(p.toString());
+        System.out.println(p);
 
     }
 
     public static void remove(int id) {
         ProductBasic p = ProductDB.findId(id);
-        System.out.println(p.toString());
+        System.out.println(p);
         ProductDB.removeProduct(p);
     }
 

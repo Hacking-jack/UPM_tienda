@@ -2,7 +2,7 @@ package es.upm.etsisi.poo.models.user;
 
 import java.util.ArrayList;
 
-public class ClientBusiness extends Client{
+public class ClientBusiness extends Client {
     public ClientBusiness(String nombre, String nif, String email, String cajeroAlta) {
         super(nombre, nif, email, cajeroAlta);
     }

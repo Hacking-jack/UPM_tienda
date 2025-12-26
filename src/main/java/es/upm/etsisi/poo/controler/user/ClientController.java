@@ -34,7 +34,7 @@ public class ClientController {
         System.out.println("Client:");
         for (User user : UserDB.list()) {
             if (user instanceof Client) {
-                System.out.println("  " + user.toString());
+                System.out.println("  " + user);
             }
         }
     }

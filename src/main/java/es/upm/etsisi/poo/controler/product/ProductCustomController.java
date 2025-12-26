@@ -20,7 +20,7 @@ public class ProductCustomController extends ProductController {
                     ProductBasic productBasic;
                     productBasic = new ProductBasicCustom(name, price, Categories.valueOf(categories), maxPers, id);
                     ProductDB.addProduct(productBasic);
-                    System.out.println(productBasic.toString());
+                    System.out.println(productBasic);
                 } else {
                     throw new FullProductCatalogException();
                 }

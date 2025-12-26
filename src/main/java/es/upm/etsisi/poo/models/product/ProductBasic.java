@@ -3,7 +3,7 @@ package es.upm.etsisi.poo.models.product;
 
 import es.upm.etsisi.poo.exceptions.product.NegativeNumException;
 
-public class ProductBasic extends Product{
+public class ProductBasic extends Product {
 
     protected String name;
     protected Categories categories;
