@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Client extends User {
 
-    private final String cajeroAlta;
+    protected final String cajeroAlta;
 
     public Client(String nombre, String dni, String email, String cajeroAlta) {
         this.nombre = nombre;
@@ -21,11 +21,12 @@ public class Client extends User {
     @Override
     public String toString() {
         String cashId;
-        if (cajeroAlta != null) {
-            cashId = cajeroAlta;
+        if (this.cajeroAlta != null) {
+            cashId = this.cajeroAlta;
         } else {
             cashId = "null";
         }
-        return "Client{identifier='" + this.id + "', name='" + nombre + "', email='" + email + "', cash=" + cashId + "}";
+        return "USER{identifier='" + this.id + "', name='" + this.nombre +
+                "', email='" + this.email + "', cash=" + cashId + "}";
     }
 }

@@ -1,5 +1,21 @@
 package es.upm.etsisi.poo.models.user;
 
-/*public class ClientBusiness extends Client{
+import java.util.ArrayList;
 
-}*/
+public class ClientBusiness extends Client{
+    public ClientBusiness(String nombre, String nif, String email, String cajeroAlta) {
+        super(nombre, nif, email, cajeroAlta);
+    }
+
+    @Override
+    public String toString() {
+        String cashId;
+        if (cajeroAlta != null) {
+            cashId = cajeroAlta;
+        } else {
+            cashId = "null";
+        }
+        return "COMPANY{identifier='" + this.id + "', name='" + this.nombre + "', email='" + this.email + "', cash=" + cashId + "}";
+    }
+
+}
