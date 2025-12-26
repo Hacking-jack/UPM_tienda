@@ -21,8 +21,9 @@ public class CashierController {
             Cashier nuevo = new Cashier(id, nombre, email);
             UserDB.addUser(nuevo);
             System.out.println(nuevo);
-        } else
+        } else {
             throw new InvalidDocumentNumberException(id);
+        }
     }
 
     public static void remove(String id) {
@@ -45,7 +46,7 @@ public class CashierController {
     }
 
     public static void cashTickets(String cashId) {
-        if (UserDB.existeId(cashId) && UserDB.findId(cashId) instanceof Cashier) {
+        if (UserDB.existeId(cashId) && (UserDB.findId(cashId) instanceof Cashier)) {
             System.out.print("Tickets: \n");
 
             Cashier aux = (Cashier) UserDB.findId(cashId);

@@ -27,22 +27,24 @@ public class CommandTicketAddProduct implements Command {
 
     @Override
     public boolean execute() {
-        ProductBasic productBasic = ProductController.findId(this.productId);
+        ProductBasic productBasic = ProductController.findId(productId);
         if (amount > 0) {
             if (UserDB.findId(cashId).getTickets().contains(ticketId)) {
                 if (!(productBasic instanceof ProductMeetingFood)) {
                     if (pers != null) { //con pers
-                        TicketController.addProductPers(this.ticketId, productBasic, this.amount, this.pers);
+                        TicketController.addProductPers(ticketId, productBasic, amount, pers);
                     } else { //sin pers
-                        TicketController.addProduct(this.ticketId, productBasic, this.amount);
+                        TicketController.addProduct(ticketId, productBasic, amount);
                     }
-                } else //foodMeeting
-                    TicketController.addMeeting(this.ticketId, (ProductMeetingFood) productBasic, this.amount);
+                } else {//foodMeeting
+                    TicketController.addMeeting(ticketId, (ProductMeetingFood) productBasic, amount);
+                }
             } else {
                 throw new CashierTicketMismatchException();
             }
-        } else
+        } else {
             throw new NegativeNumException();
+        }
         return true;
 
     }

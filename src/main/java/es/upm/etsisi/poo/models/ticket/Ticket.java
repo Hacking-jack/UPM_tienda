@@ -17,14 +17,14 @@ public class Ticket {
     private States estado;
 
     public States getEstado() {
-        return this.estado;
+        return estado;
     }
 
     public Ticket(String id) {
-        this.idTicket = id;
-        this.estado = States.VACIO;
-        this.date = LocalDateTime.now();
-        this.productBasics = new ArrayList<>();
+        idTicket = id;
+        estado = States.VACIO;
+        date = LocalDateTime.now();
+        productBasics = new ArrayList<>();
     }
 
     public Ticket() {
@@ -33,19 +33,16 @@ public class Ticket {
 
 
     public boolean addProduct(ProductBasic productBasic) {
-        if (this.productBasics.isEmpty())
-            this.estado = States.ACTIVO;
-        if (this.productBasics.size() < 100)
-            return this.productBasics.add(productBasic);
-        else {
-            return false;
+        if (productBasics.isEmpty()) {
+            estado = States.ACTIVO;
         }
+        return (productBasics.size() < 100) && productBasics.add(productBasic);
     }
 
     public void addMeeting(ProductMeetingFood productMeeting) {
         int asistentes = 0;
         ProductMeetingFood tmp;
-        for (ProductBasic productBasic : this.productBasics) {
+        for (ProductBasic productBasic : productBasics) {
             if (productBasic.getId() == productMeeting.getId()) {
                 tmp = (ProductMeetingFood) productBasic;
                 asistentes = tmp.getAssistants();
@@ -58,7 +55,7 @@ public class Ticket {
     }
 
     public void removeProduct(ProductBasic p) {
-        this.productBasics.removeIf(product -> product.getId() == p.getId());
+        productBasics.removeIf(product -> product.getId() == p.getId());
     }
 
     public boolean hasDiscount(int counterStationary, int counterClothes, int counterBook, int counterElectronic,
@@ -92,32 +89,32 @@ public class Ticket {
     }
 
     public void printAndClose() {
-        if (this.estado != States.CERRADO) {
+        if (estado != States.CERRADO) {
             //TODO aquí comprobar fechas de servicios y de eventos
             //comprobarCaducidad(); que lance error si hay algo caducado o que avise y lo borre del ticket
-            this.estado = States.CERRADO;
+            estado = States.CERRADO;
         }
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("-yy-MM-dd-HH:mm");
-        this.idTicket += LocalDateTime.now().format(formatter);
+        idTicket += LocalDateTime.now().format(formatter);
         print();
     }
 
     public String list() {
-        return this.idTicket + " - " + this.estado.toString();
+        return idTicket + " - " + estado.toString();
     }
 
     public void title() {
-        System.out.println("  " + this.idTicket + "->" + this.estado.toString());
+        System.out.println("  " + idTicket + "->" + estado.toString());
     }
 
     public String getStringPrint() {
         StringBuilder sb = new StringBuilder();
 
-        this.productBasics.sort(Comparator.comparing(ProductBasic::getName));
+        productBasics.sort(Comparator.comparing(ProductBasic::getName));
         double precioTotal = 0;
         int counterStationary = 0, counterClothes = 0, counterBook = 0, counterElectronic = 0;
 
-        for (ProductBasic p : this.productBasics) {
+        for (ProductBasic p : productBasics) {
             precioTotal += p.getPrice();
             switch (p.getCategories()) {
                 case STATIONERY -> counterStationary++;
@@ -129,9 +126,9 @@ public class Ticket {
 
         double descuentoTotal = 0;
 
-        sb.append(String.format("Ticket : %s%n", this.idTicket));
+        sb.append(String.format("Ticket : %s%n", idTicket));
 
-        for (ProductBasic p : this.productBasics) {
+        for (ProductBasic p : productBasics) {
             boolean discount = hasDiscount(counterStationary, counterClothes, counterBook, counterElectronic,
                     p.getCategories());
             double discountAmount = 0.0;
@@ -205,10 +202,10 @@ public class Ticket {
     @Override
     public String toString() {
         return "Ticket{" +
-                "products=" + this.productBasics +
-                ", idTicket='" + this.idTicket + '\'' +
-                ", date=" + this.date +
-                ", estado=" + this.estado +
+                "products=" + productBasics +
+                ", idTicket='" + idTicket + '\'' +
+                ", date=" + date +
+                ", estado=" + estado +
                 '}';
     }
 
@@ -227,6 +224,6 @@ public class Ticket {
     }
 
     public String getIdTicket() {
-        return this.idTicket;
+        return idTicket;
     }
 }

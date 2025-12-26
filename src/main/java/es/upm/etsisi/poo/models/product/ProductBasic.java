@@ -13,10 +13,11 @@ public class ProductBasic extends Product {
     public ProductBasic(int id, String name, Categories categories, double price) {
         this.name = name;
         this.categories = categories;
-        if (price >= 0)
+        if (price >= 0) {
             this.price = price;
-        else
+        } else {
             throw new NegativeNumException();
+        }
         this.id = id;
     }
 
@@ -51,7 +52,7 @@ public class ProductBasic extends Product {
 
     @Override
     public ProductBasic clone() {
-        return new ProductBasic(this.id, this.name, this.categories, this.price);
+        return new ProductBasic(id, name, categories, price);
     }
 
     @Override

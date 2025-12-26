@@ -7,35 +7,37 @@ import java.util.ArrayList;
 
 public class TicketDB {
     //Equivalente a una tabla Tickets en SQL
-    static private final ArrayList<Ticket> tickets = new ArrayList<>();
+    private static final ArrayList<Ticket> tickets = new ArrayList<>();
 
     //Equivalente a un insert
-    static public void addTicket(Ticket t) {
+    public static void addTicket(Ticket t) {
         tickets.add(t);
     }
 
-    static public Ticket findId(String id) {
+    public static Ticket findId(String id) {
         for (Ticket t : tickets) {
-            if (t.getIdTicket().equals(id))
+            if (t.getIdTicket().equals(id)) {
                 return (t);
+            }
         }
         throw new TicketNotFoundException(id);
     }
 
-    static public boolean existeId(String id) {
+    public static boolean existeId(String id) {
         for (Ticket t : tickets) {
-            if (t.getIdTicket().equals(id))
+            if (t.getIdTicket().equals(id)) {
                 return true;
+            }
         }
         return false;
     }
 
     //Equivalente a Select * from products;
-    static public ArrayList<Ticket> listProducts() {
+    public static ArrayList<Ticket> listProducts() {
         return tickets;
     }
 
-    static public void title(String ticketId) {
+    public static void title(String ticketId) {
         Ticket t = findId(ticketId);
         t.title();
     }

@@ -49,7 +49,9 @@ public class ClientController {
 
 
     public static boolean esDocumentoValido(String string) {
-        if (string == null || string.length() != 9) return false;
+        if ((string == null) || (string.length() != 9)) {
+            return false;
+        }
 
         string = string.toUpperCase();
         char letraOriginal = string.charAt(8);
@@ -70,7 +72,9 @@ public class ClientController {
                 case 'Z' -> "2" + string.substring(1, 8);
                 default -> null;
             };
-            if (numeros == null) return false;
+            if (numeros == null) {
+                return false;
+            }
         } else {//  Formato incorrecto
             return false;
         }
@@ -80,7 +84,9 @@ public class ClientController {
 
     //TODO Comprobar código
     public static boolean esCif(String cif) {
-        if (cif == null) return false;
+        if (cif == null) {
+            return false;
+        }
 
         cif = cif.toUpperCase();
 
@@ -99,7 +105,7 @@ public class ClientController {
         for (int i = 1; i <= 7; i++) {
             int digito = Character.getNumericValue(cif.charAt(i));
 
-            if (i % 2 == 0) { // posiciones pares
+            if ((i % 2) == 0) { // posiciones pares
                 sumaPares += digito;
             } else { // posiciones impares
                 int doble = digito * 2;
@@ -109,7 +115,7 @@ public class ClientController {
 
         int sumaTotal = sumaPares + sumaImpares;
         int unidad = sumaTotal % 10;
-        int digitoControl = (unidad == 0) ? 0 : 10 - unidad;
+        int digitoControl = (unidad == 0) ? 0 : (10 - unidad);
 
         char controlDigito = (char) ('0' + digitoControl);
         char controlLetra = "JABCDEFGHI".charAt(digitoControl);
@@ -120,7 +126,7 @@ public class ClientController {
         } else if ("KPQS".indexOf(letraInicial) >= 0) {
             return control == controlLetra;
         } else {
-            return control == controlDigito || control == controlLetra;
+            return (control == controlDigito) || (control == controlLetra);
         }
     }
 

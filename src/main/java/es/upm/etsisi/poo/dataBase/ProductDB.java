@@ -7,46 +7,48 @@ import java.util.ArrayList;
 
 public class ProductDB {
     //Equivalente a una tabla Products en SQL
-    static private final ArrayList<ProductBasic> PRODUCT_BASICS = new ArrayList<>();
+    private static final ArrayList<ProductBasic> PRODUCT_BASICS = new ArrayList<>();
 
     //Equivalente a un insert
-    static public void addProduct(ProductBasic p) {
+    public static void addProduct(ProductBasic p) {
         PRODUCT_BASICS.add(p);
     }
 
-    static public void addProductClone(ProductBasic p) {
+    public static void addProductClone(ProductBasic p) {
         PRODUCT_BASICS.add(p);
     }
 
     //Equivalente a Select * from Products where id = id;
-    static public ProductBasic findId(int id) {
+    public static ProductBasic findId(int id) {
         for (ProductBasic p : PRODUCT_BASICS) {
-            if (p.getId() == id)
+            if (p.getId() == id) {
                 return (p);
+            }
         }
         throw new ProductNotFoundException(id);
     }
 
-    static public boolean existeId(int id) {
+    public static boolean existeId(int id) {
         for (ProductBasic p : PRODUCT_BASICS) {
-            if (p.getId() == id)
+            if (p.getId() == id) {
                 return true;
+            }
         }
         return false;
     }
 
     //Equivalente  DELETE FROM table_name WHERE id = id;
-    static public void removeProduct(ProductBasic p) {
+    public static void removeProduct(ProductBasic p) {
         PRODUCT_BASICS.remove(p);
     }
 
     //Equivalente SELECT COUNT(*) FROM products
-    static public int countProduct() {
+    public static int countProduct() {
         return PRODUCT_BASICS.size();
     }
 
     //Equivalente a Select * from products;
-    static public ArrayList<ProductBasic> listProducts() {
+    public static ArrayList<ProductBasic> listProducts() {
         return PRODUCT_BASICS;
     }
 

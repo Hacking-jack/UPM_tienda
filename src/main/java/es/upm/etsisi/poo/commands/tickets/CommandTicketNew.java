@@ -21,7 +21,7 @@ public class CommandTicketNew implements Command {
     public boolean execute() {
         if (ClientController.existeId(clientId)) {
             if (CashierController.existeId(cashId)) {
-                this.id = TicketController.newTicket(id);
+                id = TicketController.newTicket(id);
                 ClientController.searchId(clientId).addTicket(id);
                 CashierController.searchId(cashId).addTicket(id);
             } else {

@@ -21,10 +21,11 @@ public class App {
     public static void main(String[] args) {
         App aplicacion = new App();
         aplicacion.iniciar();
-        if (args.length == 1)
+        if (args.length == 1) {
             runFromFile(args[0]);
-        else
+        } else {
             runInteractive();
+        }
         aplicacion.end();
 
     }
@@ -57,7 +58,9 @@ public class App {
                     boolean esGeneral = false;
                     System.out.print("tUPM> ");
                     line = input.readLine();
-                    if (line == null) break;
+                    if (line == null) {
+                        break;
+                    }
 
                     if (esArchivo) {
                         System.out.println(line);
@@ -114,7 +117,7 @@ public class App {
                         case "ticket add":
                             String[] pers;
                             pers = obtenerPers(args);
-                            if (pers != null && pers[0] == null) {// formato erróneo de pers
+                            if ((pers != null) && (pers[0] == null)) {// formato erróneo de pers
                                 break;
                             }
                             cmd = new CommandTicketAddProduct(args[0], args[1], Integer.parseInt(args[2]), Integer.parseInt(args[3]), pers);
@@ -308,7 +311,7 @@ public class App {
     }
 
     private static void reordenarArray(String[] split, int i1, int dif) {
-        for (int i = i1 + 1; i < split.length - dif; i++) {
+        for (int i = i1 + 1; i < (split.length - dif); i++) {
             split[i] = split[i + dif];
         }
         for (int i = split.length - dif; i < split.length; i++) {

@@ -9,7 +9,7 @@ public class Cashier extends User {
         this.id = id;
         this.nombre = nombre;
         this.email = email;
-        this.tickets = new ArrayList<>();
+        tickets = new ArrayList<>();
     }
 
 

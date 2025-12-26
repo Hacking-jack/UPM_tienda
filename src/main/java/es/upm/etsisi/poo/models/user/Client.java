@@ -6,27 +6,27 @@ public class Client extends User {
 
     protected final String cajeroAlta;
 
-    public Client(String nombre, String dni, String email, String cajeroAlta) {
+    public Client(String nombre, String id, String email, String cajeroAlta) {
         this.nombre = nombre;
-        this.id = dni;
+        this.id = id;
         this.cajeroAlta = cajeroAlta;
         this.email = email;
-        this.tickets = new ArrayList<>();
+        tickets = new ArrayList<>();
     }
 
     public String getId() {
-        return this.id;
+        return id;
     }
 
     @Override
     public String toString() {
         String cashId;
-        if (this.cajeroAlta != null) {
-            cashId = this.cajeroAlta;
+        if (cajeroAlta != null) {
+            cashId = cajeroAlta;
         } else {
             cashId = "null";
         }
-        return "USER{identifier='" + this.id + "', name='" + this.nombre +
-                "', email='" + this.email + "', cash=" + cashId + "}";
+        return "USER{identifier='" + id + "', name='" + nombre +
+                "', email='" + email + "', cash=" + cashId + "}";
     }
 }

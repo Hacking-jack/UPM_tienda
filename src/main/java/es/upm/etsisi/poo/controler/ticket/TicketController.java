@@ -33,8 +33,9 @@ public class TicketController {
     public static void addProduct(String ticketId, ProductBasic productBasic, int quantity) {
         Ticket ticket = findId(ticketId);
         if (ticket.getEstado() != States.CERRADO) {
-            if (ticket.getEstado() == States.VACIO)
+            if (ticket.getEstado() == States.VACIO) {
                 ticket.setEstado(States.ACTIVO);
+            }
             ProductBasic clone = productBasic.clone();
             for (int i = 0; i < quantity; i++) {
                 if (!ticket.addProduct(clone)) {
@@ -72,19 +73,20 @@ public class TicketController {
     }
 
     //TODO revisar esto que es un poco chapuza
-    static public void addMeeting(String ticketId, ProductMeetingFood product, int quantity) {
+    public static void addMeeting(String ticketId, ProductMeetingFood product, int quantity) {
         Ticket ticket = findId(ticketId);
         if (ticket.getEstado() != States.CERRADO) {
             ProductMeetingFood clone = product.clone();
-            if (clone.setAsistentes(quantity))
+            if (clone.setAsistentes(quantity)) {
                 ticket.addMeeting(clone);
+            }
             ticket.print();
         } else {
             throw new TicketClosedException();
         }
     }
 
-    static public Ticket findId(String id) {
+    public static Ticket findId(String id) {
         return TicketDB.findId(id);
     }
 

@@ -15,7 +15,7 @@ public class ClientBusiness extends Client {
         } else {
             cashId = "null";
         }
-        return "COMPANY{identifier='" + this.id + "', name='" + this.nombre + "', email='" + this.email + "', cash=" + cashId + "}";
+        return "COMPANY{identifier='" + id + "', name='" + nombre + "', email='" + email + "', cash=" + cashId + "}";
     }
 
 }

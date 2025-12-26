@@ -46,7 +46,7 @@ public class AppTest
         String expectedOutput = new String(bytes, StandardCharsets.UTF_8);
 
         // Salida real del programa
-        String actualOutput = new String(outContent.toByteArray(), (StandardCharsets.UTF_8));
+        String actualOutput = outContent.toString((StandardCharsets.UTF_8));
 
         // Comparar
         assertEquals(expectedOutput.trim(), actualOutput.trim());
