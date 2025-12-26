@@ -23,7 +23,7 @@ public class CommandClientAdd implements Command {
         if (ClientController.esDocumentoValido(id)) {
             ClientController.addIndividualClient(name, id, email, cashId);
         } else if (ClientController.esCif(id)) {
-            //TODO ClientController.addBusinessClient(name, id, email, cashId);
+            ClientController.addBusinessClient(name, id, email, cashId);
         } else {
             throw new InvalidDocumentNumberException(id);
         }

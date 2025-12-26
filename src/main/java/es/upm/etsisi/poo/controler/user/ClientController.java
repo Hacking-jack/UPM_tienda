@@ -3,6 +3,7 @@ package es.upm.etsisi.poo.controler.user;
 import es.upm.etsisi.poo.dataBase.UserDB;
 import es.upm.etsisi.poo.exceptions.user.DuplicateIdentifierException;
 import es.upm.etsisi.poo.exceptions.user.UserNotFoundException;
+import es.upm.etsisi.poo.models.user.ClientBusiness;
 import es.upm.etsisi.poo.models.user.User;
 import es.upm.etsisi.poo.models.user.Client;
 
@@ -21,8 +22,16 @@ public class ClientController {
         System.out.println(client);
     }
 
-    public static void addBussinessClient(String nombre, String dni, String email, String cashId) {
-
+    public static void addBusinessClient(String nombre, String cif, String email, String cashId) {
+        if (UserDB.existeId(cif)) {
+            throw new DuplicateIdentifierException(cif);
+        }
+        if (!UserDB.existeId(cashId)) {
+            throw new UserNotFoundException("Error. Cajero no encontrado.");
+        }
+        ClientBusiness clientBusiness = new ClientBusiness(nombre, cif, email, cashId);
+        UserDB.addUser(clientBusiness);
+        System.out.println(clientBusiness);
     }
 
     public static void remove(String id) {
