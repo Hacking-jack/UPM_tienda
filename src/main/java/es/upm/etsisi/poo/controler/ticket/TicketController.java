@@ -8,25 +8,38 @@ import es.upm.etsisi.poo.models.product.ProductBasicCustom;
 import es.upm.etsisi.poo.models.product.ProductMeetingFood;
 import es.upm.etsisi.poo.models.ticket.States;
 import es.upm.etsisi.poo.models.ticket.Ticket;
+import es.upm.etsisi.poo.models.ticket.TipoDeTicket;
 
 public class TicketController {
 
 
-    public static String newTicket(String id) {
+    public static String newTicket(String id, TipoDeTicket tipoDeTicket) {
         if (id == null) {
-            Ticket ticket = new Ticket();
+            Ticket ticket = new Ticket(tipoDeTicket);
             id = ticket.getIdTicket();
             TicketDB.addTicket(ticket);
             TicketDB.findId(id).print();
         } else {
             if (!TicketDB.existeId(id)) {
-                TicketDB.addTicket(new Ticket(id));
+                TicketDB.addTicket(new Ticket(id, tipoDeTicket));
                 TicketDB.findId(id).print();
             } else {
                 throw new DuplicateTicketIdException();
             }
         }
         return id;
+    }
+
+    public static String newTicketBasic(String id) {
+        return newTicket(id, TipoDeTicket.CLIENTE);
+    }
+
+    public static String newTicketService(String id) {
+        return newTicket(id, TipoDeTicket.EMPRESA_SERVICIO);
+    }
+
+    public static String newTicketMix(String id) {
+        return newTicket(id, TipoDeTicket.EMPRESA_COMBINADO);
     }
 
 

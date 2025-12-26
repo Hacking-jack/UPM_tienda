@@ -15,20 +15,22 @@ public class Ticket {
     private String idTicket;
     private final LocalDateTime date;
     private States estado;
+    private TipoDeTicket tipoDeTicket;
 
     public States getEstado() {
         return estado;
     }
 
-    public Ticket(String id) {
+    public Ticket(String id, TipoDeTicket tipoDeTicket) {
         idTicket = id;
         estado = States.VACIO;
         date = LocalDateTime.now();
         productBasics = new ArrayList<>();
+        this.tipoDeTicket=tipoDeTicket;
     }
 
-    public Ticket() {
-        this(generarId());
+    public Ticket(TipoDeTicket tipoDeTicket) {
+        this(generarId(), tipoDeTicket);
     }
 
 
