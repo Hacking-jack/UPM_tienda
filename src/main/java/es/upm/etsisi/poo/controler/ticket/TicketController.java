@@ -16,7 +16,7 @@ public class TicketController {
     public static String newTicket(String id, String tipo) {
         assert (Objects.equals(tipo, "BASIC")) || (Objects.equals(tipo, "SERVICE")) || (Objects.equals(tipo, "MIX"));
         if (id == null) {
-            Ticket ticket=null;
+            Ticket ticket;
             ticket= switch (tipo){
               case "BASIC"->  new TicketProduct();
               case "SERVICE"-> new TicketService();
@@ -28,7 +28,7 @@ public class TicketController {
             TicketDB.findId(id).print();
         } else {
             if (!TicketDB.existeId(id)) {
-                Ticket ticket=null;
+                Ticket ticket;
                 ticket= switch (tipo){
                     case "BASIC"->  new TicketProduct(id);
                     case "SERVICE"-> new TicketService(id);
