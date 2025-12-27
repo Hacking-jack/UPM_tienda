@@ -4,6 +4,7 @@ import es.upm.etsisi.poo.commands.Command;
 import es.upm.etsisi.poo.controler.user.CashierController;
 import es.upm.etsisi.poo.controler.user.ClientController;
 import es.upm.etsisi.poo.controler.ticket.TicketController;
+import es.upm.etsisi.poo.exceptions.ticket.TicketTypeMismatchException;
 import es.upm.etsisi.poo.exceptions.user.UserNotFoundException;
 
 public class CommandTicketNew implements Command {
@@ -23,16 +24,16 @@ public class CommandTicketNew implements Command {
     public boolean execute() {
         if (ClientController.existeId(clientId)) {
             if (CashierController.existeId(cashId)) {
-                if(ClientController.isClient(clientId) && (tipoDeTicket==null || tipoDeTicket=='p')) {
+                if(ClientController.isClient(clientId) && ((tipoDeTicket == null) || (tipoDeTicket == 'p'))) {
                     id = TicketController.newTicketBasic(id);
                 }else{
-                    if(ClientController.isCompany(clientId) && tipoDeTicket == 's'){
+                    if(ClientController.isBusiness(clientId) && (tipoDeTicket == 's')){
                         id = TicketController.newTicketService(id);
                     }else {
-                        if (ClientController.isCompany(clientId) && tipoDeTicket == 'c') {
+                        if (ClientController.isBusiness(clientId) && (tipoDeTicket == 'c')) {
                             id = TicketController.newTicketMix(id);
                         }else{
-                            throw new TicketTypeMistmatchException();
+                            throw new TicketTypeMismatchException();
                         }
                     }
                 }

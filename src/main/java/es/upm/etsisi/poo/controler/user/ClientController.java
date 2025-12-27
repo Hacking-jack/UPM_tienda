@@ -56,6 +56,14 @@ public class ClientController {
         return UserDB.existeId(id);
     }
 
+    public static boolean isClient(String clientId){
+        return UserDB.findId(clientId).getClass()==Client.class;
+    }
+
+    public static boolean isBusiness(String clientId){
+        return UserDB.findId(clientId).getClass()== ClientBusiness.class;
+    }
+
 
     public static boolean esDocumentoValido(String string) {
         if ((string == null) || (string.length() != 9)) {
