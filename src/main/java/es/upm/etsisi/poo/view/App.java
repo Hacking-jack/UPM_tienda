@@ -108,9 +108,17 @@ public class App {
 
                         case "ticket new":
                             if (args[2] == null) {
-                                cmd = new CommandTicketNew(null, args[0], args[1]);
+                                cmd = new CommandTicketNew(null, args[0], args[1], null);
                             } else {
-                                cmd = new CommandTicketNew(args[0], args[1], args[2]);
+                                if(args[2].startsWith("-")){
+                                    cmd = new CommandTicketNew(null, args[0], args[1], args[2].charAt(1));
+                                }else{
+                                    if(args[3]==null){
+                                        cmd = new CommandTicketNew(args[0], args[1], args[2], null);
+                                    }else{
+                                        cmd = new CommandTicketNew(args[0], args[1], args[2], args[3].charAt(1));
+                                    }
+                                }
                             }
                             break;
 
