@@ -6,22 +6,36 @@ import es.upm.etsisi.poo.exceptions.ticket.*;
 import es.upm.etsisi.poo.models.product.ProductBasic;
 import es.upm.etsisi.poo.models.product.ProductBasicCustom;
 import es.upm.etsisi.poo.models.product.ProductMeetingFood;
-import es.upm.etsisi.poo.models.ticket.States;
-import es.upm.etsisi.poo.models.ticket.Ticket;
-import es.upm.etsisi.poo.models.ticket.TipoDeTicket;
+import es.upm.etsisi.poo.models.ticket.*;
+
+import java.util.Objects;
 
 public class TicketController {
 
 
-    public static String newTicket(String id, TipoDeTicket tipoDeTicket) {
+    public static String newTicket(String id, String tipo) {
+        assert (Objects.equals(tipo, "BASIC")) || (Objects.equals(tipo, "SERVICE")) || (Objects.equals(tipo, "MIX"));
         if (id == null) {
-            Ticket ticket = new Ticket(tipoDeTicket);
+            Ticket ticket=null;
+            ticket= switch (tipo){
+              case "BASIC"->  new TicketProduct();
+              case "SERVICE"-> new TicketService();
+              case "MIX" -> new TicketMix();
+              default -> throw new IllegalStateException("Unexpected value: " + tipo);
+            };
             id = ticket.getIdTicket();
             TicketDB.addTicket(ticket);
             TicketDB.findId(id).print();
         } else {
             if (!TicketDB.existeId(id)) {
-                TicketDB.addTicket(new Ticket(id, tipoDeTicket));
+                Ticket ticket=null;
+                ticket= switch (tipo){
+                    case "BASIC"->  new TicketProduct(id);
+                    case "SERVICE"-> new TicketService(id);
+                    case "MIX" -> new TicketMix(id);
+                    default -> throw new IllegalStateException("Unexpected value: " + tipo);
+                };
+                TicketDB.addTicket(ticket);
                 TicketDB.findId(id).print();
             } else {
                 throw new DuplicateTicketIdException();
@@ -31,15 +45,15 @@ public class TicketController {
     }
 
     public static String newTicketBasic(String id) {
-        return newTicket(id, TipoDeTicket.CLIENTE);
+        return newTicket(id, "BASIC");
     }
 
     public static String newTicketService(String id) {
-        return newTicket(id, TipoDeTicket.EMPRESA_SERVICIO);
+        return newTicket(id, "SERVICE");
     }
 
     public static String newTicketMix(String id) {
-        return newTicket(id, TipoDeTicket.EMPRESA_COMBINADO);
+        return newTicket(id, "MIX");
     }
 
 
