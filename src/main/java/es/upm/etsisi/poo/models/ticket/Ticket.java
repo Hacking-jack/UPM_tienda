@@ -15,6 +15,7 @@ public class Ticket {
     private String idTicket;
    // private final LocalDateTime date;
     private States estado;
+    private TicketType tipo;
 
     public States getEstado() {
         return estado;
@@ -29,6 +30,10 @@ public class Ticket {
 
     public Ticket() {
         this(generarId());
+    }
+
+    public TicketType getType(){
+        return tipo;
     }
 
 
@@ -89,10 +94,25 @@ public class Ticket {
     }
 
     public void printAndClose() {
-        if (estado != States.CERRADO) {
+        if(tipo == TicketType.MIX){
+            boolean hayProducto = false;
+            boolean hayServicio = false;
+
+            for (ProductBasic p : productBasics) {
+                if (p instanceof ProductMeetingFood)
+                    hayServicio = true;
+                else
+                    hayProducto = true;
+            }
+            if (!hayProducto || !hayServicio) {
+                System.out.println("Un ticket mixto debe tener al menos un producto y un servicio");
+                //return;
+            }
+        } else {
             //TODO aquí comprobar fechas de servicios y de eventos
             //comprobarCaducidad(); que lance error si hay algo caducado o que avise y lo borre del ticket
-            estado = States.CERRADO;
+            if (estado != States.CERRADO)
+                estado = States.CERRADO;
         }
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("-yy-MM-dd-HH:mm");
         idTicket += LocalDateTime.now().format(formatter);
@@ -108,6 +128,53 @@ public class Ticket {
     }
 
     public String getStringPrint() {
+        if (tipo == TicketType.PRODUCTS) {
+            return getStringPrintUsuario();
+        }
+        return getStringPrintEmpresa();
+    }
+    //TODO repasarlo
+    public String getStringPrintEmpresa(){
+        StringBuilder sb = new StringBuilder();
+        productBasics.sort(Comparator.comparing(ProductBasic::getName));
+
+        int serviceCount = 0;
+        double totalProductos = 0.0;
+
+        for (ProductBasic p : productBasics) {
+            if (p instanceof ProductMeetingFood) serviceCount++;
+        }
+
+        double descuentoServicios = serviceCount * 0.15;
+        sb.append(String.format("Ticket : %s%n", idTicket));
+
+        for (ProductBasic p : productBasics) {
+
+            if (p instanceof ProductMeetingFood) {
+                sb.append("  ").append(p.getName()).append("\n");
+            }
+
+            double precio = p.getPrice();
+            double descuento = tipo == TicketType.MIX ? precio * descuentoServicios : 0;
+            double precioFinal = precio - descuento;
+
+            totalProductos += precioFinal;
+
+            sb.append(String.format("  %s %.2f", p.getName(), precioFinal));
+
+            if (descuento > 0) {
+                sb.append(String.format(" **discount -%.2f", descuento));
+            }
+            sb.append("\n");
+        }
+
+        if (tipo == TicketType.MIX) {
+            sb.append(String.format("  Final Price: %.2f%n", totalProductos));
+        }
+
+        return sb.toString();
+    }
+    public String getStringPrintUsuario(){
         StringBuilder sb = new StringBuilder();
 
         productBasics.sort(Comparator.comparing(ProductBasic::getName));
@@ -143,7 +210,6 @@ public class Ticket {
                         .append(String.format(" **discount -%.2f%n", discountAmount));
             }
         }
-
         double precioFinal = precioTotal - descuentoTotal;
         sb.append(String.format("  Total price: %.2f%n", precioTotal));
         sb.append(String.format("  Total discount: %.2f%n", descuentoTotal));
