@@ -51,8 +51,6 @@ public class ProductBasicCustom extends ProductBasic {
 
     @Override
     public ProductBasicCustom clone() {
-        ProductBasicCustom p = new ProductBasicCustom(name, price, categories, maxPers, id);
-        ProductDB.addProductClone(p);
-        return p;
+        return (ProductBasicCustom) super.clone();
     }
 }

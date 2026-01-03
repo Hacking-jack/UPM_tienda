@@ -1,9 +1,20 @@
 package es.upm.etsisi.poo.models.product;
 
 public enum Services {
-    TRANSPORT,
-    SHOW,
-    INSURANCE;
+
+    SHOW(1),
+    INSURANCE(2),
+    TRANSPORT(3);
+
+    private final int id;
+
+    Services(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
 
     @Override
     public String toString() {
@@ -23,3 +34,4 @@ public enum Services {
     }
 
 }
+

@@ -69,9 +69,8 @@ public class ProductMeetingFood extends ProductBasic {
                     ", max people allowed:" + maxAssistants + ", actual people in event:" + assistants + "}";
         }
     }
-
     @Override
     public ProductMeetingFood clone() {
-        return new ProductMeetingFood(id, name, price, date, maxAssistants, isFood);
+        return (ProductMeetingFood) super.clone();
     }
 }

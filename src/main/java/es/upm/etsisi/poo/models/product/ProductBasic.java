@@ -1,42 +1,15 @@
 package es.upm.etsisi.poo.models.product;
 
 
-import es.upm.etsisi.poo.exceptions.product.NegativeNumException;
 
-public class ProductBasic extends Product {
+public class ProductBasic extends Product  {
 
-    protected String name;
     protected Categories categories;
-    protected double price;
-    protected final int id;
 
     public ProductBasic(int id, String name, Categories categories, double price) {
-        this.name = name;
+        super(id, name, price);
         this.categories = categories;
-        if (price >= 0) {
-            this.price = price;
-        } else {
-            throw new NegativeNumException();
-        }
-        this.id = id;
     }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
 
     public Categories getCategories() {
         return categories;
@@ -49,12 +22,20 @@ public class ProductBasic extends Product {
     public int getId() {
         return id;
     }
-
+    //TODO revisar esto como hacemos la excepcion
+//
+//    @Override
+//    public ProductBasic clone() {
+//        return new ProductBasic(this.id, this.name, this.categories, this.price);
+//    }
     @Override
     public ProductBasic clone() {
-        return new ProductBasic(id, name, categories, price);
+        try {
+            return (ProductBasic) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError("No debería pasar, Product implementa Cloneable");
+        }
     }
-
     @Override
     public String toString() {
         return "{class:Product, " + "id:" + id + ", name:'"
