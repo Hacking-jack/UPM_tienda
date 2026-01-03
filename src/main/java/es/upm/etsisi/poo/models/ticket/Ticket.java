@@ -13,7 +13,7 @@ import java.util.Comparator;
 public class Ticket {
     private final ArrayList<ProductBasic> productBasics;
     private String idTicket;
-    private final LocalDateTime date;
+   // private final LocalDateTime date;
     private States estado;
 
     public States getEstado() {
@@ -23,7 +23,7 @@ public class Ticket {
     public Ticket(String id) {
         idTicket = id;
         estado = States.VACIO;
-        date = LocalDateTime.now();
+       // date = LocalDateTime.now();
         productBasics = new ArrayList<>();
     }
 
@@ -198,7 +198,7 @@ public class Ticket {
         System.out.printf("  Total discount: %.2f%n", descuentoTotal);
         System.out.printf("  Final Price: %.2f%n", precioFinal);*/
     }
-
+/*
     @Override
     public String toString() {
         return "Ticket{" +
@@ -207,7 +207,7 @@ public class Ticket {
                 ", date=" + date +
                 ", estado=" + estado +
                 '}';
-    }
+    }*/
 
     public static String generarId() {
         String string = LocalDateTime.now()
