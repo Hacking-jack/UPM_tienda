@@ -4,6 +4,7 @@ import es.upm.etsisi.poo.exceptions.ticket.TicketNotFoundException;
 import es.upm.etsisi.poo.models.ticket.Ticket;
 
 import java.util.ArrayList;
+//TODO cache de base de datos
 
 public class TicketDB {
     //Equivalente a una tabla Tickets en SQL

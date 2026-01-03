@@ -5,7 +5,7 @@ import es.upm.etsisi.poo.models.user.User;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-
+//TODO cache de base de datos
 public class UserDB {
     //Tabla Humanos de base de datos, se guarda clientes y cajeros
     private static final ArrayList<User> USERS = new ArrayList<>();
