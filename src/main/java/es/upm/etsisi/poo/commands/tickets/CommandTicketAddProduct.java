@@ -38,7 +38,7 @@ public class CommandTicketAddProduct implements Command {
         if (product instanceof ProductMeetingFood) {
             TicketController.addMeeting(ticketId, (ProductMeetingFood) product, amount);
         }
-        else if (product instanceof ProductBasic) {
+        else if (product instanceof ProductBasic) { // TODO esto no se si habria que hacerlo con Object.class()
             ProductBasic pb = (ProductBasic) product;
             if (pers != null) {
                 TicketController.addProductPers(ticketId, pb, amount, pers);
@@ -47,7 +47,7 @@ public class CommandTicketAddProduct implements Command {
             }
         }
         else {
-            TicketController.addProduct(ticketId, product, amount);
+            TicketController.addProduct(ticketId, product, amount); // TODO huh?
         }
 
         return true;

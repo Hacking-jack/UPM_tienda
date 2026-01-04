@@ -61,7 +61,7 @@ public class ProductController {
                 p.setPrice(Double.parseDouble(valor));
                 break;
             default:
-                System.out.println("Campo no valido");
+                System.out.println("Campo no valido"); //TODO esto no se si sustituirlo por una excepcion
                 break;
         }
         System.out.println(p);

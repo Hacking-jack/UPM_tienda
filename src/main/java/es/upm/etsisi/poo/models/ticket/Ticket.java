@@ -12,11 +12,11 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 public class Ticket {
-    private final ArrayList<Product> products;
-    private String idTicket;
+    protected final ArrayList<Product> products;
+    protected String idTicket;
    // private final LocalDateTime date;
-    private States estado;
-    private TicketType tipo;
+    protected States estado;
+    protected TicketType tipo;
 
     public States getEstado() {
         return estado;

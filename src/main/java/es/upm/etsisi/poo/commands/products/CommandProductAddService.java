@@ -8,6 +8,8 @@ public class CommandProductAddService implements Command {
     private String fechaStr;
     private String tipoServicio;
 
+    //TODO esto o se mete en command product add normal o faltan cosas
+
     public CommandProductAddService(String fechaStr, String tipoServicio) {
         this.fechaStr = fechaStr;
         this.tipoServicio = tipoServicio;
