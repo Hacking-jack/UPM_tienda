@@ -5,11 +5,11 @@ import es.upm.etsisi.poo.controler.product.ProductController;
 
 public class CommandProductUpdate implements Command {
 
-    private final int id;
+    private final String id;
     private final String field;
     private final String value;
 
-    public CommandProductUpdate(int id, String field, String value) {
+    public CommandProductUpdate(String id, String field, String value) {
         this.id = id;
         this.field = field;
         this.value = value;

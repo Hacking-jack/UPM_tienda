@@ -1,36 +1,36 @@
 package es.upm.etsisi.poo.dataBase;
 
 import es.upm.etsisi.poo.exceptions.product.ProductNotFoundException;
-import es.upm.etsisi.poo.models.product.ProductBasic;
+import es.upm.etsisi.poo.models.product.Product;
 
 import java.util.ArrayList;
 //TODO cache de base de datos
 public class ProductDB {
     //Equivalente a una tabla Products en SQL
-    private static final ArrayList<ProductBasic> PRODUCT_BASICS = new ArrayList<>();
+    private static final ArrayList<Product> PRODUCTS = new ArrayList<>();
 
     //Equivalente a un insert
-    public static void addProduct(ProductBasic p) {
-        PRODUCT_BASICS.add(p);
+    public static void addProduct(Product p) {
+        PRODUCTS.add(p);
     }
 
-    public static void addProductClone(ProductBasic p) {
-        PRODUCT_BASICS.add(p);
+    public static void addProductClone(Product p) {
+        PRODUCTS.add(p);
     }
 
     //Equivalente a Select * from Products where id = id;
-    public static ProductBasic findId(int id) {
-        for (ProductBasic p : PRODUCT_BASICS) {
-            if (p.getId() == id) {
-                return (p);
+    public static Product findId(String id) {
+        for (Product p : PRODUCTS) {
+            if (p.getId().equals(id)) {
+                return p;
             }
         }
         throw new ProductNotFoundException(id);
     }
 
-    public static boolean existeId(int id) {
-        for (ProductBasic p : PRODUCT_BASICS) {
-            if (p.getId() == id) {
+    public static boolean existeId(String id) {
+        for (Product p : PRODUCTS) {
+            if (p.getId().equals(id)) {
                 return true;
             }
         }
@@ -38,18 +38,18 @@ public class ProductDB {
     }
 
     //Equivalente  DELETE FROM table_name WHERE id = id;
-    public static void removeProduct(ProductBasic p) {
-        PRODUCT_BASICS.remove(p);
+    public static void removeProduct(Product p) {
+        PRODUCTS.remove(p);
     }
 
     //Equivalente SELECT COUNT(*) FROM products
     public static int countProduct() {
-        return PRODUCT_BASICS.size();
+        return PRODUCTS.size();
     }
 
     //Equivalente a Select * from products;
-    public static ArrayList<ProductBasic> listProducts() {
-        return PRODUCT_BASICS;
+    public static ArrayList<Product> listProducts() {
+        return PRODUCTS;
     }
 
 }

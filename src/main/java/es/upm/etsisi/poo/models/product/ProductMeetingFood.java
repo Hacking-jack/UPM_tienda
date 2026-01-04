@@ -14,7 +14,7 @@ public class ProductMeetingFood extends ProductBasic {
     private boolean isFood; //true==comida, false==reunion
     private int assistants;
 
-    public ProductMeetingFood(int id, String name, double price, LocalDate date, int maxParticipantes, boolean isFood) {
+    public ProductMeetingFood(String id, String name, double price, LocalDate date, int maxParticipantes, boolean isFood) {
         super(id, name, null, price);
         try {
             this.date = date;

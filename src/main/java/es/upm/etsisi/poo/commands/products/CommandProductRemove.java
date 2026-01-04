@@ -4,9 +4,9 @@ import es.upm.etsisi.poo.commands.Command;
 import es.upm.etsisi.poo.controler.product.ProductController;
 
 public class CommandProductRemove implements Command {
-    private final int id;
+    private final String id;
 
-    public CommandProductRemove(int id) {
+    public CommandProductRemove(String id) {
         this.id = id;
     }
 

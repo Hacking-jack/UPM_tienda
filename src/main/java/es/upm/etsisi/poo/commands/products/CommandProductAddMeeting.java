@@ -5,17 +5,17 @@ import es.upm.etsisi.poo.controler.product.ProductFoodMeetingController;
 
 public class CommandProductAddMeeting implements Command {
 
-    private final int id;
+    private final String id;
     private final String name;
     private final double price;
     private final String date;
     private final int maxPeople;
 
-    public CommandProductAddMeeting(Integer id, String name, double price, String date, int maxPeople) {
+    public CommandProductAddMeeting(String id, String name, double price, String date, int maxPeople) {
         if (id != null) {
             this.id = id;
         } else {
-            this.id = ProductFoodMeetingController.generarId();
+            this.id = String.valueOf(ProductFoodMeetingController.generarId());
         }
         this.name = name;
         this.price = price;

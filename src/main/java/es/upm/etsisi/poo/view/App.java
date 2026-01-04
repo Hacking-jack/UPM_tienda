@@ -128,11 +128,11 @@ public class App {
                             if ((pers != null) && (pers[0] == null)) {// formato erróneo de pers
                                 break;
                             }
-                            cmd = new CommandTicketAddProduct(args[0], args[1], Integer.parseInt(args[2]), Integer.parseInt(args[3]), pers);
+                            cmd = new CommandTicketAddProduct(args[0], args[1], args[2], Integer.parseInt(args[3]), pers);
                             break;
 
                         case "ticket remove":
-                            cmd = new CommandTicketRemoveProduct(args[0], args[1], Integer.parseInt(args[2]));
+                            cmd = new CommandTicketRemoveProduct(args[0], args[1],args[2]);
                             break;
 
                         case "ticket print":
@@ -147,10 +147,10 @@ public class App {
                             if (!args[0].startsWith("\"")) {
                                 removeComillas(args, 1);
                                 if (args[4] == null) {
-                                    cmd = new CommandProductAdd(Integer.parseInt(args[0]), args[1], args[2],
+                                    cmd = new CommandProductAdd(args[0], args[1], args[2],
                                             Double.parseDouble(args[3]), null);
                                 } else {
-                                    cmd = new CommandProductAdd(Integer.parseInt(args[0]), args[1], args[2],
+                                    cmd = new CommandProductAdd(args[0], args[1], args[2],
                                             Double.parseDouble(args[3]), Integer.parseInt(args[4]));
                                 }
                             } else {
@@ -169,13 +169,13 @@ public class App {
                             if (args[1].equals("NAME")) {
                                 removeComillas(args, 2);
                             }
-                            cmd = new CommandProductUpdate(Integer.parseInt(args[0]), args[1], args[2]);
+                            cmd = new CommandProductUpdate(args[0], args[1], args[2]);
                             break;
 
                         case "prod addFood":
                             if (!args[0].startsWith("\"")) {
                                 removeComillas(args, 1);
-                                cmd = new CommandProductAddFood(Integer.parseInt(args[0]), args[1], Double.parseDouble(args[2]),
+                                cmd = new CommandProductAddFood(args[0], args[1], Double.parseDouble(args[2]),
                                         args[3], Integer.parseInt(args[4]));
                             } else {
                                 removeComillas(args, 0);
@@ -187,7 +187,7 @@ public class App {
                         case "prod addMeeting":
                             if (!args[0].startsWith("\"")) {
                                 removeComillas(args, 1);
-                                cmd = new CommandProductAddMeeting(Integer.parseInt(args[0]), args[1], Double.parseDouble(args[2]),
+                                cmd = new CommandProductAddMeeting(args[0], args[1], Double.parseDouble(args[2]),
                                         args[3], Integer.parseInt(args[4]));
                             } else {
                                 removeComillas(args, 0);
@@ -201,7 +201,7 @@ public class App {
                             break;
 
                         case "prod remove":
-                            cmd = new CommandProductRemove(Integer.parseInt(args[0]));
+                            cmd = new CommandProductRemove(args[0]);
                             break;
 
                         case "help":

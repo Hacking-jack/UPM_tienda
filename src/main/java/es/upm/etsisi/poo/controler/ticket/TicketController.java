@@ -3,6 +3,7 @@ package es.upm.etsisi.poo.controler.ticket;
 import es.upm.etsisi.poo.dataBase.TicketDB;
 import es.upm.etsisi.poo.exceptions.product.NotCustomizableProductException;
 import es.upm.etsisi.poo.exceptions.ticket.*;
+import es.upm.etsisi.poo.models.product.Product;
 import es.upm.etsisi.poo.models.product.ProductBasic;
 import es.upm.etsisi.poo.models.product.ProductBasicCustom;
 import es.upm.etsisi.poo.models.product.ProductMeetingFood;
@@ -57,22 +58,24 @@ public class TicketController {
     }
 
 
-    public static void addProduct(String ticketId, ProductBasic productBasic, int quantity) {
+    public static void addProduct(String ticketId, Product product, int quantity) {
         Ticket ticket = findId(ticketId);
-        if (ticket.getEstado() != States.CERRADO) {
-            if (ticket.getEstado() == States.VACIO) {
-                ticket.setEstado(States.ACTIVO);
-            }
-            ProductBasic clone = productBasic.clone();
-            for (int i = 0; i < quantity; i++) {
-                if (!ticket.addProduct(clone)) {
-                    throw new FullTicketException(ticket.getStringPrint());
-                }
-            }
-            ticket.print();
-        } else {
+
+        if (ticket.getEstado() == States.CERRADO) {
             throw new TicketClosedException();
         }
+
+        if (ticket.getEstado() == States.VACIO) {
+            ticket.setEstado(States.ACTIVO);
+        }
+
+        for (int i = 0; i < quantity; i++) {
+            Product clone = product.clone();
+            if (!ticket.addProduct(clone)) {
+                throw new FullTicketException(ticket.getStringPrint());
+            }
+        }
+        ticket.print();
     }
 
     //TODO  addProductPers puede llamar a addProduct para reducir código
@@ -117,8 +120,8 @@ public class TicketController {
         return TicketDB.findId(id);
     }
 
-    public static void remove(Ticket ticket, ProductBasic productBasic) {
-        ticket.removeProduct(productBasic);
+    public static void remove(Ticket ticket, Product product) {
+        ticket.removeProduct(product);
     }
 
     public static void list() {

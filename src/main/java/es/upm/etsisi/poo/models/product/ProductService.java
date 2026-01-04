@@ -2,17 +2,18 @@ package es.upm.etsisi.poo.models.product;
 
 import java.time.LocalDateTime;
 
-public class ProductService {
+public class ProductService extends Product {
     private final double discount = 0.15;
     private LocalDateTime dateMax;
     private Services category;
 
-    public ProductService(LocalDateTime dateMax, Services category) {
+    public ProductService(int numS, LocalDateTime dateMax, Services category) {
+        super(numS+"S");
         this.dateMax = dateMax;
         this.category = category;
     }
-    public int getServiceId() {
-        return category.getId();
+    public String getServiceId() {
+        return this.id;
     }
 
     public Services getCategory() {

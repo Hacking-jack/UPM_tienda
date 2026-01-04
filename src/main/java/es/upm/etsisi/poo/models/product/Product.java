@@ -7,9 +7,9 @@ import es.upm.etsisi.poo.exceptions.product.NegativeNumException;
 public abstract class Product implements Cloneable{
     protected String name;
     protected double price;
-    protected final int id;
+    protected final String id;
 
-    public Product(int id, String name, double price) {
+    public Product(String id, String name, double price) {
         this.id = id;
         this.name = name;
         if (price < 0) {
@@ -17,8 +17,11 @@ public abstract class Product implements Cloneable{
         }
         this.price = price;
     }
-
-    public int getId() {
+    protected Product(String idS) {
+        this.id = idS;
+        //NO PONGO NI NOMBRE NI PRECIO POR QUE LOS SERVICIOS NO LO NECESITAN
+    }
+    public String getId() {
         return id;
     }
 
@@ -42,8 +45,11 @@ public abstract class Product implements Cloneable{
         }
     }
     @Override
-    protected Product clone() throws CloneNotSupportedException {
-        // Shallow copy automática de todos los campos en Product
-        return (Product) super.clone();
+    public Product clone() {
+        try {
+            return (Product) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException();
+        }
     }
 }

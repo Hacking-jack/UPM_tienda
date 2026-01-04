@@ -13,9 +13,9 @@ public class CommandTicketRemoveProduct implements Command {
 
     private final String ticketId;
     private final String cashId;
-    private final int productId;
+    private final String productId;
 
-    public CommandTicketRemoveProduct(String ticketId, String cashId, int productId) {
+    public CommandTicketRemoveProduct(String ticketId, String cashId, String productId) {
         this.ticketId = ticketId;
         this.cashId = cashId;
         this.productId = productId;

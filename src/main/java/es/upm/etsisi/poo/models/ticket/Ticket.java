@@ -2,6 +2,7 @@ package es.upm.etsisi.poo.models.ticket;
 
 import es.upm.etsisi.poo.dataBase.TicketDB;
 import es.upm.etsisi.poo.models.product.Categories;
+import es.upm.etsisi.poo.models.product.Product;
 import es.upm.etsisi.poo.models.product.ProductBasic;
 import es.upm.etsisi.poo.models.product.ProductMeetingFood;
 
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 public class Ticket {
-    private final ArrayList<ProductBasic> productBasics;
+    private final ArrayList<Product> products;
     private String idTicket;
    // private final LocalDateTime date;
     private States estado;
@@ -25,7 +26,7 @@ public class Ticket {
         idTicket = id;
         estado = States.VACIO;
        // date = LocalDateTime.now();
-        productBasics = new ArrayList<>();
+        products = new ArrayList<>();
     }
 
     public Ticket() {
@@ -37,30 +38,30 @@ public class Ticket {
     }
 
 
-    public boolean addProduct(ProductBasic productBasic) {
-        if (productBasics.isEmpty()) {
+    public boolean addProduct(Product product) {
+        if (products.isEmpty()) {
             estado = States.ACTIVO;
         }
-        return (productBasics.size() < 100) && productBasics.add(productBasic);
+        return (products.size() < 100) && products.add(product);
     }
 
     public void addMeeting(ProductMeetingFood productMeeting) {
-        int asistentes = 0;
+        int asistentes;
         ProductMeetingFood tmp;
-        for (ProductBasic productBasic : productBasics) {
-            if (productBasic.getId() == productMeeting.getId()) {
-                tmp = (ProductMeetingFood) productBasic;
+        for (Product product : products) {
+            if (product.getId().equals(productMeeting.getId())) {
+                tmp = (ProductMeetingFood) product;
                 asistentes = tmp.getAssistants();
                 productMeeting.setAsistentes(productMeeting.getAssistants() + asistentes);
-                removeProduct(productBasic);
+                removeProduct(product);
                 break;
             }
         }
         addProduct(productMeeting);
     }
 
-    public void removeProduct(ProductBasic p) {
-        productBasics.removeIf(product -> product.getId() == p.getId());
+    public void removeProduct(Product p) {
+        products.removeIf(product -> product.getId().equals(p.getId()));
     }
 
     public boolean hasDiscount(int counterStationary, int counterClothes, int counterBook, int counterElectronic,
@@ -98,7 +99,7 @@ public class Ticket {
             boolean hayProducto = false;
             boolean hayServicio = false;
 
-            for (ProductBasic p : productBasics) {
+            for (Product p : products) {
                 if (p instanceof ProductMeetingFood)
                     hayServicio = true;
                 else
@@ -136,19 +137,19 @@ public class Ticket {
     //TODO repasarlo
     public String getStringPrintEmpresa(){
         StringBuilder sb = new StringBuilder();
-        productBasics.sort(Comparator.comparing(ProductBasic::getName));
+        products.sort(Comparator.comparing(Product::getName));
 
         int serviceCount = 0;
         double totalProductos = 0.0;
 
-        for (ProductBasic p : productBasics) {
+        for (Product p : products) {
             if (p instanceof ProductMeetingFood) serviceCount++;
         }
 
         double descuentoServicios = serviceCount * 0.15;
         sb.append(String.format("Ticket : %s%n", idTicket));
 
-        for (ProductBasic p : productBasics) {
+        for (Product p : products) {
 
             if (p instanceof ProductMeetingFood) {
                 sb.append("  ").append(p.getName()).append("\n");
@@ -177,36 +178,44 @@ public class Ticket {
     public String getStringPrintUsuario(){
         StringBuilder sb = new StringBuilder();
 
-        productBasics.sort(Comparator.comparing(ProductBasic::getName));
+        products.sort(Comparator.comparing(Product::getName));
         double precioTotal = 0;
         int counterStationary = 0, counterClothes = 0, counterBook = 0, counterElectronic = 0;
 
-        for (ProductBasic p : productBasics) {
+        for (Product p : products) {
             precioTotal += p.getPrice();
-            switch (p.getCategories()) {
-                case STATIONERY -> counterStationary++;
-                case CLOTHES -> counterClothes++;
-                case BOOK -> counterBook++;
-                case ELECTRONICS -> counterElectronic++;
+            if (p instanceof ProductBasic) {
+                ProductBasic pb = (ProductBasic) p;
+                if (pb.getCategories() != null) {
+                    switch (pb.getCategories()) {
+                        case STATIONERY -> counterStationary++;
+                        case CLOTHES -> counterClothes++;
+                        case BOOK -> counterBook++;
+                        case ELECTRONICS -> counterElectronic++;
+                    }
+                }
             }
         }
-
         double descuentoTotal = 0;
 
         sb.append(String.format("Ticket : %s%n", idTicket));
 
-        for (ProductBasic p : productBasics) {
-            boolean discount = hasDiscount(counterStationary, counterClothes, counterBook, counterElectronic,
-                    p.getCategories());
+        for (Product p : products) {
             double discountAmount = 0.0;
-            if (discount) {
-                discountAmount = Categories.getDiscount(p.getCategories()) * p.getPrice();
-                descuentoTotal += discountAmount;
+            if (p instanceof ProductBasic) {
+                ProductBasic pb = (ProductBasic) p;
+                boolean discount = hasDiscount(counterStationary, counterClothes, counterBook, counterElectronic,
+                        pb.getCategories());
+                if (discount) {
+                    discountAmount = Categories.getDiscount(pb.getCategories()) * p.getPrice();
+                    descuentoTotal += discountAmount;
+                }
             }
+
             if (discountAmount == 0.0) {
-                sb.append("  ").append(p).append("\n");
+                sb.append("  ").append(p.toString()).append("\n");
             } else {
-                sb.append("  ").append(p)
+                sb.append("  ").append(p.toString())
                         .append(String.format(" **discount -%.2f%n", discountAmount));
             }
         }

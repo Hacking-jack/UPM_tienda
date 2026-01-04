@@ -4,13 +4,13 @@ import es.upm.etsisi.poo.commands.Command;
 import es.upm.etsisi.poo.controler.product.ProductFoodMeetingController;
 
 public class CommandProductAddFood implements Command {
-    private final int id;
+    private final String id;
     private final String name;
     private final double price;
     private final String date;
     private final int maxPeople;
 
-    public CommandProductAddFood(Integer id, String name, double price, String date, int maxPeople) {
+    public CommandProductAddFood(String id, String name, double price, String date, int maxPeople) {
         if (id != null) {
             this.id = id;
         } else {

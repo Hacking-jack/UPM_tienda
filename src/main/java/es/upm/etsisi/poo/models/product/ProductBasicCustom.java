@@ -1,6 +1,4 @@
 package es.upm.etsisi.poo.models.product;
-
-import es.upm.etsisi.poo.dataBase.ProductDB;
 import es.upm.etsisi.poo.exceptions.product.PersonalizationsOutOfBoundsExceptions;
 
 public class ProductBasicCustom extends ProductBasic {
@@ -9,7 +7,7 @@ public class ProductBasicCustom extends ProductBasic {
     private String[] listaPers;
     private int persAct;
 
-    public ProductBasicCustom(String name, double price, Categories categories, int maxPers, int id) {
+    public ProductBasicCustom(String name, double price, Categories categories, int maxPers, String id) {
         super(id, name, categories, price);
         this.maxPers = maxPers;
         listaPers = new String[maxPers];

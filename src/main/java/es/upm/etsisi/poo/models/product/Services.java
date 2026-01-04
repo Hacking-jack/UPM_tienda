@@ -2,20 +2,9 @@ package es.upm.etsisi.poo.models.product;
 
 public enum Services {
 
-    SHOW(1),
-    INSURANCE(2),
-    TRANSPORT(3);
-
-    private final int id;
-
-    Services(int id) {
-        this.id = id;
-    }
-
-    public int getId() {
-        return id;
-    }
-
+    SHOW,
+    INSURANCE,
+    TRANSPORT;
     @Override
     public String toString() {
         String string = null;

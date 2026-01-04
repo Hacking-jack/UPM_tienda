@@ -5,13 +5,13 @@ import es.upm.etsisi.poo.controler.product.ProductController;
 import es.upm.etsisi.poo.controler.product.ProductCustomController;
 
 public class CommandProductAdd implements Command {
-    private final int id; // null si no se da
+    private final String id; // null si no se da
     private final String name;
     private final String category;
     private final double price;
     private final Integer maxPers; // null si no es personalizado
 
-    public CommandProductAdd(Integer id, String name, String category, double price, Integer maxPers) {
+    public CommandProductAdd(String id, String name, String category, double price, Integer maxPers) {
         if (id != null) {
             this.id = id;
         } else {

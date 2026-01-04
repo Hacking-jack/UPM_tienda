@@ -6,7 +6,7 @@ public class ProductBasic extends Product  {
 
     protected Categories categories;
 
-    public ProductBasic(int id, String name, Categories categories, double price) {
+    public ProductBasic(String id, String name, Categories categories, double price) {
         super(id, name, price);
         this.categories = categories;
     }
@@ -19,7 +19,7 @@ public class ProductBasic extends Product  {
         this.categories = categories;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
     //TODO revisar esto como hacemos la excepcion
@@ -32,7 +32,7 @@ public class ProductBasic extends Product  {
     public ProductBasic clone() {
         try {
             return (ProductBasic) super.clone();
-        } catch (CloneNotSupportedException e) {
+        } catch (Exception e) {
             throw new AssertionError("No debería pasar, Product implementa Cloneable");
         }
     }

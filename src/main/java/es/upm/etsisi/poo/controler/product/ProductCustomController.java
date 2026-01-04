@@ -11,7 +11,7 @@ public class ProductCustomController extends ProductController {
 
     //TODO ESTO SE HACE EN EL PRODUCT CONTROLLER NORMAL, SOLO LE CAMBIAS EL NOMBRE AL METODO NO HACE FALTA EXTENDER NADA.
 
-    public static void add(Integer id, String name, String categories, double price, int maxPers) {
+    public static void add(String id, String name, String categories, double price, int maxPers) {
         if (categorieControl(categories)) {
             if (ProductDB.existeId(id)) {
                 throw new DuplicateProductIdException();

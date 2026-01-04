@@ -9,20 +9,21 @@ import es.upm.etsisi.poo.exceptions.product.DuplicateProductIdException;
 import es.upm.etsisi.poo.exceptions.product.FoodMeetingCategoryException;
 import es.upm.etsisi.poo.exceptions.product.FullProductCatalogException;
 import es.upm.etsisi.poo.models.product.Categories;
+import es.upm.etsisi.poo.models.product.Product;
 import es.upm.etsisi.poo.models.product.ProductBasic;
 import es.upm.etsisi.poo.models.product.ProductMeetingFood;
 
 public class ProductController {
 
-    public static void add(int id, String name, String categories, double price) {
+    public static void add(String id, String name, String categories, double price) {
         if (categorieControl(categories)) {
             if (ProductDB.existeId(id)) {
                 throw new DuplicateProductIdException();
             } else {
                 if (ProductDB.countProduct() < 200) {
-                    ProductBasic productBasic = new ProductBasic(id, name, Categories.valueOf(categories), price);
-                    ProductDB.addProduct(productBasic);
-                    System.out.println(productBasic);
+                    Product product = new ProductBasic(id, name, Categories.valueOf(categories), price);
+                    ProductDB.addProduct(product);
+                    System.out.println(product);
                 } else {
                     throw new FullProductCatalogException();
                 }
@@ -33,15 +34,15 @@ public class ProductController {
 
     public static void list() {
         System.out.println("Catalog:");
-        ArrayList<ProductBasic> productBasics = ProductDB.listProducts();
-        for (ProductBasic p : productBasics) {
+        ArrayList<Product> products = ProductDB.listProducts();
+        for (Product p : products) {
             System.out.println("  " + p.toString());
         }
     }
 
-    public static void update(int id, String campo, String valor) {
+    public static void update(String id, String campo, String valor) {
 
-        ProductBasic p = ProductDB.findId(id);
+        Product p = ProductDB.findId(id);
         switch (campo.toUpperCase()) {
             case "NAME":
                 p.setName(valor);
@@ -52,7 +53,7 @@ public class ProductController {
                 } else {
                     if (categorieControl(valor)) {
                         Categories categorie = Categories.valueOf(valor.toUpperCase());
-                        p.setCategories(categorie);
+                        ((ProductBasic) p).setCategories(categorie);
                     }
                 }
                 break;
@@ -67,13 +68,13 @@ public class ProductController {
 
     }
 
-    public static void remove(int id) {
-        ProductBasic p = ProductDB.findId(id);
+    public static void remove(String id) {
+        Product p = ProductDB.findId(id);
         System.out.println(p);
         ProductDB.removeProduct(p);
     }
 
-    public static ProductBasic findId(int id) {
+    public static Product findId(String id) {
         return ProductDB.findId(id);
     }
 
@@ -88,8 +89,9 @@ public class ProductController {
         }
     }
 
-    public static int generarId() {
-        int id = (int) (Math.random() * 10000);
+    public static String generarId() {
+        int numId = (int) (Math.random() * 10000);
+        String id = String.valueOf(numId);
         if (!ProductDB.existeId(id)) {
             return id;
         } else {
