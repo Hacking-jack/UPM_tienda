@@ -5,7 +5,9 @@ import es.upm.etsisi.poo.exceptions.product.MaxAssistantOutOfBounds;
 import es.upm.etsisi.poo.exceptions.product.NegativeNumException;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoUnit;
 
 public class ProductMeetingFood extends ProductBasic {
 
@@ -72,5 +74,10 @@ public class ProductMeetingFood extends ProductBasic {
     @Override
     public ProductMeetingFood clone() {
         return (ProductMeetingFood) super.clone();
+    }
+
+    public boolean isExpired() {
+        int dias = (int) ChronoUnit.DAYS.between(LocalDate.now(), date);
+        return !((isFood && (dias >= 3)) || (!isFood && ((dias >= 1) || ((dias == 0) && (LocalDateTime.now().getHour() <= 12)))));
     }
 }

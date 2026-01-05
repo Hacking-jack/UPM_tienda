@@ -27,11 +27,7 @@ public class ProductFoodMeetingController extends ProductController {
                     ProductDB.addProduct(productBasic);
                     System.out.println(productBasic);
                 } else {
-                    if (isFood) {
-                        throw new NotEnoughTimeException();
-                    } else {
-                        throw new NotEnoughTimeException();
-                    }
+                    throw new NotEnoughTimeException();
                 }
             } else {
                 throw new FullProductCatalogException();

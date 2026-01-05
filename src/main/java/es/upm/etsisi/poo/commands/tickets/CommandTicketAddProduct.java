@@ -17,7 +17,7 @@ public class CommandTicketAddProduct implements Command {
     private final int amount;
     private final String[] pers; // --p<txt>
 
-
+//TODO aqui hay que cambiar cosas pq no hay quien lo entienda
     public CommandTicketAddProduct(String ticketId, String cashId, String productId, int amount, String[] pers) {
         this.ticketId = ticketId;
         this.cashId = cashId;
@@ -25,7 +25,7 @@ public class CommandTicketAddProduct implements Command {
         this.amount = amount;
         this.pers = pers;
     }
-
+// TODO aqui falta meter para añadir servicios al ticket
     @Override
     public boolean execute() {
         Product product = ProductController.findId(productId);

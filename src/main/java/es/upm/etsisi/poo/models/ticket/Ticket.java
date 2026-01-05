@@ -1,31 +1,21 @@
 package es.upm.etsisi.poo.models.ticket;
 
 import es.upm.etsisi.poo.dataBase.TicketDB;
-import es.upm.etsisi.poo.models.product.Categories;
-import es.upm.etsisi.poo.models.product.Product;
-import es.upm.etsisi.poo.models.product.ProductBasic;
-import es.upm.etsisi.poo.models.product.ProductMeetingFood;
+import es.upm.etsisi.poo.models.product.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Comparator;
 
-public class Ticket {
+public abstract class Ticket {
     protected final ArrayList<Product> products;
     protected String idTicket;
-   // private final LocalDateTime date;
     protected States estado;
-    protected TicketType tipo;
 
-    public States getEstado() {
-        return estado;
-    }
 
     public Ticket(String id) {
         idTicket = id;
         estado = States.VACIO;
-       // date = LocalDateTime.now();
         products = new ArrayList<>();
     }
 
@@ -33,35 +23,12 @@ public class Ticket {
         this(generarId());
     }
 
-    public TicketType getType(){
-        return tipo;
-    }
-
-
-    public boolean addProduct(Product product) {
-        if (products.isEmpty()) {
-            estado = States.ACTIVO;
-        }
-        return (products.size() < 100) && products.add(product);
-    }
-
-    public void addMeeting(ProductMeetingFood productMeeting) {
-        int asistentes;
-        ProductMeetingFood tmp;
-        for (Product product : products) {
-            if (product.getId().equals(productMeeting.getId())) {
-                tmp = (ProductMeetingFood) product;
-                asistentes = tmp.getAssistants();
-                productMeeting.setAsistentes(productMeeting.getAssistants() + asistentes);
-                removeProduct(product);
-                break;
-            }
-        }
-        addProduct(productMeeting);
-    }
-
     public void removeProduct(Product p) {
+        //TODO excepción si el prod no esta en el ticket
         products.removeIf(product -> product.getId().equals(p.getId()));
+        if(products.isEmpty()){
+            estado=States.VACIO;
+        }
     }
 
     public boolean hasDiscount(int counterStationary, int counterClothes, int counterBook, int counterElectronic,
@@ -94,32 +61,6 @@ public class Ticket {
         return correct;
     }
 
-    public void printAndClose() {
-        if(tipo == TicketType.MIX){
-            boolean hayProducto = false;
-            boolean hayServicio = false;
-
-            for (Product p : products) {
-                if (p instanceof ProductMeetingFood)
-                    hayServicio = true;
-                else
-                    hayProducto = true;
-            }
-            if (!hayProducto || !hayServicio) {
-                System.out.println("Un ticket mixto debe tener al menos un producto y un servicio");
-                //return;
-            }
-        } else {
-            //TODO aquí comprobar fechas de servicios y de eventos
-            //comprobarCaducidad(); que lance error si hay algo caducado o que avise y lo borre del ticket
-            if (estado != States.CERRADO)
-                estado = States.CERRADO;
-        }
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("-yy-MM-dd-HH:mm");
-        idTicket += LocalDateTime.now().format(formatter);
-        print();
-    }
-
     public String list() {
         return idTicket + " - " + estado.toString();
     }
@@ -128,161 +69,9 @@ public class Ticket {
         System.out.println("  " + idTicket + "->" + estado.toString());
     }
 
-    public String getStringPrint() {
-        if (tipo == TicketType.PRODUCTS) {
-            return getStringPrintUsuario();
-        }
-        return getStringPrintEmpresa();
-    }
-    //TODO repasarlo
-    public String getStringPrintEmpresa(){
-        StringBuilder sb = new StringBuilder();
-        products.sort(Comparator.comparing(Product::getName));
-
-        int serviceCount = 0;
-        double totalProductos = 0.0;
-
-        for (Product p : products) {
-            if (p instanceof ProductMeetingFood) serviceCount++;
-        }
-
-        double descuentoServicios = serviceCount * 0.15;
-        sb.append(String.format("Ticket : %s%n", idTicket));
-
-        for (Product p : products) {
-
-            if (p instanceof ProductMeetingFood) {
-                sb.append("  ").append(p.getName()).append("\n");
-            }
-
-            double precio = p.getPrice();
-            double descuento = tipo == TicketType.MIX ? precio * descuentoServicios : 0;
-            double precioFinal = precio - descuento;
-
-            totalProductos += precioFinal;
-
-            sb.append(String.format("  %s %.2f", p.getName(), precioFinal));
-
-            if (descuento > 0) {
-                sb.append(String.format(" **discount -%.2f", descuento));
-            }
-            sb.append("\n");
-        }
-
-        if (tipo == TicketType.MIX) {
-            sb.append(String.format("  Final Price: %.2f%n", totalProductos));
-        }
-
-        return sb.toString();
-    }
-    public String getStringPrintUsuario(){
-        StringBuilder sb = new StringBuilder();
-
-        products.sort(Comparator.comparing(Product::getName));
-        double precioTotal = 0;
-        int counterStationary = 0, counterClothes = 0, counterBook = 0, counterElectronic = 0;
-
-        for (Product p : products) {
-            precioTotal += p.getPrice();
-            if (p instanceof ProductBasic) {
-                ProductBasic pb = (ProductBasic) p;
-                if (pb.getCategories() != null) {
-                    switch (pb.getCategories()) {
-                        case STATIONERY -> counterStationary++;
-                        case CLOTHES -> counterClothes++;
-                        case BOOK -> counterBook++;
-                        case ELECTRONICS -> counterElectronic++;
-                    }
-                }
-            }
-        }
-        double descuentoTotal = 0;
-
-        sb.append(String.format("Ticket : %s%n", idTicket));
-
-        for (Product p : products) {
-            double discountAmount = 0.0;
-            if (p instanceof ProductBasic) {
-                ProductBasic pb = (ProductBasic) p;
-                boolean discount = hasDiscount(counterStationary, counterClothes, counterBook, counterElectronic,
-                        pb.getCategories());
-                if (discount) {
-                    discountAmount = Categories.getDiscount(pb.getCategories()) * p.getPrice();
-                    descuentoTotal += discountAmount;
-                }
-            }
-
-            if (discountAmount == 0.0) {
-                sb.append("  ").append(p.toString()).append("\n");
-            } else {
-                sb.append("  ").append(p.toString())
-                        .append(String.format(" **discount -%.2f%n", discountAmount));
-            }
-        }
-        double precioFinal = precioTotal - descuentoTotal;
-        sb.append(String.format("  Total price: %.2f%n", precioTotal));
-        sb.append(String.format("  Total discount: %.2f%n", descuentoTotal));
-        sb.append(String.format("  Final Price: %.2f", precioFinal));
-
-        return sb.toString();
-    }
-
     public void print() {
         System.out.println(getStringPrint());
-        /*
-        this.productBasics.sort(Comparator.comparing(ProductBasic::getName));
-        double precioTotal = 0;
-        int counterStationary = 0, counterClothes = 0, counterBook = 0, counterElectronic = 0;
-        for (ProductBasic p : this.productBasics) {
-            precioTotal += p.getPrice();
-            if (p.getCategories() == Categories.STATIONERY) {
-                counterStationary++;
-            } else if (p.getCategories() == Categories.CLOTHES) {
-                counterClothes++;
-            } else if (p.getCategories() == Categories.BOOK) {
-                counterBook++;
-            } else if (p.getCategories() == Categories.ELECTRONICS) {
-                counterElectronic++;
-            }
-        }
-
-        double descuentoTotal = 0;
-
-
-        System.out.printf("Ticket : %s%n", this.idTicket);
-
-        for (int i = 0; i < this.productBasics.size(); i++) {
-            ProductBasic p = this.productBasics.get(i);
-            boolean discount = hasDiscount(counterStationary, counterClothes, counterBook, counterElectronic,
-                    p.getCategories());
-            double discountAmount = 0.0;
-            if (discount) {
-                discountAmount = Categories.getDiscount(p.getCategories()) * p.getPrice();
-                descuentoTotal += discountAmount;
-            }
-            if (discountAmount == 0.0) {
-                System.out.println("  " + p.toString());
-            } else {
-                System.out.print("  " + p.toString());
-                System.out.printf(" **discount -%.2f%n", discountAmount);
-            }
-        }
-
-        double precioFinal = precioTotal - descuentoTotal;
-        System.out.printf("  Total price: %.2f%n", precioTotal);
-        System.out.printf("  Total discount: %.2f%n", descuentoTotal);
-        System.out.printf("  Final Price: %.2f%n", precioFinal);*/
     }
-/*
-    @Override
-    public String toString() {
-        return "Ticket{" +
-                "products=" + productBasics +
-                ", idTicket='" + idTicket + '\'' +
-                ", date=" + date +
-                ", estado=" + estado +
-                '}';
-    }*/
 
     public static String generarId() {
         String string = LocalDateTime.now()
@@ -294,6 +83,10 @@ public class Ticket {
         return string;
     }
 
+    public States getEstado() {
+        return estado;
+    }
+
     public void setEstado(States estado) {
         this.estado = estado;
     }
@@ -301,4 +94,33 @@ public class Ticket {
     public String getIdTicket() {
         return idTicket;
     }
+
+    protected boolean comprobarCaducidad(){ //Aqui comprobar todo el ticket
+        boolean resul=true;
+        for (Product product : products){
+            if(product instanceof ProductService){
+                if(((ProductService) product).isExpired()){
+                    resul=false;
+                    removeProduct(product);
+                }
+            }
+            if(product instanceof ProductMeetingFood){
+                if(((ProductMeetingFood) product).isExpired()){
+                    resul=false;
+                    removeProduct(product);
+                }
+            }
+        }
+        return resul;
+    }
+
+    public abstract String getStringPrint();
+
+    public abstract boolean addProduct(Product product);
+
+    public abstract void printAndClose();
+
+    public abstract void addMeeting(ProductMeetingFood productMeetingFood);
+
+    public abstract void addService(ProductService productService);
 }

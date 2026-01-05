@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 public class ProductService extends Product {
     private final double discount = 0.15;
     private LocalDateTime dateMax;
-    private Services category;
+    private final Services category;
 
     public ProductService(int numS, LocalDateTime dateMax, Services category) {
         super(numS+"S");
@@ -13,7 +13,7 @@ public class ProductService extends Product {
         this.category = category;
     }
     public String getServiceId() {
-        return this.id;
+        return id;
     }
 
     public Services getCategory() {
@@ -29,7 +29,7 @@ public class ProductService extends Product {
     }
 
     public double getDiscount() {
-        return this.discount;
+        return discount;
     }
 
     @Override
@@ -39,6 +39,15 @@ public class ProductService extends Product {
                 + ", category:" + category
                 + ", expiration:" + dateMax
                 + "}";
+    }
+
+    //TODO esto no se yo
+    public ProductService clone(){
+        return new ProductService(Integer.parseInt(id.substring(0,id.length()-1)),dateMax, category);
+    }
+
+    public boolean isExpired(){
+        return LocalDateTime.now().isAfter(dateMax);
     }
 
 }

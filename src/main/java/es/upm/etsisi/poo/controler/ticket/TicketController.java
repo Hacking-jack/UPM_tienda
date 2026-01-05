@@ -3,10 +3,7 @@ package es.upm.etsisi.poo.controler.ticket;
 import es.upm.etsisi.poo.dataBase.TicketDB;
 import es.upm.etsisi.poo.exceptions.product.NotCustomizableProductException;
 import es.upm.etsisi.poo.exceptions.ticket.*;
-import es.upm.etsisi.poo.models.product.Product;
-import es.upm.etsisi.poo.models.product.ProductBasic;
-import es.upm.etsisi.poo.models.product.ProductBasicCustom;
-import es.upm.etsisi.poo.models.product.ProductMeetingFood;
+import es.upm.etsisi.poo.models.product.*;
 import es.upm.etsisi.poo.models.ticket.*;
 
 import java.util.Objects;
@@ -83,6 +80,9 @@ public class TicketController {
         if (productBasic instanceof ProductBasicCustom) {
             Ticket ticket = findId(ticketId);
             if (ticket.getEstado() != States.CERRADO) {
+                if(ticket.getEstado()==States.VACIO){
+                    ticket.setEstado(States.ACTIVO);
+                }
                 ProductBasicCustom clone = (ProductBasicCustom) productBasic.clone();
                 clone.addPers(pers);
                 for (int i = 0; i < quantity; i++) {
@@ -106,12 +106,29 @@ public class TicketController {
     public static void addMeeting(String ticketId, ProductMeetingFood product, int quantity) {
         Ticket ticket = findId(ticketId);
         if (ticket.getEstado() != States.CERRADO) {
+            if(ticket.getEstado()==States.VACIO){
+                ticket.setEstado(States.ACTIVO);
+            }
             ProductMeetingFood clone = product.clone();
             if (clone.setAsistentes(quantity)) {
                 ticket.addMeeting(clone);
             }
             ticket.print();
         } else {
+            throw new TicketClosedException();
+        }
+    }
+
+    public static void addService(String ticketId, ProductService productService) {
+        Ticket ticket = findId(ticketId);
+        if (ticket.getEstado() != States.CERRADO) {
+            if (ticket.getEstado() == States.VACIO) {
+                ticket.setEstado(States.ACTIVO);
+            }
+            ProductService clone = productService.clone();
+            ticket.addService(clone);
+            ticket.print();
+        }else{
             throw new TicketClosedException();
         }
     }

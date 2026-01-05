@@ -5,10 +5,9 @@ import es.upm.etsisi.poo.controler.product.ProductServiceController;
 import java.time.LocalDateTime;
 
 public class CommandProductAddService implements Command {
-    private String fechaStr;
-    private String tipoServicio;
+    private final String fechaStr;
+    private final String tipoServicio;
 
-    //TODO esto o se mete en command product add normal o faltan cosas
 
     public CommandProductAddService(String fechaStr, String tipoServicio) {
         this.fechaStr = fechaStr;
