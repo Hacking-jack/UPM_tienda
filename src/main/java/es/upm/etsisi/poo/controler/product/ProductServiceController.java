@@ -5,11 +5,11 @@ import es.upm.etsisi.poo.exceptions.product.NotEnoughTimeException;
 import es.upm.etsisi.poo.models.product.Product;
 import es.upm.etsisi.poo.models.product.ProductService;
 import es.upm.etsisi.poo.models.product.Services;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class ProductServiceController {
-    public static void addService(LocalDateTime dateMax, String serviceType) {
-        if(dateMax.isBefore(LocalDateTime.now())){
+    public static void addService(LocalDate dateMax, String serviceType) {
+        if(dateMax.isBefore(LocalDate.now())){
             throw new NotEnoughTimeException();
         }
         int contadorServicios = 0;

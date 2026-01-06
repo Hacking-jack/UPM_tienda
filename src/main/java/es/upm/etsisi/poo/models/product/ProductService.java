@@ -1,13 +1,13 @@
 package es.upm.etsisi.poo.models.product;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class ProductService extends Product {
     private final double discount = 0.15;
-    private LocalDateTime dateMax;
+    private LocalDate dateMax;
     private final Services category;
 
-    public ProductService(int numS, LocalDateTime dateMax, Services category) {
+    public ProductService(int numS, LocalDate dateMax, Services category) {
         super(numS+"S");
         this.dateMax = dateMax;
         this.category = category;
@@ -20,11 +20,11 @@ public class ProductService extends Product {
         return category;
     }
 
-    public LocalDateTime getDateMax() {
+    public LocalDate getDateMax() {
         return dateMax;
     }
 
-    public void setDateMax(LocalDateTime dateMax) {
+    public void setDateMax(LocalDate dateMax) {
         this.dateMax = dateMax;
     }
 
@@ -47,7 +47,7 @@ public class ProductService extends Product {
     }
 
     public boolean isExpired(){
-        return LocalDateTime.now().isAfter(dateMax);
+        return LocalDate.now().isAfter(dateMax);
     }
 
 }

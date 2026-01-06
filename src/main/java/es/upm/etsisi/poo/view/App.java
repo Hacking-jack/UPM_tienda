@@ -123,7 +123,7 @@ public class App {
                             }
                             break;
 
-                        case "ticket add":
+                        case "ticket add": //TODO falta para meter servicios al ticket
                             String[] pers;
                             pers = obtenerPers(args);
                             if ((pers != null) && (pers[0] == null)) {// formato erróneo de pers
@@ -145,27 +145,28 @@ public class App {
                             break;
 
                         case "prod add":
-                            if (!args[0].startsWith("\"")) {
-                                removeComillas(args, 1);
-                                if (args[4] == null) {
-                                    cmd = new CommandProductAdd(args[0], args[1], args[2],
-                                            Double.parseDouble(args[3]), null);
-                                } else {
-                                    cmd = new CommandProductAdd(args[0], args[1], args[2],
-                                            Double.parseDouble(args[3]), Integer.parseInt(args[4]));
-                                }
+                            if (args[0].startsWith("\"")) {
+                                    removeComillas(args, 0);
+                                    if (args[3] == null) {
+                                        cmd = new CommandProductAdd(null, args[0], args[1], Double.parseDouble(args[2]),
+                                                null);
+                                    } else {
+                                        cmd = new CommandProductAdd(null, args[0], args[1], Double.parseDouble(args[2]),
+                                                Integer.parseInt(args[3]));
+                                    }
                             } else {
-                                removeComillas(args, 0);
                                 if(args[2]==null){
                                     cmd = new CommandProductAddService(args[0], args[1]);
                                 }else{
-                                if (args[3] == null) {
-                                    cmd = new CommandProductAdd(null, args[0], args[1], Double.parseDouble(args[2]),
-                                            null);
-                                } else {
-                                    cmd = new CommandProductAdd(null, args[0], args[1], Double.parseDouble(args[2]),
-                                            Integer.parseInt(args[3]));
-                                }}
+                                    removeComillas(args, 1);
+                                    if (args[4] == null) {
+                                        cmd = new CommandProductAdd(args[0], args[1], args[2],
+                                                Double.parseDouble(args[3]), null);
+                                    } else {
+                                        cmd = new CommandProductAdd(args[0], args[1], args[2],
+                                                Double.parseDouble(args[3]), Integer.parseInt(args[4]));
+                                    }
+                                }
                             }
                             break;
 

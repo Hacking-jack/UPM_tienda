@@ -2,7 +2,7 @@ package es.upm.etsisi.poo.commands.products;
 
 import es.upm.etsisi.poo.commands.Command;
 import es.upm.etsisi.poo.controler.product.ProductServiceController;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class CommandProductAddService implements Command {
     private final String fechaStr;
@@ -16,7 +16,7 @@ public class CommandProductAddService implements Command {
 
     @Override
     public boolean execute() {
-        LocalDateTime dateMax = LocalDateTime.parse(fechaStr);
+        LocalDate dateMax = LocalDate.parse(fechaStr);
         ProductServiceController.addService(dateMax, tipoServicio);
         return true;
     }
