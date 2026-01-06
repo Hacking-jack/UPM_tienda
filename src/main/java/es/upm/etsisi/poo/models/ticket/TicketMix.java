@@ -2,6 +2,7 @@ package es.upm.etsisi.poo.models.ticket;
 
 import es.upm.etsisi.poo.exceptions.product.NotEnoughTimeException;
 import es.upm.etsisi.poo.exceptions.ticket.ExpiredProductsException;
+import es.upm.etsisi.poo.exceptions.ticket.ServiceAlreadyInTicketException;
 import es.upm.etsisi.poo.exceptions.ticket.TicketClosedException;
 import es.upm.etsisi.poo.models.product.Product;
 import es.upm.etsisi.poo.models.product.ProductMeetingFood;
@@ -57,6 +58,9 @@ public class TicketMix extends Ticket{
     public void addService(ProductService productService){
         if(estado==States.CERRADO){
             throw new TicketClosedException();
+        }
+        if(products.contains(productService)){
+            throw new ServiceAlreadyInTicketException();
         }
         if (products.isEmpty()) {
             estado = States.ACTIVO;

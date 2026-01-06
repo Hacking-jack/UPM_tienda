@@ -1,6 +1,7 @@
 package es.upm.etsisi.poo.models.ticket;
 
 import es.upm.etsisi.poo.exceptions.ticket.ExpiredProductsException;
+import es.upm.etsisi.poo.exceptions.ticket.ServiceAlreadyInTicketException;
 import es.upm.etsisi.poo.exceptions.ticket.TicketClosedException;
 import es.upm.etsisi.poo.exceptions.ticket.TicketTypeMismatchException;
 import es.upm.etsisi.poo.models.product.Product;
@@ -35,6 +36,9 @@ public class TicketService extends Ticket{
         }
         if (products.isEmpty()) {
             estado = States.ACTIVO;
+        }
+        if(products.contains(productService)){
+            throw new ServiceAlreadyInTicketException();
         }
         if(!productService.isExpired() && (products.size() < 100)){
             products.add(productService);
