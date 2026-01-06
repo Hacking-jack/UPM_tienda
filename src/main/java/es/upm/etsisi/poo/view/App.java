@@ -7,6 +7,7 @@ import es.upm.etsisi.poo.commands.products.*;
 import es.upm.etsisi.poo.commands.tickets.*;
 import es.upm.etsisi.poo.commands.Command;
 import es.upm.etsisi.poo.exceptions.general.UnknownCommandException;
+import es.upm.etsisi.poo.exceptions.product.NotEnoughTimeException;
 import es.upm.etsisi.poo.exceptions.user.UserNotFoundException;
 import es.upm.etsisi.poo.exceptions.product.MaxAssistantOutOfBounds;
 import es.upm.etsisi.poo.exceptions.product.PersonalitationUnformattedException;
@@ -235,7 +236,7 @@ public class App {
                     }
                 }
             } catch (ProductNotFoundException | TicketNotFoundException | UserNotFoundException | IOException |
-                     MaxAssistantOutOfBounds ex) {
+                     MaxAssistantOutOfBounds | NotEnoughTimeException ex) {
                 System.out.println(ex.getMessage());
             } catch (NumberFormatException | ArrayIndexOutOfBoundsException | NullPointerException ex) {
                 System.out.println("Formato del comando incorrecto. Use help para ver los comandos");

@@ -7,26 +7,26 @@ public class CommandHelp implements Command {
     @Override
     public boolean execute() {
         System.out.println("Commands:" +
-                "\n  client add \"<nombre>\" <DNI> <email> <cashId>\n  " +
+                "\n  client add \"<nombre>\" (<DNI>|<NIF>) <email> <cashId>\n  " +
                 "client remove <DNI>\n  " +
                 "client list\n  " +
                 "cash add [<id>] \"<nombre>\"<email>\n  " +
                 "cash remove <id>\n  " +
                 "cash list\n  " +
                 "cash tickets <id>\n  " +
-                "ticket new [<id>] <cashId> <userId>\n  " +
-                "ticket add <ticketId><cashId> <prodId> <amount> [--p<txt> --p<txt>] \n  " +
-                "ticket remove <ticketId><cashId> <prodId> \n  " +
-                "ticket print <ticketId> <cashId> \n  " +
+                "ticket new [<id>] <cashId> <userId> -[c|p|s] (default -p option)\n  " +
+                "ticket add <ticketId><cashId> <prodId> <amount> [--p<txt> --p<txt>]\n  " +
+                "ticket remove <ticketId><cashId> <prodId>\n  " +
+                "ticket print <ticketId> <cashId>\n  " +
                 "ticket list\n  " +
-                "prod add <id> \"<name>\" <category> <price>\n  " +
+                "prod add ([<id>] \"<name>\" <category> <price> [<maxPers>]) || (\"<name>\" <category> )\n  " +
                 "prod update <id> NAME|CATEGORY|PRICE <value>\n  " +
                 "prod addFood [<id>] \"<name>\" <price> <expiration:yyyy-MM-dd> <max_people>\n  " +
                 "prod addMeeting [<id>] \"<name>\" <price> <expiration:yyyy-MM-dd> <max_people>\n  " +
                 "prod list\n  " +
                 "prod remove <id>\n  " +
                 "help\n  " +
-                "echo “<text>” \n  " +
+                "echo “<text>”\n  " +
                 "exit\n\n" +
 
 

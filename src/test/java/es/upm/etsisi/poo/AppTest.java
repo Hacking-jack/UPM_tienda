@@ -34,14 +34,14 @@ public class AppTest
 
         try {
             // Ejecutar tu programa con el parámetro deseado
-            App.main(new String[]{"enunciados/input E2"});
+            App.main(new String[]{"enunciados/inputE3"});
         } finally {
             // Restaurar stdout
             System.setOut(originalOut);
         }
 
         // Leer archivo esperado
-        File expectedFile = new File("enunciados/output esperado E2");
+        File expectedFile = new File("enunciados/outputE3");
         byte[] bytes = Files.readAllBytes(expectedFile.toPath());
         String expectedOutput = new String(bytes, StandardCharsets.UTF_8);
 
