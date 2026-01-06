@@ -47,7 +47,7 @@ public class CashierController {
 
     public static void cashTickets(String cashId) {
         if (UserDB.existeId(cashId) && (UserDB.findId(cashId) instanceof Cashier)) {
-            System.out.print("Tickets: \n");
+            System.out.print("Tickets:\n");
 
             Cashier aux = (Cashier) UserDB.findId(cashId);
             for (String t : aux.getTickets()) {

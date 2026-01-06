@@ -71,6 +71,18 @@ public class ProductMeetingFood extends ProductBasic {
                     ", max people allowed:" + maxAssistants + ", actual people in event:" + assistants + "}";
         }
     }
+
+    public String initialString() {
+        if (assistants == 0) {
+            return "{class:" + ((isFood) ? "Food" : "Meeting") +
+                    ", id:" + id + ", name:'" + name + "', price:" + price  + ", date of Event:" + date +
+                    ", max people allowed:" + maxAssistants + "}";
+        } else {
+            return "{class:" + ((isFood) ? "Food" : "Meeting") +
+                    ", id:" + id + ", name:'" + name + "', price:" + price  + ", date of Event:" + date +
+                    ", max people allowed:" + maxAssistants + ", actual people in event:" + assistants + "}";
+        }
+    }
     @Override
     public ProductMeetingFood clone() {
         return (ProductMeetingFood) super.clone();

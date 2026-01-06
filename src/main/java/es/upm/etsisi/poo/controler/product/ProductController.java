@@ -36,7 +36,11 @@ public class ProductController {
         System.out.println("Catalog:");
         ArrayList<Product> products = ProductDB.listProducts();
         for (Product p : products) {
-            System.out.println("  " + p.toString());
+            if(p instanceof ProductMeetingFood){
+                System.out.println("  " + ((ProductMeetingFood) p).initialString());
+            }else {
+                System.out.println("  " + p.toString());
+            }
         }
     }
 

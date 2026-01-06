@@ -237,7 +237,7 @@ public class App {
                 }
             } catch (ProductNotFoundException | TicketNotFoundException | UserNotFoundException | IOException |
                      MaxAssistantOutOfBounds | NotEnoughTimeException ex) {
-                System.out.println(ex.getMessage());
+                System.out.println(ex.getMessage()+"\n");
             } catch (NumberFormatException | ArrayIndexOutOfBoundsException | NullPointerException ex) {
                 System.out.println("Formato del comando incorrecto. Use help para ver los comandos");
             }

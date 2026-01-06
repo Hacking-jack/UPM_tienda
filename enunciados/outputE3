@@ -62,11 +62,9 @@ tUPM> prod update 1 NAME "Libro POO V2"
 {class:Product, id:1, name:'Libro POO V2', category:BOOK, price:25.0}
 prod update: ok
 
-
 tUPM> prod update 1 PRICE 30
 {class:Product, id:1, name:'Libro POO V2', category:BOOK, price:30.0}
 prod update: ok
-
 
 tUPM> echo "inserto libro repetido y lo borro"
 "inserto libro repetido y lo borro"
@@ -411,19 +409,19 @@ ticket list: ok
 tUPM> echo "Trabajamos con productos de personas"
 "Trabajamos con productos de personas"
 
-tUPM> prod addMeeting 23456 "Reunion Rotonda" 12 2025-12-21 100
-{class:Meeting, id:23456, name:'Reunion Rotonda', price:12.0, date of Event:2025-12-21, max people allowed:100}
+tUPM> prod addMeeting 23456 "Reunion Rotonda" 12 2026-12-21 100
+{class:Meeting, id:23456, name:'Reunion Rotonda', price:12.0, date of Event:2026-12-21, max people allowed:100}
 prod addMeeting: ok
 
-tUPM> prod addMeeting 23457 "Graduacion ETSISI" 40 2025-12-21 30
-{class:Meeting, id:23457, name:'Graduacion ETSISI', price:40.0, date of Event:2025-12-21, max people allowed:30}
+tUPM> prod addMeeting 23457 "Graduacion ETSISI" 40 2026-12-21 30
+{class:Meeting, id:23457, name:'Graduacion ETSISI', price:40.0, date of Event:2026-12-21, max people allowed:30}
 prod addMeeting: ok
 
-tUPM> prod addFood 23458 "Cafeteria ETSISI" 5 2025-12-21 300
+tUPM> prod addFood 23458 "Cafeteria ETSISI" 5 2026-12-21 300
 Error processing ->prod addFood ->Error adding product
 
-tUPM> prod addFood 23459 "Restaurante Asador" 50 2025-12-21 40
-{class:Food, id:23459, name:'Restaurante Asador', price:50.0, date of Event:2025-12-21, max people allowed:40}
+tUPM> prod addFood 23459 "Restaurante Asador" 50 2026-12-21 40
+{class:Food, id:23459, name:'Restaurante Asador', price:50.0, date of Event:2026-12-21, max people allowed:40}
 prod addFood: ok
 
 tUPM> prod list
@@ -431,9 +429,9 @@ Catalog:
   {class:Product, id:0, name:'Camiseta talla:M UPM', category:CLOTHES, price:15.0}
   {class:Product, id:1, name:'Libro POO V2', category:BOOK, price:30.0}
   {class:Product, id:2, name:'Camiseta talla:M UPM', category:CLOTHES, price:15.0}
-  {class:Meeting, id:23456, name:'Reunion Rotonda', price:12.0, date of Event:2025-12-21, max people allowed:100}
-  {class:Meeting, id:23457, name:'Graduacion ETSISI', price:40.0, date of Event:2025-12-21, max people allowed:30}
-  {class:Food, id:23459, name:'Restaurante Asador', price:50.0, date of Event:2025-12-21, max people allowed:40}
+  {class:Meeting, id:23456, name:'Reunion Rotonda', price:12.0, date of Event:2026-12-21, max people allowed:100}
+  {class:Meeting, id:23457, name:'Graduacion ETSISI', price:40.0, date of Event:2026-12-21, max people allowed:30}
+  {class:Food, id:23459, name:'Restaurante Asador', price:50.0, date of Event:2026-12-21, max people allowed:40}
 prod list: ok
 
 tUPM> ticket new 212127 UW1234567 98948334B
@@ -445,7 +443,7 @@ ticket new: ok
 
 tUPM> ticket add 212127 UW1234567 23456 20
 Ticket : 212127
-  {class:Meeting, id:23456, name:'Reunion Rotonda', price:240.0, date of Event:2025-12-21, max people allowed:100, actual people in event:20}
+  {class:Meeting, id:23456, name:'Reunion Rotonda', price:240.0, date of Event:2026-12-21, max people allowed:100, actual people in event:20}
   Total price: 240.0
   Total discount: 0.0
   Final Price: 240.0
@@ -456,7 +454,7 @@ Ticket : 212127
   {class:Product, id:2, name:'Camiseta talla:M UPM', category:CLOTHES, price:15.0} **discount -1.05
   {class:Product, id:2, name:'Camiseta talla:M UPM', category:CLOTHES, price:15.0} **discount -1.05
   {class:Product, id:2, name:'Camiseta talla:M UPM', category:CLOTHES, price:15.0} **discount -1.05
-  {class:Meeting, id:23456, name:'Reunion Rotonda', price:240.0, date of Event:2025-12-21, max people allowed:100, actual people in event:20}
+  {class:Meeting, id:23456, name:'Reunion Rotonda', price:240.0, date of Event:2026-12-21, max people allowed:100, actual people in event:20}
   Total price: 285.0
   Total discount: 3.1499999
   Final Price: 281.85
@@ -467,7 +465,7 @@ Ticket : 212127-25-12-07-22:32
   {class:Product, id:2, name:'Camiseta talla:M UPM', category:CLOTHES, price:15.0} **discount -1.05
   {class:Product, id:2, name:'Camiseta talla:M UPM', category:CLOTHES, price:15.0} **discount -1.05
   {class:Product, id:2, name:'Camiseta talla:M UPM', category:CLOTHES, price:15.0} **discount -1.05
-  {class:Meeting, id:23456, name:'Reunion Rotonda', price:240.0, date of Event:2025-12-21, max people allowed:100, actual people in event:20}
+  {class:Meeting, id:23456, name:'Reunion Rotonda', price:240.0, date of Event:2026-12-21, max people allowed:100, actual people in event:20}
   Total price: 285.0
   Total discount: 3.1499999
   Final Price: 281.85
@@ -549,12 +547,12 @@ ticket print: ok
 tUPM> echo "Iniciamos productos servicio"
 "Iniciamos productos servicio"
 
-tUPM> prod add 2025-12-21 INSURANCE
-{class:ProductService, id:1, category:INSURANCE, expiration:Sun Dec 21 00:00:00 CET 2025}
+tUPM> prod add 2026-12-21 INSURANCE
+{class:ProductService, id:1, category:INSURANCE, expiration:Sun Dec 21 00:00:00 CET 2026}
 prod add: ok
 
-tUPM> prod add 2025-12-24 TRANSPORT
-{class:ProductService, id:2, category:TRANSPORT, expiration:Wed Dec 24 00:00:00 CET 2025}
+tUPM> prod add 2026-12-24 TRANSPORT
+{class:ProductService, id:2, category:TRANSPORT, expiration:Wed Dec 24 00:00:00 CET 2026}
 prod add: ok
 
 tUPM> echo "Iniciamos empresas"
@@ -571,21 +569,21 @@ ticket new: ok
 tUPM> ticket add 212129 UW1234567 1S
 Ticket : 212129
 Services Included:
-  {class:ProductService, id:1, category:INSURANCE, expiration:Sun Dec 21 00:00:00 CET 2025}
+  {class:ProductService, id:1, category:INSURANCE, expiration:Sun Dec 21 00:00:00 CET 2026}
 ticket add: ok
 
 tUPM> ticket add 212129 UW1234567 2S
 Ticket : 212129
 Services Included:
-  {class:ProductService, id:1, category:INSURANCE, expiration:Sun Dec 21 00:00:00 CET 2025}
-  {class:ProductService, id:2, category:TRANSPORT, expiration:Wed Dec 24 00:00:00 CET 2025}
+  {class:ProductService, id:1, category:INSURANCE, expiration:Sun Dec 21 00:00:00 CET 2026}
+  {class:ProductService, id:2, category:TRANSPORT, expiration:Wed Dec 24 00:00:00 CET 2026}
 ticket add: ok
 
 tUPM> ticket print 212129 UW1234567
 Ticket : 212129-25-12-07-22:32
 Services Included:
-  {class:ProductService, id:1, category:INSURANCE, expiration:Sun Dec 21 00:00:00 CET 2025}
-  {class:ProductService, id:2, category:TRANSPORT, expiration:Wed Dec 24 00:00:00 CET 2025}
+  {class:ProductService, id:1, category:INSURANCE, expiration:Sun Dec 21 00:00:00 CET 2026}
+  {class:ProductService, id:2, category:TRANSPORT, expiration:Wed Dec 24 00:00:00 CET 2026}
 ticket print: ok
 
 tUPM> ticket new 212130 UW1234567 B12345674 -c
@@ -595,23 +593,23 @@ ticket new: ok
 tUPM> ticket add 212130 UW1234567 1S
 Ticket : 212130
 Services Included:
-  {class:ProductService, id:1, category:INSURANCE, expiration:Sun Dec 21 00:00:00 CET 2025}
+  {class:ProductService, id:1, category:INSURANCE, expiration:Sun Dec 21 00:00:00 CET 2026}
 ticket add: ok
 
 tUPM> ticket add 212130 UW1234567 2S
 Ticket : 212130
 Services Included:
-  {class:ProductService, id:1, category:INSURANCE, expiration:Sun Dec 21 00:00:00 CET 2025}
-  {class:ProductService, id:2, category:TRANSPORT, expiration:Wed Dec 24 00:00:00 CET 2025}
+  {class:ProductService, id:1, category:INSURANCE, expiration:Sun Dec 21 00:00:00 CET 2026}
+  {class:ProductService, id:2, category:TRANSPORT, expiration:Wed Dec 24 00:00:00 CET 2026}
 ticket add: ok
 
 tUPM> ticket add 212130 UW1234567 23456 20
 Ticket : 212130
 Services Included:
-  {class:ProductService, id:1, category:INSURANCE, expiration:Sun Dec 21 00:00:00 CET 2025}
-  {class:ProductService, id:2, category:TRANSPORT, expiration:Wed Dec 24 00:00:00 CET 2025}
+  {class:ProductService, id:1, category:INSURANCE, expiration:Sun Dec 21 00:00:00 CET 2026}
+  {class:ProductService, id:2, category:TRANSPORT, expiration:Wed Dec 24 00:00:00 CET 2026}
 Product Included
-  {class:Meeting, id:23456, name:'Reunion Rotonda', price:240.0, date of Event:2025-12-21, max people allowed:100, actual people in event:20}
+  {class:Meeting, id:23456, name:'Reunion Rotonda', price:240.0, date of Event:2026-12-21, max people allowed:100, actual people in event:20}
   Total price: 240.0
   Extra Discount from services:72.0 **discount -72.0
   Total discount: 72.0
@@ -621,10 +619,10 @@ ticket add: ok
 tUPM> ticket print 212130 UW1234567
 Ticket : 212130-25-12-07-22:32
 Services Included:
-  {class:ProductService, id:1, category:INSURANCE, expiration:Sun Dec 21 00:00:00 CET 2025}
-  {class:ProductService, id:2, category:TRANSPORT, expiration:Wed Dec 24 00:00:00 CET 2025}
+  {class:ProductService, id:1, category:INSURANCE, expiration:Sun Dec 21 00:00:00 CET 2026}
+  {class:ProductService, id:2, category:TRANSPORT, expiration:Wed Dec 24 00:00:00 CET 2026}
 Product Included
-  {class:Meeting, id:23456, name:'Reunion Rotonda', price:240.0, date of Event:2025-12-21, max people allowed:100, actual people in event:20}
+  {class:Meeting, id:23456, name:'Reunion Rotonda', price:240.0, date of Event:2026-12-21, max people allowed:100, actual people in event:20}
   Total price: 240.0
   Extra Discount from services:72.0 **discount -72.0
   Total discount: 72.0
