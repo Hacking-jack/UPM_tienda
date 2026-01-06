@@ -155,13 +155,16 @@ public class App {
                                 }
                             } else {
                                 removeComillas(args, 0);
+                                if(args[2]==null){
+                                    cmd = new CommandProductAddService(args[0], args[1]);
+                                }else{
                                 if (args[3] == null) {
                                     cmd = new CommandProductAdd(null, args[0], args[1], Double.parseDouble(args[2]),
                                             null);
                                 } else {
                                     cmd = new CommandProductAdd(null, args[0], args[1], Double.parseDouble(args[2]),
                                             Integer.parseInt(args[3]));
-                                }
+                                }}
                             }
                             break;
 
