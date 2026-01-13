@@ -127,9 +127,13 @@ public class App {
                             String[] pers;
                             pers = obtenerPers(args);
                             if ((pers != null) && (pers[0] == null)) {// formato erróneo de pers
-                                break;
+                                throw new PersonalitationUnformattedException();
                             }
-                            cmd = new CommandTicketAddProduct(args[0], args[1], args[2], Integer.parseInt(args[3]), pers);
+                            if(args[3]==null){
+                                cmd = new CommandTicketAddProduct(args[0], args[1], args[2], null, pers);
+                            }else{
+                                cmd = new CommandTicketAddProduct(args[0], args[1], args[2], Integer.parseInt(args[3]), pers);
+                            }
                             break;
 
                         case "ticket remove":

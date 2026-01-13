@@ -9,16 +9,17 @@ import es.upm.etsisi.poo.exceptions.ticket.CashierTicketMismatchException;
 import es.upm.etsisi.poo.models.product.Product;
 import es.upm.etsisi.poo.models.product.ProductBasic;
 import es.upm.etsisi.poo.models.product.ProductMeetingFood;
+import es.upm.etsisi.poo.models.product.ProductService;
 
 public class CommandTicketAddProduct implements Command {
     private final String ticketId;
     private final String cashId;
     private final String productId;
-    private final int amount;
+    private final Integer amount;
     private final String[] pers; // --p<txt>
 
 //TODO aqui hay que cambiar cosas pq no hay quien lo entienda
-    public CommandTicketAddProduct(String ticketId, String cashId, String productId, int amount, String[] pers) {
+    public CommandTicketAddProduct(String ticketId, String cashId, String productId, Integer amount, String[] pers) {
         this.ticketId = ticketId;
         this.cashId = cashId;
         this.productId = productId;
@@ -29,7 +30,7 @@ public class CommandTicketAddProduct implements Command {
     @Override
     public boolean execute() {
         Product product = ProductController.findId(productId);
-        if (amount <= 0) {
+        if (amount!=null && amount <= 0) {
             throw new NegativeNumException();
         }
         if (!UserDB.findId(cashId).getTickets().contains(ticketId)) {
@@ -45,9 +46,10 @@ public class CommandTicketAddProduct implements Command {
             } else {
                 TicketController.addProduct(ticketId, pb, amount);
             }
-        }
-        else {
-            TicketController.addProduct(ticketId, product, amount); // TODO huh?
+        } else if(product instanceof ProductService) {
+            TicketController.addService(ticketId, (ProductService) product); // TODO huh?
+        }else{
+            //NO DEBERIA PASAR
         }
 
         return true;

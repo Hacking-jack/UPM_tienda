@@ -2,7 +2,6 @@ package es.upm.etsisi.poo.models.product;
 
 import es.upm.etsisi.poo.exceptions.product.NegativeNumException;
 
-//TODO comprobar que los ids aunque seán Strings que solo sean numeros
 public abstract class Product implements Cloneable{
     protected String name;
     protected double price;
