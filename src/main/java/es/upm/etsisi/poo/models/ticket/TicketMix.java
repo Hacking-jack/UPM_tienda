@@ -2,6 +2,7 @@ package es.upm.etsisi.poo.models.ticket;
 
 import es.upm.etsisi.poo.exceptions.product.NotEnoughTimeException;
 import es.upm.etsisi.poo.exceptions.ticket.ExpiredProductsException;
+import es.upm.etsisi.poo.exceptions.ticket.NotSatisfiedMinimunRequirementsException;
 import es.upm.etsisi.poo.exceptions.ticket.ServiceAlreadyInTicketException;
 import es.upm.etsisi.poo.exceptions.ticket.TicketClosedException;
 import es.upm.etsisi.poo.models.product.Product;
@@ -82,8 +83,7 @@ public class TicketMix extends Ticket{
             }
         }
         if (!hayProducto || !hayServicio) {
-            System.out.println("Un ticket mixto debe tener al menos un producto y un servicio");
-            return;//TODO excepción y quitar return
+            throw new NotSatisfiedMinimunRequirementsException();
         }
         if((estado != States.CERRADO) && !comprobarCaducidad()){
             throw new ExpiredProductsException();

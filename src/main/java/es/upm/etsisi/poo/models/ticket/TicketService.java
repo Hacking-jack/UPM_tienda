@@ -1,9 +1,6 @@
 package es.upm.etsisi.poo.models.ticket;
 
-import es.upm.etsisi.poo.exceptions.ticket.ExpiredProductsException;
-import es.upm.etsisi.poo.exceptions.ticket.ServiceAlreadyInTicketException;
-import es.upm.etsisi.poo.exceptions.ticket.TicketClosedException;
-import es.upm.etsisi.poo.exceptions.ticket.TicketTypeMismatchException;
+import es.upm.etsisi.poo.exceptions.ticket.*;
 import es.upm.etsisi.poo.models.product.Product;
 import es.upm.etsisi.poo.models.product.ProductMeetingFood;
 import es.upm.etsisi.poo.models.product.ProductService;
@@ -47,7 +44,7 @@ public class TicketService extends Ticket{
 
     public void printAndClose() {
         if (estado == States.VACIO) {
-            System.out.println("El ticket debe tener al menos un servicio para cerrarse");//TODO sustituir por excepcion
+            throw new NotSatisfiedMinimunRequirementsException();
         }else{
             if((estado != States.CERRADO) && !comprobarCaducidad()){
                 throw new ExpiredProductsException();
