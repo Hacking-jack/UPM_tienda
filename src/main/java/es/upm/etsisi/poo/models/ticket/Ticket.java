@@ -7,6 +7,7 @@ import es.upm.etsisi.poo.models.product.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public abstract class Ticket {
     protected final ArrayList<Product> products;
@@ -26,7 +27,7 @@ public abstract class Ticket {
 
     public void removeProduct(Product p) {
         for(int i = 0; i<products.size();i++){
-            if(products.get(i).getId() != p.getId())
+            if(!Objects.equals(products.get(i).getId(), p.getId()))
                 throw new ProductNotInTicketException(p.getId());
         }
 
