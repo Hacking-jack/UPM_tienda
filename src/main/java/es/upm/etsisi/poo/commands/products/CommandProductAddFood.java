@@ -2,6 +2,7 @@ package es.upm.etsisi.poo.commands.products;
 
 import es.upm.etsisi.poo.commands.Command;
 import es.upm.etsisi.poo.controler.product.ProductFoodMeetingController;
+import es.upm.etsisi.poo.exceptions.product.IdUnformattedException;
 
 public class CommandProductAddFood implements Command {
     private final String id;
@@ -15,6 +16,11 @@ public class CommandProductAddFood implements Command {
             this.id = id;
         } else {
             this.id = ProductFoodMeetingController.generarId();
+        }
+        try {
+            Integer.parseInt(this.id);
+        }catch(NumberFormatException ex){
+            throw new IdUnformattedException();
         }
         this.name = name;
         this.price = price;
