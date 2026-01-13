@@ -4,6 +4,7 @@ import es.upm.etsisi.poo.dataBase.UserDB;
 import es.upm.etsisi.poo.commands.Command;
 import es.upm.etsisi.poo.controler.product.ProductController;
 import es.upm.etsisi.poo.controler.ticket.TicketController;
+import es.upm.etsisi.poo.exceptions.general.UnknownCommandException;
 import es.upm.etsisi.poo.exceptions.product.NegativeNumException;
 import es.upm.etsisi.poo.exceptions.ticket.CashierTicketMismatchException;
 import es.upm.etsisi.poo.models.product.Product;
@@ -36,20 +37,24 @@ public class CommandTicketAddProduct implements Command {
         if (!UserDB.findId(cashId).getTickets().contains(ticketId)) {
             throw new CashierTicketMismatchException();
         }
-        if (product instanceof ProductMeetingFood) {
-            TicketController.addMeeting(ticketId, (ProductMeetingFood) product, amount);
-        }
-        else if (product instanceof ProductBasic) { // TODO esto no se si habria que hacerlo con Object.class()
-            ProductBasic pb = (ProductBasic) product;
-            if (pers != null) {
-                TicketController.addProductPers(ticketId, pb, amount, pers);
-            } else {
-                TicketController.addProduct(ticketId, pb, amount);
+        if(amount!=null){
+            if (product instanceof ProductMeetingFood) {
+                TicketController.addMeeting(ticketId, (ProductMeetingFood) product, amount);
             }
-        } else if(product instanceof ProductService) {
-            TicketController.addService(ticketId, (ProductService) product); // TODO huh?
+            else if (product instanceof ProductBasic) { // TODO esto no se si habria que hacerlo con Object.class()
+                ProductBasic pb = (ProductBasic) product;
+                if (pers != null) {
+                    TicketController.addProductPers(ticketId, pb, amount, pers);
+                } else {
+                    TicketController.addProduct(ticketId, pb, amount);
+                }
+            }
         }else{
-            //NO DEBERIA PASAR
+            if(product instanceof ProductService) {
+                TicketController.addService(ticketId, (ProductService) product); // TODO huh?
+            }else{
+                throw new UnknownCommandException();
+            }
         }
 
         return true;

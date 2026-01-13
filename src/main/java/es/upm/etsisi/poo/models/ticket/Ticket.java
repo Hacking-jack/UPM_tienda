@@ -26,10 +26,14 @@ public abstract class Ticket {
     }
 
     public void removeProduct(Product p) {
-        for(int i = 0; i<products.size();i++){
-            if(!Objects.equals(products.get(i).getId(), p.getId()))
-                throw new ProductNotInTicketException(p.getId());
+        boolean encontrado = false;
+        for (Product value : products) {
+            if (Objects.equals(value.getId(), p.getId())) {
+                encontrado = true;
+                break;
+            }
         }
+        if(!encontrado) throw new ProductNotInTicketException(p.getId());
 
         products.removeIf(product -> product.getId().equals(p.getId()));
         if(products.isEmpty()){

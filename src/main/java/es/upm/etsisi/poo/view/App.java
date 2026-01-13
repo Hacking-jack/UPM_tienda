@@ -129,7 +129,7 @@ public class App {
                             if ((pers != null) && (pers[0] == null)) {// formato erróneo de pers
                                 throw new PersonalitationUnformattedException();
                             }
-                            if(args[3]==null){
+                            if(args.length==3){
                                 cmd = new CommandTicketAddProduct(args[0], args[1], args[2], null, pers);
                             }else{
                                 cmd = new CommandTicketAddProduct(args[0], args[1], args[2], Integer.parseInt(args[3]), pers);
