@@ -4,10 +4,7 @@ import java.util.ArrayList;
 
 
 import es.upm.etsisi.poo.dataBase.ProductDB;
-import es.upm.etsisi.poo.exceptions.product.CategoryMismatchException;
-import es.upm.etsisi.poo.exceptions.product.DuplicateProductIdException;
-import es.upm.etsisi.poo.exceptions.product.FoodMeetingCategoryException;
-import es.upm.etsisi.poo.exceptions.product.FullProductCatalogException;
+import es.upm.etsisi.poo.exceptions.product.*;
 import es.upm.etsisi.poo.models.product.Categories;
 import es.upm.etsisi.poo.models.product.Product;
 import es.upm.etsisi.poo.models.product.ProductBasic;
@@ -65,8 +62,7 @@ public class ProductController {
                 p.setPrice(Double.parseDouble(valor));
                 break;
             default:
-                System.out.println("Campo no valido"); //TODO esto no se si sustituirlo por una excepcion
-                break;
+                throw new NotValidFieldException(campo);
         }
         System.out.println(p);
 

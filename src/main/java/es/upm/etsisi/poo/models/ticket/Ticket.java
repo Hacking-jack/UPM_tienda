@@ -101,7 +101,7 @@ public abstract class Ticket {
         return idTicket;
     }
 
-    protected boolean comprobarCaducidad(){ //Aqui comprobar todo el ticket
+    protected boolean comprobarCaducidad(){
         boolean resul=true;
         for (Product product : products){
             if(product instanceof ProductService){
