@@ -27,7 +27,7 @@ public class CommandTicketAddProduct implements Command {
         this.amount = amount;
         this.pers = pers;
     }
-// TODO aqui falta meter para añadir servicios al ticket
+
     @Override
     public boolean execute() {
         Product product = ProductController.findId(productId);
@@ -51,7 +51,7 @@ public class CommandTicketAddProduct implements Command {
             }
         }else{
             if(product instanceof ProductService) {
-                TicketController.addService(ticketId, (ProductService) product); // TODO huh?
+                TicketController.addService(ticketId, (ProductService) product);
             }else{
                 throw new UnknownCommandException();
             }

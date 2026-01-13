@@ -123,7 +123,7 @@ public class App {
                             }
                             break;
 
-                        case "ticket add": //TODO falta para meter servicios al ticket
+                        case "ticket add":
                             String[] pers;
                             pers = obtenerPers(args);
                             if ((pers != null) && (pers[0] == null)) {// formato erróneo de pers
