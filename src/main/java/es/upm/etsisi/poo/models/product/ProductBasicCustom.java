@@ -32,7 +32,7 @@ public class ProductBasicCustom extends ProductBasic {
     public String toString() {
         StringBuilder s = new StringBuilder("{class:ProductPersonalized" +
                 ", id:" + id + ", name:'" + name + "', category:" + categories +
-                ", price:" + price + (0.1 * price * persAct) + ", maxPersonal:" + maxPers);
+                ", price:" + (getPrice()) + ", maxPersonal:" + maxPers);
         if (persAct > 0) {
             s.append(", personalizationList:[");
             for (int i = 0; i < persAct; i++) {
