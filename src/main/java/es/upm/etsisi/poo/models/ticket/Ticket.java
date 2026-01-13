@@ -1,6 +1,7 @@
 package es.upm.etsisi.poo.models.ticket;
 
 import es.upm.etsisi.poo.dataBase.TicketDB;
+import es.upm.etsisi.poo.exceptions.ticket.ProductNotInTicketException;
 import es.upm.etsisi.poo.models.product.*;
 
 import java.time.LocalDateTime;
@@ -24,7 +25,11 @@ public abstract class Ticket {
     }
 
     public void removeProduct(Product p) {
-        //TODO excepción si el prod no esta en el ticket
+        for(int i = 0; i<products.size();i++){
+            if(products.get(i).getId() != p.getId())
+                throw new ProductNotInTicketException(p.getId());
+        }
+
         products.removeIf(product -> product.getId().equals(p.getId()));
         if(products.isEmpty()){
             estado=States.VACIO;
