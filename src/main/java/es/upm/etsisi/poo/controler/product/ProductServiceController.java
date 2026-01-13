@@ -22,6 +22,6 @@ public class ProductServiceController {
         Services category = Services.valueOf(serviceType.toUpperCase());
         ProductService nuevoServicio = new ProductService(siguienteNum, dateMax, category);
         ProductDB.addProduct(nuevoServicio);
-        System.out.println("Servicio creado: " + nuevoServicio);
+        System.out.println(nuevoServicio);
     }
 }

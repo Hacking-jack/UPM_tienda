@@ -65,12 +65,12 @@ public class TicketService extends Ticket{
 
     public String getStringPrint(){
         StringBuilder sb = new StringBuilder();
-        products.sort(Comparator.comparing(Product::getName));
-
+        products.sort(Comparator.comparing(Product::getId));
         sb.append(String.format("Ticket : %s%n", idTicket));
+        sb.append("Services Included:");
 
         for (Product p : products) {
-                sb.append("  ").append(p.toString()).append("\n");
+                sb.append("\n  ").append(p.toString());
         }
 
         return sb.toString();

@@ -103,7 +103,9 @@ public class TicketProduct extends Ticket{
         double descuentoTotal = 0;
 
         sb.append(String.format("Ticket : %s%n", idTicket));
-
+        if(estado!=States.VACIO){
+            sb.append("\nProducts Included:");
+        }
         for (Product p : products) {
             double discountAmount = 0.0;
             if (p instanceof ProductBasic) {

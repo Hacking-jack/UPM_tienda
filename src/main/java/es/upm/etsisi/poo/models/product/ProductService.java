@@ -35,7 +35,7 @@ public class ProductService extends Product {
     @Override
     public String toString() {
         return "{class:ProductService"
-                + ", id:" + getServiceId()
+                + ", id:" + getServiceId().substring(0, getServiceId().length()-1)
                 + ", category:" + category
                 + ", expiration:" + dateMax
                 + "}";

@@ -6,6 +6,7 @@ import es.upm.etsisi.poo.exceptions.ticket.NotSatisfiedMinimunRequirementsExcept
 import es.upm.etsisi.poo.exceptions.ticket.ServiceAlreadyInTicketException;
 import es.upm.etsisi.poo.exceptions.ticket.TicketClosedException;
 import es.upm.etsisi.poo.models.product.Product;
+import es.upm.etsisi.poo.models.product.ProductBasic;
 import es.upm.etsisi.poo.models.product.ProductMeetingFood;
 import es.upm.etsisi.poo.models.product.ProductService;
 
@@ -102,7 +103,17 @@ public class TicketMix extends Ticket{
 
     public String getStringPrint(){
         StringBuilder sb = new StringBuilder();
-        products.sort(Comparator.comparing(Product::getName));
+        products.sort(
+                Comparator
+                        .comparing((Product p) -> !(p instanceof ProductService))
+                        .thenComparing(p -> {
+                            if (p instanceof ProductService) {
+                                return p.getId();
+                            }
+                            return null;
+                        }, Comparator.nullsLast(Comparator.naturalOrder()))
+                        .thenComparing(Product::getName)
+        );
 
         int serviceCount = 0;
         double totalProductos = 0.0;
@@ -114,28 +125,41 @@ public class TicketMix extends Ticket{
         }
 
         double descuentoServicios = serviceCount * 0.15;
-        sb.append(String.format("Ticket : %s%n", idTicket));
-
-        for (Product p : products) {
-
-            if (p instanceof ProductMeetingFood) {
-                sb.append("  ").append(p.toString()).append("\n");
+        sb.append(String.format("Ticket : %s", idTicket));
+        if(serviceCount!=0){
+            sb.append("\nServices Included:");
+            for (Product p : products) {
+                if (p instanceof ProductService) {
+                    sb.append("\n  ").append(p.toString());
+                }
             }
-
-            double precio = p.getPrice();
-            double descuento = precio * descuentoServicios;
-            double precioFinal = Math.max(precio - descuento, 0);
-
-            totalProductos += precioFinal;
-
-            sb.append(String.format("  %s %.2f", p.toString(), precioFinal));
-
-            if (descuento > 0) {
-                sb.append(String.format(" **discount -%.2f", descuento));
-            }
-            sb.append("\n");
         }
+        int i=0;
+        if(serviceCount<products.toArray().length){
+            sb.append("\nProducts Included:");
+        }
+        for (Product p : products) {
+            if (p instanceof ProductBasic) {
+                i++;
+                sb.append("\n  ").append(p.toString()).append("\n");
+
+                double precio = p.getPrice();
+                double descuento = precio * descuentoServicios;
+                double precioFinal = Math.max(precio - descuento, 0);
+
+                totalProductos += precioFinal;
+
+                sb.append(String.format("  %s %.2f", p.toString(), precioFinal));
+
+                if (descuento > 0) {
+                    sb.append(String.format(" **discount -%.2f", descuento));
+                }
+                sb.append("\n");
+            }
+        }
+        if(i!=0) {
             sb.append(String.format("  Final Price: %.2f%n", totalProductos));
+        }
 
 
         return sb.toString();
