@@ -149,7 +149,7 @@ public class TicketMix extends Ticket{
 
                 totalProductos += precioFinal;
 
-                sb.append(String.format("  %s %.2f", p.toString(), precioFinal));
+                //sb.append(String.format("  %s %.2f", p.toString(), precioFinal)); TODO no se qeu hacer con esto
 
                 if (descuento > 0) {
                     sb.append(String.format(" **discount -%.2f", descuento));
