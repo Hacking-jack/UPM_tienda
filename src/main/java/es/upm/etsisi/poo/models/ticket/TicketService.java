@@ -31,7 +31,7 @@ public class TicketService extends Ticket{
         if(estado==States.CERRADO){
             throw new TicketClosedException();
         }
-        if (products.isEmpty()) {
+        if (estado==States.VACIO) {
             estado = States.ACTIVO;
         }
         if(products.contains(productService)){
