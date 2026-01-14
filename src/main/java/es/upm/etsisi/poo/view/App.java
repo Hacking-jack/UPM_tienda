@@ -240,11 +240,11 @@ public class App {
                         }
                     }
                 }
-            } catch (ProductNotFoundException | TicketNotFoundException | UserNotFoundException | IOException |
-                     MaxAssistantOutOfBounds | NotEnoughTimeException | UnknownCommandException ex) {//TODO rellenar el catch
-                System.out.println(ex.getMessage()+"\n");
+
             } catch (NumberFormatException | ArrayIndexOutOfBoundsException | NullPointerException ex) {
-                System.out.println("Formato del comando incorrecto. Use help para ver los comandos");
+                System.out.println("Formato del comando incorrecto. Use help para ver los comandos\n");
+            } catch (Exception ex) {
+                System.out.println(ex.getMessage() + "\n");
             }
         }
 
