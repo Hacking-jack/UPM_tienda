@@ -31,7 +31,7 @@ public class ProductBasic extends Product  {
     @Override
     public ProductBasic clone() {
         try {
-            return (ProductBasic) super.clone(); //TODO esto está mal, el super clone no tiene categories
+            return (ProductBasic) super.clone();
         } catch (Exception e) {
             throw new AssertionError("No debería pasar, Product implementa Cloneable");
         }
