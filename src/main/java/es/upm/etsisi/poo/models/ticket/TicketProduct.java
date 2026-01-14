@@ -2,7 +2,7 @@ package es.upm.etsisi.poo.models.ticket;
 
 import es.upm.etsisi.poo.exceptions.product.NotEnoughTimeException;
 import es.upm.etsisi.poo.exceptions.ticket.ExpiredProductsException;
-import es.upm.etsisi.poo.exceptions.ticket.NotSatisfiedMinimunRequirementsException;
+import es.upm.etsisi.poo.exceptions.ticket.NotSatisfiedMinimumRequirementsException;
 import es.upm.etsisi.poo.exceptions.ticket.TicketClosedException;
 import es.upm.etsisi.poo.exceptions.ticket.TicketTypeMismatchException;
 import es.upm.etsisi.poo.models.product.*;
@@ -61,7 +61,7 @@ public class TicketProduct extends Ticket{
 
     public void printAndClose() {
         if(estado==States.VACIO) {
-            throw new NotSatisfiedMinimunRequirementsException();
+            throw new NotSatisfiedMinimumRequirementsException();
         }else {
             if((estado != States.CERRADO) && !comprobarCaducidad()){
                 throw new ExpiredProductsException();

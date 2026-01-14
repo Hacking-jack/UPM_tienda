@@ -44,7 +44,7 @@ public class TicketService extends Ticket{
 
     public void printAndClose() {
         if (estado == States.VACIO) {
-            throw new NotSatisfiedMinimunRequirementsException();
+            throw new NotSatisfiedMinimumRequirementsException();
         }else{
             if((estado != States.CERRADO) && !comprobarCaducidad()){
                 throw new ExpiredProductsException();

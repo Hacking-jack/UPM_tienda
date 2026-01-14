@@ -2,7 +2,7 @@ package es.upm.etsisi.poo.models.ticket;
 
 import es.upm.etsisi.poo.exceptions.product.NotEnoughTimeException;
 import es.upm.etsisi.poo.exceptions.ticket.ExpiredProductsException;
-import es.upm.etsisi.poo.exceptions.ticket.NotSatisfiedMinimunRequirementsException;
+import es.upm.etsisi.poo.exceptions.ticket.NotSatisfiedMinimumRequirementsException;
 import es.upm.etsisi.poo.exceptions.ticket.ServiceAlreadyInTicketException;
 import es.upm.etsisi.poo.exceptions.ticket.TicketClosedException;
 import es.upm.etsisi.poo.models.product.Product;
@@ -84,7 +84,7 @@ public class TicketMix extends Ticket{
             }
         }
         if (!hayProducto || !hayServicio) {
-            throw new NotSatisfiedMinimunRequirementsException();
+            throw new NotSatisfiedMinimumRequirementsException();
         }
         if((estado != States.CERRADO) && !comprobarCaducidad()){
             throw new ExpiredProductsException();
