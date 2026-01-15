@@ -1,79 +1,26 @@
-package es.upm.etsisi.poo.models.ticket;
+package es.upm.etsisi.poo.models.ticket.printBehaviour;
 
-import es.upm.etsisi.poo.exceptions.product.NotEnoughTimeException;
 import es.upm.etsisi.poo.exceptions.ticket.ExpiredProductsException;
 import es.upm.etsisi.poo.exceptions.ticket.NotSatisfiedMinimumRequirementsException;
-import es.upm.etsisi.poo.exceptions.ticket.ServiceAlreadyInTicketException;
-import es.upm.etsisi.poo.exceptions.ticket.TicketClosedException;
-import es.upm.etsisi.poo.models.product.*;
+import es.upm.etsisi.poo.models.product.Categories;
+import es.upm.etsisi.poo.models.product.Product;
+import es.upm.etsisi.poo.models.product.ProductBasic;
+import es.upm.etsisi.poo.models.product.ProductService;
+import es.upm.etsisi.poo.models.ticket.States;
+import es.upm.etsisi.poo.models.ticket.Ticket;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Comparator;
 
-public class TicketMix extends Ticket{
-    public TicketMix(){
-        super();
-    }
-    public TicketMix(String id){
-        super(id);
-    }
-
-    public boolean addProduct(Product product) {
-        if (products.isEmpty()) {
-            estado = States.ACTIVO;
-        }
-        if (estado==States.VACIO) {
-            estado = States.ACTIVO;
-        }
-        return (products.size() < 100) && products.add(product);
-    }
-
-    public void addMeeting(ProductMeetingFood productMeeting) {
-        if(estado==States.CERRADO){
-            throw new TicketClosedException();
-        }
-        int asistentes;
-        ProductMeetingFood productMeetingFood;
-        for (Product product : products) {
-            if (product.getId().equals(productMeeting.getId())) {
-                productMeetingFood = (ProductMeetingFood) product;
-                asistentes = productMeetingFood.getAssistants();
-                productMeeting.setAsistentes(productMeeting.getAssistants() + asistentes);
-                removeProduct(product);
-                break;
-            }
-        }
-        if(!productMeeting.isExpired()) {
-            if(estado==States.VACIO){
-                estado=States.ACTIVO;
-            }
-            addProduct(productMeeting);
-        }else{
-            throw new NotEnoughTimeException();
-        }
-    }
-
-    public void addService(ProductService productService){
-        if(estado==States.CERRADO){
-            throw new TicketClosedException();
-        }
-        if(products.contains(productService)){
-            throw new ServiceAlreadyInTicketException();
-        }
-        if (products.isEmpty()) {
-            estado = States.ACTIVO;
-        }
-        if(!productService.isExpired() && (products.size() < 100)){
-            products.add(productService);
-        }
-    }
-
-    public void printAndClose() {
+public class TicketMixPrint implements TicketPrintBehaviour<Product>{
+    @Override
+    public void printAndClose(Ticket<Product> ticket) {
         boolean hayProducto = false;
         boolean hayServicio = false;
 
-        for (Product p : products) {
+        for (Product p : ticket.getProducts()) {
             if (p instanceof ProductService) {
                 hayServicio = true;
             } else {
@@ -83,23 +30,25 @@ public class TicketMix extends Ticket{
         if (!hayProducto || !hayServicio) {
             throw new NotSatisfiedMinimumRequirementsException();
         }
-        if((estado != States.CERRADO) && !comprobarCaducidad()){
+        if((ticket.getEstado() != States.CERRADO) && !ticket.comprobarCaducidad()){
             throw new ExpiredProductsException();
         }
-        if (estado != States.CERRADO) {
-            estado = States.CERRADO;
+        if (ticket.getEstado() != States.CERRADO) {
+            ticket.setEstado(States.CERRADO);
         }
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("-yy-MM-dd-HH:mm");
-        idTicket += LocalDateTime.now().format(formatter);
-        print();
+        ticket.setIdTicket(ticket.getIdTicket() + LocalDateTime.now().format(formatter));
+        print(ticket);
     }
 
-    public void print() {
-        System.out.println(getStringPrint());
+    public void print(Ticket<Product> ticket){
+        System.out.println(getStringPrint(ticket));
     }
 
-    public String getStringPrint(){
+    @Override
+    public String getStringPrint(Ticket<Product> ticket) {
         StringBuilder sb = new StringBuilder();
+        ArrayList<Product> products = ticket.getProducts();
         products.sort(
                 Comparator
                         .comparing((Product p) -> !(p instanceof ProductService))
@@ -113,7 +62,6 @@ public class TicketMix extends Ticket{
         );
 
         int serviceCount = 0;
-        double totalProductos = 0.0;
 
         for (Product p : products) {
             if (p instanceof ProductService) {
@@ -122,7 +70,7 @@ public class TicketMix extends Ticket{
         }
 
         double descuentoServicios = serviceCount * 0.15;
-        sb.append(String.format("Ticket : %s", idTicket));
+        sb.append(String.format("Ticket : %s", ticket.getIdTicket()));
         if(serviceCount!=0){
             sb.append("\nServices Included:");
             for (Product p : products) {
@@ -153,7 +101,6 @@ public class TicketMix extends Ticket{
                 }
             }
         }
-        double descuentoTotalServicios=0;
         double descuentoTotalCategories = 0;
 
         for (Product p : products) {
@@ -161,7 +108,7 @@ public class TicketMix extends Ticket{
             if(!(p instanceof ProductService)){
                 if (p instanceof ProductBasic) {
                     ProductBasic pb = (ProductBasic) p;
-                    boolean discount = hasDiscount(counterStationary, counterClothes, counterBook, counterElectronic,
+                    boolean discount = ticket.hasDiscount(counterStationary, counterClothes, counterBook, counterElectronic,
                             pb.getCategories());
                     if (discount) {
                         discountcategories = Categories.getDiscount(pb.getCategories()) * p.getPrice();
@@ -173,7 +120,7 @@ public class TicketMix extends Ticket{
                     sb.append("\n  ").append(p.toString());
                 } else {
                     sb.append("\n  ").append(p.toString())
-                        .append(String.format(" **discount -%.2f", discountcategories));
+                            .append(String.format(" **discount -%.2f", discountcategories));
                 }
             }
         }

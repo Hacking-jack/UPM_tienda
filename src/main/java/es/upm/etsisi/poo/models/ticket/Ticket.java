@@ -1,43 +1,43 @@
 package es.upm.etsisi.poo.models.ticket;
 
 import es.upm.etsisi.poo.dataBase.TicketDB;
+import es.upm.etsisi.poo.exceptions.product.NotEnoughTimeException;
 import es.upm.etsisi.poo.exceptions.ticket.ProductNotInTicketException;
+import es.upm.etsisi.poo.exceptions.ticket.ServiceAlreadyInTicketException;
+import es.upm.etsisi.poo.exceptions.ticket.TicketClosedException;
+import es.upm.etsisi.poo.exceptions.ticket.TicketTypeMismatchException;
 import es.upm.etsisi.poo.models.product.*;
+import es.upm.etsisi.poo.models.ticket.printBehaviour.TicketPrintBehaviour;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Objects;
 
-public abstract class Ticket {
-    protected final ArrayList<Product> products;
+public class Ticket<T extends Product> {
+    protected final ArrayList<T> products;
     protected String idTicket;
     protected States estado;
+    protected TicketPrintBehaviour<T> ticketPrintBehaviour;
 
 
-    public Ticket(String id) {
+    public Ticket(String id, TicketPrintBehaviour<T> ticketPrintBehaviour) {
         idTicket = id;
         estado = States.VACIO;
-        products = new ArrayList<>();
+        products = new ArrayList<T>();
+        this.ticketPrintBehaviour = ticketPrintBehaviour;
     }
 
-    public Ticket() {
-        this(generarId());
+    public Ticket(TicketPrintBehaviour<T> ticketPrintBehaviour) {
+        this(generarId(), ticketPrintBehaviour);
     }
 
     public void removeProduct(Product p) {
-        boolean encontrado = false;
-        for (Product value : products) {
-            if (Objects.equals(value.getId(), p.getId())) {
-                encontrado = true;
-                break;
+        if(products.removeIf(product -> product.getId().equals(p.getId()))) {
+            if (products.isEmpty()) {
+                estado = States.VACIO;
             }
-        }
-        if(!encontrado) throw new ProductNotInTicketException(p.getId());
-
-        products.removeIf(product -> product.getId().equals(p.getId()));
-        if(products.isEmpty()){
-            estado=States.VACIO;
+        }else{
+            throw new ProductNotInTicketException(p.getId());
         }
     }
 
@@ -71,18 +71,6 @@ public abstract class Ticket {
         return correct;
     }
 
-    public String list() {
-        return idTicket + " - " + estado.toString();
-    }
-
-    public void title() {
-        System.out.println("  " + idTicket + "->" + estado.toString());
-    }
-
-    public void print() {
-        System.out.println(getStringPrint());
-    }
-
     public static String generarId() {
         String string = LocalDateTime.now()
                 .format(DateTimeFormatter.ofPattern("yy-MM-dd-HH:mm-"))
@@ -101,11 +89,19 @@ public abstract class Ticket {
         this.estado = estado;
     }
 
+    public ArrayList<T> getProducts() {
+        return products;
+    }
+
     public String getIdTicket() {
         return idTicket;
     }
 
-    protected boolean comprobarCaducidad(){
+    public void setIdTicket(String idTicket) {
+        this.idTicket = idTicket;
+    }
+
+    public boolean comprobarCaducidad(){
         boolean resul=true;
         for (Product product : products){
             if(product instanceof ProductService){
@@ -124,13 +120,95 @@ public abstract class Ticket {
         return resul;
     }
 
-    public abstract String getStringPrint();
+    public boolean addProduct(T product) {
+        try {
+            if (estado == States.CERRADO) {
+                throw new TicketClosedException();
+            }
+            if (estado == States.VACIO) {
+                estado = States.ACTIVO;
+            }
+            return (products.size() < 100) && products.add(product);
+        }catch (ClassCastException ex){
+            throw new TicketTypeMismatchException();
+        }
+    }
 
-    public abstract boolean addProduct(Product product);
+    public void addMeeting(T productMeetingFood) {
+        try {
+            if (productMeetingFood instanceof ProductMeetingFood) {
+                if (estado == States.CERRADO) {
+                    throw new TicketClosedException();
+                }
+                ProductMeetingFood pM = (ProductMeetingFood) productMeetingFood;
+                for (T product : products) {
+                    if (product.getId().equals(pM.getId())) {
+                        if (product instanceof ProductMeetingFood) {
+                            ProductMeetingFood pEnLista = (ProductMeetingFood) product;
+                            pM.setAsistentes(pM.getAssistants() + pEnLista.getAssistants());
+                        }
+                        removeProduct(product);
+                        break;
+                    }
+                }
+                if (!pM.isExpired()) {
+                    if (estado == States.VACIO) {
+                        estado = States.ACTIVO;
+                    }
+                    addProduct(productMeetingFood);
+                } else {
+                    throw new NotEnoughTimeException();
+                }
+            } else {
+                throw new TicketTypeMismatchException();
+            }
+        }catch (ClassCastException ex){
+            throw new TicketTypeMismatchException();
+        }
+    }
 
-    public abstract void printAndClose();
+    public void addService(T productService){
+        try {
+            if (estado == States.CERRADO) {
+                throw new TicketClosedException();
+            }
+            if (products.contains(productService)) {
+                throw new ServiceAlreadyInTicketException();
+            }
+            if (products.isEmpty()) {
+                estado = States.ACTIVO;
+            }
+            ProductService pS = (ProductService) productService;
+            if (!pS.isExpired() && (products.size() < 100)) {
+                products.add(productService);
+                if (estado == States.VACIO) {
+                    estado = States.ACTIVO;
+                }
+            }
+        }catch (ClassCastException ex){
+        throw new TicketTypeMismatchException();
+    }
+    }
 
-    public abstract void addMeeting(ProductMeetingFood productMeetingFood);
+    public String getStringPrint(){
+        return ticketPrintBehaviour.getStringPrint(this);
+    }
 
-    public abstract void addService(ProductService productService);
+    public void printAndClose(){
+        ticketPrintBehaviour.printAndClose(this);
+    }
+
+    public String list() {
+        return idTicket + " - " + estado.toString();
+    }
+
+    public void title() {
+        System.out.println("  " + idTicket + "->" + estado.toString());
+    }
+
+    public void print() {
+        ticketPrintBehaviour.print(this);
+    }
+
+
 }

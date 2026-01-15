@@ -5,6 +5,9 @@ import es.upm.etsisi.poo.exceptions.product.NotCustomizableProductException;
 import es.upm.etsisi.poo.exceptions.ticket.*;
 import es.upm.etsisi.poo.models.product.*;
 import es.upm.etsisi.poo.models.ticket.*;
+import es.upm.etsisi.poo.models.ticket.printBehaviour.TicketMixPrint;
+import es.upm.etsisi.poo.models.ticket.printBehaviour.TicketProductPrint;
+import es.upm.etsisi.poo.models.ticket.printBehaviour.TicketServicePrint;
 
 import java.util.Objects;
 
@@ -16,9 +19,9 @@ public class TicketController {
         if (id == null) {
             Ticket ticket;
             ticket= switch (tipo){
-              case "BASIC"->  new TicketProduct();
-              case "SERVICE"-> new TicketService();
-              case "MIX" -> new TicketMix();
+              case "BASIC"->  new Ticket<ProductBasic>(new TicketProductPrint());
+              case "SERVICE"-> new Ticket<ProductService>(new TicketServicePrint());
+              case "MIX" -> new Ticket<Product>(new TicketMixPrint());
               default -> throw new IllegalStateException("Unexpected value: " + tipo);
             };
             id = ticket.getIdTicket();
@@ -28,9 +31,9 @@ public class TicketController {
             if (!TicketDB.existeId(id)) {
                 Ticket ticket;
                 ticket= switch (tipo){
-                    case "BASIC"->  new TicketProduct(id);
-                    case "SERVICE"-> new TicketService(id);
-                    case "MIX" -> new TicketMix(id);
+                    case "BASIC"->  new Ticket<ProductBasic>(id, new TicketProductPrint());
+                    case "SERVICE"-> new Ticket<ProductService>(id, new TicketServicePrint());
+                    case "MIX" -> new Ticket<Product>(id, new TicketMixPrint());
                     default -> throw new IllegalStateException("Unexpected value: " + tipo);
                 };
                 TicketDB.addTicket(ticket);
