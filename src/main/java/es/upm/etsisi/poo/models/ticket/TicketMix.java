@@ -5,10 +5,7 @@ import es.upm.etsisi.poo.exceptions.ticket.ExpiredProductsException;
 import es.upm.etsisi.poo.exceptions.ticket.NotSatisfiedMinimumRequirementsException;
 import es.upm.etsisi.poo.exceptions.ticket.ServiceAlreadyInTicketException;
 import es.upm.etsisi.poo.exceptions.ticket.TicketClosedException;
-import es.upm.etsisi.poo.models.product.Product;
-import es.upm.etsisi.poo.models.product.ProductBasic;
-import es.upm.etsisi.poo.models.product.ProductMeetingFood;
-import es.upm.etsisi.poo.models.product.ProductService;
+import es.upm.etsisi.poo.models.product.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -138,30 +135,55 @@ public class TicketMix extends Ticket{
         if(serviceCount<products.toArray().length){
             sb.append("\nProducts Included:");
         }
+        double precioTotal = 0;
+        int counterStationary = 0, counterClothes = 0, counterBook = 0, counterElectronic = 0;
+
         for (Product p : products) {
+            precioTotal += p.getPrice();
             if (p instanceof ProductBasic) {
                 i++;
-                sb.append("\n  ").append(p.toString()).append("\n");
-
-                double precio = p.getPrice();
-                double descuento = precio * descuentoServicios;
-                double precioFinal = Math.max(precio - descuento, 0);
-
-                totalProductos += precioFinal;
-
-                //sb.append(String.format("  %s %.2f", p.toString(), precioFinal)); TODO no se qeu hacer con esto
-
-                if (descuento > 0) {
-                    sb.append(String.format(" **discount -%.2f", descuento));
+                ProductBasic pb = (ProductBasic) p;
+                if (pb.getCategories() != null) {
+                    switch (pb.getCategories()) {
+                        case STATIONERY -> counterStationary++;
+                        case CLOTHES -> counterClothes++;
+                        case BOOK -> counterBook++;
+                        case ELECTRONICS -> counterElectronic++;
+                    }
                 }
-                sb.append("\n");
             }
         }
-        if(i!=0) {
-            sb.append(String.format("  Final Price: %.2f%n", totalProductos));
+        double descuentoTotalServicios=0;
+        double descuentoTotalCategories = 0;
+
+        for (Product p : products) {
+            double discountcategories = 0.0;
+            if(!(p instanceof ProductService)){
+                if (p instanceof ProductBasic) {
+                    ProductBasic pb = (ProductBasic) p;
+                    boolean discount = hasDiscount(counterStationary, counterClothes, counterBook, counterElectronic,
+                            pb.getCategories());
+                    if (discount) {
+                        discountcategories = Categories.getDiscount(pb.getCategories()) * p.getPrice();
+                        descuentoTotalCategories += discountcategories;
+                    }
+                }
+
+                if (discountcategories == 0.0) {
+                    sb.append("\n  ").append(p.toString());
+                } else {
+                    sb.append("\n  ").append(p.toString())
+                        .append(String.format(" **discount -%.2f", discountcategories));
+                }
+            }
         }
-
-
+        double precioFinal = Math.max(precioTotal - descuentoTotalCategories - (precioTotal*descuentoServicios), 0);
+        if(i>=1){
+            sb.append(String.format("%n  Total price: %.2f", precioTotal));
+            sb.append(String.format("%n  Extra Discount from services:%.2f **discount -%.2f", (precioTotal*descuentoServicios), (precioTotal*descuentoServicios)));
+            sb.append(String.format("%n  Total discount: %.2f", descuentoTotalCategories+(precioTotal*descuentoServicios)));
+            sb.append(String.format("%n  Final Price: %.2f", precioFinal));
+        }
         return sb.toString();
     }
 }

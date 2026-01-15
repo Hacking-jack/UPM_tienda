@@ -66,8 +66,8 @@ public class TicketService extends Ticket{
     public String getStringPrint(){
         StringBuilder sb = new StringBuilder();
         products.sort(Comparator.comparing(Product::getId));
-        sb.append(String.format("Ticket : %s%n", idTicket));
-        if(estado!=States.VACIO)    sb.append("Services Included:");
+        sb.append(String.format("Ticket : %s", idTicket));
+        if(estado!=States.VACIO)    sb.append("\nServices Included:");
 
         for (Product p : products) {
                 sb.append("\n  ").append(p.toString());
