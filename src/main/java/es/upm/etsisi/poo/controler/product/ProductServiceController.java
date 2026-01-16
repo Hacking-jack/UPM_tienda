@@ -2,9 +2,7 @@ package es.upm.etsisi.poo.controler.product;
 
 import es.upm.etsisi.poo.dataBase.ProductDB;
 import es.upm.etsisi.poo.exceptions.product.NotEnoughTimeException;
-import es.upm.etsisi.poo.models.product.Product;
-import es.upm.etsisi.poo.models.product.ProductService;
-import es.upm.etsisi.poo.models.product.Services;
+import es.upm.etsisi.poo.models.product.*;
 import java.time.LocalDate;
 
 public class ProductServiceController {

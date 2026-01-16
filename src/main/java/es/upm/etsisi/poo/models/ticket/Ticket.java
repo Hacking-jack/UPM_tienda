@@ -2,10 +2,7 @@ package es.upm.etsisi.poo.models.ticket;
 
 import es.upm.etsisi.poo.dataBase.TicketDB;
 import es.upm.etsisi.poo.exceptions.product.NotEnoughTimeException;
-import es.upm.etsisi.poo.exceptions.ticket.ProductNotInTicketException;
-import es.upm.etsisi.poo.exceptions.ticket.ServiceAlreadyInTicketException;
-import es.upm.etsisi.poo.exceptions.ticket.TicketClosedException;
-import es.upm.etsisi.poo.exceptions.ticket.TicketTypeMismatchException;
+import es.upm.etsisi.poo.exceptions.ticket.*;
 import es.upm.etsisi.poo.models.product.*;
 import es.upm.etsisi.poo.models.ticket.printBehaviour.TicketPrintBehaviour;
 

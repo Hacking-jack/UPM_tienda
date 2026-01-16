@@ -3,9 +3,7 @@ package es.upm.etsisi.poo.controler.user;
 import es.upm.etsisi.poo.dataBase.UserDB;
 import es.upm.etsisi.poo.exceptions.user.DuplicateIdentifierException;
 import es.upm.etsisi.poo.exceptions.user.UserNotFoundException;
-import es.upm.etsisi.poo.models.user.ClientBusiness;
-import es.upm.etsisi.poo.models.user.User;
-import es.upm.etsisi.poo.models.user.Client;
+import es.upm.etsisi.poo.models.user.*;
 
 
 public class ClientController {

@@ -5,10 +5,7 @@ import java.util.ArrayList;
 
 import es.upm.etsisi.poo.dataBase.ProductDB;
 import es.upm.etsisi.poo.exceptions.product.*;
-import es.upm.etsisi.poo.models.product.Categories;
-import es.upm.etsisi.poo.models.product.Product;
-import es.upm.etsisi.poo.models.product.ProductBasic;
-import es.upm.etsisi.poo.models.product.ProductMeetingFood;
+import es.upm.etsisi.poo.models.product.*;
 
 public class ProductController {
 

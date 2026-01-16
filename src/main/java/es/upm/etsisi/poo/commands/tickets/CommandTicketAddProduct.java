@@ -7,10 +7,7 @@ import es.upm.etsisi.poo.controler.ticket.TicketController;
 import es.upm.etsisi.poo.exceptions.general.UnknownCommandException;
 import es.upm.etsisi.poo.exceptions.product.NegativeNumException;
 import es.upm.etsisi.poo.exceptions.ticket.CashierTicketMismatchException;
-import es.upm.etsisi.poo.models.product.Product;
-import es.upm.etsisi.poo.models.product.ProductBasic;
-import es.upm.etsisi.poo.models.product.ProductMeetingFood;
-import es.upm.etsisi.poo.models.product.ProductService;
+import es.upm.etsisi.poo.models.product.*;
 
 public class CommandTicketAddProduct implements Command {
     private final String ticketId;

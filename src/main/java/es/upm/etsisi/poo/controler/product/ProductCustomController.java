@@ -3,9 +3,7 @@ package es.upm.etsisi.poo.controler.product;
 import es.upm.etsisi.poo.dataBase.ProductDB;
 import es.upm.etsisi.poo.exceptions.product.DuplicateProductIdException;
 import es.upm.etsisi.poo.exceptions.product.FullProductCatalogException;
-import es.upm.etsisi.poo.models.product.Categories;
-import es.upm.etsisi.poo.models.product.ProductBasic;
-import es.upm.etsisi.poo.models.product.ProductBasicCustom;
+import es.upm.etsisi.poo.models.product.*;
 
 public class ProductCustomController extends ProductController {
 

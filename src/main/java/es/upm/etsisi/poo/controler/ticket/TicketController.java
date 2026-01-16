@@ -5,9 +5,7 @@ import es.upm.etsisi.poo.exceptions.product.NotCustomizableProductException;
 import es.upm.etsisi.poo.exceptions.ticket.*;
 import es.upm.etsisi.poo.models.product.*;
 import es.upm.etsisi.poo.models.ticket.*;
-import es.upm.etsisi.poo.models.ticket.printBehaviour.TicketMixPrint;
-import es.upm.etsisi.poo.models.ticket.printBehaviour.TicketProductPrint;
-import es.upm.etsisi.poo.models.ticket.printBehaviour.TicketServicePrint;
+import es.upm.etsisi.poo.models.ticket.printBehaviour.*;
 
 import java.util.Objects;
 

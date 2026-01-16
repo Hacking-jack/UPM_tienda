@@ -2,10 +2,7 @@ package es.upm.etsisi.poo.controler.product;
 
 
 import es.upm.etsisi.poo.dataBase.ProductDB;
-import es.upm.etsisi.poo.exceptions.product.DuplicateProductIdException;
-import es.upm.etsisi.poo.exceptions.product.FullProductCatalogException;
-import es.upm.etsisi.poo.exceptions.product.NotEnoughTimeException;
-import es.upm.etsisi.poo.models.product.ProductBasic;
+import es.upm.etsisi.poo.exceptions.product.*;
 import es.upm.etsisi.poo.models.product.ProductMeetingFood;
 
 import java.time.LocalDate;

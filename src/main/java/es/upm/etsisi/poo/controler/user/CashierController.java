@@ -2,9 +2,7 @@ package es.upm.etsisi.poo.controler.user;
 
 import es.upm.etsisi.poo.dataBase.UserDB;
 import es.upm.etsisi.poo.dataBase.TicketDB;
-import es.upm.etsisi.poo.exceptions.user.DuplicateIdentifierException;
-import es.upm.etsisi.poo.exceptions.user.InvalidDocumentNumberException;
-import es.upm.etsisi.poo.exceptions.user.UserNotFoundException;
+import es.upm.etsisi.poo.exceptions.user.*;
 import es.upm.etsisi.poo.models.user.Cashier;
 import es.upm.etsisi.poo.models.user.User;
 

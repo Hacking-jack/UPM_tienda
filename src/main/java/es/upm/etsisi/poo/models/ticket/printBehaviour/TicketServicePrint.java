@@ -1,7 +1,6 @@
 package es.upm.etsisi.poo.models.ticket.printBehaviour;
 
-import es.upm.etsisi.poo.exceptions.ticket.ExpiredProductsException;
-import es.upm.etsisi.poo.exceptions.ticket.NotSatisfiedMinimumRequirementsException;
+import es.upm.etsisi.poo.exceptions.ticket.*;
 import es.upm.etsisi.poo.models.product.Product;
 import es.upm.etsisi.poo.models.product.ProductService;
 import es.upm.etsisi.poo.models.ticket.States;
