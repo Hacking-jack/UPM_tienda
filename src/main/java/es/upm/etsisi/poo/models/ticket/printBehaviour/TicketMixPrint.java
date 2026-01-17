@@ -11,6 +11,11 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 public class TicketMixPrint implements TicketPrintBehaviour<Product>{
+
+    public Class<Product> getTipo(){
+        return Product.class;
+    }
+
     @Override
     public void printAndClose(Ticket<Product> ticket) {
         boolean hayProducto = false;

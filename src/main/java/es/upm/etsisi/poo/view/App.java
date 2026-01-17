@@ -106,12 +106,12 @@ public class App {
                             if (args[2] == null) {
                                 cmd = new CommandTicketNew(null, args[0], args[1], null);
                             } else {
-                                if(args[2].startsWith("-")){
+                                if (args[2].startsWith("-")) {
                                     cmd = new CommandTicketNew(null, args[0], args[1], args[2].charAt(1));
-                                }else{
-                                    if(args[3]==null){
+                                } else {
+                                    if (args[3] == null) {
                                         cmd = new CommandTicketNew(args[0], args[1], args[2], null);
-                                    }else{
+                                    } else {
                                         cmd = new CommandTicketNew(args[0], args[1], args[2], args[3].charAt(1));
                                     }
                                 }
@@ -124,15 +124,15 @@ public class App {
                             if ((pers != null) && (pers[0] == null)) {// formato erróneo de pers
                                 throw new PersonalitationUnformattedException();
                             }
-                            if(args[3]==null){
+                            if (args[3] == null) {
                                 cmd = new CommandTicketAddProduct(args[0], args[1], args[2], null, pers);
-                            }else{
+                            } else {
                                 cmd = new CommandTicketAddProduct(args[0], args[1], args[2], Integer.parseInt(args[3]), pers);
                             }
                             break;
 
                         case "ticket remove":
-                            cmd = new CommandTicketRemoveProduct(args[0], args[1],args[2]);
+                            cmd = new CommandTicketRemoveProduct(args[0], args[1], args[2]);
                             break;
 
                         case "ticket print":
@@ -145,18 +145,18 @@ public class App {
 
                         case "prod add":
                             if (args[0].startsWith("\"")) {
-                                    removeComillas(args, 0);
-                                    if (args[3] == null) {
-                                        cmd = new CommandProductAdd(null, args[0], args[1], Double.parseDouble(args[2]),
-                                                null);
-                                    } else {
-                                        cmd = new CommandProductAdd(null, args[0], args[1], Double.parseDouble(args[2]),
-                                                Integer.parseInt(args[3]));
-                                    }
+                                removeComillas(args, 0);
+                                if (args[3] == null) {
+                                    cmd = new CommandProductAdd(null, args[0], args[1], Double.parseDouble(args[2]),
+                                            null);
+                                } else {
+                                    cmd = new CommandProductAdd(null, args[0], args[1], Double.parseDouble(args[2]),
+                                            Integer.parseInt(args[3]));
+                                }
                             } else {
-                                if(args[2]==null){
+                                if (args[2] == null) {
                                     cmd = new CommandProductAddService(args[0], args[1]);
-                                }else{
+                                } else {
                                     removeComillas(args, 1);
                                     if (args[4] == null) {
                                         cmd = new CommandProductAdd(args[0], args[1], args[2],
@@ -236,6 +236,8 @@ public class App {
                     }
                 }
 
+            } catch (IOException ex) {
+                System.out.println("Ha habido un problema con el archivo");
             } catch (NumberFormatException | ArrayIndexOutOfBoundsException | NullPointerException ex) {
                 System.out.println("Formato del comando incorrecto. Use help para ver los comandos\n");
             } catch (Exception ex) {

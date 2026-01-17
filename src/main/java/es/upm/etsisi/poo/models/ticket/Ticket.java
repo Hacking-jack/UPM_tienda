@@ -16,6 +16,7 @@ public class Ticket<T extends Product> {
     protected String idTicket;
     protected States estado;
     protected TicketPrintBehaviour<T> ticketPrintBehaviour;
+    private Class<T> tipoPermitido;
 
 
     public Ticket(String id, TicketPrintBehaviour<T> ticketPrintBehaviour) {
@@ -23,6 +24,7 @@ public class Ticket<T extends Product> {
         estado = States.VACIO;
         products = new ArrayList<T>();
         this.ticketPrintBehaviour = ticketPrintBehaviour;
+        tipoPermitido = ticketPrintBehaviour.getTipo();
     }
     public Ticket(Integer numId,String id, TicketPrintBehaviour<T> ticketPrintBehaviour) {
         this.numId=numId;
@@ -36,11 +38,11 @@ public class Ticket<T extends Product> {
     }
 
     public void removeProduct(Product p) {
-        if(products.removeIf(product -> product.getId().equals(p.getId()))) {
+        if (products.removeIf(product -> product.getId().equals(p.getId()))) {
             if (products.isEmpty()) {
                 estado = States.VACIO;
             }
-        }else{
+        } else {
             throw new ProductNotInTicketException(p.getId());
         }
     }
@@ -107,18 +109,18 @@ public class Ticket<T extends Product> {
         this.idTicket = idTicket;
     }
 
-    public boolean comprobarCaducidad(){
-        boolean resul=true;
-        for (Product product : products){
-            if(product instanceof ProductService){
-                if(((ProductService) product).isExpired()){
-                    resul=false;
+    public boolean comprobarCaducidad() {
+        boolean resul = true;
+        for (Product product : products) {
+            if (product instanceof ProductService) {
+                if (((ProductService) product).isExpired()) {
+                    resul = false;
                     removeProduct(product);
                 }
             }
-            if(product instanceof ProductMeetingFood){
-                if(((ProductMeetingFood) product).isExpired()){
-                    resul=false;
+            if (product instanceof ProductMeetingFood) {
+                if (((ProductMeetingFood) product).isExpired()) {
+                    resul = false;
                     removeProduct(product);
                 }
             }
@@ -127,7 +129,7 @@ public class Ticket<T extends Product> {
     }
 
     public boolean addProduct(T product) {
-        try {
+        if (tipoPermitido.equals(ProductBasic.class) || tipoPermitido.equals(Product.class)) {
             if (estado == States.CERRADO) {
                 throw new TicketClosedException();
             }
@@ -135,13 +137,13 @@ public class Ticket<T extends Product> {
                 estado = States.ACTIVO;
             }
             return (products.size() < 100) && products.add(product);
-        }catch (ClassCastException ex){
+        } else {
             throw new TicketTypeMismatchException();
         }
     }
 
     public void addMeeting(T productMeetingFood) {
-        try {
+        if (tipoPermitido.equals(ProductBasic.class) || tipoPermitido.equals(Product.class)) {
             if (productMeetingFood instanceof ProductMeetingFood) {
                 if (estado == States.CERRADO) {
                     throw new TicketClosedException();
@@ -168,18 +170,20 @@ public class Ticket<T extends Product> {
             } else {
                 throw new TicketTypeMismatchException();
             }
-        }catch (ClassCastException ex){
+        } else {
             throw new TicketTypeMismatchException();
         }
     }
 
     public void addService(T productService){
-        try {
+        if (tipoPermitido.equals(ProductService.class) || tipoPermitido.equals(Product.class)) {
             if (estado == States.CERRADO) {
                 throw new TicketClosedException();
             }
-            if (products.contains(productService)) {
-                throw new ServiceAlreadyInTicketException();
+            for (T product : products) {
+                if (product.getId().equals(productService.getId())) {
+                    throw new ServiceAlreadyInTicketException();
+                }
             }
             if (products.isEmpty()) {
                 estado = States.ACTIVO;
@@ -191,7 +195,7 @@ public class Ticket<T extends Product> {
                     estado = States.ACTIVO;
                 }
             }
-        }catch (ClassCastException ex){
+        } else {
         throw new TicketTypeMismatchException();
     }
     }

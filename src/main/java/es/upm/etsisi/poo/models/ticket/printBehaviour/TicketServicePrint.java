@@ -2,6 +2,7 @@ package es.upm.etsisi.poo.models.ticket.printBehaviour;
 
 import es.upm.etsisi.poo.exceptions.ticket.*;
 import es.upm.etsisi.poo.models.product.Product;
+import es.upm.etsisi.poo.models.product.ProductBasic;
 import es.upm.etsisi.poo.models.product.ProductService;
 import es.upm.etsisi.poo.models.ticket.States;
 import es.upm.etsisi.poo.models.ticket.Ticket;
@@ -12,6 +13,11 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 public class TicketServicePrint implements TicketPrintBehaviour<ProductService>{
+
+    public Class<ProductService> getTipo(){
+        return ProductService.class;
+    }
+
     @Override
     public void printAndClose(Ticket<ProductService> ticket) {
         if (ticket.getEstado() == States.VACIO) {

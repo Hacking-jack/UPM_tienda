@@ -12,6 +12,10 @@ import java.util.Comparator;
 
 public class TicketProductPrint implements TicketPrintBehaviour<ProductBasic> {
 
+    public Class<ProductBasic> getTipo(){
+        return ProductBasic.class;
+    }
+
     @Override
     public void printAndClose(Ticket<ProductBasic> ticket) {
         if (ticket.getEstado() == States.VACIO) {

@@ -7,13 +7,14 @@ import es.upm.etsisi.poo.models.product.ProductMeetingFood;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
 public class ProductFoodMeetingController extends ProductController {
 
 
     public static void add(String id, String name, double price, String date, int maxParticipantes, boolean isFood) {
-        LocalDate fecha = LocalDate.parse(date);
+        LocalDate fecha = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-M-d"));
         int dias = (int) ChronoUnit.DAYS.between(LocalDate.now(), fecha);
         if (ProductRepository.existeId(id)) {
             throw new DuplicateProductIdException();
