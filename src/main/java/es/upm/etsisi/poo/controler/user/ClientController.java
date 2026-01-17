@@ -1,6 +1,6 @@
 package es.upm.etsisi.poo.controler.user;
 
-import es.upm.etsisi.poo.dataBase.UserDB;
+import es.upm.etsisi.poo.dataBase.cache.UserRepository;
 import es.upm.etsisi.poo.exceptions.user.DuplicateIdentifierException;
 import es.upm.etsisi.poo.exceptions.user.UserNotFoundException;
 import es.upm.etsisi.poo.models.user.*;
@@ -9,37 +9,37 @@ import es.upm.etsisi.poo.models.user.*;
 public class ClientController {
 
     public static void addIndividualClient(String nombre, String dni, String email, String cashId) {
-        if (UserDB.existeId(dni)) {
+        if (UserRepository.existeId(dni)) {
             throw new DuplicateIdentifierException(dni);
         }
-        if (!UserDB.existeId(cashId)) {
+        if (!UserRepository.existeId(cashId)) {
             throw new UserNotFoundException("Error. Cajero no encontrado.");
         }
         Client client = new Client(nombre, dni, email, cashId);
-        UserDB.addUser(client);
+        UserRepository.addUser(client);
         System.out.println(client);
     }
 
     public static void addBusinessClient(String nombre, String cif, String email, String cashId) {
-        if (UserDB.existeId(cif)) {
+        if (UserRepository.existeId(cif)) {
             throw new DuplicateIdentifierException(cif);
         }
-        if (!UserDB.existeId(cashId)) {
+        if (!UserRepository.existeId(cashId)) {
             throw new UserNotFoundException("Error. Cajero no encontrado.");
         }
         ClientBusiness clientBusiness = new ClientBusiness(nombre, cif, email, cashId);
-        UserDB.addUser(clientBusiness);
+        UserRepository.addUser(clientBusiness);
         System.out.println(clientBusiness);
     }
 
     public static void remove(String id) {
-        User p = UserDB.findId(id);
-        UserDB.removeUser(p);
+        User p = UserRepository.findId(id);
+        UserRepository.removeUser(p);
     }
 
     public static void list() {
         System.out.println("Client:");
-        for (User user : UserDB.list()) {
+        for (User user : UserRepository.list()) {
             if (user instanceof Client) {
                 System.out.println("  " + user);
             }
@@ -47,19 +47,19 @@ public class ClientController {
     }
 
     public static Client searchId(String id) {
-        return (Client) UserDB.findId(id);
+        return (Client) UserRepository.findId(id);
     }
 
     public static boolean existeId(String id) {
-        return UserDB.existeId(id);
+        return UserRepository.existeId(id);
     }
 
     public static boolean isClient(String clientId){
-        return UserDB.findId(clientId).getClass()==Client.class;
+        return UserRepository.findId(clientId).getClass()==Client.class;
     }
 
     public static boolean isBusiness(String clientId){
-        return UserDB.findId(clientId).getClass()== ClientBusiness.class;
+        return UserRepository.findId(clientId).getClass()== ClientBusiness.class;
     }
 
 

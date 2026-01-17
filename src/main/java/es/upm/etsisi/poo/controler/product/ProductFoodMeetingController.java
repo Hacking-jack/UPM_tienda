@@ -1,7 +1,7 @@
 package es.upm.etsisi.poo.controler.product;
 
 
-import es.upm.etsisi.poo.dataBase.ProductDB;
+import es.upm.etsisi.poo.dataBase.cache.ProductRepository;
 import es.upm.etsisi.poo.exceptions.product.*;
 import es.upm.etsisi.poo.models.product.ProductMeetingFood;
 
@@ -15,13 +15,13 @@ public class ProductFoodMeetingController extends ProductController {
     public static void add(String id, String name, double price, String date, int maxParticipantes, boolean isFood) {
         LocalDate fecha = LocalDate.parse(date);
         int dias = (int) ChronoUnit.DAYS.between(LocalDate.now(), fecha);
-        if (ProductDB.existeId(id)) {
+        if (ProductRepository.existeId(id)) {
             throw new DuplicateProductIdException();
         } else {
-            if (ProductDB.countProduct() < 200) {
+            if (ProductRepository.countProduct() < 200) {
                 if ((isFood && (dias >= 3)) || (!isFood && ((dias >= 1) || ((dias == 0) && (LocalDateTime.now().getHour() <= 12))))) {
                     ProductMeetingFood productMeetingFood = new ProductMeetingFood(id, name, price, fecha, maxParticipantes, isFood);
-                    ProductDB.addProduct(productMeetingFood);
+                    ProductRepository.addProduct(productMeetingFood);
                     System.out.println(productMeetingFood.initialString());
                 } else {
                     throw new NotEnoughTimeException();

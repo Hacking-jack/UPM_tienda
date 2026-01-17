@@ -1,6 +1,6 @@
 package es.upm.etsisi.poo.controler.product;
 
-import es.upm.etsisi.poo.dataBase.ProductDB;
+import es.upm.etsisi.poo.dataBase.cache.ProductRepository;
 import es.upm.etsisi.poo.exceptions.product.NotEnoughTimeException;
 import es.upm.etsisi.poo.models.product.*;
 import java.time.LocalDate;
@@ -11,7 +11,7 @@ public class ProductServiceController {
             throw new NotEnoughTimeException();
         }
         int contadorServicios = 0;
-        for (Product p : ProductDB.listProducts()) {
+        for (Product p : ProductRepository.listProducts()) {
             if (p instanceof ProductService) {
                 contadorServicios++;
             }
@@ -19,7 +19,7 @@ public class ProductServiceController {
         int siguienteNum = contadorServicios + 1;
         Services category = Services.valueOf(serviceType.toUpperCase());
         ProductService nuevoServicio = new ProductService(siguienteNum, dateMax, category);
-        ProductDB.addProduct(nuevoServicio);
+        ProductRepository.addProduct(nuevoServicio);
         System.out.println(nuevoServicio);
     }
 }

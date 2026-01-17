@@ -1,7 +1,7 @@
 package es.upm.etsisi.poo.controler.user;
 
-import es.upm.etsisi.poo.dataBase.UserDB;
-import es.upm.etsisi.poo.dataBase.TicketDB;
+import es.upm.etsisi.poo.dataBase.cache.UserRepository;
+import es.upm.etsisi.poo.dataBase.cache.TicketRepository;
 import es.upm.etsisi.poo.exceptions.user.*;
 import es.upm.etsisi.poo.models.user.Cashier;
 import es.upm.etsisi.poo.models.user.User;
@@ -13,11 +13,11 @@ public class CashierController {
 
     public static void add(String id, String nombre, String email) {
         if (id.matches("^UW\\d{7}$")) {
-            if (UserDB.existeId(id)) {
+            if (UserRepository.existeId(id)) {
                 throw new DuplicateIdentifierException(id);
             }
             Cashier nuevo = new Cashier(id, nombre, email);
-            UserDB.addUser(nuevo);
+            UserRepository.addUser(nuevo);
             System.out.println(nuevo);
         } else {
             throw new InvalidDocumentNumberException(id);
@@ -26,12 +26,12 @@ public class CashierController {
 
     public static void remove(String id) {
         Cashier c = searchId(id);
-        UserDB.removeUser(c);
+        UserRepository.removeUser(c);
     }
 
     public static void list() {
         System.out.println("Cash:");
-        for (User user : UserDB.list()) {
+        for (User user : UserRepository.list()) {
             if (user instanceof Cashier) {
                 System.out.println("  " + user);
             }
@@ -40,16 +40,16 @@ public class CashierController {
 
 
     public static Cashier searchId(String id) {
-        return (Cashier) UserDB.findId(id);
+        return (Cashier) UserRepository.findId(id);
     }
 
     public static void cashTickets(String cashId) {
-        if (UserDB.existeId(cashId) && (UserDB.findId(cashId) instanceof Cashier)) {
+        if (UserRepository.existeId(cashId) && (UserRepository.findId(cashId) instanceof Cashier)) {
             System.out.print("Tickets:\n");
 
-            Cashier aux = (Cashier) UserDB.findId(cashId);
+            Cashier aux = (Cashier) UserRepository.findId(cashId);
             for (String t : aux.getTickets()) {
-                TicketDB.title(t);
+                TicketRepository.title(t);
             }
         } else {
             throw new UserNotFoundException("No existe el cajero");
@@ -61,7 +61,7 @@ public class CashierController {
     }
 
     public static boolean existeId(String id) {
-        return UserDB.existeId(id);
+        return UserRepository.existeId(id);
     }
 }
 

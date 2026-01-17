@@ -1,6 +1,6 @@
 package es.upm.etsisi.poo.models.ticket;
 
-import es.upm.etsisi.poo.dataBase.TicketDB;
+import es.upm.etsisi.poo.dataBase.cache.TicketRepository;
 import es.upm.etsisi.poo.exceptions.product.NotEnoughTimeException;
 import es.upm.etsisi.poo.exceptions.ticket.*;
 import es.upm.etsisi.poo.models.product.*;
@@ -11,6 +11,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class Ticket<T extends Product> {
+    protected Integer numId;
     protected final ArrayList<T> products;
     protected String idTicket;
     protected States estado;
@@ -23,7 +24,13 @@ public class Ticket<T extends Product> {
         products = new ArrayList<T>();
         this.ticketPrintBehaviour = ticketPrintBehaviour;
     }
-
+    public Ticket(Integer numId,String id, TicketPrintBehaviour<T> ticketPrintBehaviour) {
+        this.numId=numId;
+        idTicket = id;
+        estado = States.VACIO;
+        products = new ArrayList<T>();
+        this.ticketPrintBehaviour = ticketPrintBehaviour;
+    }
     public Ticket(TicketPrintBehaviour<T> ticketPrintBehaviour) {
         this(generarId(), ticketPrintBehaviour);
     }
@@ -67,12 +74,14 @@ public class Ticket<T extends Product> {
         }
         return correct;
     }
-
+    public boolean isNew(){
+        return this.numId==null;
+    }
     public static String generarId() {
         String string = LocalDateTime.now()
                 .format(DateTimeFormatter.ofPattern("yy-MM-dd-HH:mm-"))
                 + String.format("%05d", (int) (Math.random() * 10000));
-        if (TicketDB.existeId(string)) {
+        if (TicketRepository.existeId(string)) {
             return generarId();
         }
         return string;

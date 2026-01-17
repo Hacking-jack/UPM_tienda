@@ -1,6 +1,6 @@
 package es.upm.etsisi.poo.commands.tickets;
 
-import es.upm.etsisi.poo.dataBase.UserDB;
+import es.upm.etsisi.poo.dataBase.cache.UserRepository;
 import es.upm.etsisi.poo.commands.Command;
 import es.upm.etsisi.poo.controler.product.ProductController;
 import es.upm.etsisi.poo.controler.ticket.TicketController;
@@ -31,7 +31,7 @@ public class CommandTicketAddProduct implements Command {
         if (amount!=null && amount <= 0) {
             throw new NegativeNumException();
         }
-        if (!UserDB.findId(cashId).getTickets().contains(ticketId)) {
+        if (!UserRepository.findId(cashId).getTickets().contains(ticketId)) {
             throw new CashierTicketMismatchException();
         }
         if(amount!=null){

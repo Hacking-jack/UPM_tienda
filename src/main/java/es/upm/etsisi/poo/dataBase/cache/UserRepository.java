@@ -1,4 +1,4 @@
-package es.upm.etsisi.poo.dataBase;
+package es.upm.etsisi.poo.dataBase.cache;
 
 import es.upm.etsisi.poo.exceptions.user.UserNotFoundException;
 import es.upm.etsisi.poo.models.user.User;
@@ -6,7 +6,7 @@ import es.upm.etsisi.poo.models.user.User;
 import java.util.ArrayList;
 import java.util.Comparator;
 //TODO cache de base de datos
-public class UserDB {
+public class UserRepository {
     //Tabla Humanos de base de datos, se guarda clientes y cajeros
     private static final ArrayList<User> USERS = new ArrayList<>();
 

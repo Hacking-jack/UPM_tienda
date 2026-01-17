@@ -1,4 +1,4 @@
-package es.upm.etsisi.poo.dataBase;
+package es.upm.etsisi.poo.dataBase.cache;
 
 import es.upm.etsisi.poo.exceptions.ticket.TicketNotFoundException;
 import es.upm.etsisi.poo.models.ticket.Ticket;
@@ -6,7 +6,7 @@ import es.upm.etsisi.poo.models.ticket.Ticket;
 import java.util.ArrayList;
 //TODO cache de base de datos
 
-public class TicketDB {
+public class TicketRepository {
     //Equivalente a una tabla Tickets en SQL
     private static final ArrayList<Ticket> tickets = new ArrayList<>();
 

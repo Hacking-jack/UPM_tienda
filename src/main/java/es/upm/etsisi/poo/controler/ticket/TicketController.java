@@ -1,6 +1,6 @@
 package es.upm.etsisi.poo.controler.ticket;
 
-import es.upm.etsisi.poo.dataBase.TicketDB;
+import es.upm.etsisi.poo.dataBase.cache.TicketRepository;
 import es.upm.etsisi.poo.exceptions.product.NotCustomizableProductException;
 import es.upm.etsisi.poo.exceptions.ticket.*;
 import es.upm.etsisi.poo.models.product.*;
@@ -23,10 +23,10 @@ public class TicketController {
               default -> throw new IllegalStateException("Unexpected value: " + tipo);
             };
             id = ticket.getIdTicket();
-            TicketDB.addTicket(ticket);
-            TicketDB.findId(id).print();
+            TicketRepository.addTicket(ticket);
+            TicketRepository.findId(id).print();
         } else {
-            if (!TicketDB.existeId(id)) {
+            if (!TicketRepository.existeId(id)) {
                 Ticket ticket;
                 ticket= switch (tipo){
                     case "BASIC"->  new Ticket<ProductBasic>(id, new TicketProductPrint());
@@ -34,8 +34,8 @@ public class TicketController {
                     case "MIX" -> new Ticket<Product>(id, new TicketMixPrint());
                     default -> throw new IllegalStateException("Unexpected value: " + tipo);
                 };
-                TicketDB.addTicket(ticket);
-                TicketDB.findId(id).print();
+                TicketRepository.addTicket(ticket);
+                TicketRepository.findId(id).print();
             } else {
                 throw new DuplicateTicketIdException();
             }
@@ -135,7 +135,7 @@ public class TicketController {
     }
 
     public static Ticket findId(String id) {
-        return TicketDB.findId(id);
+        return TicketRepository.findId(id);
     }
 
     public static void remove(Ticket ticket, Product product) {
@@ -144,14 +144,14 @@ public class TicketController {
 
     public static void list() {
         System.out.println("Ticket List:");
-        for (Ticket t : TicketDB.listProducts()) {
+        for (Ticket t : TicketRepository.listProducts()) {
             System.out.println("  " + t.list());
         }
     }
 
     public static void print(String ticketId) {
-        if (TicketDB.existeId(ticketId)) {
-            Ticket ticket = TicketDB.findId(ticketId);
+        if (TicketRepository.existeId(ticketId)) {
+            Ticket ticket = TicketRepository.findId(ticketId);
             ticket.printAndClose();
         } else {
             throw new TicketNotFoundException(ticketId);

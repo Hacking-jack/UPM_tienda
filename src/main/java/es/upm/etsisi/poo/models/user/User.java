@@ -6,11 +6,15 @@ import java.util.ArrayList;
 
 public abstract class User {
 
+    protected Integer numId;
     protected String id;
     protected String nombre;
     protected String email;
     protected ArrayList<String> tickets;
 
+    public boolean isNew() {
+        return this.numId == null;
+    }
     public String getNombre() {
         return nombre;
     }

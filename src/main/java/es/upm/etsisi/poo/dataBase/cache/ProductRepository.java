@@ -1,11 +1,11 @@
-package es.upm.etsisi.poo.dataBase;
+package es.upm.etsisi.poo.dataBase.cache;
 
 import es.upm.etsisi.poo.exceptions.product.ProductNotFoundException;
 import es.upm.etsisi.poo.models.product.Product;
 
 import java.util.ArrayList;
 //TODO cache de base de datos
-public class ProductDB {
+public class ProductRepository {
     //Equivalente a una tabla Products en SQL
     private static final ArrayList<Product> PRODUCTS = new ArrayList<>();
 

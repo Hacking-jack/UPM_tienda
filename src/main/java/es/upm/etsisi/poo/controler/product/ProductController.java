@@ -3,7 +3,7 @@ package es.upm.etsisi.poo.controler.product;
 import java.util.ArrayList;
 
 
-import es.upm.etsisi.poo.dataBase.ProductDB;
+import es.upm.etsisi.poo.dataBase.cache.ProductRepository;
 import es.upm.etsisi.poo.exceptions.product.*;
 import es.upm.etsisi.poo.models.product.*;
 
@@ -11,12 +11,12 @@ public class ProductController {
 
     public static void add(String id, String name, String categories, double price) {
         if (categorieControl(categories)) {
-            if (ProductDB.existeId(id)) {
+            if (ProductRepository.existeId(id)) {
                 throw new DuplicateProductIdException();
             } else {
-                if (ProductDB.countProduct() < 200) {
+                if (ProductRepository.countProduct() < 200) {
                     Product product = new ProductBasic(id, name, Categories.valueOf(categories), price);
-                    ProductDB.addProduct(product);
+                    ProductRepository.addProduct(product);
                     System.out.println(product);
                 } else {
                     throw new FullProductCatalogException();
@@ -28,7 +28,7 @@ public class ProductController {
 
     public static void list() {
         System.out.println("Catalog:");
-        ArrayList<Product> products = ProductDB.listProducts();
+        ArrayList<Product> products = ProductRepository.listProducts();
         for (Product p : products) {
             if(p instanceof ProductMeetingFood){
                 System.out.println("  " + ((ProductMeetingFood) p).initialString());
@@ -40,7 +40,7 @@ public class ProductController {
 
     public static void update(String id, String campo, String valor) {
 
-        Product p = ProductDB.findId(id);
+        Product p = ProductRepository.findId(id);
         switch (campo.toUpperCase()) {
             case "NAME":
                 p.setName(valor);
@@ -66,13 +66,13 @@ public class ProductController {
     }
 
     public static void remove(String id) {
-        Product p = ProductDB.findId(id);
+        Product p = ProductRepository.findId(id);
         System.out.println(p);
-        ProductDB.removeProduct(p);
+        ProductRepository.removeProduct(p);
     }
 
     public static Product findId(String id) {
-        return ProductDB.findId(id);
+        return ProductRepository.findId(id);
     }
 
 
@@ -89,7 +89,7 @@ public class ProductController {
     public static String generarId() {
         int numId = (int) (Math.random() * 10000);
         String id = String.valueOf(numId);
-        if (!ProductDB.existeId(id)) {
+        if (!ProductRepository.existeId(id)) {
             return id;
         } else {
             return generarId();

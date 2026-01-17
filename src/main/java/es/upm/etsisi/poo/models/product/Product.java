@@ -3,11 +3,22 @@ package es.upm.etsisi.poo.models.product;
 import es.upm.etsisi.poo.exceptions.product.NegativeNumException;
 
 public abstract class Product implements Cloneable{
+    protected Integer numId;
     protected String name;
     protected double price;
     protected final String id;
 
     public Product(String id, String name, double price) {
+        this.numId = null;
+        this.id = id;
+        this.name = name;
+        if (price < 0) {
+            throw new NegativeNumException();
+        }
+        this.price = price;
+    }
+    public Product(Integer numId,String id, String name, double price) {
+        this.numId = numId;
         this.id = id;
         this.name = name;
         if (price < 0) {
@@ -33,6 +44,10 @@ public abstract class Product implements Cloneable{
 
     public double getPrice() {
         return price;
+    }
+
+    public boolean isNew(){
+        return this.numId==null;
     }
 
     public void setPrice(double price) {
